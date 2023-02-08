@@ -1,0 +1,15 @@
+{
+   "name": "infrastructure",
+   "version": "1.0.0",
+   "packageManager": "yarn@3.2.1",
+   "dependencies": {
+      "domain": "workspace:*",
+      "rimraf": "^3.0.2"
+   },
+   "scripts": {
+      "start": "ts-node src/main.ts --watch",
+      "build:watch": "yarn clean | tsc -p tsconfig.json",
+      "clean": "rimraf ./lib | rimraf tsconfig.tsbuildinfo",
+      "build": "tsc -b tsconfig.json"
+   }
+}

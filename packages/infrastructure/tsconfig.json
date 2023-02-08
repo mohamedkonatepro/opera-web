@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators":true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "composite": true,
+    "declaration": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "watch": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.json", "src/account/account.adapter.spec.tsO",
+    "public"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "build",
+    "tsconfig.json",
+    "tsconfig.test.json",
+  ],
+  "references": [
+    {
+      "path": "../domain"
+    }
+  ]
+}

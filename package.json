@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "opera-groupe",
+  "repository": "git@github.com:thetribeio/opera-groupe.git",
+  "packageManager": "yarn@3.4.1",
+  "workspaces": [
+    "packages/**/*"
+  ],
+  "scripts": {
+    "w": "yarn workspace",
+    "i": "yarn workspace infrastructure",
+    "d": "yarn workspace domain"
+  },
+  "dependencies": {
+    "node-gyp": "^9.3.0"
+  }
+}
