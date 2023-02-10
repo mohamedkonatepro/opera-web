@@ -1,0 +1,9 @@
+version: "3"
+services:
+  tenant-appointment-booker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: yarn w tenant-appointment-booker dev
+    ports:
+      - "3000:3000"

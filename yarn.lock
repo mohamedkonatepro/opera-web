@@ -149,9 +149,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.1.6":
+"@next/swc-linux-x64-musl@npm:13.1.6, @next/swc-linux-x64-musl@npm:^13.1.6":
   version: 13.1.6
   resolution: "@next/swc-linux-x64-musl@npm:13.1.6"
+  checksum: 1a93982a7d7e6e9d9770ebbaea32a397bae45985c917c6557e1bde54a9445a8285337de92de3d57865c83b6690bead5f5993776b4c3b8a2fa4a5f9b779370d5f
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
@@ -242,6 +243,14 @@ __metadata:
   version: 1.2.0
   resolution: "@rushstack/eslint-patch@npm:1.2.0"
   checksum: faa749faae0e83c26ae9eb00ad36a897ac78f3cf27da8e8ff21c00bcf7973b598d823d8f2b3957ef66079288bcf577f94df831eae2d65f3f68d8ca32f18b6aff
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-musl@npm:^1.3.35":
+  version: 1.3.35
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.35"
+  checksum: 9c06ecf9dd54f051a528f2a4c7d2ea0244737a3ad90c849f205d65878919e4da4341cf31954fd65ea1d4835896027229707f7bd806a5fa05b3b2398358522a20
+  conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
@@ -3206,6 +3215,8 @@ __metadata:
   resolution: "tenant-appointment-booker@workspace:packages/tenant-appointment-booker"
   dependencies:
     "@next/font": 13.1.6
+    "@next/swc-linux-x64-musl": ^13.1.6
+    "@swc/core-linux-x64-musl": ^1.3.35
     "@types/node": 18.13.0
     "@types/react": 18.0.27
     "@types/react-dom": 18.0.10
