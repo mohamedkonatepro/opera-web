@@ -1,15 +1,14 @@
 {
   "private": true,
-  "name": "opera-groupe",
-  "repository": "git@github.com:thetribeio/opera-groupe.git",
+  "name": "opera-groupe-web",
+  "repository": "git@github.com:thetribeio/opera-groupe-web.git",
   "packageManager": "yarn@3.4.1",
   "workspaces": [
     "packages/**/*"
   ],
   "scripts": {
     "w": "yarn workspace",
-    "i": "yarn workspace infrastructure",
-    "d": "yarn workspace domain"
+    "b": "yarn workspace tenant-appointment-booker"
   },
   "dependencies": {
     "node-gyp": "^9.3.0"
