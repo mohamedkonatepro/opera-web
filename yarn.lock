@@ -142,9 +142,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.1.6":
+"@next/swc-linux-x64-gnu@npm:13.1.6, @next/swc-linux-x64-gnu@npm:^13.1.6":
   version: 13.1.6
   resolution: "@next/swc-linux-x64-gnu@npm:13.1.6"
+  checksum: d2225cb7ed98d5aa329b1cefcc58dc03dc3fe3b679d1ff5139ff8459ffa20f753a219ed488ade3222b6149d2eeada1a6ff5816e79709272afc4f33de21c32fcf
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -246,14 +247,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:^1.3.35":
-  version: 1.3.35
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.35"
-  checksum: 9c06ecf9dd54f051a528f2a4c7d2ea0244737a3ad90c849f205d65878919e4da4341cf31954fd65ea1d4835896027229707f7bd806a5fa05b3b2398358522a20
-  conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
 "@swc/helpers@npm:0.4.14":
   version: 0.4.14
   resolution: "@swc/helpers@npm:0.4.14"
@@ -300,7 +293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.27":
+"@types/react@npm:*":
   version: 18.0.27
   resolution: "@types/react@npm:18.0.27"
   dependencies:
@@ -308,6 +301,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 600fdbc39a92ea4a77047db3e12f05f67776a710f5918248c0189a59ac2a38900c9db5a5d2e433a16df528a3ecab1aa114b322cacea573bb1ca2fc0b094c52d1
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.0.28":
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
   languageName: node
   linkType: hard
 
@@ -1201,9 +1205,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.33.0":
-  version: 8.33.0
-  resolution: "eslint@npm:8.33.0"
+"eslint@npm:8.34.0":
+  version: 8.34.0
+  resolution: "eslint@npm:8.34.0"
   dependencies:
     "@eslint/eslintrc": ^1.4.1
     "@humanwhocodes/config-array": ^0.11.8
@@ -1246,7 +1250,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 727e63ab8b7acf281442323c5971f6afdd5b656fbcebc4476cf54e35af51b2f180617433fc5e1952f0449ca3f43a905527f9407ea4b8a7ea7562fc9c3f278d4c
+  checksum: 4e13e9eb05ac2248efbb6acae0b2325091235d5c47ba91a4775c7d6760778cbcd358a773ebd42f4629d2ad89e27c02f5d66eb1f737d75d9f5fc411454f83b2e5
   languageName: node
   linkType: hard
 
@@ -3215,12 +3219,12 @@ __metadata:
   resolution: "tenant-appointment-booker@workspace:packages/tenant-appointment-booker"
   dependencies:
     "@next/font": 13.1.6
+    "@next/swc-linux-x64-gnu": ^13.1.6
     "@next/swc-linux-x64-musl": ^13.1.6
-    "@swc/core-linux-x64-musl": ^1.3.35
     "@types/node": 18.13.0
-    "@types/react": 18.0.27
+    "@types/react": 18.0.28
     "@types/react-dom": 18.0.10
-    eslint: 8.33.0
+    eslint: 8.34.0
     eslint-config-next: 13.1.6
     next: 13.1.6
     react: 18.2.0
