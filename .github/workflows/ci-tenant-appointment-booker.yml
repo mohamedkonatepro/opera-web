@@ -27,3 +27,33 @@ jobs:
 
     - name: Build application
       run: yarn workspace tenant-appointment-booker build
+    
+  build-image:
+    name: Build image
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: rg.fr-par.scw.cloud/opera-groupe/opera-groupe-web
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=semver,enable=true,pattern={{version}}          
+          flavor: latest=false
+      - uses: docker/login-action@v2
+        with:
+          registry: rg.fr-par.scw.cloud/opera-groupe/
+          username: SCWEKRXFPETC99ZFZD5B
+          password: 0789751d-00b9-4dae-ae17-c48601f150b0
+      - name: api build
+        uses: int128/kaniko-action@v1
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          executor: gcr.io/kaniko-project/executor:latest
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          context: .
+          file: ./Dockerfile
+          cache: false
