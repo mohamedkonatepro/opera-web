@@ -81,4 +81,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         with: 
           args: |
-            helm upgrade -i web-tenant-appointment-booker "./deployment" --set image.tag=${{ steps.metadata.outputs.version }} --create-namespace --namespace=default
+            helm upgrade -i web-tenant-appointment-booker "./deployment" --set image.tag=${{ steps.metadata.outputs.version }} --create-namespace --namespace=opera-groupe-staging
