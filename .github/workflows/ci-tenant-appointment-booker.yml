@@ -22,13 +22,13 @@ jobs:
 
     - name: Install dependencies
       run: yarn workspace tenant-appointment-booker install
-      
+
     - name: Lint application
       run: yarn workspace tenant-appointment-booker lint
 
     - name: Build application
       run: yarn workspace tenant-appointment-booker build
-    
+
   build-image:
     name: Build image
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
           images: rg.fr-par.scw.cloud/opera-groupe/opera-groupe-web
           tags: |
             type=sha,prefix={{branch}}-
-            type=semver,enable=true,pattern={{version}}          
+            type=semver,enable=true,pattern={{version}}
           flavor: latest=false
       - uses: docker/login-action@v2
         with:
@@ -55,6 +55,8 @@ jobs:
           executor: gcr.io/kaniko-project/executor:latest
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+          build-args:
+            BASE_PATH="/tenant-appointment-booker"
           context: .
           file: ./Dockerfile
           cache: false
@@ -79,7 +81,7 @@ jobs:
         uses: wahyd4/kubectl-helm-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
-        with: 
+        with:
           args: |
             helm repo add opera-groupe https://opera-groupe.github.io/opera-groupe-helm/charts
             helm upgrade -i frontend-tenant-appointment-booker opera-groupe/frontend-tenant-appointment-booker --set image.tag=${{ steps.metadata.outputs.version }} --create-namespace --namespace=opera-groupe-staging

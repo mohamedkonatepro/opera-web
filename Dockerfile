@@ -8,6 +8,9 @@ COPY packages/tenant-appointment-booker/. ./packages/tenant-appointment-booker/
 
 RUN yarn workspaces focus tenant-appointment-booker
 
+ARG BASE_PATH
+ENV BASE_PATH $BASE_PATH
+
 RUN yarn b build
 
 FROM node:18-alpine AS runner
