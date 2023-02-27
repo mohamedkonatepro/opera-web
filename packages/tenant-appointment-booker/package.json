@@ -9,7 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.6",
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
+    "@next/font": "^13.2.1",
     "@next/swc-linux-x64-gnu": "^13.1.6",
     "@next/swc-linux-x64-musl": "^13.1.6",
     "@types/node": "18.13.0",

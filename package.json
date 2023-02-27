@@ -11,6 +11,7 @@
     "b": "yarn workspace tenant-appointment-booker"
   },
   "dependencies": {
+    "@fontsource/inter": "^4.5.15",
     "node-gyp": "^9.3.0"
   }
 }

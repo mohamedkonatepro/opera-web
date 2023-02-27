@@ -30,8 +30,6 @@ jobs:
           executor: gcr.io/kaniko-project/executor:latest
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
-          build-args:
-            BASE_PATH=/tenant-appointment-booker
           context: .
           file: ./Dockerfile
           cache: false
