@@ -1,34 +1,8 @@
-name: CI tenant appointment booker
+name: CD tenant appointment booker
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+on: [workflow_dispatch]
 
 jobs:
-  build:
-    name: Build lint
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18
-
-    - name: Install dependencies
-      run: yarn workspace tenant-appointment-booker install
-
-    - name: Lint application
-      run: yarn workspace tenant-appointment-booker lint
-
-    - name: Build application
-      run: yarn workspace tenant-appointment-booker build
-
   build-image:
     name: Build image
     runs-on: ubuntu-latest
