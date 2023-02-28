@@ -10,9 +10,7 @@ const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
     const { commercialName, familleLongue } = order
 
     return (
-        <>
-            <MeetingSummary commercialName={commercialName} familyLongName={familleLongue}/>
-        </>
+        <MeetingSummary commercialName={commercialName} familyLongName={familleLongue}/>
     )
 }
 

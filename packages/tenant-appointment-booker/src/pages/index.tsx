@@ -7,21 +7,30 @@ import mockOrder from '@/mocks/order'
 import { NextPageContext } from 'next'
 
 const getOperaOrder = async (orderId: string) => {
-    const res = await axios.get(process.env.NEXT_PUBLIC_SERVER_BASE_URL + `/api/old-order-order/${orderId}`)
+    const res = await axios.get(
+      process.env.NEXT_PUBLIC_SERVER_BASE_URL + `/api/opera-order/${orderId}`,
+      {
+        headers: {
+          // This is not the best way to do it.
+          // We should generate a magic link in the backend to authenticate the user with a proper JWT token and pass it here
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        }
+      }
+    )
     return res.data
 }
 
 export const getServerSideProps = async (context: NextPageContext) => {
-  const { orderId, appointmentBookingId } = context.query
+  const { oldOrderId, appointmentBookingId } = context.query
 
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({ queryKey: ['operaOrder', orderId], queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string) })
+  await queryClient.prefetchQuery({ queryKey: ['operaOrder', oldOrderId], queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string) })
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      operaOrderId: orderId,
+      operaOrderId: oldOrderId,
       appointmentBookingId: appointmentBookingId
     }
   }

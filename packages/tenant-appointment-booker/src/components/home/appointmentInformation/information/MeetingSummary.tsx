@@ -5,8 +5,7 @@ interface MeetingSummaryProps {
     familyLongName: string
 }
 
-const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = (props) => {
-    const { commercialName, familyLongName } = props
+const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = ({ commercialName, familyLongName }) => {
     return (
         <Box>
             <Stack spacing={0.5}>
