@@ -1,9 +1,41 @@
 import Head from 'next/head'
 import { Box, Divider, Paper, Stack } from '@mui/material'
 import AppointmentInformation from '@/components/home/appointmentInformation'
-// import SelectAppointment from '@/components/home/SelectAppointment'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import mockOrder from '@/mocks/order'
+import { NextPageContext } from 'next'
 
-export default function Home() {
+const getOperaOrder = async (orderId: string) => {
+    const res = await axios.get(process.env.NEXT_PUBLIC_SERVER_BASE_URL + `/api/old-order-order/${orderId}`)
+    return res.data
+}
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  const { orderId, appointmentBookingId } = context.query
+
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery({ queryKey: ['operaOrder', orderId], queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string) })
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      operaOrderId: orderId,
+      appointmentBookingId: appointmentBookingId
+    }
+  }
+}
+
+const Home = ({ operaOrderId }: { operaOrderId: string }) => {
+
+  const { data } = useQuery({
+    queryKey: ['operaOrder', operaOrderId],
+    queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string)
+  })
+
+  const order = data?.order || mockOrder
+
   return (
     <>
       <Head>
@@ -13,14 +45,15 @@ export default function Home() {
       </Head>
       <Paper variant="outlined">
         <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={3}>
-          <Box width="60%" p={3} pr={0}>
-            <AppointmentInformation />
-          </Box>
-          <Box p={3} pl={0} width="40%">
-            Select appointment
+          <Box m={3} mr={0}>
+            <Box width={540}>
+              <AppointmentInformation order={order} />
+            </Box>
           </Box>
         </Stack>
       </Paper>
     </>
   )
 }
+
+export default Home

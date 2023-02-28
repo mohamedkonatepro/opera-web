@@ -37,6 +37,11 @@ const theme = createTheme({
       main: '#E63946',
       light: '#FCEBEC'
     },
+    text: {
+      primary: '#1A1A1A',
+      secondary: '#666666',
+      disabled: '#ADADAD',
+    }
   },
   typography: {
     fontFamily: inter.style.fontFamily,

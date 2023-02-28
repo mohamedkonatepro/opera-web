@@ -1,9 +1,17 @@
+import Order from "@/types/order"
 import MeetingSummary from "./MeetingSummary"
 
-const Information = () => {
+interface InformationProps {
+    order: Order
+}
+
+const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
+
+    const { commercialName, familleLongue } = order
+
     return (
         <>
-            <MeetingSummary />
+            <MeetingSummary commercialName={commercialName} familyLongName={familleLongue}/>
         </>
     )
 }

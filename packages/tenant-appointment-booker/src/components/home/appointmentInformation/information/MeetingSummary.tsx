@@ -1,9 +1,22 @@
-import { Box } from "@mui/material"
+import { Box, Stack, Typography } from "@mui/material"
 
-const MeetingSummary = () => {
+interface MeetingSummaryProps {
+    commercialName: string
+    familyLongName: string
+}
+
+const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = (props) => {
+    const { commercialName, familyLongName } = props
     return (
         <Box>
-            Meeting Summary
+            <Stack spacing={0.5}>
+                <Typography variant="body2" color="secondary">{commercialName}</Typography>
+                <Typography variant="h5">Rendez-vous pour votre {familyLongName}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Prenez rendez-vous pour établir votre {familyLongName}.
+                    Choisissez la date et le créneau qui vous conviennent le mieux.
+                </Typography>
+            </Stack>
         </Box>
     )
 }
