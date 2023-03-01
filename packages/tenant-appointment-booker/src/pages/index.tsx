@@ -1,10 +1,11 @@
-import Head from "next/head";
-import { Box, Divider, Paper, Stack } from "@mui/material";
-import AppointmentInformation from "@/components/home/appointmentInformation";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import mockOrder from "@/mocks/order";
-import { NextPageContext } from "next";
+import Head from 'next/head'
+import { Box, Divider, Paper, Stack } from '@mui/material'
+import AppointmentInformation from '@/components/home/appointmentInformation'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import mockOrder from '@/mocks/order'
+import { NextPageContext } from 'next'
+import SelectAppointment from '@/components/home/selectAppointment'
 
 const getOperaOrder = async (orderId: string) => {
   const res = await axios.get(
@@ -65,6 +66,13 @@ const Home = ({ operaOrderId }: { operaOrderId: string }) => {
               <AppointmentInformation order={order} />
             </Box>
           </Box>
+            <Box width={1}>
+              <Box m={3} ml={0}>
+                <Box width={356}>
+                  <SelectAppointment />
+                </Box>
+              </Box>
+            </Box>
         </Stack>
       </Paper>
     </>
