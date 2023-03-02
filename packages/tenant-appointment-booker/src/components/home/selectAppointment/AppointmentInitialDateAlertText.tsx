@@ -1,13 +1,25 @@
 import { Alert, Typography } from "@mui/material"
+import { DateTime } from "luxon"
+import EDLAppointmentDateAlert from "./EDLAppointmentDateAlert"
 
-const AppointmentInitialDateAlertText = () => {
-    return (
-        <Alert severity="info" variant="outlined" sx={{ backgroundColor: "#EEEDFC" }}>
-            <Typography variant="body2" fontWeight="500" color="text.primary">
-                L’état des lieux de sortie est initialement prévu le Mercredi 8 mars 2023.
-            </Typography>
-        </Alert>
-    )
+interface AppointmentInitialDateAlertTextProps {
+    desiredDateByContractor: DateTime
+    selectedDate: DateTime
+    orderType: string
+    orderFamily: string
+}
+
+const AppointmentInitialDateAlertText: React.FC<AppointmentInitialDateAlertTextProps> = ({
+    desiredDateByContractor,
+    selectedDate,
+    orderType,
+    orderFamily
+}) => {
+    if (orderFamily === "EDL") {
+        return <EDLAppointmentDateAlert desiredDateByContractor={desiredDateByContractor}  selectedDate={selectedDate} orderType={orderType} />
+    }
+
+    return null
 }
 
 export default AppointmentInitialDateAlertText

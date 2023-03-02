@@ -8,28 +8,20 @@ import { NextPageContext } from 'next'
 import SelectAppointment from '@/components/home/selectAppointment'
 
 const getOperaOrder = async (orderId: string) => {
-  const res = await axios.get(
-    process.env.NEXT_PUBLIC_SERVER_BASE_URL + `/api/opera-order/${orderId}`,
-    {
-      headers: {
-        // This is not the best way to do it.
-        // We should generate a magic link in the backend to authenticate the user with a proper JWT token and pass it here
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
-      },
-    }
-  );
-  return res.data;
-};
+  try {
+    const response = await axios(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { oldOrderId, appointmentBookingId } = context.query;
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["operaOrder", oldOrderId],
-    queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
-  });
+  await queryClient.fetchQuery({ queryKey: ['operaOrder', oldOrderId], queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string) })
 
   return {
     props: {
@@ -69,7 +61,7 @@ const Home = ({ operaOrderId }: { operaOrderId: string }) => {
             <Box width={1}>
               <Box m={3} ml={0}>
                 <Box width={356}>
-                  <SelectAppointment />
+                  <SelectAppointment order={order} />
                 </Box>
               </Box>
             </Box>
