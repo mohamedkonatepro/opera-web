@@ -42,7 +42,7 @@ const SelectAppointmentDayCalendar: React.FC<SelectAppointmentDayCalendarProps> 
 
     return (
         <Stack spacing={1.5}>
-            <Typography variant="body1">Mars, 2023</Typography>
+            <Typography variant="body1">{desiredDateByContractor.toFormat('LLLL, yyyy')}</Typography>
             <Stack direction="row" spacing={1} justifyContent="space-between">
                 {items.map(({ page, type, disabled, ...item }) => {
                     const currentPage: number = page as number

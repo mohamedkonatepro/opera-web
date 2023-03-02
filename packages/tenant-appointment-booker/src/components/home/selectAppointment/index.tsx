@@ -5,15 +5,26 @@ import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar"
 import { DateTime } from 'luxon'
 import { useState } from "react"
 import Slot from "@/types/slot"
+import { useMutation } from "@tanstack/react-query"
+import axios from "axios"
 
 interface SelectAppointmentProps {
     order: Order
+    appointmentBookingId: string
 }
 
-const SelectAppointment: React.FC<SelectAppointmentProps> = ({ order }) => {
+const SelectAppointment: React.FC<SelectAppointmentProps> = ({ order, appointmentBookingId }) => {
 
     const [selectedDate, setSelectedDate] = useState<DateTime>(DateTime.fromFormat(order.desiredDateByContractor, 'dd-MM-yyyy'))
     const [selectedSlot, setSelectedSlot] = useState<Slot>()
+
+    const mutation = useMutation({
+        mutationFn: ({ appointmentBookingId, selectedSlot }: { appointmentBookingId: string, selectedSlot: Slot }) => {
+          return axios.put(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`, {
+            selectedSlot
+          })
+        },
+      })
 
     const handleOnSelectDate = (date: DateTime) => {
         setSelectedDate(date)
@@ -25,8 +36,12 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({ order }) => {
     }
 
     const handleOnClickValidate = () => {
-        console.log('validate')
+        mutation.mutate({
+            appointmentBookingId,
+            selectedSlot: selectedSlot as Slot
+        })
     }
+
 
     const desiredDateByContractor = DateTime.fromFormat(order.desiredDateByContractor, 'dd-MM-yyyy')
     const minDate = DateTime.fromFormat(order.minimumDate, 'dd-MM-yyyy')

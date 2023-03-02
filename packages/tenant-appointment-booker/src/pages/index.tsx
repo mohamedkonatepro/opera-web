@@ -32,7 +32,8 @@ export const getServerSideProps = async (context: NextPageContext) => {
   };
 };
 
-const Home = ({ operaOrderId }: { operaOrderId: string }) => {
+const Home = ({ operaOrderId, appointmentBookingId }: { operaOrderId: string, appointmentBookingId: string }) => {
+
   const { data } = useQuery({
     queryKey: ["operaOrder", operaOrderId],
     queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
@@ -61,7 +62,7 @@ const Home = ({ operaOrderId }: { operaOrderId: string }) => {
             <Box width={1}>
               <Box m={3} ml={0}>
                 <Box width={356}>
-                  <SelectAppointment order={order} />
+                  <SelectAppointment order={order} appointmentBookingId={appointmentBookingId} />
                 </Box>
               </Box>
             </Box>
