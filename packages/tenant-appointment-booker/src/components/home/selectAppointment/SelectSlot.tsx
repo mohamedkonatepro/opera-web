@@ -16,7 +16,7 @@ interface SelectSlotProps {
 
 const getOperaSlots = async (orderId: string, selectedDate: DateTime) => {
     try {
-        const response = await axios.get(`/api/opera-slots?orderId=${orderId}&date=${selectedDate.toFormat('dd-MM-yyyy')}`)
+        const response = await axios.get(`/api/opera-slots?orderId=${orderId}&date=${selectedDate.toISODate()}`)
         return response.data
     }
     catch (error) {

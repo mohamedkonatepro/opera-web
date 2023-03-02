@@ -30,8 +30,8 @@ interface Order {
     commercialName: string;
     commercialPhoneNumber: string;
     desiredDateByContractor: string;
-    minimumDate: string;
-    maximumDate: string;
+    minimumDate?: string;
+    maximumDate?: string;
     locataires: {
         name: string;
         phoneNumber: string;

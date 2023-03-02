@@ -1,11 +1,9 @@
 import Holidays from "date-holidays"
 import { DateTime } from "luxon"
 
-export const isPaginationItemDisabled = (currentDate: DateTime, disabled: boolean, minDate?: DateTime, maxDate?: DateTime) => {
-    if (disabled) return true
-
-    if (minDate !== undefined && currentDate.day < minDate.day) return true
-    if (maxDate !== undefined && currentDate.day > maxDate.day) return true
+export const isItemDisabled = (currentDate: DateTime, minDate: DateTime, maxDate: DateTime) => {
+    if (currentDate < minDate) return true
+    if (currentDate > maxDate) return true
 
     if (currentDate.weekday === 7) return true
 
@@ -17,3 +15,8 @@ export const isPaginationItemDisabled = (currentDate: DateTime, disabled: boolea
     return false
 }
 
+export const datesAreSame = (date1: DateTime, date2: DateTime) => {
+    return date1.hasSame(date2, 'day') &&
+        date1.hasSame(date2, 'month') &&
+        date1.hasSame(date2, 'year')
+}

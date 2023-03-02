@@ -1,18 +1,17 @@
-import { useState } from "react"
-import { Button, PaginationItem, Stack, Typography } from "@mui/material"
-import usePagination from "@mui/material/usePagination"
+import { IconButton, Stack, Typography } from "@mui/material"
 import { DateTime } from "luxon"
-import { isPaginationItemDisabled } from "./utils"
 import SelectSlot from "./SelectSlot"
 import Slot from "@/types/slot"
+import { ChevronLeft, ChevronRight } from "@mui/icons-material"
+import useDaysPagination from "./hooks/useDaysPagination"
 
 interface SelectAppointmentDayCalendarProps {
     orderId: string
     desiredDateByContractor: DateTime
     selectedDate: DateTime
     selectedSlot?: Slot
-    minDate?: DateTime
-    maxDate?: DateTime
+    minDate: DateTime
+    maxDate: DateTime
     onSelectSlot: (slot: Slot) => void
     onSelectDate: (date: DateTime) => void
 }
@@ -29,41 +28,69 @@ const SelectAppointmentDayCalendar: React.FC<SelectAppointmentDayCalendarProps> 
         onSelectSlot
     } = props
 
-    const { items } = usePagination({
-        count: desiredDateByContractor.daysInMonth,
-        siblingCount: 2,
-        boundaryCount: 0,
-        defaultPage: desiredDateByContractor.day,
-    })
+    const { items, onClickNext, onClickPrevious } = useDaysPagination(
+        desiredDateByContractor,
+        minDate,
+        maxDate,
+        selectedDate
+    )
 
-    const handleOnClickPage = (page: number) => {
-        onSelectDate(DateTime.fromObject({ ...selectedDate.toObject(), day: page }))
+    const handleOnClickPage = (page: DateTime) => {
+        onSelectDate(page)
     }
 
     return (
         <Stack spacing={1.5}>
-            <Typography variant="body1">{desiredDateByContractor.toFormat('LLLL, yyyy')}</Typography>
+            <Typography variant="body1">{selectedDate.toFormat('LLLL, yyyy')}</Typography>
             <Stack direction="row" spacing={1} justifyContent="space-between">
-                {items.map(({ page, type, disabled, ...item }) => {
-                    const currentPage: number = page as number
-                    const key = `${type}-${currentPage}`
+                {items.map(({ page, type, selected, disabled }) => {
                     switch (type) {
                         case "page": {
-                            const currentDate = DateTime.local(selectedDate.year, selectedDate.month, currentPage)
-                            const isDisabled = isPaginationItemDisabled(currentDate, disabled, minDate, maxDate)
+                            const currentDate = page as DateTime
+
                             return (
-                                <PaginationItem
-                                    key={key}
-                                    disabled={isDisabled}
+                                <IconButton
                                     color="secondary"
-                                    page={page?.toString().padStart(2, '0')}
-                                    selected={currentPage === selectedDate.day}
-                                    onClick={() => handleOnClickPage(currentPage)}
-                                />
+                                    disabled={disabled}
+                                    onClick={() => handleOnClickPage(currentDate)}
+                                    sx={{
+                                        width: 40,
+                                        height: 40,
+                                        backgroundColor: selected ? 'secondary.main' : 'secondary.light',
+                                        color: selected ? 'common.white' : 'secondary',
+                                        typography: 'body2',
+                                        fontWeight: '500',
+                                        '&:hover': {
+                                            backgroundColor: selected ? 'secondary.main' : 'secondary.light',
+                                        },
+
+                                    }}
+                                >
+                                    {currentDate.toFormat('dd')}
+                                </IconButton>
                             )
                         }
-                        case "next": case "previous": {
-                            return <PaginationItem {...item} key={key} type={type} page={page} />
+                        case "next": {
+                            return (
+                                <IconButton
+                                    onClick={onClickNext}
+                                    disabled={disabled}
+                                    sx={{ width: 40, height: 40, backgroundColor: '#F4F4F4' }}
+                                >
+                                    <ChevronRight />
+                                </IconButton>
+                            )
+                        }
+                        case "previous": {
+                            return (
+                                <IconButton
+                                    onClick={onClickPrevious}
+                                    disabled={disabled}
+                                    sx={{ width: 40, height: 40, backgroundColor: '#F4F4F4' }}
+                                >
+                                    <ChevronLeft />
+                                </IconButton>
+                            )
                         }
                         default: {
                             return null

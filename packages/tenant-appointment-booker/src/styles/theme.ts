@@ -30,7 +30,8 @@ const theme = createTheme({
       main: "#EFA815",
     },
     secondary: {
-      main: "#5148E6",
+      light: "#EEEDFC",
+      main: '#5148E6',
     },
     info: {
       light: "#EEEDFC",

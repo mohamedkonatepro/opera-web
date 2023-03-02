@@ -15,7 +15,9 @@ interface SelectAppointmentProps {
 
 const SelectAppointment: React.FC<SelectAppointmentProps> = ({ order, appointmentBookingId }) => {
 
-    const [selectedDate, setSelectedDate] = useState<DateTime>(DateTime.fromFormat(order.desiredDateByContractor, 'dd-MM-yyyy'))
+    const desiredDateByContractor = DateTime.fromFormat(order.desiredDateByContractor, 'dd-MM-yyyy')
+
+    const [selectedDate, setSelectedDate] = useState<DateTime>(desiredDateByContractor)
     const [selectedSlot, setSelectedSlot] = useState<Slot>()
 
     const mutation = useMutation({
@@ -42,10 +44,8 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({ order, appointmen
         })
     }
 
-
-    const desiredDateByContractor = DateTime.fromFormat(order.desiredDateByContractor, 'dd-MM-yyyy')
-    const minDate = DateTime.fromFormat(order.minimumDate, 'dd-MM-yyyy')
-    const maxDate = DateTime.fromFormat(order.maximumDate, 'dd-MM-yyyy')
+    const minDate = order.minimumDate ? DateTime.fromFormat(order.minimumDate, 'dd-MM-yyyy') : desiredDateByContractor.minus({ months: 1 })
+    const maxDate = order.maximumDate ? DateTime.fromFormat(order.maximumDate, 'dd-MM-yyyy') : desiredDateByContractor.plus({ months: 1 })
 
     return (
         <Stack spacing={3}>
