@@ -1,17 +1,19 @@
-import Order from "@/types/order"
-import { Stack } from "@mui/material"
-import Information from "./information"
+import Order from "@/types/order";
+import { Stack } from "@mui/material";
+import Information from "./information";
 
 interface AppointmentInformationProps {
-    order: Order
+  order: Order;
 }
 
-const AppointmentInformation: React.FunctionComponent<AppointmentInformationProps> = ({ order }) => {
-    return (
-        <Stack>
-            <Information order={order} />
-        </Stack>
-    )
-}
+const AppointmentInformation: React.FunctionComponent<
+  AppointmentInformationProps
+> = ({ order }) => {
+  return (
+    <Stack>
+      <Information order={order} />
+    </Stack>
+  );
+};
 
-export default AppointmentInformation
+export default AppointmentInformation;
