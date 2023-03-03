@@ -12,9 +12,10 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import axios from "axios";
+import { Settings } from "luxon";
 
-// axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
+Settings.defaultLocale = "fr";
+Settings.defaultZone = "Europe/Paris";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

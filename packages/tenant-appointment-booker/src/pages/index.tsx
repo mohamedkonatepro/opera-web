@@ -5,19 +5,17 @@ import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import mockOrder from "@/mocks/order";
 import { NextPageContext } from "next";
+import SelectAppointment from "@/components/home/selectAppointment";
 
 const getOperaOrder = async (orderId: string) => {
-  const res = await axios.get(
-    process.env.NEXT_PUBLIC_SERVER_BASE_URL + `/api/opera-order/${orderId}`,
-    {
-      headers: {
-        // This is not the best way to do it.
-        // We should generate a magic link in the backend to authenticate the user with a proper JWT token and pass it here
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
-      },
-    }
-  );
-  return res.data;
+  try {
+    const response = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getServerSideProps = async (context: NextPageContext) => {
@@ -25,7 +23,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
+  await queryClient.fetchQuery({
     queryKey: ["operaOrder", oldOrderId],
     queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
   });
@@ -39,7 +37,13 @@ export const getServerSideProps = async (context: NextPageContext) => {
   };
 };
 
-const Home = ({ operaOrderId }: { operaOrderId: string }) => {
+const Home = ({
+  operaOrderId,
+  appointmentBookingId,
+}: {
+  operaOrderId: string;
+  appointmentBookingId: string;
+}) => {
   const { data } = useQuery({
     queryKey: ["operaOrder", operaOrderId],
     queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
@@ -63,6 +67,16 @@ const Home = ({ operaOrderId }: { operaOrderId: string }) => {
           <Box m={3} mr={0}>
             <Box width={540}>
               <AppointmentInformation order={order} />
+            </Box>
+          </Box>
+          <Box width={1}>
+            <Box m={3} ml={0}>
+              <Box width={356}>
+                <SelectAppointment
+                  order={order}
+                  appointmentBookingId={appointmentBookingId}
+                />
+              </Box>
             </Box>
           </Box>
         </Stack>

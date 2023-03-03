@@ -9,7 +9,7 @@ interface RealEstate {
   superficie: string;
   etage: string;
   code: string;
-  meuble: number;
+  meuble: boolean;
   cave: boolean;
   grenier: boolean;
   parking: boolean;
