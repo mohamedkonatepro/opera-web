@@ -59,6 +59,9 @@ const theme = createTheme({
       default: "rgba(11, 19, 36, 0.12)",
       bold: "#5148E6",
     },
+    background: {
+      default: "#F4F4F4",
+    },
   },
   typography: {
     fontFamily: inter.style.fontFamily,
