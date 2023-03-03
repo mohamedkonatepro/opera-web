@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import Document, {
   Html,
   Head,
@@ -6,11 +6,11 @@ import Document, {
   NextScript,
   DocumentProps,
   DocumentContext,
-} from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import theme, { inter } from '../styles/theme';
-import createEmotionCache from '../styles/createEmotionCache';
+} from "next/document";
+import createEmotionServer from "@emotion/server/create-instance";
+import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import theme, { inter } from "../styles/theme";
+import createEmotionCache from "../styles/createEmotionCache";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: EmotionJSX.Element[];
@@ -34,7 +34,6 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
 }
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-
   const originalRenderPage = ctx.renderPage;
   const cache = createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
@@ -51,7 +50,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style: any) => (
     <style
-      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      data-emotion={`${style.key} ${style.ids.join(" ")}`}
       key={style.key}
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
