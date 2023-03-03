@@ -1,5 +1,9 @@
 import Order from "@/types/order"
+import { Divider } from "@mui/material"
+import { Stack } from "@mui/system"
 import MeetingSummary from "./MeetingSummary"
+import RealEstateSummary from "./RealEstateSummary"
+import TenantSummary from "./TenantSummary"
 
 interface InformationProps {
     order: Order
@@ -7,10 +11,17 @@ interface InformationProps {
 
 const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
 
-    const { commercialName, familleLongue } = order
+    const { commercialName, familleLongue, bien, locataires } = order
+    const locataire = locataires.length == 1 ? locataires[0] : locataires[1]
 
     return (
-        <MeetingSummary commercialName={commercialName} familyLongName={familleLongue}/>
+        <>
+            <Stack direction="column" divider={<Divider orientation="horizontal" flexItem />} spacing={3}>
+                <MeetingSummary commercialName={commercialName} familyLongName={familleLongue}/>
+                <RealEstateSummary realEstate={bien}/>
+                <TenantSummary locataire={locataire}/>
+            </Stack>
+        </>
     )
 }
 

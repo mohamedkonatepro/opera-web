@@ -8,7 +8,7 @@ const order: Order = {
     "services": ["Etat des lieux de sortie"],
     "in_out":0,
     "address":"20 QUAI AUGAGNEUR, 69003 LYON",
-    "bien":{"Address":"20 QUAI AUGAGNEUR","Suite":"LE FRAGORYNOM IMMEUBLE","CP":"69003","Ville":"LYON","libelle":"Appartement","Type":"T","nbpiece":1,"superficie":"120","meuble":0,"cave":true,"grenier":false,"parking":true,"garage":true},
+    "bien":{"Address":"20 QUAI AUGAGNEUR","Suite":"LE FRAGORYNOM IMMEUBLE","CP":"69003","Ville":"LYON","libelle":"Appartement","Type":"T","nbpiece":1,"superficie":"120", "etage" : "3eme", "code" : "123", "meuble":0,"cave":true,"grenier":false,"parking":true,"garage":true},
     "commercialName":"REGIE TEST",
     "desiredDateByContractor":"23-03-2023",
     "minimumDate":"18-03-2023",
