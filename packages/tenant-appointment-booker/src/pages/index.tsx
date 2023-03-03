@@ -1,27 +1,32 @@
-import Head from 'next/head'
-import { Box, Divider, Paper, Stack } from '@mui/material'
-import AppointmentInformation from '@/components/home/appointmentInformation'
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import mockOrder from '@/mocks/order'
-import { NextPageContext } from 'next'
-import SelectAppointment from '@/components/home/selectAppointment'
+import Head from "next/head";
+import { Box, Divider, Paper, Stack } from "@mui/material";
+import AppointmentInformation from "@/components/home/appointmentInformation";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import mockOrder from "@/mocks/order";
+import { NextPageContext } from "next";
+import SelectAppointment from "@/components/home/selectAppointment";
 
 const getOperaOrder = async (orderId: string) => {
   try {
-    const response = await axios(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`)
-    return response.data
+    const response = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
+    );
+    return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { oldOrderId, appointmentBookingId } = context.query;
 
   const queryClient = new QueryClient();
 
-  await queryClient.fetchQuery({ queryKey: ['operaOrder', oldOrderId], queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string) })
+  await queryClient.fetchQuery({
+    queryKey: ["operaOrder", oldOrderId],
+    queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
+  });
 
   return {
     props: {
@@ -32,8 +37,13 @@ export const getServerSideProps = async (context: NextPageContext) => {
   };
 };
 
-const Home = ({ operaOrderId, appointmentBookingId }: { operaOrderId: string, appointmentBookingId: string }) => {
-
+const Home = ({
+  operaOrderId,
+  appointmentBookingId,
+}: {
+  operaOrderId: string;
+  appointmentBookingId: string;
+}) => {
   const { data } = useQuery({
     queryKey: ["operaOrder", operaOrderId],
     queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
@@ -59,13 +69,16 @@ const Home = ({ operaOrderId, appointmentBookingId }: { operaOrderId: string, ap
               <AppointmentInformation order={order} />
             </Box>
           </Box>
-            <Box width={1}>
-              <Box m={3} ml={0}>
-                <Box width={356}>
-                  <SelectAppointment order={order} appointmentBookingId={appointmentBookingId} />
-                </Box>
+          <Box width={1}>
+            <Box m={3} ml={0}>
+              <Box width={356}>
+                <SelectAppointment
+                  order={order}
+                  appointmentBookingId={appointmentBookingId}
+                />
               </Box>
             </Box>
+          </Box>
         </Stack>
       </Paper>
     </>

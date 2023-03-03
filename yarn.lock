@@ -3684,21 +3684,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
-  bin:
-    prettier: bin-prettier.js
-  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
-  languageName: node
-  linkType: hard
-
 "prepin@npm:^1.0.3":
   version: 1.0.3
   resolution: "prepin@npm:1.0.3"
   bin:
     prepin: ./bin/prepin.js
   checksum: b43f1e3b5f0d7da5e97ef707e6eebf44f88e54bbac7d87ad011c01e03f7e5ce40e02288c4df0d7853570aa3d492e10bb3c885502f9db99a905635c2f1733cd5c
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.8.4":
+  version: 2.8.4
+  resolution: "prettier@npm:2.8.4"
+  bin:
+    prettier: bin-prettier.js
+  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
   languageName: node
   linkType: hard
 

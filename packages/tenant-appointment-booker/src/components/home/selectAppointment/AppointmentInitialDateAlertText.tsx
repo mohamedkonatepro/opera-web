@@ -1,25 +1,27 @@
-import { Alert, Typography } from "@mui/material"
-import { DateTime } from "luxon"
-import EDLAppointmentDateAlert from "./EDLAppointmentDateAlert"
+import { DateTime } from "luxon";
+import EDLAppointmentDateAlert from "./EDLAppointmentDateAlert";
 
 interface AppointmentInitialDateAlertTextProps {
-    desiredDateByContractor: DateTime
-    selectedDate: DateTime
-    orderType: string
-    orderFamily: string
+  desiredDateByContractor: DateTime;
+  selectedDate: DateTime;
+  orderType: string;
+  orderFamily: string;
 }
 
-const AppointmentInitialDateAlertText: React.FC<AppointmentInitialDateAlertTextProps> = ({
-    desiredDateByContractor,
-    selectedDate,
-    orderType,
-    orderFamily
-}) => {
-    if (orderFamily === "EDL") {
-        return <EDLAppointmentDateAlert desiredDateByContractor={desiredDateByContractor}  selectedDate={selectedDate} orderType={orderType} />
-    }
+const AppointmentInitialDateAlertText: React.FC<
+  AppointmentInitialDateAlertTextProps
+> = ({ desiredDateByContractor, selectedDate, orderType, orderFamily }) => {
+  if (orderFamily === "EDL") {
+    return (
+      <EDLAppointmentDateAlert
+        desiredDateByContractor={desiredDateByContractor}
+        selectedDate={selectedDate}
+        orderType={orderType}
+      />
+    );
+  }
 
-    return null
-}
+  return null;
+};
 
-export default AppointmentInitialDateAlertText
+export default AppointmentInitialDateAlertText;
