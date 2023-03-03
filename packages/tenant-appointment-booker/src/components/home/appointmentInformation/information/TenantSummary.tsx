@@ -34,13 +34,11 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           <Typography variant="body2" color="text.secondary">
             Locataire
           </Typography>
-          {displayButton != "none" ? (
+          {displayButton != "none" && (
             <UnderlinedButton
               label="Modifier"
               handler={clickHandler}
             ></UnderlinedButton>
-          ) : (
-            NaN
           )}
         </Stack>
         <Typography
@@ -66,9 +64,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           display="flex"
         >
           <LocalPhoneOutlinedIcon sx={{ mr: 1.2 }} /> (+33){" "}
-          {locataire.phoneNumber
-            ? locataire.phoneNumber.replaceAll(".", " ")
-            : NaN}
+          {locataire.phoneNumber && locataire.phoneNumber.replaceAll(".", " ")}
         </Typography>
       </Stack>
     </Box>
