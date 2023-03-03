@@ -1,24 +1,15 @@
-import { Link } from "@mui/material";
+import { Link, LinkProps } from "@mui/material";
 
-interface ButtonProps {
-  label: string;
-  handler?: () => void;
-  lien?: string;
-  display?: string;
-}
-
-const UnderlinedButton: React.FunctionComponent<ButtonProps> = (props) => {
-  const { label, handler, lien, display } = props;
+const UnderlinedButton: React.FC<LinkProps> = (props) => {
+  const { children, onClick } = props;
   return (
     <Link
-      onClick={handler}
-      href={lien}
+      component="button"
       variant="body2"
       color="secondary"
-      display={display}
-      style={{ cursor: "pointer" }}
+      onClick={onClick}
     >
-      {label}
+      {children}
     </Link>
   );
 };

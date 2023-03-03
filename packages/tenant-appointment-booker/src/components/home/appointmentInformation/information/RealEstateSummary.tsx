@@ -20,26 +20,18 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   const { realEstate, displayButton } = props;
   return (
     <Box>
-      <Stack spacing={0.8}>
+      <Stack spacing={1.5}>
         <Stack
           direction="row"
-          spacing={0.2}
+          spacing={1}
           alignItems="center"
-          display="flex"
-          divider={
-            <Divider variant="inset" color="text.primary">
-              <FiberManualRecordIcon sx={{ width: 4, mt: 0.5 }} />
-            </Divider>
-          }
+          divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
         >
           <Typography variant="body2" color="text.secondary">
             Informations du bien
           </Typography>
           {displayButton != "none" && (
-            <UnderlinedButton
-              label="Modifier"
-              handler={clickHandler}
-            ></UnderlinedButton>
+            <UnderlinedButton onClick={clickHandler}>Modifier</UnderlinedButton>
           )}
         </Stack>
         <Typography
@@ -53,14 +45,10 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
         </Typography>
         <Stack
           direction="row"
-          spacing={0.2}
+          spacing={1}
           alignItems="center"
           display="flex"
-          divider={
-            <Divider variant="inset" color="text.primary">
-              <FiberManualRecordIcon sx={{ width: 4, mt: 0.5 }} />
-            </Divider>
-          }
+          divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
         >
           <Typography
             variant="body2"
