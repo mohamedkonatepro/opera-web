@@ -35,13 +35,11 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
           <Typography variant="body2" color="text.secondary">
             Informations du bien
           </Typography>
-          {displayButton != "none" ? (
+          {displayButton != "none" && (
             <UnderlinedButton
               label="Modifier"
               handler={clickHandler}
             ></UnderlinedButton>
-          ) : (
-            NaN
           )}
         </Stack>
         <Typography
@@ -77,13 +75,11 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
           <Typography variant="body2" color="text.primary">
             étage : {realEstate.etage}
           </Typography>
-          {realEstate.code ? (
+          {realEstate.code && (
             <Typography variant="body2" color="text.primary">
               {" "}
               code : {realEstate.code}
             </Typography>
-          ) : (
-            NaN
           )}
         </Stack>
       </Stack>

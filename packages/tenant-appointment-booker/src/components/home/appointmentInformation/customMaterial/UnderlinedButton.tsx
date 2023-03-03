@@ -1,25 +1,25 @@
-import { Button } from "@mui/material";
+import { Link } from "@mui/material";
 
 interface ButtonProps {
   label: string;
-  handler: () => void;
-  disabled?: boolean;
+  handler?: () => void;
+  lien?: string;
   display?: string;
 }
 
 const UnderlinedButton: React.FunctionComponent<ButtonProps> = (props) => {
-  const { label, handler, disabled, display } = props;
+  const { label, handler, lien, display } = props;
   return (
-    <Button
+    <Link
       onClick={handler}
-      variant="text"
+      href={lien}
+      variant="body2"
       color="secondary"
-      sx={{ textDecorationLine: "underline", textTransform: "none" }}
-      disabled={disabled}
-      style={{ display: display }}
+      display={display}
+      style={{ cursor: "pointer" }}
     >
       {label}
-    </Button>
+    </Link>
   );
 };
 

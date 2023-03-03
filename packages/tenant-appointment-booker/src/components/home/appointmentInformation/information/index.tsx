@@ -11,7 +11,7 @@ interface InformationProps {
 
 const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
   const { commercialName, familleLongue, bien, locataires } = order;
-  const locataire = locataires.length == 1 ? locataires[0] : locataires[1];
+  const locataire = locataires[0];
 
   return (
     <>
