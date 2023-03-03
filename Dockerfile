@@ -8,8 +8,7 @@ COPY packages/tenant-appointment-booker/. ./packages/tenant-appointment-booker/
 
 RUN yarn workspaces focus tenant-appointment-booker
 
-ARG BASE_PATH
-ENV BASE_PATH $BASE_PATH
+ENV NEXT_PUBLIC_SERVER_BASE_URL http://127.0.0.1:3000
 
 RUN yarn b build
 
