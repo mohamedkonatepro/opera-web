@@ -1,3 +1,4 @@
+import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import getConfig from "next/config";
@@ -6,6 +7,7 @@ const { serverRuntimeConfig } = getConfig();
 const { API_KEY, SERVER_BASE_URL } = serverRuntimeConfig;
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     const { orderId, date } = req.query;
 

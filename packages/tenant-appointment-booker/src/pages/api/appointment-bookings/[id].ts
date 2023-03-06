@@ -3,6 +3,7 @@ import axios from "axios";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
 import mockAppointment from "@/mocks/appointment";
+import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 
 const getAppointmentBooking = async (id: string, res: NextApiResponse) => {
   try {
@@ -53,6 +54,7 @@ const updateAppointmentBooking = async (
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res, cors);
   if (req.method === "PUT") {
     return updateAppointmentBooking(req.query.id as string, req.body, res);
   }

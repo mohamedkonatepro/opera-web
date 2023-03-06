@@ -1,8 +1,10 @@
+import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const getOperaOrder = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     const { id } = req.query;
     try {
