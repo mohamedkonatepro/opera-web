@@ -42,7 +42,15 @@ export default function MyApp(props: MyAppProps) {
             },
           }}
         />
-        <Container component="main" sx={{ mt: 12, mb: 2 }} fixed disableGutters>
+        <Container
+          component="main"
+          sx={{
+            mt: { sm: 0, md: 12 },
+            mb: { sm: 0, md: 2 },
+          }}
+          fixed
+          disableGutters
+        >
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <Component {...pageProps} />

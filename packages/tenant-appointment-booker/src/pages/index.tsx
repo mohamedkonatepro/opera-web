@@ -1,20 +1,16 @@
 import Head from "next/head";
-import { Box, Divider, Paper, Stack } from "@mui/material";
-import AppointmentInformation from "@/components/home/appointmentInformation";
+import { Box, Paper } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import mockOrder from "@/mocks/order";
 import { NextPageContext } from "next";
-import SelectAppointment from "@/components/home/selectAppointment";
-import getConfig from "next/config";
-
-const { publicRuntimeConfig } = getConfig();
-const { NEXT_PUBLIC_SERVER_BASE_URL } = publicRuntimeConfig;
+import AppointmentBookingDesktop from "@/components/home/desktop";
+import AppointmentBookingMobile from "@/components/home/mobile";
 
 const getOperaOrder = async (orderId: string) => {
   try {
     const response = await axios(
-      `${NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
     );
     return response.data;
   } catch (error) {
@@ -63,27 +59,18 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper variant="outlined">
-        <Stack
-          direction="row"
-          divider={<Divider orientation="vertical" flexItem />}
-          spacing={3}
-        >
-          <Box m={3} mr={0}>
-            <Box width={540}>
-              <AppointmentInformation order={order} />
-            </Box>
-          </Box>
-          <Box width={1}>
-            <Box m={3} ml={0}>
-              <Box width={356}>
-                <SelectAppointment
-                  order={order}
-                  appointmentBookingId={appointmentBookingId}
-                />
-              </Box>
-            </Box>
-          </Box>
-        </Stack>
+        <Box display={{ sm: "none", md: "block" }}>
+          <AppointmentBookingDesktop
+            order={order}
+            appointmentBookingId={appointmentBookingId}
+          />
+        </Box>
+        <Box display={{ sm: "block", md: "none" }}>
+          <AppointmentBookingMobile
+            order={order}
+            appointmentBookingId={appointmentBookingId}
+          />
+        </Box>
       </Paper>
     </>
   );
