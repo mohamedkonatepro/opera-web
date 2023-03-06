@@ -1,6 +1,11 @@
 import { Paper, Stack, Typography } from "@mui/material";
+import { DateTime } from "luxon";
 
-const AgendaView = () => {
+interface AgendaViewProps {
+  appointmentDatetime: DateTime;
+}
+
+const AgendaView: React.FC<AgendaViewProps> = ({ appointmentDatetime }) => {
   return (
     <Stack justifyContent="center" alignItems="center" spacing={0} width={80}>
       <Paper
@@ -18,7 +23,7 @@ const AgendaView = () => {
         }}
       >
         <Typography variant="body2" color="common.white" width={1}>
-          Mars
+          {appointmentDatetime.toFormat("LLLL")}
         </Typography>
       </Paper>
       <Paper
@@ -36,7 +41,7 @@ const AgendaView = () => {
         }}
       >
         <Typography variant="h5" color="secondary" fontWeight="500">
-          23
+          {appointmentDatetime.toFormat("dd")}
         </Typography>
       </Paper>
     </Stack>

@@ -39,7 +39,7 @@ export default function MyApp(props: MyAppProps) {
           styles={{
             body: {
               backgroundColor: "background.default",
-            }
+            },
           }}
         />
         <Container component="main" sx={{ mt: 12, mb: 2 }} fixed disableGutters>

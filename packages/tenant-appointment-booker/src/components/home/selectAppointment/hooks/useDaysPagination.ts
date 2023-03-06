@@ -8,7 +8,8 @@ const useDaysPagination = (
   initialDate: DateTime,
   minDate: DateTime,
   maxDate: DateTime,
-  selectedDate: DateTime
+  selectedDate: DateTime,
+  disabled: boolean
 ) => {
   const [halfDate, setHalfDate] = useState(initialDate);
 
@@ -41,13 +42,13 @@ const useDaysPagination = (
         page: undefined,
         type: "previous",
         selected: false,
-        disabled: datesAreSame(datesToShow[0], minDate),
+        disabled: disabled || datesAreSame(datesToShow[0], minDate),
       },
       ...datesToShow.map((date) => {
         return {
           page: date,
           type: "page",
-          disabled: isItemDisabled(date, minDate, maxDate),
+          disabled: disabled || isItemDisabled(date, minDate, maxDate),
           selected: datesAreSame(date, selectedDate),
         };
       }),
@@ -56,6 +57,7 @@ const useDaysPagination = (
         type: "next",
         selected: false,
         disabled:
+          disabled ||
           datesAreSame(datesToShow[datesToShow.length - 1], maxDate) ||
           datesAreSame(halfDate, maxDate),
       },

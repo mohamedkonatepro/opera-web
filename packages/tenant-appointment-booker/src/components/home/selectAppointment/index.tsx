@@ -7,20 +7,31 @@ import { useState } from "react";
 import Slot from "@/types/slot";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
-const { NEXT_PUBLIC_SERVER_BASE_URL } = publicRuntimeConfig
+import { useRouter } from "next/router";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
 }
 
+const updateAppointmentBooking = async ({
+  appointmentBookingId,
+  selectedSlot,
+}: {
+  appointmentBookingId: string;
+  selectedSlot: Slot;
+}) => {
+  return axios.put(
+    `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
+    { selectedSlot }
+  );
+};
 
 const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   order,
   appointmentBookingId,
 }) => {
+  const router = useRouter();
+
   const desiredDateByContractor = DateTime.fromFormat(
     order.desiredDateByContractor,
     "dd-MM-yyyy"
@@ -32,19 +43,9 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<Slot>();
 
   const mutation = useMutation({
-    mutationFn: ({
-      appointmentBookingId,
-      selectedSlot,
-    }: {
-      appointmentBookingId: string;
-      selectedSlot: Slot;
-    }) => {
-      return axios.put(
-        `${NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
-        {
-          selectedSlot,
-        }
-      );
+    mutationFn: updateAppointmentBooking,
+    onSuccess: () => {
+      router.push(`/appointment-summary/${appointmentBookingId}`);
     },
   });
 
@@ -85,6 +86,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
         onSelectDate={handleOnSelectDate}
         selectedDate={selectedDate}
         selectedSlot={selectedSlot}
+        disabled={mutation.isLoading}
       />
       <AppointmentInitialDateAlertText
         desiredDateByContractor={desiredDateByContractor}
@@ -96,7 +98,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
         variant="contained"
         color="secondary"
         onClick={handleOnClickValidate}
-        disabled={!selectedSlot}
+        disabled={!selectedSlot || mutation.isLoading}
       >
         {selectedDate && selectedSlot
           ? `Valider pour le ${selectedDate.toFormat("EEEE d LLLL")} à ${

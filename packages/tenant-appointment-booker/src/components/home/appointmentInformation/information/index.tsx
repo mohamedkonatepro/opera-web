@@ -2,8 +2,8 @@ import Order from "@/types/order";
 import { Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import MeetingSummary from "./MeetingSummary";
-import RealEstateSummary from "./RealEstateSummary";
-import TenantSummary from "./TenantSummary";
+import RealEstateSummary from "../../../common/RealEstateSummary";
+import TenantSummary from "../../../common/TenantSummary";
 
 interface InformationProps {
   order: Order;
@@ -24,8 +24,8 @@ const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
           commercialName={commercialName}
           familyLongName={familleLongue}
         />
-        <RealEstateSummary realEstate={bien} />
-        <TenantSummary locataire={locataire} />
+        <RealEstateSummary realEstate={bien} displayEditButton />
+        <TenantSummary locataire={locataire} displayEditButton />
       </Stack>
     </>
   );

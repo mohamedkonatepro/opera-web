@@ -1,5 +1,9 @@
 import { Inter } from "@next/font/google";
-import {  BreakpointsOptions, createTheme, PaletteOptions } from "@mui/material/styles";
+import {
+  BreakpointsOptions,
+  createTheme,
+  PaletteOptions,
+} from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export const inter = Inter({
@@ -25,7 +29,6 @@ declare module "@mui/material/styles" {
 }
 
 const defaultTheme = createTheme();
-
 
 const palette: PaletteOptions = {
   primary: {
@@ -64,18 +67,18 @@ const palette: PaletteOptions = {
   background: {
     default: "#F4F4F4",
   },
-}
+};
 
 const typography: TypographyOptions = {
   fontFamily: inter.style.fontFamily,
-}
+};
 
 const breakpoints: BreakpointsOptions = {
   values: {
     sm: 0,
     md: 992,
   },
-}
+};
 
 const components = {
   MuiList: {
@@ -92,26 +95,26 @@ const components = {
         "&:not(:last-child)": {
           marginBottom: defaultTheme.spacing(1.5),
         },
-      }
-    }
+      },
+    },
   },
   MuiListItemIcon: {
     styleOverrides: {
       root: {
         minWidth: 0,
         marginRight: defaultTheme.spacing(1.5),
-      }
-    }
+      },
+    },
   },
   MuiListItemText: {
     styleOverrides: {
       primary: {
         ...defaultTheme.typography.body2,
-        ...typography
-      }
-    }
-  }
-}
+        ...typography,
+      },
+    },
+  },
+};
 
 const theme = createTheme({
   palette,

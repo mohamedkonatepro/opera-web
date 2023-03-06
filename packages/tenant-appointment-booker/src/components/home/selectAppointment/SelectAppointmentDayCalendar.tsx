@@ -12,6 +12,7 @@ interface SelectAppointmentDayCalendarProps {
   selectedSlot?: Slot;
   minDate: DateTime;
   maxDate: DateTime;
+  disabled?: boolean;
   onSelectSlot: (slot: Slot) => void;
   onSelectDate: (date: DateTime) => void;
 }
@@ -26,6 +27,7 @@ const SelectAppointmentDayCalendar: React.FC<
     selectedDate,
     selectedSlot,
     desiredDateByContractor,
+    disabled = false,
     onSelectDate,
     onSelectSlot,
   } = props;
@@ -34,7 +36,8 @@ const SelectAppointmentDayCalendar: React.FC<
     desiredDateByContractor,
     minDate,
     maxDate,
-    selectedDate
+    selectedDate,
+    disabled
   );
 
   const handleOnClickPage = (page: DateTime) => {
@@ -116,6 +119,7 @@ const SelectAppointmentDayCalendar: React.FC<
         selectedSlot={selectedSlot}
         orderId={orderId}
         onSelectSlot={onSelectSlot}
+        disabled={disabled}
       />
     </Stack>
   );
