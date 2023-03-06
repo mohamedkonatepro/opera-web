@@ -1,18 +1,23 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import getConfig from "next/config";
+
+const { serverRuntimeConfig } = getConfig();
+const { API_KEY, SERVER_BASE_URL } = serverRuntimeConfig;
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "PUT") {
     const { id } = req.query;
     const { selectedSlot } = req.body;
     try {
       const response = await axios.put(
-        `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
+        `${SERVER_BASE_URL}/api/appointment-bookings/${id}`,
         {
           data: selectedSlot,
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
           },
         }
       );

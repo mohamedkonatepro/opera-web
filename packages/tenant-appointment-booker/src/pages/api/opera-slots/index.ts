@@ -1,5 +1,9 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import getConfig from "next/config";
+
+const { serverRuntimeConfig } = getConfig();
+const { API_KEY, SERVER_BASE_URL } = serverRuntimeConfig;
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
@@ -7,10 +11,10 @@ const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       const response = await axios.get(
-        `${process.env.SERVER_BASE_URL}/api/opera-slots/${orderId}/${date}`,
+        `${SERVER_BASE_URL}/api/opera-slots/${orderId}/${date}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
           },
         }
       );

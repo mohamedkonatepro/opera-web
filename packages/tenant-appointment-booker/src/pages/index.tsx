@@ -6,11 +6,15 @@ import axios from "axios";
 import mockOrder from "@/mocks/order";
 import { NextPageContext } from "next";
 import SelectAppointment from "@/components/home/selectAppointment";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_SERVER_BASE_URL } = publicRuntimeConfig;
 
 const getOperaOrder = async (orderId: string) => {
   try {
     const response = await axios(
-      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
+      `${NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
     );
     return response.data;
   } catch (error) {

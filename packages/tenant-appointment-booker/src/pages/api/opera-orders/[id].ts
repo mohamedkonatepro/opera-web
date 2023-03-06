@@ -1,14 +1,19 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import getConfig from "next/config";
+
+const { serverRuntimeConfig } = getConfig();
+const { API_KEY, SERVER_BASE_URL } = serverRuntimeConfig;
+
 const getOperaOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const { id } = req.query;
     try {
       const response = await axios.get(
-        `${process.env.SERVER_BASE_URL}/api/opera-order/${id}`,
+        `${SERVER_BASE_URL}/api/opera-order/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.API_KEY}`,
+            Authorization: `Bearer ${API_KEY}`,
           },
         }
       );

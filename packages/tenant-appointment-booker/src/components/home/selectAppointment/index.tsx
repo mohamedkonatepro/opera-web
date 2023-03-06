@@ -7,11 +7,15 @@ import { useState } from "react";
 import Slot from "@/types/slot";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import getConfig from 'next/config'
 
+const { publicRuntimeConfig } = getConfig()
+const { NEXT_PUBLIC_SERVER_BASE_URL } = publicRuntimeConfig
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
 }
+
 
 const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   order,
@@ -36,7 +40,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
       selectedSlot: Slot;
     }) => {
       return axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
+        `${NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
         {
           selectedSlot,
         }
