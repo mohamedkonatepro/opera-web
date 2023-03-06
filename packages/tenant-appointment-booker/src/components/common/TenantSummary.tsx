@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "../customMaterial/UnderlinedButton";
+import UnderlinedButton from "./customMaterial/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -8,7 +8,7 @@ import Tenant from "@/types/tenant";
 
 interface TenantSummaryProps {
   locataire: Tenant;
-  displayButton?: string;
+  displayEditButton?: boolean;
 }
 
 const clickHandler = () => {
@@ -16,7 +16,7 @@ const clickHandler = () => {
 };
 
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
-  const { locataire, displayButton } = props;
+  const { locataire, displayEditButton = false } = props;
   return (
     <Box>
       <Stack spacing={1.5}>
@@ -30,7 +30,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           <Typography variant="body2" color="text.secondary">
             Locataire
           </Typography>
-          {displayButton != "none" && (
+          {displayEditButton && (
             <UnderlinedButton onClick={clickHandler}>Modifier</UnderlinedButton>
           )}
         </Stack>

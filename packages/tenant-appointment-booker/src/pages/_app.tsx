@@ -38,7 +38,7 @@ export default function MyApp(props: MyAppProps) {
         <GlobalStyles
           styles={{
             body: {
-              backgroundColor: "#f4f4f4",
+              backgroundColor: "background.default",
             },
           }}
         />

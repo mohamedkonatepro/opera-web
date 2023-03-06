@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "../customMaterial/UnderlinedButton";
+import UnderlinedButton from "./customMaterial/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CottageOutlinedIcon from "@mui/icons-material/CottageOutlined";
@@ -7,7 +7,7 @@ import RealEstate from "@/types/realEstate";
 
 interface RealEstateSummaryProps {
   realEstate: RealEstate;
-  displayButton?: string;
+  displayEditButton?: boolean;
 }
 
 const clickHandler = () => {
@@ -17,7 +17,7 @@ const clickHandler = () => {
 const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   props
 ) => {
-  const { realEstate, displayButton } = props;
+  const { realEstate, displayEditButton = false } = props;
   return (
     <Box>
       <Stack spacing={1.5}>
@@ -30,7 +30,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
           <Typography variant="body2" color="text.secondary">
             Informations du bien
           </Typography>
-          {displayButton != "none" && (
+          {displayEditButton && (
             <UnderlinedButton onClick={clickHandler}>Modifier</UnderlinedButton>
           )}
         </Stack>

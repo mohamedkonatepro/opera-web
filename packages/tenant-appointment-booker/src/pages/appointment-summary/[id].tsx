@@ -1,0 +1,80 @@
+import AppointmentInformation from "@/components/appointment-summary/AppointmentInformation";
+import AppointmentModalities from "@/components/appointment-summary/AppointmentModalities";
+import RealEstateAndTenantInformation from "@/components/appointment-summary/RealEstateAndTenantInformation";
+import { Box, Divider, Paper, Stack } from "@mui/material";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { NextPageContext } from "next";
+import Head from "next/head";
+
+const getAppointmentBooking = async (appointmentBookingId: string) => {
+  try {
+    const response = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  const appointmentBookingId = ctx.query.id as string;
+  const queryClient = new QueryClient();
+
+  await queryClient.fetchQuery({
+    queryKey: ["appointmentBookings", appointmentBookingId],
+    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+  });
+
+  return {
+    props: {
+      appointmentBookingId,
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+const SummaryAppointment = ({
+  appointmentBookingId,
+}: {
+  appointmentBookingId: string;
+}) => {
+  const { isFetching, isLoading, isSuccess, data } = useQuery({
+    queryKey: ["appointmentBookings", appointmentBookingId],
+    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+  });
+
+  if (isFetching || isLoading || !isSuccess) return null;
+
+  if (!data) return null;
+
+  const appointmentBooking = data;
+
+  return (
+    <>
+      <Head>
+        <title>Confirmation RDV Locataire</title>
+        <meta name="description" content="Prise de RDV locataire" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Paper variant="outlined">
+        <Stack
+          divider={<Divider orientation="horizontal" flexItem />}
+          spacing={3}
+          p={3}
+        >
+          <AppointmentInformation
+            appointment={appointmentBooking.appointment}
+          />
+          <RealEstateAndTenantInformation
+            order={appointmentBooking.appointment.order}
+          />
+          <AppointmentModalities />
+        </Stack>
+      </Paper>
+    </>
+  );
+};
+
+export default SummaryAppointment;

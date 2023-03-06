@@ -10,13 +10,16 @@ interface SelectSlotProps {
   orderId: string;
   selectedDate: DateTime;
   selectedSlot?: Slot;
+  disabled?: boolean;
   onSelectSlot: (slot: Slot) => void;
 }
 
 const getOperaSlots = async (orderId: string, selectedDate: DateTime) => {
   try {
     const response = await axios.get(
-      `/api/opera-slots?orderId=${orderId}&date=${selectedDate.toISODate()}`
+      `${
+        process.env.NEXT_PUBLIC_SERVER_BASE_URL
+      }/api/opera-slots?orderId=${orderId}&date=${selectedDate.toISODate()}`
     );
     return response.data;
   } catch (error) {
@@ -29,6 +32,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   orderId,
   selectedSlot,
   onSelectSlot,
+  disabled,
 }) => {
   const { isFetching, isLoading, isSuccess, data } = useQuery<Slot[]>({
     queryKey: ["operaSlots", orderId, selectedDate],
@@ -62,6 +66,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
         <Grid sm={6} key={slot.stamp}>
           <Button
             variant="outlined"
+            disabled={disabled}
             color={selectedSlot?.stamp === slot.stamp ? "secondary" : "inherit"}
             sx={{
               borderColor:
