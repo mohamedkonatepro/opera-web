@@ -16,7 +16,7 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
   const appointmentDatetime = DateTime.fromISO(slot.datetime);
 
   return (
-    <Stack direction="row" spacing={3}>
+    <Stack direction={{ sm: "column", md: "row" }} spacing={3}>
       <AgendaView appointmentDatetime={appointmentDatetime} />
       <Stack spacing={0.5}>
         <Stack direction="row" spacing={0.5} alignItems="center">
