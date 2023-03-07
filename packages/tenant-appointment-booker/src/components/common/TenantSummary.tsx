@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "../customMaterial/UnderlinedButton";
+import UnderlinedButton from "@/components/common/customMaterial/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -8,7 +8,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 import Tenant from "@/types/tenant";
 import { useState } from "react";
-import CustomDialog, { DialogType } from "../customMaterial/CustomDialog";
+import CustomDialog, { DialogType } from "@/components/common/customMaterial/CustomDialog";
 import TextField from "@mui/material/TextField";
 
 interface TenantSummaryProps {

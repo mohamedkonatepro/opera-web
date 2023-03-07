@@ -1,11 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "../customMaterial/UnderlinedButton";
+import UnderlinedButton from "@/components/common/customMaterial/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CottageOutlinedIcon from "@mui/icons-material/CottageOutlined";
 import RealEstate from "@/types/realEstate";
 import { useState } from "react";
-import CustomDialog, { DialogType } from "../customMaterial/CustomDialog";
+import CustomDialog, { DialogType } from "@/components/common/customMaterial/CustomDialog";
 import TextField from "@mui/material/TextField";
 
 interface RealEstateSummaryProps {
@@ -56,7 +56,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
       <Stack spacing={0.5}>
         <Typography variant="h6">Modifier les informations du bien</Typography>
         <Typography variant="body2" color="text.secondary">
-          Modifier l'adresse, le type de bien, l'étage ou le digicode.
+          Modifier l&apos;adresse, le type de bien, l&apos;étage ou le digicode.
         </Typography>
       </Stack>
       <Stack sx={{ mt: 3 }}>
