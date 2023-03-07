@@ -10,10 +10,10 @@ import getAppointmentBooking from "@/queries/getAppointmentBooking";
 export const getServerSideProps = async (context: NextPageContext) => {
   const { oldOrderId, appointmentBookingId } = context.query;
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } }});
 
   await queryClient.fetchQuery({
-    queryKey: ["appointmentBooking", appointmentBookingId],
+    queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
   });
 

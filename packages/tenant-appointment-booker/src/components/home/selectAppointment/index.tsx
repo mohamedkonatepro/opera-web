@@ -5,9 +5,10 @@ import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import Slot from "@/types/slot";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
@@ -32,6 +33,8 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
 }) => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const desiredDateByContractor = DateTime.fromISO(order.desiredDateByContractor);
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
@@ -44,6 +47,15 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   const triggerErrorDialog = () => {
     setErrorDialogOpened(!errorDialogOpened);
   };
+
+  const onCloseErrorDialog = () => {
+    triggerErrorDialog()
+    queryClient.invalidateQueries({
+      queryKey: ["operaSlots", order.orderId, selectedDate],
+      exact: true,
+    })
+  }
+
 
   const mutation = useMutation({
     mutationFn: updateAppointmentBooking,
@@ -116,15 +128,12 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           : `Valider`}
       </Button>
     </Stack>
-    <Dialog open={errorDialogOpened} onClose={triggerErrorDialog} maxWidth="md">
-        <DialogTitle>Erreur</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <Typography variant="body1" fontWeight="500" color="text.primary">Le créneau choisi est indisponible</Typography>
-            <Typography variant="body2">Le créneau choisi n’est plus disponible. Veuillez en choisir un autre. </Typography>
-          </DialogContentText>
-        </DialogContent>
-    </Dialog>
+    <ErrorDialog
+      open={errorDialogOpened}
+      onClose={onCloseErrorDialog}
+      title="Le créneau choisi est indisponible"
+      text="Le créneau choisi n’est plus disponible. Veuillez en choisir un autre."
+    />
     </div>
   );
 };
