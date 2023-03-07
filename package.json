@@ -11,6 +11,7 @@
     "b": "yarn workspace tenant-appointment-booker"
   },
   "dependencies": {
-    "node-gyp": "^9.3.0"
+    "node-gyp": "^9.3.0",
+    "react-phone-input-2": "^2.15.1"
   }
 }
