@@ -34,7 +34,7 @@ const Home = ({
   appointmentBookingId: string;
 }) => {
   const { data, isFetching, isLoading, isSuccess } = useQuery({
-    queryKey: ["appointmentBooking", appointmentBookingId],
+    queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
   });
 

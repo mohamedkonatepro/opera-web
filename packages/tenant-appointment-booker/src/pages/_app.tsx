@@ -13,6 +13,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { Settings } from "luxon";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 Settings.defaultLocale = "fr";
 Settings.defaultZone = "Europe/Paris";
@@ -55,6 +56,7 @@ export default function MyApp(props: MyAppProps) {
             <Hydrate state={pageProps.dehydratedState}>
               <Component {...pageProps} />
             </Hydrate>
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </Container>
       </ThemeProvider>
