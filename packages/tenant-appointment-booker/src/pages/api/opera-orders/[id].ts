@@ -7,6 +7,7 @@ const getOperaOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     const { id } = req.query;
+
     try {
       const response = await axios.get(
         `${process.env.SERVER_BASE_URL}/api/opera-order/${id}`,

@@ -1,22 +1,11 @@
 import AppointmentInformation from "@/components/appointment-summary/AppointmentInformation";
 import AppointmentModalities from "@/components/appointment-summary/AppointmentModalities";
 import RealEstateAndTenantInformation from "@/components/appointment-summary/RealEstateAndTenantInformation";
-import { Box, Divider, Paper, Stack } from "@mui/material";
+import getAppointmentBooking from "@/queries/getAppointmentBooking";
+import { Divider, Paper, Stack } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { NextPageContext } from "next";
 import Head from "next/head";
-
-const getAppointmentBooking = async (appointmentBookingId: string) => {
-  try {
-    const response = await axios(
-      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;

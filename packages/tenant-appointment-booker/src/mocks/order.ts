@@ -26,11 +26,11 @@ const order: Order = {
     parking: true,
     garage: true,
   },
-  commercialName: "REGIE TEST",
+  commercialName: "REGIE TESTDDDD",
   commercialPhoneNumber: "04 37 65 16 16",
-  desiredDateByContractor: "23-03-2023",
-  minimumDate: "18-03-2023",
-  maximumDate: "23-03-2023",
+  desiredDateByContractor: "2023-03-23",
+  minimumDate: "2023-03-18",
+  maximumDate: "2023-03-23",
   locataires: [
     {
       name: "MR DUCROS",

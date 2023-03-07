@@ -1,10 +1,7 @@
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
+import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import getConfig from "next/config";
-
-const { serverRuntimeConfig } = getConfig();
-const { API_KEY, SERVER_BASE_URL } = serverRuntimeConfig;
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
@@ -13,12 +10,8 @@ const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       const response = await axios.get(
-        `${SERVER_BASE_URL}/api/opera-slots/${orderId}/${date}`,
-        {
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-          },
-        }
+        `${process.env.SERVER_BASE_URL}/api/opera-slots/${orderId}/${date}`,
+        getAxiosOptions()
       );
       const slots = response.data;
       res.status(200).json(slots);

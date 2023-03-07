@@ -1,22 +1,11 @@
 import Head from "next/head";
 import { Box, Paper } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import mockOrder from "@/mocks/order";
 import { NextPageContext } from "next";
 import AppointmentBookingDesktop from "@/components/home/desktop";
 import AppointmentBookingMobile from "@/components/home/mobile";
-
-const getOperaOrder = async (orderId: string) => {
-  try {
-    const response = await axios(
-      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/opera-orders/${orderId}`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+import getAppointmentBooking from "@/queries/getAppointmentBooking";
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { oldOrderId, appointmentBookingId } = context.query;
@@ -24,8 +13,8 @@ export const getServerSideProps = async (context: NextPageContext) => {
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery({
-    queryKey: ["operaOrder", oldOrderId],
-    queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
+    queryKey: ["appointmentBooking", appointmentBookingId],
+    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
   });
 
   return {
@@ -44,12 +33,17 @@ const Home = ({
   operaOrderId: string;
   appointmentBookingId: string;
 }) => {
-  const { data } = useQuery({
-    queryKey: ["operaOrder", operaOrderId],
-    queryFn: ({ queryKey }) => getOperaOrder(queryKey[1] as string),
+  const { data, isFetching, isLoading, isSuccess } = useQuery({
+    queryKey: ["appointmentBooking", appointmentBookingId],
+    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
   });
 
-  const order = data?.order || mockOrder;
+  if (isFetching || isLoading || !isSuccess) return null;
+
+  if (!data) return null;
+
+  const appointmentBooking = data
+  const order = !appointmentBooking.order && process.env.NODE_ENV === "development" ? mockOrder : appointmentBooking.order;
 
   return (
     <>

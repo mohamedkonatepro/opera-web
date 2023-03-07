@@ -32,10 +32,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
 }) => {
   const router = useRouter();
 
-  const desiredDateByContractor = DateTime.fromFormat(
-    order.desiredDateByContractor,
-    "dd-MM-yyyy"
-  );
+  const desiredDateByContractor = DateTime.fromISO(order.desiredDateByContractor);
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
     desiredDateByContractor
@@ -66,10 +63,10 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   };
 
   const minDate = order.minimumDate
-    ? DateTime.fromFormat(order.minimumDate, "dd-MM-yyyy")
+    ? DateTime.fromISO(order.minimumDate)
     : desiredDateByContractor.minus({ months: 1 });
   const maxDate = order.maximumDate
-    ? DateTime.fromFormat(order.maximumDate, "dd-MM-yyyy")
+    ? DateTime.fromISO(order.maximumDate)
     : desiredDateByContractor.plus({ months: 1 });
 
   return (

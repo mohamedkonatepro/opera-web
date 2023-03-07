@@ -16,6 +16,12 @@ const getAppointmentBooking = async (id: string, res: NextApiResponse) => {
       ...response.data.data.attributes,
     };
 
+    const order = await axios.get(
+      `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
+      getAxiosOptions()
+    );
+    appointmentBooking.order = order.data;
+
     if (appointmentBooking.appointment_id !== null) {
       const appointmentResponse = await axios.get(
         `${process.env.SERVER_BASE_URL}/api/opera-appointments/${appointmentBooking.appointment_id}`,
