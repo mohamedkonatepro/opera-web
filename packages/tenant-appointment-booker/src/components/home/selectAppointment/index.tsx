@@ -1,13 +1,14 @@
 import Order from "@/types/order";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Stack, Typography } from "@mui/material";
 import AppointmentInitialDateAlertText from "./AppointmentInitialDateAlertText";
 import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import Slot from "@/types/slot";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
@@ -32,6 +33,8 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
 }) => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const desiredDateByContractor = DateTime.fromISO(order.desiredDateByContractor);
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
@@ -39,11 +42,31 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   );
   const [selectedSlot, setSelectedSlot] = useState<Slot>();
 
+  const [errorDialogOpened, setErrorDialogOpened] = useState<boolean>(false);
+
+  const triggerErrorDialog = () => {
+    setErrorDialogOpened(!errorDialogOpened);
+  };
+
+  const onCloseErrorDialog = () => {
+    triggerErrorDialog()
+    queryClient.invalidateQueries({
+      queryKey: ["operaSlots", order.orderId, selectedDate],
+      exact: true,
+    })
+  }
+
+
   const mutation = useMutation({
     mutationFn: updateAppointmentBooking,
     onSuccess: () => {
       router.push(`/appointment-summary/${appointmentBookingId}`);
     },
+    onError: (error: any) => {
+      if (error.response.status === 409) {
+        triggerErrorDialog();
+      }
+    }
   });
 
   const handleOnSelectDate = (date: DateTime) => {
@@ -70,6 +93,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     : desiredDateByContractor.plus({ months: 1 });
 
   return (
+    <div>
     <Stack spacing={3}>
       <Typography variant="body1" fontWeight="500">
         Choisissez une date et une heure
@@ -104,6 +128,13 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           : `Valider`}
       </Button>
     </Stack>
+    <ErrorDialog
+      open={errorDialogOpened}
+      onClose={onCloseErrorDialog}
+      title="Le créneau choisi est indisponible"
+      text="Le créneau choisi n’est plus disponible. Veuillez en choisir un autre."
+    />
+    </div>
   );
 };
 

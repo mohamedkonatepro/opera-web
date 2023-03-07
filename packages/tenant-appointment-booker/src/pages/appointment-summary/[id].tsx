@@ -9,7 +9,7 @@ import Head from "next/head";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
   await queryClient.fetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
