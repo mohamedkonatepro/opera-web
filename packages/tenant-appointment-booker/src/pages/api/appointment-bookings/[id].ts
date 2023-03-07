@@ -54,8 +54,13 @@ const updateAppointmentBooking = async (
     const order = response.data;
     res.status(200).json(order);
   } catch (error: any) {
-    console.error(error);
-    res.status(error.response.status).json(error.response.data);
+    if (error.response) {
+      res.status(error.response.status).json(error.response.data);
+    } else if (error.request) {
+      res.status(500).json({ error: "No response from server" });
+    } else {
+      res.status(500).json({ error: "Unknown error" });
+    }
   }
 };
 

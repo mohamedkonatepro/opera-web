@@ -1,5 +1,5 @@
 import Order from "@/types/order";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Stack, Typography } from "@mui/material";
 import AppointmentInitialDateAlertText from "./AppointmentInitialDateAlertText";
 import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar";
 import { DateTime } from "luxon";
@@ -39,11 +39,22 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   );
   const [selectedSlot, setSelectedSlot] = useState<Slot>();
 
+  const [errorDialogOpened, setErrorDialogOpened] = useState<boolean>(false);
+
+  const triggerErrorDialog = () => {
+    setErrorDialogOpened(!errorDialogOpened);
+  };
+
   const mutation = useMutation({
     mutationFn: updateAppointmentBooking,
     onSuccess: () => {
       router.push(`/appointment-summary/${appointmentBookingId}`);
     },
+    onError: (error: any) => {
+      if (error.response.status === 409) {
+        triggerErrorDialog();
+      }
+    }
   });
 
   const handleOnSelectDate = (date: DateTime) => {
@@ -70,6 +81,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     : desiredDateByContractor.plus({ months: 1 });
 
   return (
+    <div>
     <Stack spacing={3}>
       <Typography variant="body1" fontWeight="500">
         Choisissez une date et une heure
@@ -104,6 +116,16 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           : `Valider`}
       </Button>
     </Stack>
+    <Dialog open={errorDialogOpened} onClose={triggerErrorDialog} maxWidth="md">
+        <DialogTitle>Erreur</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Typography variant="body1" fontWeight="500" color="text.primary">Le créneau choisi est indisponible</Typography>
+            <Typography variant="body2">Le créneau choisi n’est plus disponible. Veuillez en choisir un autre. </Typography>
+          </DialogContentText>
+        </DialogContent>
+    </Dialog>
+    </div>
   );
 };
 
