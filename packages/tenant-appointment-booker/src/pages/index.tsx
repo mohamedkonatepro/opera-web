@@ -41,7 +41,7 @@ const Home = ({
   if (!data) return null;
 
   const appointmentBooking = data
-  const order = !appointmentBooking.order && process.env.NODE_ENV === "development" ? mockOrder : appointmentBooking.order;
+  const order = appointmentBooking.order;
 
   return (
     <>

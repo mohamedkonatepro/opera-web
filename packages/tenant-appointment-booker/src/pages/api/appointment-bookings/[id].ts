@@ -31,8 +31,6 @@ export const getAppointmentBooking = async (id: string) => {
       );
       const appointment = appointmentResponse.data;
       appointmentBooking.appointment = appointment.data;
-    } else if (process.env.NODE_ENV === "development") {
-      appointmentBooking.appointment = mockAppointment;
     }
 
     return appointmentBooking;
