@@ -1,11 +1,12 @@
 import AppointmentInformation from "@/components/appointment-summary/AppointmentInformation";
 import AppointmentModalities from "@/components/appointment-summary/AppointmentModalities";
 import RealEstateAndTenantInformation from "@/components/appointment-summary/RealEstateAndTenantInformation";
-import getAppointmentBooking from "@/queries/getAppointmentBooking";
 import { Divider, Paper, Stack } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPageContext } from "next";
 import Head from "next/head";
+import * as appointmentBookingApi from "@/pages/api/appointment-bookings/[id]";
+import * as appointmentBookingClient from "@/queries/appointmentBookings";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
@@ -13,7 +14,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 
   await queryClient.fetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) => appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
   return {
@@ -31,7 +32,7 @@ const SummaryAppointment = ({
 }) => {
   const { isFetching, isLoading, isSuccess, data } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
   });
 
   if (isFetching || isLoading || !isSuccess) return null;

@@ -9,23 +9,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
 import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
+import { updateAppointmentBooking } from "@/queries/appointmentBookings";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
 }
-
-const updateAppointmentBooking = async ({
-  appointmentBookingId,
-  selectedSlot,
-}: {
-  appointmentBookingId: string;
-  selectedSlot: Slot;
-}) => {
-  return axios.put(
-    `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
-    { selectedSlot }
-  );
-};
 
 const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   order,

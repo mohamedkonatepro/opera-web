@@ -2,9 +2,8 @@ import Slot from "@/types/slot";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Skeleton } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import axios from "axios";
 import { DateTime } from "luxon";
-import { useState } from "react";
+import { getOperaSlots } from "@/queries/operaSlots";
 
 interface SelectSlotProps {
   orderId: string;
@@ -13,19 +12,6 @@ interface SelectSlotProps {
   disabled?: boolean;
   onSelectSlot: (slot: Slot) => void;
 }
-
-const getOperaSlots = async (orderId: string, selectedDate: DateTime) => {
-  try {
-    const response = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_SERVER_BASE_URL
-      }/api/opera-slots?orderId=${orderId}&date=${selectedDate.toISODate()}`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
 const SelectSlot: React.FC<SelectSlotProps> = ({
   selectedDate,

@@ -5,37 +5,35 @@ import mockOrder from "@/mocks/order";
 import { NextPageContext } from "next";
 import AppointmentBookingDesktop from "@/components/home/desktop";
 import AppointmentBookingMobile from "@/components/home/mobile";
-import getAppointmentBooking from "@/queries/getAppointmentBooking";
+import * as appointmentBookingApi from "./api/appointment-bookings/[id]";
+import * as appointmentBookingClient from '@/queries/appointmentBookings'
 
 export const getServerSideProps = async (context: NextPageContext) => {
-  const { oldOrderId, appointmentBookingId } = context.query;
+  const { appointmentBookingId } = context.query;
 
   const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } }});
 
-  await queryClient.fetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) => appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      operaOrderId: oldOrderId,
       appointmentBookingId: appointmentBookingId,
     },
   };
 };
 
 const Home = ({
-  operaOrderId,
   appointmentBookingId,
 }: {
-  operaOrderId: string;
   appointmentBookingId: string;
 }) => {
   const { data, isFetching, isLoading, isSuccess } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
   });
 
   if (isFetching || isLoading || !isSuccess) return null;

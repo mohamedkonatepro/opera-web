@@ -5,12 +5,14 @@ import Slot from "@/types/slot";
 import mockAppointment from "@/mocks/appointment";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 
-const getAppointmentBooking = async (id: string, res: NextApiResponse) => {
-  try {
-    const response = await axios.get(
+export const getAppointmentBooking = async (id: string) => {
+
+  const response = await axios.get(
       `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
       getAxiosOptions()
     );
+
+
     const appointmentBooking = {
       id: response.data.data.id,
       ...response.data.data.attributes,
@@ -19,8 +21,8 @@ const getAppointmentBooking = async (id: string, res: NextApiResponse) => {
     const order = await axios.get(
       `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
       getAxiosOptions()
-    );
-    appointmentBooking.order = order.data;
+      );
+      appointmentBooking.order = order.data;
 
     if (appointmentBooking.appointment_id !== null) {
       const appointmentResponse = await axios.get(
@@ -33,26 +35,32 @@ const getAppointmentBooking = async (id: string, res: NextApiResponse) => {
       appointmentBooking.appointment = mockAppointment;
     }
 
-    res.status(200).json(appointmentBooking);
-  } catch (error: any) {
-    console.error(error);
-    res.status(error.response.status).json(error.response.data);
-  }
+    return appointmentBooking;
 };
 
-const updateAppointmentBooking = async (
+export const updateAppointmentBooking = async (
   id: string,
-  selectedSlot: Slot,
-  res: NextApiResponse
+  selectedSlot: Slot
 ) => {
-  try {
-    const response = await axios.put(
+    await axios.put(
       `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
       { data: selectedSlot },
       getAxiosOptions()
     );
-    const order = response.data;
-    res.status(200).json(order);
+    return getAppointmentBooking(id);
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res, cors);
+  try {
+    if (req.method === "PUT") {
+      const jsonData = await updateAppointmentBooking(req.query.id as string, req.body.data);
+      res.status(200).json(jsonData);
+    }
+    if (req.method === "GET") {
+      const jsonData = await getAppointmentBooking(req.query.id as string);
+      res.status(200).json(jsonData);
+    }
   } catch (error: any) {
     if (error.response) {
       res.status(error.response.status).json(error.response.data);
@@ -61,16 +69,6 @@ const updateAppointmentBooking = async (
     } else {
       res.status(500).json({ error: "Unknown error" });
     }
-  }
-};
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await corsMiddleware(req, res, cors);
-  if (req.method === "PUT") {
-    return updateAppointmentBooking(req.query.id as string, req.body, res);
-  }
-  if (req.method === "GET") {
-    return getAppointmentBooking(req.query.id as string, res);
   }
 };
 
