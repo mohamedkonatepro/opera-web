@@ -7,12 +7,15 @@ import { NextPageContext } from "next";
 import Head from "next/head";
 import * as appointmentBookingApi from "@/pages/api/appointment-bookings/[id]";
 import * as appointmentBookingClient from "@/queries/appointmentBookings";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
   const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
-  await queryClient.fetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) => appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
@@ -30,10 +33,12 @@ const SummaryAppointment = ({
 }: {
   appointmentBookingId: string;
 }) => {
+  const router = useRouter();
   const { isFetching, isLoading, isSuccess, data } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(appointmentBookingId),
   });
+
 
   if (isFetching || isLoading || !isSuccess) return null;
 
@@ -41,11 +46,29 @@ const SummaryAppointment = ({
 
   const appointmentBooking = data;
 
+  if (!appointmentBooking.appointment) {
+    return (
+      <>
+        <Head>
+          <title>Confirmation RDV Locataire</title>
+          <meta name="description" content="Confirmation RDV locataire" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <ErrorDialog
+          open
+          title="RDV non pris"
+          text="Vous n'avez pas encore pris de RDV, veuillez en prendre un avant de continuer."
+          onClose={() => router.push(`/?appointmentBookingId=${appointmentBookingId}`)}
+        />
+      </>
+    )
+  }
+
   return (
     <>
       <Head>
         <title>Confirmation RDV Locataire</title>
-        <meta name="description" content="Prise de RDV locataire" />
+        <meta name="description" content="Confirmation RDV locataire" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper variant="outlined">
@@ -58,7 +81,7 @@ const SummaryAppointment = ({
             appointment={appointmentBooking.appointment}
           />
           <RealEstateAndTenantInformation
-            order={appointmentBooking.appointment.order}
+            order={appointmentBooking.order}
           />
           <AppointmentModalities />
         </Stack>

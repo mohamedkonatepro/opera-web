@@ -4,7 +4,7 @@ import axios from "axios";
 export const getAppointmentBooking = async (appointmentBookingId: string) => {
   try {
     const response = await axios(
-      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`
+      `/api/appointment-bookings/${appointmentBookingId}`
     );
     return response.data;
   } catch (error) {
@@ -20,7 +20,7 @@ export const updateAppointmentBooking = async ({
   selectedSlot: Slot;
 }) => {
   return axios.put(
-    `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/appointment-bookings/${appointmentBookingId}`,
+    `/api/appointment-bookings/${appointmentBookingId}`,
     { selectedSlot }
   );
 };

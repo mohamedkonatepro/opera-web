@@ -1,10 +1,8 @@
 FROM --platform=linux/amd64 node:18-alpine AS builder
 
 WORKDIR /app
-
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV NEXT_PUBLIC_SERVER_BASE_URL http://127.0.0.1:3000
 
 COPY package.json yarn.lock .yarn .yarnrc.yml ./
 COPY .yarn/ ./.yarn/
