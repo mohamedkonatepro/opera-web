@@ -1,58 +1,55 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "@/components/common/customMaterial/buttons/UnderlinedButton";
+import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CottageOutlinedIcon from "@mui/icons-material/CottageOutlined";
 import RealEstate from "@/types/realEstate";
-import { useId, useState } from "react";
-import EditDialog from "@/components/common/customMaterial/dialogs/EditDialog";
-import TextField from "@mui/material/TextField";
-import SuccessDialog from "./customMaterial/dialogs/SuccessDialog";
-import ModifyRealEstateForm from "./forms/ModifyRealEstateFrom";
+import { useState } from "react";
+import EditDialog from "@/components/common/dialogs/EditDialog";
+import SuccessDialog from "./dialogs/SuccessDialog";
+import ModifyRealEstateForm, {
+  RealEstateFormSubmitValues,
+} from "../home/appointmentInformation/forms/ModifyRealEstateForm";
+import * as operaOrderClient from "@/queries/operaOrders";
+import { useMutation } from "@tanstack/react-query";
 
 interface RealEstateSummaryProps {
   realEstate: RealEstate;
+  orderId: string;
   displayEditButton?: boolean;
 }
+
+const formId = "modify-real-estate-form";
 
 const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   props
 ) => {
-  const { realEstate, displayEditButton = false } = props;
-  const [open, setOpen] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-  const [dialogData, setDilaogData] = useState({ informationsBien: "" });
+  const { realEstate, orderId, displayEditButton = false } = props;
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
-  const updateData = (e: any) => {
-    setDilaogData({
-      ...dialogData,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const mutation = useMutation({
+    mutationFn: operaOrderClient.sendNoteToUpdateRealEstateInformation,
+    onSuccess: () => {
+      setConfirmDialogOpen(true);
+      setEditDialogOpen(false);
+    }
+  });
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const closeInfo = () => {
-    setConfirm(false);
+  const handleClickEditButton = () => {
+    setEditDialogOpen(true);
   };
 
-  const onSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    /** todo : appel API */
-    setOpen(false);
-    // show confirmation
-    setConfirm(true);
+  const handleCloseEditDialog = () => {
+    setEditDialogOpen(false);
+  };
+  const handleCloseConfirmDialog = () => {
+    setConfirmDialogOpen(false);
   };
 
-  const id = useId();
-  const dialogContent = (
-    <ModifyRealEstateForm id={id} onChange={updateData} onSubmit={onSubmit} />
-  );
+  const onSubmit = ({ message }: RealEstateFormSubmitValues) => {
+    mutation.mutate({ note: message, orderId });
+  };
 
   return (
     <>
@@ -69,20 +66,24 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
             </Typography>
             {displayEditButton && (
               <>
-                <UnderlinedButton onClick={handleClickOpen}>
+                <UnderlinedButton onClick={handleClickEditButton}>
                   Modifier
                 </UnderlinedButton>
                 <EditDialog
-                  content={dialogContent}
-                  formId={id}
-                  onCloseHandler={handleClose}
-                  open={open}
-                />
+                  formId={formId}
+                  onClose={handleCloseEditDialog}
+                  open={editDialogOpen}
+                  title="Modifier les informations du bien"
+                  text="Modifier l'adresse, le type de bien, l'étage ou le digicode."
+                  // mutationIsLoading={mutation.isLoading}
+                >
+                  <ModifyRealEstateForm onSubmit={onSubmit} id={formId} />
+                </EditDialog>
                 <SuccessDialog
-                  message="Votre demande de modification a été envoyée !"
-                  onValiderHandler={closeInfo}
-                  onCloseHandler={closeInfo}
-                  open={confirm}
+                  title="Votre demande de modification a été envoyée !"
+                  text="Votre message a été transmis à l’agence. Vous pouvez tout de même prendre rendez-vous et nous modifierons ces informations dans les plus brefs délais."
+                  onClose={handleCloseConfirmDialog}
+                  open={confirmDialogOpen}
                 />
               </>
             )}

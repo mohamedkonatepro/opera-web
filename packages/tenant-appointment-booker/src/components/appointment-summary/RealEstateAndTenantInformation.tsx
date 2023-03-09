@@ -14,7 +14,7 @@ const RealEstateAndTenantInformation: React.FC<
   const locataire = locataires[0];
   return (
     <Stack spacing={3}>
-      <RealEstateSummary realEstate={bien} />
+      <RealEstateSummary realEstate={bien} orderId={order.orderId} />
       <TenantSummary locataire={locataire} />
     </Stack>
   );

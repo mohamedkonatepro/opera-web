@@ -1,70 +1,26 @@
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import HelpIcon from "@mui/icons-material/Help";
-import ErrorIcon from "@mui/icons-material/Error";
-import InfoIcon from "@mui/icons-material/Info";
+import MuiCheckCircleIcon from "@mui/icons-material/CheckCircle";
+import MuiEditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import MuiHelpIcon from "@mui/icons-material/Help";
+import MuiErrorIcon from "@mui/icons-material/Error";
+import MuiInfoIcon from "@mui/icons-material/Info";
+import { IconProps, SvgIconProps } from "@mui/material";
 
-export const successIcon = (
-  <CheckCircleIcon
-    sx={{
-      color: "#2A9D8F",
-      backgroundColor: "#EAF5F4",
-      p: 1.2,
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-    }}
-  />
+export const SuccessIcon: React.FC<SvgIconProps> = (props) => (
+  <MuiCheckCircleIcon {...props} color="success" />
 );
 
-export const helpIcon = (
-  <HelpIcon
-    sx={{
-      color: "#5148E6",
-      backgroundColor: "#EEEDFC",
-      p: 1.2,
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-    }}
-  />
+export const HelpIcon: React.FC<SvgIconProps> = (props) => (
+  <MuiHelpIcon {...props} color="secondary" />
 );
 
-export const infoIcon = (
-  <InfoIcon
-    sx={{
-      color: "#5148E6",
-      backgroundColor: "#EEEDFC",
-      p: 1.2,
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-    }}
-  />
+export const InfoIcon: React.FC<SvgIconProps> = (props) => (
+  <MuiInfoIcon {...props} color="secondary" />
 );
 
-export const errorIcon = (
-  <ErrorIcon
-    sx={{
-      color: "#E63946",
-      backgroundColor: "#FCEBEC",
-      p: 1.2,
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-    }}
-  />
+export const ErrorIcon: React.FC<SvgIconProps> = (props) => (
+  <MuiErrorIcon {...props} color="error" />
 );
 
-export const editIcon = (
-  <EditOutlinedIcon
-    sx={{
-      color: "#666666",
-      backgroundColor: "#F4F4F4",
-      p: 1.2,
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-    }}
-  />
+export const EditIcon: React.FC<SvgIconProps> = ({ sx, ...rest }) => (
+  <MuiEditOutlinedIcon {...rest} sx={{ ...sx, color: "text.secondary" }} />
 );

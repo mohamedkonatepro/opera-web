@@ -6,14 +6,14 @@ import {
 } from "@mui/material";
 import DialogActions from "./DialogActions";
 import DialogTitle from "./DialogTitle";
-interface ErrorDialogProps {
+interface SuccessDialogProps {
   open: boolean;
   onClose?: () => void;
   title?: string;
   text?: string;
 }
 
-const ErrorDialog: React.FC<ErrorDialogProps> = ({
+const SuccessDialog: React.FC<SuccessDialogProps> = ({
   open,
   title,
   text,
@@ -21,7 +21,7 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
 }) => {
   return (
     <Dialog open={open} maxWidth="md">
-      <DialogTitle onClose={onClose} type="error" />
+      <DialogTitle onClose={onClose} type="success" />
       <DialogContent>
         {title && (
           <DialogContentText
@@ -48,4 +48,4 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
   );
 };
 
-export default ErrorDialog;
+export default SuccessDialog;

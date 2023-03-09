@@ -13,11 +13,14 @@ import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
-  const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  });
 
   await queryClient.prefetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) =>
+      appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
   return {
@@ -36,9 +39,9 @@ const SummaryAppointment = ({
   const router = useRouter();
   const { isFetching, isLoading, isSuccess, data } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(appointmentBookingId),
+    queryFn: ({ queryKey }) =>
+      appointmentBookingClient.getAppointmentBooking(appointmentBookingId),
   });
-
 
   if (isFetching || isLoading || !isSuccess) return null;
 
@@ -58,10 +61,12 @@ const SummaryAppointment = ({
           open
           title="RDV non pris"
           text="Vous n'avez pas encore pris de RDV, veuillez en prendre un avant de continuer."
-          onClose={() => router.push(`/?appointmentBookingId=${appointmentBookingId}`)}
+          onClose={() =>
+            router.push(`/?appointmentBookingId=${appointmentBookingId}`)
+          }
         />
       </>
-    )
+    );
   }
 
   return (
@@ -80,9 +85,7 @@ const SummaryAppointment = ({
           <AppointmentInformation
             appointment={appointmentBooking.appointment}
           />
-          <RealEstateAndTenantInformation
-            order={appointmentBooking.order}
-          />
+          <RealEstateAndTenantInformation order={appointmentBooking.order} />
           <AppointmentModalities />
         </Stack>
       </Paper>

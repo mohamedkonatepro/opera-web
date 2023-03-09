@@ -6,16 +6,19 @@ import { NextPageContext } from "next";
 import AppointmentBookingDesktop from "@/components/home/desktop";
 import AppointmentBookingMobile from "@/components/home/mobile";
 import * as appointmentBookingApi from "./api/appointment-bookings/[id]";
-import * as appointmentBookingClient from '@/queries/appointmentBookings'
+import * as appointmentBookingClient from "@/queries/appointmentBookings";
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { appointmentBookingId } = context.query;
 
-  const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } }});
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  });
 
   await queryClient.prefetchQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) =>
+      appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
   return {
@@ -26,21 +29,18 @@ export const getServerSideProps = async (context: NextPageContext) => {
   };
 };
 
-const Home = ({
-  appointmentBookingId,
-}: {
-  appointmentBookingId: string;
-}) => {
+const Home = ({ appointmentBookingId }: { appointmentBookingId: string }) => {
   const { data, isFetching, isLoading, isSuccess } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
-    queryFn: ({ queryKey }) => appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
+    queryFn: ({ queryKey }) =>
+      appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
   });
 
   if (isFetching || isLoading || !isSuccess) return null;
 
   if (!data) return null;
 
-  const appointmentBooking = data
+  const appointmentBooking = data;
   const order = appointmentBooking.order;
 
   return (

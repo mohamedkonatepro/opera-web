@@ -81,6 +81,38 @@ const breakpoints: BreakpointsOptions = {
 };
 
 const components = {
+  MuiDialog: {
+    styleOverrides: {
+      paper: {
+        padding: defaultTheme.spacing(3),
+      },
+    },
+  },
+  MuiDialogActions: {
+    styleOverrides: {
+      root: {
+        marginTop: defaultTheme.spacing(3),
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 0,
+      },
+    },
+  },
+  MuiDialogContent: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
+  MuiDialogTitle: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+        marginBottom: defaultTheme.spacing(1.5),
+      },
+    },
+  },
   MuiList: {
     styleOverrides: {
       root: {
@@ -113,38 +145,6 @@ const components = {
         ...typography,
       },
     },
-  },
-  MuiDialog: {
-    styleOverrides: {
-      paper: {
-        padding: defaultTheme.spacing(3),
-      }
-    }
-  },
-  MuiDialogTitle: {
-    styleOverrides: {
-      root: {
-        padding: 0,
-        marginBottom: defaultTheme.spacing(1.5),
-      }
-    }
-  },
-  MuiDialogContent: {
-    styleOverrides: {
-      root: {
-        padding: 0,
-      }
-    }
-  },
-  MuiDialogActions: {
-    styleOverrides: {
-      root: {
-        marginTop: defaultTheme.spacing(3),
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 0,
-      }
-    }
   },
 };
 

@@ -1,16 +1,19 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "@/components/common/customMaterial/buttons/UnderlinedButton";
+import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Tenant from "@/types/tenant";
-import { useId, useState } from "react";
-import EditDialog from "@/components/common/customMaterial/dialogs/EditDialog";
-import SuccessDialog from "./customMaterial/dialogs/SuccessDialog";
-import ModifyTenantFrom from "./forms/ModifyTenantFrom";
+import { useState } from "react";
+import EditDialog from "@/components/common/dialogs/EditDialog";
+import SuccessDialog from "./dialogs/SuccessDialog";
 import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
+import ModifyTenantForm, {
+  TenantFormSubmitValues,
+} from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
 
+const formId = "modify-tenant-form";
 interface TenantSummaryProps {
   locataire: Tenant;
   displayEditButton?: boolean;
@@ -19,50 +22,25 @@ interface TenantSummaryProps {
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
   const { locataire, displayEditButton = false } = props;
 
-  const [open, setOpen] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-  const [dialogData, setDilaogData] = useState({
-    email: locataire.email,
-    phoneNumber: formattedPhoneNumber(locataire.phoneNumber),
-  });
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
-  const updateData = (e: any) => {
-    setDilaogData({
-      ...dialogData,
-      [e.target.name]: e.target.value,
-    });
+  const handleClickEditButton = () => {
+    setEditDialogOpen(true);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleCloseEditDialog = () => {
+    setEditDialogOpen(false);
+  };
+  const handleCloseConfirmDialog = () => {
+    setConfirmDialogOpen(false);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const onSubmit = (values: TenantFormSubmitValues) => {
+    // TODO: send request to server
+    alert(JSON.stringify(values));
+    setConfirmDialogOpen(true);
   };
-
-  const closeInfo = () => {
-    setConfirm(false);
-  };
-
-  const onSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    /** todo : appel API */
-    setOpen(false);
-    // show confirmation
-    setConfirm(true);
-  };
-
-  const id = useId();
-  const dialogContent = (
-    <ModifyTenantFrom
-      id={id}
-      onChange={updateData}
-      onSubmit={onSubmit}
-      locataire={dialogData}
-    />
-  );
 
   return (
     <Box>
@@ -79,20 +57,27 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           </Typography>
           {displayEditButton && (
             <>
-              <UnderlinedButton onClick={handleClickOpen}>
+              <UnderlinedButton onClick={handleClickEditButton}>
                 Modifier
               </UnderlinedButton>
               <EditDialog
-                content={dialogContent}
-                formId={id}
-                onCloseHandler={handleClose}
-                open={open}
-              />
+                title="Modifier vos coordonnées"
+                text="Modifier votre email ou votre numéro de téléphone."
+                formId={formId}
+                onClose={handleCloseEditDialog}
+                open={editDialogOpen}
+              >
+                <ModifyTenantForm
+                  id={formId}
+                  onSubmit={onSubmit}
+                  defaultValues={locataire}
+                />
+              </EditDialog>
               <SuccessDialog
-                message="Votre demande de modification a été envoyée !"
-                onValiderHandler={closeInfo}
-                onCloseHandler={closeInfo}
-                open={confirm}
+                title="Vos informations personnelles ont été modifiées !"
+                text="Vos informations personnelles ont été modifiées. Vous pouvez continuer la prise de rendez-vous."
+                onClose={handleCloseConfirmDialog}
+                open={confirmDialogOpen}
               />
             </>
           )}
@@ -120,7 +105,8 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           display="flex"
         >
           <LocalPhoneOutlinedIcon sx={{ mr: 1.2 }} />
-          {locataire.phoneNumber && formattedPhoneNumber(locataire.phoneNumber).replace("+33", "(+33)")}
+          {locataire.phoneNumber &&
+            formattedPhoneNumber(locataire.phoneNumber).replace("+33", "(+33)")}
         </Typography>
       </Stack>
     </Box>
