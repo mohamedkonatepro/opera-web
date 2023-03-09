@@ -1,22 +1,16 @@
 import Order from "@/types/order";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import AppointmentInitialDateAlertText from "./AppointmentInitialDateAlertText";
 import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar";
 import { DateTime } from "luxon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slot from "@/types/slot";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 import { updateAppointmentBooking } from "@/queries/appointmentBookings";
+import * as operaSlotsClient from "@/queries/operaSlots";
+import SlotAlreadyTakenErrorDialog from "./SlotAlreadyTakenErrorDialog";
+import NoSlotsAvailableDialog from "./NoSlotsAvailableDialog";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
@@ -26,33 +20,46 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   order,
   appointmentBookingId,
 }) => {
-  const router = useRouter();
-
-  const queryClient = useQueryClient();
-
   const desiredDateByContractor = DateTime.fromISO(
     order.desiredDateByContractor
   );
+
+  const minDate = order.minimumDate
+    ? DateTime.fromISO(order.minimumDate)
+    : desiredDateByContractor.minus({ months: 1 });
+  const maxDate = order.maximumDate
+    ? DateTime.fromISO(order.maximumDate)
+    : desiredDateByContractor.plus({ months: 1 });
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
     desiredDateByContractor
   );
   const [selectedSlot, setSelectedSlot] = useState<Slot>();
 
-  const [errorDialogOpened, setErrorDialogOpened] = useState<boolean>(false);
+  const [slotAlreadyTakenDialogOpened, setSlotAlreadyTakenDialogOpened] =
+    useState(false);
+  const [noSlotsAvailableDialogOpened, setNoSlotsAvailableDialogOpened] =
+    useState(false);
 
-  const triggerErrorDialog = () => {
-    setErrorDialogOpened(!errorDialogOpened);
-  };
+  const hasSlotsBetweenDatesQueryRes = useQuery({
+    queryKey: [
+      "hasSlotsBetweenDates",
+      order.orderId,
+      minDate.toISODate(),
+      maxDate.toISODate(),
+    ],
+    queryFn: ({ queryKey }) =>
+      operaSlotsClient.hasOperaSlotsBetweenDates(
+        queryKey[1] as string,
+        queryKey[2] as string,
+        queryKey[3] as string
+      ),
+    onSuccess: (data) => {
+      setNoSlotsAvailableDialogOpened(!data);
+    },
+  });
 
-  const onCloseErrorDialog = () => {
-    triggerErrorDialog();
-    queryClient.invalidateQueries({
-      queryKey: ["operaSlots", order.orderId, selectedDate],
-      exact: true,
-    });
-  };
-
+  const router = useRouter();
   const mutation = useMutation({
     mutationFn: updateAppointmentBooking,
     onSuccess: () => {
@@ -60,7 +67,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     },
     onError: (error: any) => {
       if (error.response.status === 409) {
-        triggerErrorDialog();
+        setSlotAlreadyTakenDialogOpened(true);
       }
     },
   });
@@ -81,12 +88,11 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     });
   };
 
-  const minDate = order.minimumDate
-    ? DateTime.fromISO(order.minimumDate)
-    : desiredDateByContractor.minus({ months: 1 });
-  const maxDate = order.maximumDate
-    ? DateTime.fromISO(order.maximumDate)
-    : desiredDateByContractor.plus({ months: 1 });
+  const hasSlotsBetweenDates: boolean = hasSlotsBetweenDatesQueryRes.data;
+  const isDisabled =
+    !hasSlotsBetweenDates ||
+    mutation.isLoading ||
+    hasSlotsBetweenDatesQueryRes.isLoading;
 
   return (
     <div>
@@ -103,32 +109,45 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           onSelectDate={handleOnSelectDate}
           selectedDate={selectedDate}
           selectedSlot={selectedSlot}
-          disabled={mutation.isLoading}
+          disabled={isDisabled}
+          hasSlotsBetweenDates={hasSlotsBetweenDatesQueryRes.data}
         />
-        <AppointmentInitialDateAlertText
-          desiredDateByContractor={desiredDateByContractor}
-          selectedDate={selectedDate}
-          orderType={order.type}
-          orderFamily={order.familleInitial}
-        />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleOnClickValidate}
-          disabled={!selectedSlot || mutation.isLoading}
-        >
-          {selectedDate && selectedSlot
-            ? `Valider pour le ${selectedDate.toFormat("EEEE d LLLL")} à ${
-                selectedSlot.startTimeSlotOfAppointment
-              }`
-            : `Valider`}
-        </Button>
+        {hasSlotsBetweenDates && (
+          <AppointmentInitialDateAlertText
+            desiredDateByContractor={desiredDateByContractor}
+            selectedDate={selectedDate}
+            orderType={order.type}
+            orderFamily={order.familleInitial}
+          />
+        )}
+        {hasSlotsBetweenDates && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleOnClickValidate}
+            disabled={!selectedSlot || mutation.isLoading}
+          >
+            {selectedDate && selectedSlot
+              ? `Valider pour le ${selectedDate.toFormat("EEEE d LLLL")} à ${
+                  selectedSlot.startTimeSlotOfAppointment
+                }`
+              : `Valider`}
+          </Button>
+        )}
       </Stack>
-      <ErrorDialog
-        open={errorDialogOpened}
-        onClose={onCloseErrorDialog}
-        title="Le créneau choisi est indisponible"
-        text="Le créneau choisi n’est plus disponible. Veuillez en choisir un autre."
+      <SlotAlreadyTakenErrorDialog
+        open={slotAlreadyTakenDialogOpened}
+        setOpenedState={setSlotAlreadyTakenDialogOpened}
+        orderId={order.orderId}
+        selectedDate={selectedDate}
+        minDate={minDate}
+        maxDate={maxDate}
+      />
+      <NoSlotsAvailableDialog
+        orderId={order.orderId}
+        open={noSlotsAvailableDialogOpened}
+        setOpenedState={setNoSlotsAvailableDialogOpened}
+        appointmentBookingId={appointmentBookingId}
       />
     </div>
   );

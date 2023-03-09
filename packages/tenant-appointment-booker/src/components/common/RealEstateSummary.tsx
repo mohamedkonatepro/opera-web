@@ -33,7 +33,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
     onSuccess: () => {
       setConfirmDialogOpen(true);
       setEditDialogOpen(false);
-    }
+    },
   });
 
   const handleClickEditButton = () => {

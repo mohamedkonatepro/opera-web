@@ -1,33 +1,29 @@
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
+import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const sendNoteToUpdateRealEstateInformation = async (
-  operaOrderId: string,
-  note: string
+const sendNoSlotsAvailableEmail = async (
+  orderId: string,
+  appointmentBookingId: string
 ) => {
-  return axios.post(
-    `${process.env.SERVER_URL}/api/opera-order/${operaOrderId}/send-note`,
-    {
-      data: {
-        content: note,
-      },
-    }
+  await axios.post(
+    `${process.env.SERVER_BASE_URL}/api/opera-slots/send-no-slots-available-email`,
+    { orderId, appointmentBookingId },
+    getAxiosOptions()
   );
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "POST") {
+    const { orderId, appointmentBookingId } = req.body;
     try {
-      const { note } = req.body;
-      const { id } = req.query;
-      const operaOrderId = id as string;
-      const response = await sendNoteToUpdateRealEstateInformation(
-        operaOrderId,
-        note
+      await sendNoSlotsAvailableEmail(
+        orderId as string,
+        appointmentBookingId as string
       );
-      return res.status(200).json(response);
+      return res.status(200);
     } catch (error: any) {
       if (error.response) {
         return res.status(error.response.status).json(error.response.data);
@@ -38,7 +34,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
   }
-  return res.status(405).json({ message: "Method not allowed" });
+
+  return res.status(405).json({ error: "Method not allowed" });
 };
 
 export default handler;

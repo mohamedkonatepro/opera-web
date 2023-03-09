@@ -1,7 +1,17 @@
-import { DialogTitle as MuiDialogTitle, IconButton, Stack } from "@mui/material";
+import {
+  DialogTitle as MuiDialogTitle,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Circle from "@/components/common/Circle";
-import { EditIcon, ErrorIcon, HelpIcon, InfoIcon, SuccessIcon } from "@/components/common/icons/Icons";
+import {
+  EditIcon,
+  ErrorIcon,
+  HelpIcon,
+  InfoIcon,
+  SuccessIcon,
+} from "@/components/common/icons/Icons";
 
 export interface DialogTitleProps {
   onClose?: () => void;
@@ -50,19 +60,14 @@ const DialogTitle: React.FC<DialogTitleProps> = (props) => {
 
   return (
     <MuiDialogTitle component={Stack} direction="row">
-      <Circle bgcolor={circleBackgroundColor}>
-        {icon}
-      </Circle>
+      <Circle bgcolor={circleBackgroundColor}>{icon}</Circle>
       {onClose && (
-        <IconButton
-          onClick={onClose}
-          sx={{ alignSelf: "start", ml: 'auto' }}
-        >
+        <IconButton onClick={onClose} sx={{ alignSelf: "start", ml: "auto" }}>
           <CloseIcon fontSize="small" />
         </IconButton>
       )}
     </MuiDialogTitle>
   );
-}
+};
 
 export default DialogTitle;

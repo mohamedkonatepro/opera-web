@@ -10,7 +10,8 @@ interface ErrorDialogProps {
   open: boolean;
   onClose?: () => void;
   title?: string;
-  text?: string;
+  text?: React.ReactNode;
+  maxWidth?: number;
 }
 
 const ErrorDialog: React.FC<ErrorDialogProps> = ({
@@ -18,9 +19,10 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
   title,
   text,
   onClose,
+  maxWidth,
 }) => {
   return (
-    <Dialog open={open} maxWidth="md">
+    <Dialog open={open} maxWidth={false} PaperProps={{ sx: { maxWidth } }}>
       <DialogTitle onClose={onClose} type="error" />
       <DialogContent>
         {title && (
@@ -32,7 +34,10 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
             {title}
           </DialogContentText>
         )}
-        {text && <DialogContentText variant="body2">{text}</DialogContentText>}
+        {typeof text === "string" && (
+          <DialogContentText variant="body2">{text}</DialogContentText>
+        )}
+        {typeof text !== "string" && text}
       </DialogContent>
       <DialogActions>
         <Button
