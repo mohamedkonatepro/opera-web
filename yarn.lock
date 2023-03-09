@@ -3054,6 +3054,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"libphonenumber-js@npm:^1.10.15":
+  version: 1.10.21
+  resolution: "libphonenumber-js@npm:1.10.21"
+  checksum: 0ffac0db4552eb1d39f8da8ee57cba20b1ad76a268f0e633c2dfcfe7db97d498cc6631c1ec4c1fc608944b866509d5b8e5039af878debec00b3a526946edebac
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -3375,6 +3382,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mui-tel-input@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "mui-tel-input@npm:3.1.1"
+  dependencies:
+    libphonenumber-js: ^1.10.15
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: b915222fbb938399ad616510d4f829aa2dd64a035227e8f8b9e3fa2fd675acb38f477b079ecdcadafda2423cb56347e482f08edec02d1062dc58ff4dadc1e086
+  languageName: node
+  linkType: hard
+
 "multipipe@npm:^1.0.2":
   version: 1.0.2
   resolution: "multipipe@npm:1.0.2"
@@ -3652,6 +3678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "opera-groupe-web@workspace:."
   dependencies:
+    mui-tel-input: ^3.1.1
     node-gyp: ^9.3.0
   languageName: unknown
   linkType: soft

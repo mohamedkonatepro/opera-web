@@ -1,12 +1,14 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "@/components/common/customMaterial/UnderlinedButton";
+import UnderlinedButton from "@/components/common/customMaterial/buttons/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CottageOutlinedIcon from "@mui/icons-material/CottageOutlined";
 import RealEstate from "@/types/realEstate";
-import { useState } from "react";
-import CustomDialog, { DialogType } from "@/components/common/customMaterial/CustomDialog";
+import { useId, useState } from "react";
+import EditDialog from "@/components/common/customMaterial/dialogs/EditDialog";
 import TextField from "@mui/material/TextField";
+import SuccessDialog from "./customMaterial/dialogs/SuccessDialog";
+import ModifyRealEstateForm from "./forms/ModifyRealEstateFrom";
 
 interface RealEstateSummaryProps {
   realEstate: RealEstate;
@@ -19,7 +21,6 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   const { realEstate, displayEditButton = false } = props;
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [error, setError] = useState(false);
   const [dialogData, setDilaogData] = useState({ informationsBien: "" });
 
   const updateData = (e: any) => {
@@ -39,39 +40,18 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
     setConfirm(false);
   };
 
-  const onValidate = () => {
-    if (dialogData.informationsBien == "") {
-      setError(true);
-    } else {
-      setError(false);
-      /** todo : appel API */
-      setOpen(false);
-      // show confirmation
-      setConfirm(true);
-    }
+  const onSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    /** todo : appel API */
+    setOpen(false);
+    // show confirmation
+    setConfirm(true);
   };
 
+  const id = useId();
   const dialogContent = (
-    <Box>
-      <Stack spacing={0.5}>
-        <Typography variant="h6">Modifier les informations du bien</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Modifier l&apos;adresse, le type de bien, l&apos;étage ou le digicode.
-        </Typography>
-      </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <TextField
-          label="Votre message"
-          placeholder="Votre message..."
-          name="informationsBien"
-          color="secondary"
-          error={error}
-          onChange={updateData}
-          multiline
-          InputLabelProps={{ shrink: true }}
-        />
-      </Stack>
-    </Box>
+    <ModifyRealEstateForm id={id} onChange={updateData} onSubmit={onSubmit} />
   );
 
   return (
@@ -92,17 +72,16 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
                 <UnderlinedButton onClick={handleClickOpen}>
                   Modifier
                 </UnderlinedButton>
-                <CustomDialog
+                <EditDialog
                   content={dialogContent}
+                  formId={id}
                   onCloseHandler={handleClose}
-                  onValiderHandler={onValidate}
                   open={open}
                 />
-                <CustomDialog
-                  dialogType={DialogType.Success}
+                <SuccessDialog
                   message="Votre demande de modification a été envoyée !"
-                  onCloseHandler={closeInfo}
                   onValiderHandler={closeInfo}
+                  onCloseHandler={closeInfo}
                   open={confirm}
                 />
               </>

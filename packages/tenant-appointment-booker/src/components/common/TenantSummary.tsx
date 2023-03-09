@@ -1,15 +1,15 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlinedButton from "@/components/common/customMaterial/UnderlinedButton";
+import UnderlinedButton from "@/components/common/customMaterial/buttons/UnderlinedButton";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/material.css";
 import Tenant from "@/types/tenant";
-import { useState } from "react";
-import CustomDialog, { DialogType } from "@/components/common/customMaterial/CustomDialog";
-import TextField from "@mui/material/TextField";
+import { useId, useState } from "react";
+import EditDialog from "@/components/common/customMaterial/dialogs/EditDialog";
+import SuccessDialog from "./customMaterial/dialogs/SuccessDialog";
+import ModifyTenantFrom from "./forms/ModifyTenantFrom";
+import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
 
 interface TenantSummaryProps {
   locataire: Tenant;
@@ -21,11 +21,9 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
 
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [error, setError] = useState(false);
   const [dialogData, setDilaogData] = useState({
     email: locataire.email,
-    phoneNumber:
-      locataire.phoneNumber && formattedPhoneNumber(locataire.phoneNumber),
+    phoneNumber: formattedPhoneNumber(locataire.phoneNumber),
   });
 
   const updateData = (e: any) => {
@@ -34,6 +32,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,61 +45,23 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
     setConfirm(false);
   };
 
-  const onValidate = () => {
-    if (!isValidEmail(dialogData.email) || dialogData.phoneNumber == "") {
-      setError(true);
-    } else {
-      /** todo : appel API */
-      setError(false);
-      setOpen(false);
-      // show confirmation
-      setConfirm(true);
-    }
+  const onSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    /** todo : appel API */
+    setOpen(false);
+    // show confirmation
+    setConfirm(true);
   };
 
-  const phoneInputChange = (
-    value: string,
-    country: string,
-    e: any,
-    formattedValue: string
-  ) => {
-    dialogData.phoneNumber = formattedValue;
-  };
-
+  const id = useId();
   const dialogContent = (
-    <Box>
-      <Stack spacing={0.5}>
-        <Typography variant="h6">Modifier vos coordonnées</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Modifier votre email ou votre numéro de téléphone.
-        </Typography>
-      </Stack>
-      <Stack sx={{ mt: 3 }} spacing={2}>
-        <TextField
-          label="Email"
-          defaultValue={dialogData.email}
-          name="email"
-          color="secondary"
-          error={!isValidEmail(dialogData.email)}
-          onChange={updateData}
-          InputLabelProps={{ shrink: true }}
-        />
-        <PhoneInput
-          specialLabel="Numéro de téléphone"
-          country={"fr"}
-          regions={"europe"}
-          placeholder="+33 06 12 34 56 78"
-          value={dialogData.phoneNumber}
-          inputProps={{
-            name: "phoneNumber",
-            autoFocus: true,
-            error: dialogData.phoneNumber == "",
-          }}
-          onChange={phoneInputChange}
-          inputStyle={{ width: "100%" }}
-        />
-      </Stack>
-    </Box>
+    <ModifyTenantFrom
+      id={id}
+      onChange={updateData}
+      onSubmit={onSubmit}
+      locataire={dialogData}
+    />
   );
 
   return (
@@ -121,17 +82,16 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
               <UnderlinedButton onClick={handleClickOpen}>
                 Modifier
               </UnderlinedButton>
-              <CustomDialog
+              <EditDialog
                 content={dialogContent}
+                formId={id}
                 onCloseHandler={handleClose}
-                onValiderHandler={onValidate}
                 open={open}
               />
-              <CustomDialog
-                dialogType={DialogType.Success}
+              <SuccessDialog
                 message="Votre demande de modification a été envoyée !"
-                onCloseHandler={closeInfo}
                 onValiderHandler={closeInfo}
+                onCloseHandler={closeInfo}
                 open={confirm}
               />
             </>
@@ -160,25 +120,11 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           display="flex"
         >
           <LocalPhoneOutlinedIcon sx={{ mr: 1.2 }} />
-          {locataire.phoneNumber && formattedPhoneNumber(locataire.phoneNumber)}
+          {locataire.phoneNumber && formattedPhoneNumber(locataire.phoneNumber).replace("+33", "(+33)")}
         </Typography>
       </Stack>
     </Box>
   );
 };
-
-function formattedPhoneNumber(phoneNumber: string) {
-  phoneNumber = phoneNumber.replaceAll(".", " ");
-  if (phoneNumber.substring(0, 1) == "0")
-    phoneNumber = phoneNumber.substring(1);
-  if (phoneNumber.indexOf("+33") == -1) phoneNumber = "(+33) " + phoneNumber;
-
-  return phoneNumber;
-}
-
-function isValidEmail(email: string) {
-  const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  return expression.test(email);
-}
 
 export default TenantSummary;

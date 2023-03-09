@@ -6,7 +6,6 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 import Slot from "@/types/slot";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useRouter } from "next/router";
 import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 import { updateAppointmentBooking } from "@/queries/appointmentBookings";
@@ -43,7 +42,6 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
       exact: true,
     })
   }
-
 
   const mutation = useMutation({
     mutationFn: updateAppointmentBooking,

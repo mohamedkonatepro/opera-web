@@ -5,5 +5,4 @@ interface AppointmentBookingProps {
   appointmentBookingId: string;
 }
 
-
 export default AppointmentBookingProps;
