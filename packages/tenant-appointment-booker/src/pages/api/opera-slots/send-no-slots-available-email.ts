@@ -4,12 +4,11 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const sendNoSlotsAvailableEmail = async (
-  orderId: string,
   appointmentBookingId: string
 ) => {
   await axios.post(
     `${process.env.SERVER_BASE_URL}/api/opera-slots/send-no-slots-available-email`,
-    { orderId, appointmentBookingId },
+    { appointmentBookingId },
     getAxiosOptions()
   );
 };
@@ -17,10 +16,9 @@ const sendNoSlotsAvailableEmail = async (
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "POST") {
-    const { orderId, appointmentBookingId } = req.body;
+    const { appointmentBookingId } = req.body;
     try {
       await sendNoSlotsAvailableEmail(
-        orderId as string,
         appointmentBookingId as string
       );
       return res.status(200);

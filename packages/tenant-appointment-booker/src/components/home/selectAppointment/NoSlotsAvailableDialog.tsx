@@ -12,7 +12,6 @@ interface NoSlotsAvailableDialogProps {
 }
 
 const NoSlotsAvailableDialog: React.FC<NoSlotsAvailableDialogProps> = ({
-  orderId,
   appointmentBookingId,
   open,
   setOpenedState,
@@ -23,9 +22,9 @@ const NoSlotsAvailableDialog: React.FC<NoSlotsAvailableDialogProps> = ({
 
   useEffect(() => {
     if (open) {
-      mutation.mutate({ orderId, appointmentBookingId });
+      mutation.mutate({ appointmentBookingId });
     }
-  }, [open, orderId, appointmentBookingId, mutation]);
+  }, [open, appointmentBookingId, mutation]);
 
   const onClose = () => {
     setOpenedState(false);

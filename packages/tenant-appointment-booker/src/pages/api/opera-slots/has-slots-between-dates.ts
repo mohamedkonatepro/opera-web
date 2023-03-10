@@ -8,7 +8,6 @@ export const hasOperaSlotsBetweenDates = async (
   startDate: string,
   endDate: string
 ) => {
-  return false;
   const interval = Interval.fromDateTimes(
     DateTime.fromISO(startDate),
     DateTime.fromISO(endDate)

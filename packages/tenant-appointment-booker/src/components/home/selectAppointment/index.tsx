@@ -55,7 +55,9 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
         queryKey[3] as string
       ),
     onSuccess: (data) => {
-      setNoSlotsAvailableDialogOpened(!data);
+      if (!data && !noSlotsAvailableDialogOpened) {
+        setNoSlotsAvailableDialogOpened(true);
+      }
     },
   });
 

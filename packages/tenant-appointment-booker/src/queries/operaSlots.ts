@@ -31,16 +31,14 @@ export const hasOperaSlotsBetweenDates = async (
 };
 
 export const sendNoSlotsAvailableEmail = async ({
-  orderId,
   appointmentBookingId,
 }: {
-  orderId: string;
   appointmentBookingId: string;
 }) => {
   try {
     const response = await axios.post(
       `/api/opera-slots/send-no-slots-available-email`,
-      { orderId, appointmentBookingId }
+      { appointmentBookingId }
     );
     return response.data;
   } catch (error) {
