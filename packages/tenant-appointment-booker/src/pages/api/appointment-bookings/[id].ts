@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
-import mockAppointment from "@/mocks/appointment";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 
 export const getAppointmentBooking = async (id: string) => {
@@ -54,19 +53,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         req.query.id as string,
         req.body.data
       );
-      res.status(200).json(jsonData);
+      return res.status(200).json(jsonData);
     }
     if (req.method === "GET") {
       const jsonData = await getAppointmentBooking(req.query.id as string);
-      res.status(200).json(jsonData);
+      return res.status(200).json(jsonData);
     }
+
+    return res.status(405).json({ error: "Method not allowed" });
   } catch (error: any) {
     if (error.response) {
-      res.status(error.response.status).json(error.response.data);
+      return res.status(error.response.status).json(error.response.data);
     } else if (error.request) {
-      res.status(500).json({ error: "No response from server" });
+      return res.status(500).json({ error: "No response from server" });
     } else {
-      res.status(500).json({ error: "Unknown error" });
+      return res.status(500).json({ error: "Unknown error" });
     }
   }
 };

@@ -57,8 +57,12 @@ const EditDialog: React.FC<EditDialogProps> = (props) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <CancelButton onClick={onClose} fullWidth>{cancelButtonLabel}</CancelButton>
-        <ValidateButton form={formId} fullWidth>{submitButtonLabel}</ValidateButton>
+        <CancelButton onClick={onClose} fullWidth>
+          {cancelButtonLabel}
+        </CancelButton>
+        <ValidateButton form={formId} fullWidth>
+          {submitButtonLabel}
+        </ValidateButton>
       </DialogActions>
     </Dialog>
   );

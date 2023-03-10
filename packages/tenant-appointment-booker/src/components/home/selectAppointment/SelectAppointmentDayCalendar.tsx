@@ -4,6 +4,9 @@ import SelectSlot from "./SelectSlot";
 import Slot from "@/types/slot";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import useDaysPagination from "./hooks/useDaysPagination";
+import { useQuery } from "@tanstack/react-query";
+import * as operaSlotsClient from "@/queries/operaSlots";
+import NoSlotsBetweenDates from "./NoSlotsAvailable";
 
 interface SelectAppointmentDayCalendarProps {
   orderId: string;
@@ -13,6 +16,7 @@ interface SelectAppointmentDayCalendarProps {
   minDate: DateTime;
   maxDate: DateTime;
   disabled?: boolean;
+  hasSlotsBetweenDates?: boolean;
   onSelectSlot: (slot: Slot) => void;
   onSelectDate: (date: DateTime) => void;
 }
@@ -28,6 +32,7 @@ const SelectAppointmentDayCalendar: React.FC<
     selectedSlot,
     desiredDateByContractor,
     disabled = false,
+    hasSlotsBetweenDates = true,
     onSelectDate,
     onSelectSlot,
   } = props;
@@ -111,16 +116,21 @@ const SelectAppointmentDayCalendar: React.FC<
           }
         })}
       </Stack>
-      <Typography variant="body1">
-        {selectedDate.toFormat("EEEE, d LLLL yyyy")}
-      </Typography>
-      <SelectSlot
-        selectedDate={selectedDate}
-        selectedSlot={selectedSlot}
-        orderId={orderId}
-        onSelectSlot={onSelectSlot}
-        disabled={disabled}
-      />
+      {hasSlotsBetweenDates && (
+        <>
+          <Typography variant="body1">
+            {selectedDate.toFormat("EEEE, d LLLL yyyy")}
+          </Typography>
+          <SelectSlot
+            selectedDate={selectedDate}
+            selectedSlot={selectedSlot}
+            orderId={orderId}
+            onSelectSlot={onSelectSlot}
+            disabled={disabled}
+          />
+        </>
+      )}
+      {!hasSlotsBetweenDates && <NoSlotsBetweenDates />}
     </Stack>
   );
 };

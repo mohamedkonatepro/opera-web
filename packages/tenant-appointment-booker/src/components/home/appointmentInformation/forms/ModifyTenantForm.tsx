@@ -18,7 +18,9 @@ interface FormProps {
 const ModifyTenantForm: React.FunctionComponent<FormProps> = (props) => {
   const { id, onSubmit, defaultValues } = props;
 
-  const [phoneNumber, setPhoneNumber] = useState(parsePhoneNumber(defaultValues.phoneNumber, "FR").formatInternational());
+  const [phoneNumber, setPhoneNumber] = useState(
+    parsePhoneNumber(defaultValues.phoneNumber, "FR").formatInternational()
+  );
   const [email, setEmail] = useState(defaultValues.email);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
