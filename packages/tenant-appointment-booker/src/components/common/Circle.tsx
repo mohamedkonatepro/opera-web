@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material"
+import { Box, BoxProps } from "@mui/material";
 
 const Circle: React.FC<BoxProps> = (props) => {
   return (
@@ -11,7 +11,7 @@ const Circle: React.FC<BoxProps> = (props) => {
       justifyContent="center"
       alignItems="center"
     />
-  )
-}
+  );
+};
 
-export default Circle
+export default Circle;

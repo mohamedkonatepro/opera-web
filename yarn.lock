@@ -1294,6 +1294,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"classnames@npm:^2.2.6":
+  version: 2.3.2
+  resolution: "classnames@npm:2.3.2"
+  checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
+  languageName: node
+  linkType: hard
+
 "clean-stack@npm:^2.0.0":
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
@@ -3047,6 +3054,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"libphonenumber-js@npm:^1.10.15, libphonenumber-js@npm:^1.10.21":
+  version: 1.10.21
+  resolution: "libphonenumber-js@npm:1.10.21"
+  checksum: 0ffac0db4552eb1d39f8da8ee57cba20b1ad76a268f0e633c2dfcfe7db97d498cc6631c1ec4c1fc608944b866509d5b8e5039af878debec00b3a526946edebac
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -3060,6 +3074,20 @@ __metadata:
   dependencies:
     p-locate: ^5.0.0
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
+  languageName: node
+  linkType: hard
+
+"lodash.debounce@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "lodash.debounce@npm:4.0.8"
+  checksum: a3f527d22c548f43ae31c861ada88b2637eb48ac6aa3eb56e82d44917971b8aa96fbb37aa60efea674dc4ee8c42074f90f7b1f772e9db375435f6c83a19b3bc6
+  languageName: node
+  linkType: hard
+
+"lodash.memoize@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.memoize@npm:4.1.2"
+  checksum: 9ff3942feeccffa4f1fafa88d32f0d24fdc62fd15ded5a74a5f950ff5f0c6f61916157246744c620173dddf38d37095a92327d5fd3861e2063e736a5c207d089
   languageName: node
   linkType: hard
 
@@ -3081,6 +3109,20 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.pick@npm:4.4.0"
   checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
+  languageName: node
+  linkType: hard
+
+"lodash.reduce@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.reduce@npm:4.6.0"
+  checksum: 81f2a1045440554f8427f895ef479f1de5c141edd7852dde85a894879312801efae0295116e5cf830c531c1a51cdab8f3628c3ad39fa21a9874bb9158d9ea075
+  languageName: node
+  linkType: hard
+
+"lodash.startswith@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "lodash.startswith@npm:4.2.1"
+  checksum: 1847371cbf6f32c4125a555847aff8a1ff1a977f40882b0ad4e2656a32e364793cfa7602915c9165cc0bba61fbd802e561888126d242faadcf3fc77215bab19b
   languageName: node
   linkType: hard
 
@@ -3337,6 +3379,25 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
+  languageName: node
+  linkType: hard
+
+"mui-tel-input@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "mui-tel-input@npm:3.1.1"
+  dependencies:
+    libphonenumber-js: ^1.10.15
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@mui/material": ^5.0.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: b915222fbb938399ad616510d4f829aa2dd64a035227e8f8b9e3fa2fd675acb38f477b079ecdcadafda2423cb56347e482f08edec02d1062dc58ff4dadc1e086
   languageName: node
   linkType: hard
 
@@ -3617,6 +3678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "opera-groupe-web@workspace:."
   dependencies:
+    mui-tel-input: ^3.1.1
     node-gyp: ^9.3.0
   languageName: unknown
   linkType: soft
@@ -3792,7 +3854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -3847,6 +3909,23 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-phone-input-2@npm:^2.15.1":
+  version: 2.15.1
+  resolution: "react-phone-input-2@npm:2.15.1"
+  dependencies:
+    classnames: ^2.2.6
+    lodash.debounce: ^4.0.8
+    lodash.memoize: ^4.1.2
+    lodash.reduce: ^4.6.0
+    lodash.startswith: ^4.2.1
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ^16.12.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+    react-dom: ^16.12.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+  checksum: 60cee455c7044da648a23312cae0077b4108dd24e26173a954904123decefae9875a1f8225a722a6c4d74c37b18ad3038ec6c302b64857f75089e544e8d48847
   languageName: node
   linkType: hard
 
@@ -4442,11 +4521,13 @@ __metadata:
     eslint: 8.34.0
     eslint-config-next: 13.1.6
     eslint-config-prettier: ^8.6.0
+    libphonenumber-js: ^1.10.21
     luxon: ^3.2.1
     next: 13.1.6
     prettier: ^2.8.4
     react: 18.2.0
     react-dom: 18.2.0
+    react-phone-input-2: ^2.15.1
     react-query: ^3.39.3
     typescript: 4.9.5
   languageName: unknown

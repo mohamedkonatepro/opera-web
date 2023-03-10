@@ -19,8 +19,7 @@ export const updateAppointmentBooking = async ({
   appointmentBookingId: string;
   selectedSlot: Slot;
 }) => {
-  return axios.put(
-    `/api/appointment-bookings/${appointmentBookingId}`,
-    { selectedSlot }
-  );
+  return axios.put(`/api/appointment-bookings/${appointmentBookingId}`, {
+    selectedSlot,
+  });
 };

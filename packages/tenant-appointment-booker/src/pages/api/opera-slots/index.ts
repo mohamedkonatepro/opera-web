@@ -12,10 +12,10 @@ export const getOperaSlots = async (orderId: string, date: string) => {
   return slots;
 };
 
-  const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
-    await corsMiddleware(req, res, cors);
-    if (req.method === "GET") {
-      const { orderId, date } = req.query;
+const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res, cors);
+  if (req.method === "GET") {
+    const { orderId, date } = req.query;
     try {
       const slots = await getOperaSlots(orderId as string, date as string);
       res.status(200).json(slots);
