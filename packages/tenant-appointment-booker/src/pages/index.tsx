@@ -22,13 +22,16 @@ export const getServerSideProps = async (context: NextPageContext) => {
       appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
-  const minDate = (
-    appointmentBooking.order.minimumDate
-      ? DateTime.fromISO(appointmentBooking.order.minimumDate)
-      : DateTime.fromISO(
-          appointmentBooking.order.desiredDateByContractor
-        ).minus({ months: 1 })
-  ).toISODate();
+  const minimumDate = appointmentBooking.order.minimumDate
+    ? DateTime.fromISO(appointmentBooking.order.minimumDate)
+    : DateTime.fromISO(appointmentBooking.order.desiredDateByContractor).minus({
+        months: 1,
+      });
+
+  const tomorrow = DateTime.local().plus({ days: 1 });
+
+  const minDate = DateTime.max(tomorrow, minimumDate).toISODate();
+
   const maxDate = (
     appointmentBooking.order.maximumDate
       ? DateTime.fromISO(appointmentBooking.order.maximumDate)
@@ -56,11 +59,21 @@ export const getServerSideProps = async (context: NextPageContext) => {
     props: {
       dehydratedState: dehydrate(queryClient),
       appointmentBookingId: appointmentBookingId,
+      minDate,
+      maxDate,
     },
   };
 };
 
-const Home = ({ appointmentBookingId }: { appointmentBookingId: string }) => {
+const Home = ({
+  appointmentBookingId,
+  minDate,
+  maxDate,
+}: {
+  appointmentBookingId: string;
+  minDate: string;
+  maxDate: string;
+}) => {
   const { data, isFetching, isLoading, isSuccess } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) =>
@@ -88,12 +101,16 @@ const Home = ({ appointmentBookingId }: { appointmentBookingId: string }) => {
           <AppointmentBookingDesktop
             order={order}
             appointmentBookingId={appointmentBookingId}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         )}
         {!matchesMD && (
           <AppointmentBookingMobile
             order={order}
             appointmentBookingId={appointmentBookingId}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         )}
       </Paper>

@@ -51,7 +51,7 @@ const SelectAppointmentDayCalendar: React.FC<
 
   return (
     <Stack spacing={1.5}>
-      <Typography variant="body1">
+      <Typography variant="body1" textTransform="capitalize">
         {selectedDate.toFormat("LLLL, yyyy")}
       </Typography>
       <Stack direction="row" spacing={1} justifyContent="space-between">
@@ -61,53 +61,73 @@ const SelectAppointmentDayCalendar: React.FC<
               const currentDate = page as DateTime;
 
               return (
-                <IconButton
+                <Stack
                   key={currentDate.toISODate()}
-                  color="secondary"
-                  disabled={disabled}
-                  onClick={() => handleOnClickPage(currentDate)}
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    backgroundColor: selected
-                      ? "secondary.main"
-                      : "secondary.light",
-                    color: selected ? "common.white" : "secondary",
-                    typography: "body2",
-                    fontWeight: "500",
-                    "&:hover": {
+                  spacing={1}
+                  alignItems="center"
+                >
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    textTransform="capitalize"
+                  >
+                    {currentDate.toFormat("EEE")}
+                  </Typography>
+                  <IconButton
+                    color="secondary"
+                    disabled={disabled}
+                    onClick={() => handleOnClickPage(currentDate)}
+                    sx={{
+                      width: 40,
+                      height: 40,
                       backgroundColor: selected
                         ? "secondary.main"
                         : "secondary.light",
-                    },
-                  }}
-                >
-                  {currentDate.toFormat("dd")}
-                </IconButton>
+                      color: selected ? "common.white" : "secondary",
+                      typography: "body2",
+                      fontWeight: "500",
+                      "&:hover": {
+                        backgroundColor: selected
+                          ? "secondary.main"
+                          : "secondary.light",
+                      },
+                    }}
+                  >
+                    {currentDate.toFormat("dd")}
+                  </IconButton>
+                </Stack>
               );
             }
             case "next": {
               return (
-                <IconButton
-                  key="next"
-                  onClick={onClickNext}
-                  disabled={disabled}
-                  sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
-                >
-                  <ChevronRight />
-                </IconButton>
+                <Stack key="next" spacing={1} alignItems="center">
+                  <Typography variant="body1" color="text.secondary">
+                    &nbsp;
+                  </Typography>
+                  <IconButton
+                    onClick={onClickNext}
+                    disabled={disabled}
+                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
+                  >
+                    <ChevronRight />
+                  </IconButton>
+                </Stack>
               );
             }
             case "previous": {
               return (
-                <IconButton
-                  key="previous"
-                  onClick={onClickPrevious}
-                  disabled={disabled}
-                  sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
-                >
-                  <ChevronLeft />
-                </IconButton>
+                <Stack key="previous" spacing={1} alignItems="center">
+                  <Typography variant="body1" color="text.secondary">
+                    &nbsp;
+                  </Typography>
+                  <IconButton
+                    onClick={onClickPrevious}
+                    disabled={disabled}
+                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
+                  >
+                    <ChevronLeft />
+                  </IconButton>
+                </Stack>
               );
             }
             default: {
@@ -118,7 +138,14 @@ const SelectAppointmentDayCalendar: React.FC<
       </Stack>
       {hasSlotsBetweenDates && (
         <>
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            sx={{
+              ":first-letter": {
+                textTransform: "uppercase",
+              },
+            }}
+          >
             {selectedDate.toFormat("EEEE, d LLLL yyyy")}
           </Typography>
           <SelectSlot
