@@ -5,15 +5,16 @@ import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Tenant from "@/types/tenant";
-import { useState } from "react";
 import EditDialog from "@/components/common/dialogs/EditDialog";
 import SuccessDialog from "./dialogs/SuccessDialog";
-import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
 import ModifyTenantForm, {
   TenantFormSubmitValues,
 } from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
 
 const formId = "modify-tenant-form";
+import { useState } from "react";
+import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
+
 interface TenantSummaryProps {
   locataire: Tenant;
   displayEditButton?: boolean;

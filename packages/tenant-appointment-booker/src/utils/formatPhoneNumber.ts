@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export function formattedPhoneNumber(phoneNumber: string) {
   phoneNumber = phoneNumber.replaceAll(".", " ");
   if (phoneNumber.substring(0, 1) == "0")
@@ -5,4 +6,13 @@ export function formattedPhoneNumber(phoneNumber: string) {
   if (phoneNumber.indexOf("+33") == -1) phoneNumber = "+33 " + phoneNumber;
 
   return phoneNumber;
+=======
+import { parsePhoneNumber } from "libphonenumber-js";
+
+export function formattedPhoneNumber(phoneNumber: string) {
+  const digitsOnly = phoneNumber.replace(/\D/g, "");
+  const formattedPhoneNumber = `+33${digitsOnly.slice(-9)}`;
+
+  return parsePhoneNumber(formattedPhoneNumber, "FR").formatInternational();
+>>>>>>> 7cdd71b (feat: modify tenant)
 }

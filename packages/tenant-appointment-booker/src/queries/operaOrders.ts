@@ -1,3 +1,4 @@
+import Tenant from "@/types/tenant";
 import axios from "axios";
 
 export const sendNoteToUpdateRealEstateInformation = async ({
@@ -9,5 +10,17 @@ export const sendNoteToUpdateRealEstateInformation = async ({
 }) => {
   return axios.post(`/api/opera-orders/${orderId}/send-note`, {
     note,
+  });
+};
+
+export const updateTenantInformations = async ({
+  locataire,
+  orderId,
+}: {
+  locataire: Tenant;
+  orderId: string;
+}) => {
+  return axios.put(`/api/opera-orders/${orderId}/update-tenant`, {
+    locataire,
   });
 };
