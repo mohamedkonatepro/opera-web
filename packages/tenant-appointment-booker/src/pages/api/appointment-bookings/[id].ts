@@ -51,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "PUT") {
       const jsonData = await updateAppointmentBooking(
         req.query.id as string,
-        req.body.data
+        req.body.selectedSlot
       );
       return res.status(200).json(jsonData);
     }
