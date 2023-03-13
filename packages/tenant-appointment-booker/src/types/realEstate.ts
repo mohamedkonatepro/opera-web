@@ -10,11 +10,11 @@ interface RealEstate {
   etage: string;
   code: string;
   meuble: boolean;
-  numeroImmeuble?: string,
-  numeroLot?: string,
-  numeroMandat?: string,
-  numeroBail?: string,
-  proprietaire?: string,
+  numeroImmeuble?: string;
+  numeroLot?: string;
+  numeroMandat?: string;
+  numeroBail?: string;
+  proprietaire?: string;
   cave: boolean;
   grenier: boolean;
   parking: boolean;

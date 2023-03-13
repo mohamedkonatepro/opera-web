@@ -29,7 +29,11 @@ const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
           orderId={order.orderId}
           displayEditButton
         />
-        <TenantSummary locataire={locataire} displayEditButton />
+        <TenantSummary
+          locataire={locataire}
+          orderId={order.orderId}
+          displayEditButton
+        />
       </Stack>
     </>
   );

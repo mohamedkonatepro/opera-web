@@ -2,31 +2,23 @@ import { isValidEmail } from "@/utils/isValidEmail";
 import { Stack, TextField } from "@mui/material";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { useState } from "react";
-import { parsePhoneNumber } from "libphonenumber-js";
-
-export interface TenantFormSubmitValues {
-  phoneNumber: string;
-  email: string;
-}
+import Tenant from "@/types/tenant";
 
 interface FormProps {
   id: string;
-  onSubmit: (values: TenantFormSubmitValues) => void;
-  defaultValues: TenantFormSubmitValues;
+  onSubmit: (data: Tenant) => void;
+  defaultValues: Tenant;
 }
 
 const ModifyTenantForm: React.FunctionComponent<FormProps> = (props) => {
   const { id, onSubmit, defaultValues } = props;
-
-  const [phoneNumber, setPhoneNumber] = useState(
-    parsePhoneNumber(defaultValues.phoneNumber, "FR").formatInternational()
-  );
-  const [email, setEmail] = useState(defaultValues.email);
+  const [tenant, setTenant] = useState(defaultValues);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    onSubmit({ phoneNumber, email });
+    if (isValidEmail(tenant.email) && matchIsValidTel(tenant.phoneNumber))
+      onSubmit(tenant);
   };
 
   return (
@@ -36,19 +28,19 @@ const ModifyTenantForm: React.FunctionComponent<FormProps> = (props) => {
         type="email"
         name="email"
         color="secondary"
-        error={!isValidEmail(email)}
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
+        error={!isValidEmail(tenant.email)}
+        onChange={(e) => setTenant({ ...tenant, email: e.target.value })}
+        value={tenant.email}
         required
       />
       <MuiTelInput
         label="Numéro de téléphone"
         name="phoneNumber"
         defaultCountry="FR"
-        error={!matchIsValidTel(phoneNumber)}
+        error={!matchIsValidTel(tenant.phoneNumber)}
         color="secondary"
-        value={phoneNumber}
-        onChange={setPhoneNumber}
+        value={tenant.phoneNumber}
+        onChange={(value) => setTenant({ ...tenant, phoneNumber: value })}
         required
       />
     </Stack>
