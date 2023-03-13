@@ -68,8 +68,17 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
       router.push(`/appointment-summary/${appointmentBookingId}`);
     },
     onError: (error: any) => {
-      if (error.response.status === 409) {
-        setSlotAlreadyTakenDialogOpened(true);
+      switch (error.response.status) {
+        case 409: {
+          return router.push(`/appointment-summary/${appointmentBookingId}`);
+        }
+        case 410: {
+          return setSlotAlreadyTakenDialogOpened(true);
+        }
+        default: {
+          console.error(error);
+          return;
+        }
       }
     },
   });
