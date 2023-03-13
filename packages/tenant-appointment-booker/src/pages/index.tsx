@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Theme, useMediaQuery } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPageContext } from "next";
 import AppointmentBookingDesktop from "@/components/home/desktop";
@@ -67,6 +67,8 @@ const Home = ({ appointmentBookingId }: { appointmentBookingId: string }) => {
       appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
   });
 
+  const matchesMD = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
+
   if (isFetching || isLoading || !isSuccess) return null;
 
   if (!data) return null;
@@ -82,18 +84,18 @@ const Home = ({ appointmentBookingId }: { appointmentBookingId: string }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper variant="outlined">
-        <Box display={{ sm: "none", md: "block" }}>
+        {matchesMD && (
           <AppointmentBookingDesktop
             order={order}
             appointmentBookingId={appointmentBookingId}
           />
-        </Box>
-        <Box display={{ sm: "block", md: "none" }}>
+        )}
+        {!matchesMD && (
           <AppointmentBookingMobile
             order={order}
             appointmentBookingId={appointmentBookingId}
           />
-        </Box>
+        )}
       </Paper>
     </>
   );
