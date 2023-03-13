@@ -3,7 +3,6 @@ import axios from "axios";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-
 export const getAppointmentBooking = async (id: string) => {
   const response = await axios.get(
     `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,

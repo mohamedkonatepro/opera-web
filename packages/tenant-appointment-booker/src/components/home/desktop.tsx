@@ -7,6 +7,8 @@ import SelectAppointment from "./selectAppointment";
 const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
   order,
   appointmentBookingId,
+  minDate,
+  maxDate,
 }) => {
   return (
     <Stack
@@ -25,6 +27,8 @@ const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
             <SelectAppointment
               order={order}
               appointmentBookingId={appointmentBookingId}
+              minDate={minDate}
+              maxDate={maxDate}
             />
           </Box>
         </Box>

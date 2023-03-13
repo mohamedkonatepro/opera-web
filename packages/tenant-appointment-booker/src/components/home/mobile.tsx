@@ -7,6 +7,8 @@ import SelectAppointment from "./selectAppointment";
 const AppointmentBookingMobile: React.FC<AppointmentBookingProps> = ({
   order,
   appointmentBookingId,
+  minDate,
+  maxDate,
 }) => {
   return (
     <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={3}>
@@ -18,6 +20,8 @@ const AppointmentBookingMobile: React.FC<AppointmentBookingProps> = ({
           <SelectAppointment
             order={order}
             appointmentBookingId={appointmentBookingId}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         </Box>
       </Box>

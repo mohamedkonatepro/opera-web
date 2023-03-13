@@ -14,22 +14,19 @@ import NoSlotsAvailableDialog from "./NoSlotsAvailableDialog";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
+  minDate: string;
+  maxDate: string;
 }
 
 const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   order,
   appointmentBookingId,
+  minDate: minDateString,
+  maxDate: maxDateString,
 }) => {
   const desiredDateByContractor = DateTime.fromISO(
     order.desiredDateByContractor
   );
-
-  const minDate = order.minimumDate
-    ? DateTime.fromISO(order.minimumDate)
-    : desiredDateByContractor.minus({ months: 1 });
-  const maxDate = order.maximumDate
-    ? DateTime.fromISO(order.maximumDate)
-    : desiredDateByContractor.plus({ months: 1 });
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
     desiredDateByContractor
@@ -40,6 +37,9 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     useState(false);
   const [noSlotsAvailableDialogOpened, setNoSlotsAvailableDialogOpened] =
     useState(false);
+
+  const minDate = DateTime.fromISO(minDateString);
+  const maxDate = DateTime.fromISO(maxDateString);
 
   const hasSlotsBetweenDatesQueryRes = useQuery({
     queryKey: [
@@ -129,11 +129,21 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
             onClick={handleOnClickValidate}
             disabled={!selectedSlot || mutation.isLoading}
           >
-            {selectedDate && selectedSlot
-              ? `Valider pour le ${selectedDate.toFormat("EEEE d LLLL")} à ${
-                  selectedSlot.startTimeSlotOfAppointment
-                }`
-              : `Valider`}
+            {selectedDate && selectedSlot ? (
+              <>
+                Valider pour le&nbsp;
+                <Typography
+                  variant="button"
+                  sx={{ ":first-letter": { textTransform: "uppercase" } }}
+                >
+                  {" "}
+                  {selectedDate.toFormat("EEEE d LLLL")}
+                </Typography>
+                &nbsp;à {selectedSlot.startTimeSlotOfAppointment}
+              </>
+            ) : (
+              `Valider`
+            )}
           </Button>
         )}
       </Stack>

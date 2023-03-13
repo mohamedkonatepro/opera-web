@@ -71,6 +71,9 @@ const palette: PaletteOptions = {
 
 const typography: TypographyOptions = {
   fontFamily: inter.style.fontFamily,
+  button: {
+    textTransform: "none",
+  },
 };
 
 const breakpoints: BreakpointsOptions = {
