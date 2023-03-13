@@ -16,15 +16,15 @@ const NoSlotsAvailableDialog: React.FC<NoSlotsAvailableDialogProps> = ({
   open,
   setOpenedState,
 }) => {
-  const mutation = useMutation({
+  const { mutate } = useMutation({
     mutationFn: sendNoSlotsAvailableEmail,
   });
 
   useEffect(() => {
     if (open) {
-      mutation.mutate({ appointmentBookingId });
+      mutate({ appointmentBookingId });
     }
-  }, [open, appointmentBookingId, mutation]);
+  }, [open, appointmentBookingId, mutate]);
 
   const onClose = () => {
     setOpenedState(false);
