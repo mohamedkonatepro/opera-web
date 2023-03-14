@@ -42,7 +42,7 @@ const EditDialog: React.FC<EditDialogProps> = (props) => {
           <Box>
             {title && (
               <DialogContentText
-                variant="body1"
+                variant="subtitle1"
                 fontWeight="500"
                 color="text.primary"
               >

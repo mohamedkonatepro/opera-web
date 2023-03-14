@@ -9,7 +9,7 @@ const AgendaView: React.FC<AgendaViewProps> = ({ appointmentDatetime }) => {
   return (
     <Stack justifyContent="center" alignItems="center" spacing={0} width={80}>
       <Paper
-        elevation={0}
+        variant="outlined"
         sx={{
           pt: 0.5,
           pb: 0.5,
@@ -27,7 +27,7 @@ const AgendaView: React.FC<AgendaViewProps> = ({ appointmentDatetime }) => {
         </Typography>
       </Paper>
       <Paper
-        elevation={0}
+        variant="outlined"
         sx={{
           pt: 1.25,
           pb: 1.25,

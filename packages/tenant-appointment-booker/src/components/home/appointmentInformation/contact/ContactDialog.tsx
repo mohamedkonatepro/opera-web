@@ -1,6 +1,9 @@
+import CancelButton from "@/components/common/buttons/CancelButton";
+import ValidateButton from "@/components/common/buttons/ValidateButton";
 import HelpDialog from "@/components/common/dialogs/HelpDialog";
 import Order from "@/types/order";
 import { Button, Divider, Stack } from "@mui/material";
+import ContactForm from "./form";
 import ContractorSummary from "./ContractorSummary";
 
 interface ContactDialogProps {
@@ -8,6 +11,8 @@ interface ContactDialogProps {
   onClose: () => void;
   order: Order;
 }
+
+const formId = "contact-form";
 
 const ContactDialog: React.FC<ContactDialogProps> = ({
   open,
@@ -28,14 +33,14 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
       text="Contactez votre conseiller d’agence par téléphone, ou remplissez le formulaire de contact."
       maxWidth={600}
       actions={
-        <Button
-          fullWidth
-          variant="contained"
-          color="secondary"
-          onClick={onClose}
-        >
-          Fermer
-        </Button>
+        <>
+          <CancelButton fullWidth onClick={onClose}>
+            Annuler
+          </CancelButton>
+          <ValidateButton fullWidth form={formId}>
+            Envoyer
+          </ValidateButton>
+        </>
       }
     >
       <Stack
@@ -43,6 +48,12 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
         divider={<Divider orientation="horizontal" flexItem />}
       >
         <ContractorSummary contractor={contractor} />
+        <ContactForm
+          id={formId}
+          defaultValues={{
+            desiredDateByContractor: order.desiredDateByContractor,
+          }}
+        />
       </Stack>
     </HelpDialog>
   );

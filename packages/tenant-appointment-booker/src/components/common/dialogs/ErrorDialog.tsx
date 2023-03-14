@@ -27,7 +27,7 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
       <DialogContent>
         {title && (
           <DialogContentText
-            variant="body1"
+            variant="subtitle1"
             fontWeight="500"
             color="text.primary"
           >

@@ -5,6 +5,8 @@ import {
   PaletteOptions,
 } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { frFR as coreFrFR } from "@mui/material/locale";
+import { frFR as dateFrFR } from "@mui/x-date-pickers";
 
 export const inter = Inter({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -149,13 +151,24 @@ const components = {
       },
     },
   },
+  MuiPaper: {
+    styleOverrides: {
+      outlined: {
+        borderColor: palette.border.subtle,
+      },
+    },
+  },
 };
 
-const theme = createTheme({
-  palette,
-  typography,
-  breakpoints,
-  components,
-});
+const theme = createTheme(
+  {
+    palette,
+    typography,
+    breakpoints,
+    components,
+  },
+  dateFrFR,
+  coreFrFR
+);
 
 export default theme;

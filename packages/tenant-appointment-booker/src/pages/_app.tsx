@@ -14,6 +14,8 @@ import {
 } from "@tanstack/react-query";
 import { Settings } from "luxon";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 
 Settings.defaultLocale = "fr";
 Settings.defaultZone = "Europe/Paris";
@@ -40,30 +42,32 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <GlobalStyles
-          styles={{
-            body: {
-              backgroundColor: "#F4F4F4",
-            },
-          }}
-        />
-        <Container
-          component="main"
-          sx={{
-            mt: { sm: 0, md: 12 },
-            mb: { sm: 0, md: 2 },
-          }}
-          fixed
-          disableGutters
-        >
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <Component {...pageProps} />
-            </Hydrate>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
-        </Container>
+        <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="fr">
+          <CssBaseline />
+          <GlobalStyles
+            styles={{
+              body: {
+                backgroundColor: "#F4F4F4",
+              },
+            }}
+          />
+          <Container
+            component="main"
+            sx={{
+              mt: { sm: 0, md: 12 },
+              mb: { sm: 0, md: 2 },
+            }}
+            fixed
+            disableGutters
+          >
+            <QueryClientProvider client={queryClient}>
+              <Hydrate state={pageProps.dehydratedState}>
+                <Component {...pageProps} />
+              </Hydrate>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </Container>
+        </LocalizationProvider>
       </ThemeProvider>
     </CacheProvider>
   );
