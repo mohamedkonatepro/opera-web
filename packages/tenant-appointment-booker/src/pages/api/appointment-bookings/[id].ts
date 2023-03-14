@@ -33,6 +33,8 @@ export const getAppointmentBooking = async (id: string) => {
       if (error.response.status === 404) appointmentBooking.appointment = null;
       else throw error;
     }
+  } else {
+    appointmentBooking.appointment = null;
   }
 
   return appointmentBooking;
