@@ -1,5 +1,6 @@
 import Order from "@/types/order";
 import { Stack } from "@mui/material";
+import Contact from "./contact";
 import Information from "./information";
 
 interface AppointmentInformationProps {
@@ -12,6 +13,7 @@ const AppointmentInformation: React.FunctionComponent<
   return (
     <Stack>
       <Information order={order} />
+      <Contact order={order} />
     </Stack>
   );
 };
