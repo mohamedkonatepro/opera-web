@@ -8,6 +8,7 @@ import * as appointmentBookingApi from "./api/appointment-bookings/[id]";
 import * as hasOperaSlotsApi from "@/pages/api/opera-slots/has-slots-between-dates";
 import * as appointmentBookingClient from "@/queries/appointmentBookings";
 import { DateTime } from "luxon";
+import { useRouter } from "next/router";
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { appointmentBookingId } = context.query;
@@ -21,6 +22,15 @@ export const getServerSideProps = async (context: NextPageContext) => {
     queryFn: ({ queryKey }) =>
       appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
+
+  if (appointmentBooking.appointment !== null) {
+    return {
+      redirect: {
+        destination: `/appointment-summary/${appointmentBookingId}`,
+        permanent: false,
+      },
+    };
+  }
 
   const minimumDate = appointmentBooking.order.minimumDate
     ? DateTime.fromISO(appointmentBooking.order.minimumDate)
@@ -74,10 +84,17 @@ const Home = ({
   minDate: string;
   maxDate: string;
 }) => {
+  const router = useRouter();
+
   const { data, isFetching, isLoading, isSuccess } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) =>
       appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
+    onSuccess: (appointmentBooking) => {
+      if (appointmentBooking.appointment !== null) {
+        router.push(`/appointment-summary/${appointmentBookingId}`);
+      }
+    },
   });
 
   const matchesMD = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
