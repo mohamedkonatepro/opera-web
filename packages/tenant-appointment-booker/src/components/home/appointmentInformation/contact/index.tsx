@@ -15,14 +15,27 @@ const Contact: React.FC<ContactProps> = ({ order }) => {
     setContactDialogOpen(true);
   };
 
+  const handleOnCloseContactDialog = () => {
+    setContactDialogOpen(false);
+  };
 
   return (
     <>
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction={{ sm: "column", md: "row" }}
+        alignItems="flex-start"
+        spacing={1}
+      >
         <Typography variant="body2">Un empêchement, un problème ?</Typography>
-        <UnderlinedButton onClick={handleClickContactButton}>Contactez-nous</UnderlinedButton>
+        <UnderlinedButton onClick={handleClickContactButton}>
+          Contactez-nous
+        </UnderlinedButton>
       </Stack>
-      <ContactDialog open={contactDialogOpen} onClose={() => setContactDialogOpen(false)} />
+      <ContactDialog
+        open={contactDialogOpen}
+        onClose={handleOnCloseContactDialog}
+        order={order}
+      />
     </>
   );
 };

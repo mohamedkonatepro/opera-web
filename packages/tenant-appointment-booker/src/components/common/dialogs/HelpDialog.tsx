@@ -10,7 +10,6 @@ import { PropsWithChildren } from "react";
 import DialogActions from "./DialogActions";
 import DialogTitle from "./DialogTitle";
 
-
 interface HelpDialogProps extends PropsWithChildren {
   open: boolean;
   onClose?: () => void;
@@ -28,36 +27,31 @@ const HelpDialog: React.FC<HelpDialogProps> = ({
   onClose,
   actions,
   maxWidth,
-  children
+  children,
 }) => {
   return (
-    <Dialog open={open} PaperProps={{ sx: { maxWidth } }}>
-      <DialogTitle onClose={onClose} type="success" />
+    <Dialog open={open} maxWidth={false} PaperProps={{ sx: { maxWidth } }}>
+      <DialogTitle onClose={onClose} type="help" />
       <DialogContent>
         <Stack spacing={3}>
           <Box>
             {title && (
-            <DialogContentText
-              variant="body1"
-              fontWeight="500"
-              color="text.primary"
-            >
-              {title}
-            </DialogContentText>
-          )}
-          {text && <DialogContentText variant="body2">{text}</DialogContentText>}
+              <DialogContentText
+                variant="body1"
+                fontWeight="500"
+                color="text.primary"
+              >
+                {title}
+              </DialogContentText>
+            )}
+            {text && (
+              <DialogContentText variant="body2">{text}</DialogContentText>
+            )}
           </Box>
-          <Box>
-            {children}
-          </Box>
+          <Box>{children}</Box>
         </Stack>
-
       </DialogContent>
-      {actions &&(
-        <DialogActions>
-          {actions}
-        </DialogActions>
-      )}
+      {actions && <DialogActions>{actions}</DialogActions>}
     </Dialog>
   );
 };

@@ -1,5 +1,5 @@
 import Order from "@/types/order";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import Contact from "./contact";
 import Information from "./information";
 
@@ -11,7 +11,7 @@ const AppointmentInformation: React.FunctionComponent<
   AppointmentInformationProps
 > = ({ order }) => {
   return (
-    <Stack>
+    <Stack spacing={3} divider={<Divider orientation="horizontal" flexItem />}>
       <Information order={order} />
       <Contact order={order} />
     </Stack>
