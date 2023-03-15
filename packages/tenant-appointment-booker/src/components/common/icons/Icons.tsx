@@ -3,7 +3,7 @@ import MuiEditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MuiHelpIcon from "@mui/icons-material/Help";
 import MuiErrorIcon from "@mui/icons-material/Error";
 import MuiInfoIcon from "@mui/icons-material/Info";
-import { IconProps, SvgIconProps } from "@mui/material";
+import { SvgIconProps } from "@mui/material";
 
 export const SuccessIcon: React.FC<SvgIconProps> = (props) => (
   <MuiCheckCircleIcon {...props} color="success" />

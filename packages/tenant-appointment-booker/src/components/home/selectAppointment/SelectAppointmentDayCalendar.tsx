@@ -1,11 +1,9 @@
-import { IconButton, Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { DateTime } from "luxon";
 import SelectSlot from "./SelectSlot";
 import Slot from "@/types/slot";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import useDaysPagination from "./hooks/useDaysPagination";
-import { useQuery } from "@tanstack/react-query";
-import * as operaSlotsClient from "@/queries/operaSlots";
 import NoSlotsBetweenDates from "./NoSlotsAvailable";
 
 interface SelectAppointmentDayCalendarProps {
@@ -44,6 +42,8 @@ const SelectAppointmentDayCalendar: React.FC<
     selectedDate,
     disabled
   );
+
+  const theme = useTheme()
 
   const handleOnClickPage = (page: DateTime) => {
     onSelectDate(page);
@@ -84,8 +84,7 @@ const SelectAppointmentDayCalendar: React.FC<
                         ? "secondary.main"
                         : "secondary.light",
                       color: selected ? "common.white" : "secondary",
-                      typography: "body2",
-                      fontWeight: "500",
+                      typography: "subtitle1",
                       "&:hover": {
                         backgroundColor: selected
                           ? "secondary.main"
@@ -98,34 +97,20 @@ const SelectAppointmentDayCalendar: React.FC<
                 </Stack>
               );
             }
-            case "next": {
+            case "next": case "previous": {
+              const onClick = type === "next" ? onClickNext : onClickPrevious
+              const Icon = type === "next" ? ChevronRight : ChevronLeft
               return (
-                <Stack key="next" spacing={1} alignItems="center">
+                <Stack key={type} spacing={1.75} alignItems="center">
                   <Typography variant="body1" color="text.secondary">
                     &nbsp;
                   </Typography>
                   <IconButton
-                    onClick={onClickNext}
+                    onClick={onClick}
                     disabled={disabled}
-                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
+                    size="small"
                   >
-                    <ChevronRight />
-                  </IconButton>
-                </Stack>
-              );
-            }
-            case "previous": {
-              return (
-                <Stack key="previous" spacing={1} alignItems="center">
-                  <Typography variant="body1" color="text.secondary">
-                    &nbsp;
-                  </Typography>
-                  <IconButton
-                    onClick={onClickPrevious}
-                    disabled={disabled}
-                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
-                  >
-                    <ChevronLeft />
+                    <Icon />
                   </IconButton>
                 </Stack>
               );

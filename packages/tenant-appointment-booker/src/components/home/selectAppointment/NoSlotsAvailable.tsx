@@ -5,7 +5,7 @@ const NoSlotsAvailable = () => {
   return (
     <Paper variant="outlined" sx={{ bgcolor: "error.light", padding: 1.5 }}>
       <Stack direction="row" spacing={1.5}>
-        <ErrorIcon fontSize="small" />
+        <ErrorIcon />
         <Stack spacing={0.5}>
           <Typography variant="subtitle2">
             Pas de créneau disponible pour le moment

@@ -49,9 +49,9 @@ const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
       <AccordionSummary
         expandIcon={
           expanded ? (
-            <RadioButtonChecked fontSize="small" color="secondary" />
+            <RadioButtonChecked color="secondary" />
           ) : (
-            <RadioButtonUnchecked fontSize="small" htmlColor="text.disabled" />
+            <RadioButtonUnchecked color="disabled" />
           )
         }
       >

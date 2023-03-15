@@ -55,10 +55,6 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
             disabled={disabled}
             color={selectedSlot?.stamp === slot.stamp ? "secondary" : "inherit"}
             sx={{
-              borderColor:
-                selectedSlot?.stamp === slot.stamp
-                  ? "border.bold"
-                  : "border.default",
               color:
                 selectedSlot?.stamp === slot.stamp
                   ? "secondary"

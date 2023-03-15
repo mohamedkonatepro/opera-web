@@ -104,13 +104,14 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
             display="flex"
             divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
           >
+            <CottageOutlinedIcon />
             <Typography
               variant="body2"
               color="text.primary"
               alignItems="center"
               display="flex"
             >
-              <CottageOutlinedIcon sx={{ mr: 1.2 }} /> {realEstate.libelle}{" "}
+              {realEstate.libelle}{" "}
               {realEstate.Type}
               {realEstate.nbpiece},{" "}
               {realEstate.meuble ? "meublé" : "non-meublé"}

@@ -59,7 +59,7 @@ const DialogTitle: React.FC<DialogTitleProps> = (props) => {
       <Circle bgcolor={circleBackgroundColor}>{icon}</Circle>
       {onClose && (
         <IconButton onClick={onClose} sx={{ alignSelf: "start", ml: "auto" }}>
-          <CloseIcon fontSize="small" />
+          <CloseIcon />
         </IconButton>
       )}
     </MuiDialogTitle>

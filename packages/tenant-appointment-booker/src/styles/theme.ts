@@ -1,11 +1,8 @@
 import { Inter } from "@next/font/google";
 import {
-  BreakpointsOptions,
   createTheme,
-  PaletteOptions,
   ThemeOptions,
 } from "@mui/material/styles";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { frFR as coreFrFR } from "@mui/material/locale";
 import { frFR as dateFrFR } from "@mui/x-date-pickers";
 
@@ -22,6 +19,13 @@ declare module "@mui/material/styles" {
     lg: false;
     xl: false;
   }
+  interface Palette {
+    border: {
+      subtle: string;
+      default: string;
+      bold: string;
+    };
+  }
   interface PaletteOptions {
     border: {
       subtle: string;
@@ -33,7 +37,7 @@ declare module "@mui/material/styles" {
 
 const defaultTheme = createTheme();
 
-const palette: PaletteOptions = {
+const palette: ThemeOptions["palette"] = {
   primary: {
     main: "#EFA815",
   },
@@ -72,17 +76,20 @@ const palette: PaletteOptions = {
   },
 };
 
-const typography: TypographyOptions = {
+const typography: ThemeOptions["typography"] = {
   fontFamily: inter.style.fontFamily,
   button: {
     textTransform: "none",
   },
+  h5: {
+    fontSize: "1.125rem",
+  },
 };
 
-const breakpoints: BreakpointsOptions = {
+const breakpoints: ThemeOptions["breakpoints"] = {
   values: {
     sm: 0,
-    md: 992,
+    md: 1024,
   },
 };
 
@@ -110,6 +117,28 @@ const components: ThemeOptions["components"] = {
         padding: defaultTheme.spacing(2),
       },
     },
+  },
+  MuiButton: {
+    styleOverrides: {
+      outlined: {
+        borderColor: palette.border.default,
+      },
+      outlinedSecondary: {
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: palette.border.bold,
+        "&:hover ": {
+          borderWidth: 2,
+          borderStyle: "solid",
+          borderColor: palette.border.bold,
+        },
+        "&:focus": {
+          borderWidth: 2,
+          borderStyle: "solid",
+          borderColor: palette.border.bold,
+        }
+      }
+    }
   },
   MuiDialog: {
     styleOverrides: {
@@ -140,6 +169,19 @@ const components: ThemeOptions["components"] = {
       root: {
         padding: 0,
         marginBottom: defaultTheme.spacing(1.5),
+      },
+    },
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        backgroundColor: palette.background?.default,
+        "&.Mui-disabled": {
+          backgroundColor: palette.background?.default
+        }
+      },
+      sizeSmall: {
+        padding: defaultTheme.spacing(0.5),
       },
     },
   },
@@ -205,6 +247,31 @@ const components: ThemeOptions["components"] = {
         borderColor: palette.border.subtle,
       },
     },
+  },
+  MuiSvgIcon: {
+    defaultProps: {
+      fontSize: "small",
+    },
+    styleOverrides: {
+      root: {
+        color: palette.text?.secondary,
+      },
+      colorPrimary: {
+        // @ts-ignore
+        color: palette.primary?.main,
+      },
+      colorSecondary: {
+        // @ts-ignore
+        color: palette.secondary?.main,
+      },
+      colorError: {
+        // @ts-ignore
+        color: palette.error?.main,
+      },
+      colorDisabled: {
+        color: palette.text?.disabled,
+      },
+    }
   },
 };
 
