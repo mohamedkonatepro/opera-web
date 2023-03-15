@@ -1,16 +1,11 @@
 import CancelButton from "@/components/common/buttons/CancelButton";
 import ValidateButton from "@/components/common/buttons/ValidateButton";
 import HelpDialog from "@/components/common/dialogs/HelpDialog";
-import Order from "@/types/order";
-import { Button, Divider, Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import ContactForm from "./form";
 import ContractorSummary from "./ContractorSummary";
-
-interface ContactDialogProps {
-  open: boolean;
-  onClose: () => void;
-  order: Order;
-}
+import { ContactDialogProps } from "./types";
+import { useState } from "react";
 
 const formId = "contact-form";
 
@@ -18,12 +13,16 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
   open,
   onClose,
   order,
+  onSubmit,
+  disabled,
 }) => {
   const contractor = {
     commercialName: order.commercialName,
     phoneNumber: order.commercialPhoneNumber,
     emails: order.emails,
   };
+
+  const [formIsValid, setFormIsValid] = useState(false);
 
   return (
     <HelpDialog
@@ -34,10 +33,14 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
       maxWidth={600}
       actions={
         <>
-          <CancelButton fullWidth onClick={onClose}>
+          <CancelButton fullWidth onClick={onClose} disabled={disabled}>
             Annuler
           </CancelButton>
-          <ValidateButton fullWidth form={formId}>
+          <ValidateButton
+            fullWidth
+            form={formId}
+            disabled={disabled || !formIsValid}
+          >
             Envoyer
           </ValidateButton>
         </>
@@ -53,6 +56,9 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
           defaultValues={{
             desiredDateByContractor: order.desiredDateByContractor,
           }}
+          onSubmit={onSubmit}
+          setFormIsValid={setFormIsValid}
+          disabled={disabled}
         />
       </Stack>
     </HelpDialog>

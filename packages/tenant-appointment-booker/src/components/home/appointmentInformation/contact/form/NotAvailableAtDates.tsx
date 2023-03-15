@@ -8,29 +8,34 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { DateTime } from "luxon";
-import { useState } from "react";
-
-interface NotAvailableAtDatesProps {
-  expanded: boolean;
-  desiredDateByContractor: DateTime;
-  formId: string;
-  onSubmit: () => void;
-  onChange: () => void;
-}
+import { useEffect, useState } from "react";
+import { NotAvailableAtDatesProps } from "./types";
 
 const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
   expanded,
   onChange,
   desiredDateByContractor,
   formId,
+  disabled,
+  onSubmit,
+  setFormIsValid,
 }) => {
   const [date, setDate] = useState(desiredDateByContractor);
+  const [reason, setReason] = useState("");
+
+  useEffect(() => {
+    if (date && reason && reason.length > 0) {
+      setFormIsValid(true);
+    } else {
+      setFormIsValid(false);
+    }
+  }, [date, reason, setFormIsValid]);
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    alert("on submit");
+    onSubmit({ newDesiredDate: date, reason });
   };
 
   return (
@@ -43,23 +48,17 @@ const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
       disableGutters
     >
       <AccordionSummary
-        sx={{
-          flexDirection: "row-reverse",
-          "& .MuiAccordionSummary-content": {
-            marginLeft: 1.5,
-          },
-        }}
         expandIcon={
           expanded ? (
-            <RadioButtonChecked color="secondary" />
+            <RadioButtonChecked fontSize="small" color="secondary" />
           ) : (
-            <RadioButtonUnchecked htmlColor="text.disabled" />
+            <RadioButtonUnchecked fontSize="small" htmlColor="text.disabled" />
           )
         }
       >
         Je suis indisponible aux dates proposées
       </AccordionSummary>
-      <AccordionDetails sx={{ bgcolor: "background.default" }}>
+      <AccordionDetails>
         {expanded && (
           <Stack
             component="form"
@@ -72,35 +71,44 @@ const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
               format="EEEE, d MMMM yyyy"
               value={date}
               disablePast
+              disabled={disabled}
               onChange={(newValue) => {
                 setDate(newValue as DateTime);
               }}
               slotProps={{
+                openPickerIcon: {
+                  fontSize: "small",
+                },
                 textField: {
-                  name: "notAvailableAtDatesReason",
+                  name: "newDesiredDate",
                   required: true,
                   color: "secondary",
-                  sx: {
-                    bgcolor: "background.paper",
-                  },
                 },
                 day: {
                   sx: {
                     "&.Mui-selected": {
                       backgroundColor: "secondary.main",
                       color: "secondary.contrastText",
+                      "&:hover": {
+                        backgroundColor: "secondary.main",
+                      },
+                      "&:focus": {
+                        backgroundColor: "secondary.main",
+                      },
                     },
                   },
                 },
               }}
             />
             <TextField
-              name="notAvailableAtDatesReason"
+              name="newDesiredDateReason"
               label="Indiquez les raisons du changement de date voulue"
               placeholder="Indiquez les raisons du changement de date voulue"
               color="secondary"
-              sx={{
-                bgcolor: "background.paper",
+              value={reason}
+              disabled={disabled}
+              onChange={(event) => {
+                setReason(event.target.value);
               }}
               multiline
               required

@@ -12,11 +12,7 @@ import {
   InfoIcon,
   SuccessIcon,
 } from "@/components/common/icons/Icons";
-
-export interface DialogTitleProps {
-  onClose?: () => void;
-  type?: "success" | "error" | "info" | "help" | "edit" | "default";
-}
+import { DialogTitleProps } from "./types";
 
 const getIcon = (type: DialogTitleProps["type"]) => {
   switch (type) {

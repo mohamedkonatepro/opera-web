@@ -8,19 +8,9 @@ import {
 
 import ValidateButton from "../buttons/ValidateButton";
 import CancelButton from "../buttons/CancelButton";
-import { PropsWithChildren } from "react";
 import DialogActions from "@/components/common/dialogs/DialogActions";
 import DialogTitle from "@/components/common/dialogs/DialogTitle";
-
-interface EditDialogProps extends PropsWithChildren {
-  open: boolean;
-  onClose: () => void;
-  formId: string;
-  submitButtonLabel?: string;
-  cancelButtonLabel?: string;
-  title?: string;
-  text?: string;
-}
+import { EditDialogProps } from "./types";
 
 const EditDialog: React.FC<EditDialogProps> = (props) => {
   const {

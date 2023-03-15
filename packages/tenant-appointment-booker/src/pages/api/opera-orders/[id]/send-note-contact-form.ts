@@ -3,16 +3,18 @@ import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const sendNoteToUpdateRealEstateInformation = async (
+const sendNoteContactForm = async (
   operaOrderId: string,
-  note: string
+  reason: string,
+  type: string,
+  newDesiredDate?: string
 ) => {
   return axios.post(
-    `${process.env.SERVER_URL}/api/opera-order/${operaOrderId}/send-note`,
+    `${process.env.SERVER_URL}/api/opera-order/${operaOrderId}/send-note-contact-form`,
     {
-      data: {
-        content: note,
-      },
+      reason,
+      type,
+      newDesiredDate,
     },
     getAxiosOptions()
   );
@@ -22,12 +24,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "POST") {
     try {
-      const { note } = req.body;
+      const { reason, type, newDesiredDate } = req.body;
       const { id } = req.query;
       const operaOrderId = id as string;
-      const response = await sendNoteToUpdateRealEstateInformation(
+      const response = await sendNoteContactForm(
         operaOrderId,
-        note
+        reason,
+        type,
+        newDesiredDate
       );
       return res.status(200).json(response);
     } catch (error: any) {

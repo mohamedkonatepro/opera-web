@@ -6,25 +6,32 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-
-interface CancelAppointmentProps {
-  expanded: boolean;
-  formId: string;
-  onSubmit: () => void;
-  onChange: () => void;
-}
+import { useEffect, useState } from "react";
+import { CancelAppointmentProps } from "./types";
 
 const CancelAppointment: React.FC<CancelAppointmentProps> = ({
   expanded,
   onChange,
   formId,
+  onSubmit,
+  setFormIsValid,
 }) => {
+  const [reason, setReason] = useState("");
+
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    alert("on submit 2");
+    onSubmit({ reason });
   };
+
+  useEffect(() => {
+    if (reason && reason.length > 0) {
+      setFormIsValid(true);
+    } else {
+      setFormIsValid(false);
+    }
+  }, [reason, setFormIsValid]);
 
   return (
     <Accordion
@@ -35,23 +42,17 @@ const CancelAppointment: React.FC<CancelAppointmentProps> = ({
       disableGutters
     >
       <AccordionSummary
-        sx={{
-          flexDirection: "row-reverse",
-          "& .MuiAccordionSummary-content": {
-            marginLeft: 1.5,
-          },
-        }}
         expandIcon={
           expanded ? (
-            <RadioButtonChecked color="secondary" />
+            <RadioButtonChecked fontSize="small" color="secondary" />
           ) : (
-            <RadioButtonUnchecked htmlColor="text.disabled" />
+            <RadioButtonUnchecked fontSize="small" htmlColor="text.disabled" />
           )
         }
       >
         Je ne souhaite pas prendre de rendez-vous
       </AccordionSummary>
-      <AccordionDetails sx={{ bgcolor: "background.default" }}>
+      <AccordionDetails>
         {expanded && (
           <Stack
             component="form"
@@ -67,6 +68,8 @@ const CancelAppointment: React.FC<CancelAppointmentProps> = ({
               sx={{
                 bgcolor: "background.paper",
               }}
+              value={reason}
+              onChange={(event) => setReason(event.target.value)}
               multiline
               required
             />

@@ -6,21 +6,17 @@ import {
 } from "@mui/material";
 import DialogActions from "./DialogActions";
 import DialogTitle from "./DialogTitle";
-interface SuccessDialogProps {
-  open: boolean;
-  onClose?: () => void;
-  title?: string;
-  text?: string;
-}
+import { SuccessDialogProps } from "./types";
 
 const SuccessDialog: React.FC<SuccessDialogProps> = ({
   open,
   title,
   text,
   onClose,
+  maxWidth,
 }) => {
   return (
-    <Dialog open={open} maxWidth="md">
+    <Dialog open={open} maxWidth={false} PaperProps={{ sx: { maxWidth } }}>
       <DialogTitle onClose={onClose} type="success" />
       <DialogContent>
         {title && (

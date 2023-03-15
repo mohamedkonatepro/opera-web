@@ -1,6 +1,6 @@
 import Appointment from "@/types/appointment";
-import { Assignment, AssignmentOutlined } from "@mui/icons-material";
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { AssignmentOutlined } from "@mui/icons-material";
+import { Stack, Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import AgendaView from "./AgendaView";
 

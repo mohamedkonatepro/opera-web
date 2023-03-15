@@ -4,26 +4,29 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 import CancelAppointment from "./CancelAppointment";
 import NotAvailableAtDates from "./NotAvailableAtDates";
+import {
+  ContactFormProps,
+  ContactFormSubmitValues,
+  ContactReason,
+} from "./types";
 
-enum ContactReason {
-  NOT_AVAILABLE_AT_DATES,
-  CANCEL_APPOINTMENT,
-}
-
-interface ContactFormProps {
-  id: string;
-  defaultValues: {
-    desiredDateByContractor: string;
-  };
-}
-
-const ContactForm: React.FC<ContactFormProps> = ({ id, defaultValues }) => {
+const ContactForm: React.FC<ContactFormProps> = ({
+  id,
+  defaultValues,
+  disabled,
+  onSubmit,
+  setFormIsValid,
+}) => {
   const [expanded, setExpanded] = useState<ContactReason>(
     ContactReason.NOT_AVAILABLE_AT_DATES
   );
 
   const handleOnChangeAccordion = (panel: ContactReason) => () => {
     setExpanded(panel);
+  };
+
+  const handleOnSubmit = (values: ContactFormSubmitValues) => {
+    onSubmit({ ...values, type: expanded });
   };
 
   return (
@@ -40,15 +43,18 @@ const ContactForm: React.FC<ContactFormProps> = ({ id, defaultValues }) => {
           desiredDateByContractor={DateTime.fromISO(
             defaultValues.desiredDateByContractor
           )}
-          onSubmit={() => alert("on submit")}
+          onSubmit={handleOnSubmit}
           formId={id}
+          setFormIsValid={setFormIsValid}
+          disabled={disabled}
         />
 
         <CancelAppointment
           expanded={expanded === ContactReason.CANCEL_APPOINTMENT}
           onChange={handleOnChangeAccordion(ContactReason.CANCEL_APPOINTMENT)}
-          onSubmit={() => alert("on submit 2")}
+          onSubmit={handleOnSubmit}
           formId={id}
+          setFormIsValid={setFormIsValid}
         />
       </Box>
     </Stack>
