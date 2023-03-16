@@ -7,18 +7,13 @@ const CommonEDLAppointmentDateText: React.FC<{
   familyLongName: string;
 }> = ({ desiredDateByContractor, familyLongName }) => (
   <>
-    <Typography variant="subtitle2" color="text.primary" display="inline">
+    <Typography variant="subtitle2" display="inline">
       L’
     </Typography>
-    <Typography
-      variant="subtitle2"
-      color="text.primary"
-      textTransform="lowercase"
-      display="inline"
-    >
+    <Typography variant="subtitle2" textTransform="lowercase" display="inline">
       {familyLongName}
     </Typography>
-    <Typography variant="subtitle2" color="text.primary" display="inline">
+    <Typography variant="subtitle2" display="inline">
       {" "}
       est initialement prévu le{" "}
       {desiredDateByContractor.toFormat("EEEE d LLLL yyyy")}. Votre demande sera
