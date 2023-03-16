@@ -53,9 +53,7 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
         <ContractorSummary contractor={contractor} />
         <ContactForm
           id={formId}
-          defaultValues={{
-            desiredDateByContractor: order.desiredDateByContractor,
-          }}
+          order={order}
           onSubmit={onSubmit}
           setFormIsValid={setFormIsValid}
           disabled={disabled}

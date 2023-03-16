@@ -7,7 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { CancelAppointmentProps } from "./types";
+import ChangeDesiredAppointmentDateAlert from "./ChangeDesiredAppointmentDateAlert";
+import { CancelAppointmentProps, ContactReason } from "./types";
 
 const CancelAppointment: React.FC<CancelAppointmentProps> = ({
   expanded,
@@ -15,6 +16,7 @@ const CancelAppointment: React.FC<CancelAppointmentProps> = ({
   formId,
   onSubmit,
   setFormIsValid,
+  order,
 }) => {
   const [reason, setReason] = useState("");
 
@@ -26,11 +28,7 @@ const CancelAppointment: React.FC<CancelAppointmentProps> = ({
   };
 
   useEffect(() => {
-    if (reason && reason.length > 0) {
-      setFormIsValid(true);
-    } else {
-      setFormIsValid(false);
-    }
+    setFormIsValid(Boolean(reason) && reason.length > 0);
   }, [reason, setFormIsValid]);
 
   return (
@@ -72,6 +70,10 @@ const CancelAppointment: React.FC<CancelAppointmentProps> = ({
               onChange={(event) => setReason(event.target.value)}
               multiline
               required
+            />
+            <ChangeDesiredAppointmentDateAlert
+              type={ContactReason.CANCEL_APPOINTMENT}
+              order={order}
             />
           </Stack>
         )}

@@ -1,18 +1,14 @@
 import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import SuccessDialog from "@/components/common/dialogs/SuccessDialog";
-import { sendNoteContactForm } from "@/queries/operaOrders";
-import Order from "@/types/order";
+import { processContactForm } from "@/queries/operaAppointments";
 import { Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import ContactDialog from "./ContactDialog";
-import {
-  ContactFormSubmitValues,
-  ContactFormSubmitValuesWithType,
-} from "./form/types";
+import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
 
-const Contact: React.FC<ContactProps> = ({ order }) => {
+const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
@@ -29,7 +25,7 @@ const Contact: React.FC<ContactProps> = ({ order }) => {
   };
 
   const mutation = useMutation({
-    mutationFn: sendNoteContactForm,
+    mutationFn: processContactForm,
     onSuccess: () => {
       setContactDialogOpen(false);
       setSuccessDialogOpen(true);
@@ -39,7 +35,7 @@ const Contact: React.FC<ContactProps> = ({ order }) => {
   const handleOnSubmitContactForm = (
     values: ContactFormSubmitValuesWithType
   ) => {
-    mutation.mutate({ ...values, orderId: order.orderId });
+    mutation.mutate({ ...values, appointmentBookingId });
   };
 
   return (

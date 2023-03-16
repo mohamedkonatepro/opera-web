@@ -13,7 +13,10 @@ const AppointmentBookingMobile: React.FC<AppointmentBookingProps> = ({
   return (
     <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={3}>
       <Box m={3} mb={0}>
-        <AppointmentInformation order={order} />
+        <AppointmentInformation
+          order={order}
+          appointmentBookingId={appointmentBookingId}
+        />
       </Box>
       <Box width={1}>
         <Box m={3} mt={0}>

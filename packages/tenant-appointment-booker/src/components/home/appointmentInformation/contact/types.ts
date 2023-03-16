@@ -3,6 +3,7 @@ import { ContactFormSubmitValuesWithType } from "./form/types";
 
 export interface ContactProps {
   order: Order;
+  appointmentBookingId: string;
 }
 
 export interface ContactDialogProps {

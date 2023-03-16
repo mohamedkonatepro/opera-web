@@ -9,26 +9,25 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
-import { NotAvailableAtDatesProps } from "./types";
+import ChangeDesiredAppointmentDateAlert from "./ChangeDesiredAppointmentDateAlert";
+import { ContactReason, NotAvailableAtDatesProps } from "./types";
 
 const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
   expanded,
   onChange,
-  desiredDateByContractor,
+  order,
   formId,
   disabled,
   onSubmit,
   setFormIsValid,
 }) => {
-  const [date, setDate] = useState(desiredDateByContractor);
+  const [date, setDate] = useState(
+    DateTime.fromISO(order.desiredDateByContractor)
+  );
   const [reason, setReason] = useState("");
 
   useEffect(() => {
-    if (date && reason && reason.length > 0) {
-      setFormIsValid(true);
-    } else {
-      setFormIsValid(false);
-    }
+    setFormIsValid(date.isValid && Boolean(reason) && reason.length > 0);
   }, [date, reason, setFormIsValid]);
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -112,6 +111,11 @@ const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
               }}
               multiline
               required
+            />
+            <ChangeDesiredAppointmentDateAlert
+              order={order}
+              newDesiredDate={date}
+              type={ContactReason.NOT_AVAILABLE_AT_DATES}
             />
           </Stack>
         )}

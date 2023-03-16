@@ -1,3 +1,4 @@
+import Order from "@/types/order";
 import { DateTime } from "luxon";
 
 export enum ContactReason {
@@ -18,9 +19,7 @@ export interface ContactFormSubmitValuesWithType {
 
 export interface ContactFormProps {
   id: string;
-  defaultValues: {
-    desiredDateByContractor: string;
-  };
+  order: Order;
   disabled: boolean;
   onSubmit: (values: ContactFormSubmitValuesWithType) => void;
   setFormIsValid: (isValid: boolean) => void;
@@ -28,7 +27,7 @@ export interface ContactFormProps {
 
 export interface NotAvailableAtDatesProps {
   expanded: boolean;
-  desiredDateByContractor: DateTime;
+  order: Order;
   formId: string;
   disabled: boolean;
   onSubmit: (values: ContactFormSubmitValues) => void;
@@ -39,7 +38,14 @@ export interface NotAvailableAtDatesProps {
 export interface CancelAppointmentProps {
   expanded: boolean;
   formId: string;
+  order: Order;
   onSubmit: (values: ContactFormSubmitValues) => void;
   onChange: () => void;
   setFormIsValid: (isValid: boolean) => void;
+}
+
+export interface ChangeDesiredAppointmentDateAlertProps {
+  newDesiredDate?: DateTime;
+  order: Order;
+  type: ContactReason;
 }

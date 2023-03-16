@@ -12,7 +12,7 @@ import {
 
 const ContactForm: React.FC<ContactFormProps> = ({
   id,
-  defaultValues,
+  order,
   disabled,
   onSubmit,
   setFormIsValid,
@@ -40,9 +40,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           onChange={handleOnChangeAccordion(
             ContactReason.NOT_AVAILABLE_AT_DATES
           )}
-          desiredDateByContractor={DateTime.fromISO(
-            defaultValues.desiredDateByContractor
-          )}
+          order={order}
           onSubmit={handleOnSubmit}
           formId={id}
           setFormIsValid={setFormIsValid}
@@ -55,6 +53,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           onSubmit={handleOnSubmit}
           formId={id}
           setFormIsValid={setFormIsValid}
+          order={order}
         />
       </Box>
     </Stack>
