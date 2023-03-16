@@ -6,19 +6,9 @@ import {
   DialogContentText,
   Stack,
 } from "@mui/material";
-import { PropsWithChildren } from "react";
 import DialogActions from "./DialogActions";
 import DialogTitle from "./DialogTitle";
-
-interface HelpDialogProps extends PropsWithChildren {
-  open: boolean;
-  onClose?: () => void;
-  title?: string;
-  text?: string;
-  variant?: "help" | "form";
-  actions?: React.ReactNode;
-  maxWidth?: number;
-}
+import { HelpDialogProps } from "./types";
 
 const HelpDialog: React.FC<HelpDialogProps> = ({
   open,
@@ -37,7 +27,7 @@ const HelpDialog: React.FC<HelpDialogProps> = ({
           <Box>
             {title && (
               <DialogContentText
-                variant="body1"
+                variant="subtitle1"
                 fontWeight="500"
                 color="text.primary"
               >

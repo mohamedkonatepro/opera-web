@@ -108,7 +108,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   return (
     <div>
       <Stack spacing={3}>
-        <Typography variant="body1" fontWeight="500">
+        <Typography variant="subtitle1" fontWeight="500">
           Choisissez une date et une heure
         </Typography>
         <SelectAppointmentDayCalendar

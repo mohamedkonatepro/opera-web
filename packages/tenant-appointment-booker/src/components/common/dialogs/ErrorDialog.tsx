@@ -6,13 +6,7 @@ import {
 } from "@mui/material";
 import DialogActions from "./DialogActions";
 import DialogTitle from "./DialogTitle";
-interface ErrorDialogProps {
-  open: boolean;
-  onClose?: () => void;
-  title?: string;
-  text?: React.ReactNode;
-  maxWidth?: number;
-}
+import { ErrorDialogProps } from "./types";
 
 const ErrorDialog: React.FC<ErrorDialogProps> = ({
   open,
@@ -27,7 +21,7 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
       <DialogContent>
         {title && (
           <DialogContentText
-            variant="body1"
+            variant="subtitle1"
             fontWeight="500"
             color="text.primary"
           >

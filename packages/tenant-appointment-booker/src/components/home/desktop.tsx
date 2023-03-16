@@ -18,7 +18,10 @@ const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
     >
       <Box m={3} mr={0}>
         <Box width={540}>
-          <AppointmentInformation order={order} />
+          <AppointmentInformation
+            order={order}
+            appointmentBookingId={appointmentBookingId}
+          />
         </Box>
       </Box>
       <Box width={1}>

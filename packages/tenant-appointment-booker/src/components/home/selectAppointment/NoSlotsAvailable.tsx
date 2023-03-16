@@ -3,11 +3,11 @@ import { Paper, Stack, Typography } from "@mui/material";
 
 const NoSlotsAvailable = () => {
   return (
-    <Paper elevation={0} sx={{ bgcolor: "error.light", padding: 1.5 }}>
+    <Paper variant="outlined" sx={{ bgcolor: "error.light", padding: 1.5 }}>
       <Stack direction="row" spacing={1.5}>
         <ErrorIcon fontSize="small" />
         <Stack spacing={0.5}>
-          <Typography variant="body2" fontWeight="500">
+          <Typography variant="subtitle2">
             Pas de créneau disponible pour le moment
           </Typography>
           <Typography variant="body2">

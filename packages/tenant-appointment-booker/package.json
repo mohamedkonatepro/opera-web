@@ -16,6 +16,7 @@
     "@fontsource/inter": "^4.5.15",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
+    "@mui/x-date-pickers": "^6.0.1",
     "@next/font": "^13.2.1",
     "@next/swc-linux-x64-gnu": "^13.1.6",
     "@next/swc-linux-x64-musl": "^13.1.6",

@@ -10,7 +10,7 @@ interface EDLAppointmentDateAlertProps {
 const CommonEDLAppointmentDateText: React.FC<{
   desiredDateByContractor: DateTime;
 }> = ({ desiredDateByContractor }) => (
-  <Typography variant="body2" color="text.primary" fontWeight="500">
+  <Typography variant="subtitle2" color="text.primary">
     L’état des lieux de sortie est initialement prévu le{" "}
     {desiredDateByContractor.toFormat("EEEE d LLLL yyyy")}.
   </Typography>

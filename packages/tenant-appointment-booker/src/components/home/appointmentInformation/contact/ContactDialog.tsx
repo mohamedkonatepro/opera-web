@@ -1,24 +1,28 @@
+import CancelButton from "@/components/common/buttons/CancelButton";
+import ValidateButton from "@/components/common/buttons/ValidateButton";
 import HelpDialog from "@/components/common/dialogs/HelpDialog";
-import Order from "@/types/order";
-import { Button, Divider, Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
+import ContactForm from "./form";
 import ContractorSummary from "./ContractorSummary";
+import { ContactDialogProps } from "./types";
+import { useState } from "react";
 
-interface ContactDialogProps {
-  open: boolean;
-  onClose: () => void;
-  order: Order;
-}
+const formId = "contact-form";
 
 const ContactDialog: React.FC<ContactDialogProps> = ({
   open,
   onClose,
   order,
+  onSubmit,
+  disabled,
 }) => {
   const contractor = {
     commercialName: order.commercialName,
     phoneNumber: order.commercialPhoneNumber,
     emails: order.emails,
   };
+
+  const [formIsValid, setFormIsValid] = useState(false);
 
   return (
     <HelpDialog
@@ -28,14 +32,18 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
       text="Contactez votre conseiller d’agence par téléphone, ou remplissez le formulaire de contact."
       maxWidth={600}
       actions={
-        <Button
-          fullWidth
-          variant="contained"
-          color="secondary"
-          onClick={onClose}
-        >
-          Fermer
-        </Button>
+        <>
+          <CancelButton fullWidth onClick={onClose} disabled={disabled}>
+            Annuler
+          </CancelButton>
+          <ValidateButton
+            fullWidth
+            form={formId}
+            disabled={disabled || !formIsValid}
+          >
+            Envoyer
+          </ValidateButton>
+        </>
       }
     >
       <Stack
@@ -43,6 +51,13 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
         divider={<Divider orientation="horizontal" flexItem />}
       >
         <ContractorSummary contractor={contractor} />
+        <ContactForm
+          id={formId}
+          order={order}
+          onSubmit={onSubmit}
+          setFormIsValid={setFormIsValid}
+          disabled={disabled}
+        />
       </Stack>
     </HelpDialog>
   );

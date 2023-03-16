@@ -3,8 +3,11 @@ import {
   BreakpointsOptions,
   createTheme,
   PaletteOptions,
+  ThemeOptions,
 } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { frFR as coreFrFR } from "@mui/material/locale";
+import { frFR as dateFrFR } from "@mui/x-date-pickers";
 
 export const inter = Inter({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -83,7 +86,31 @@ const breakpoints: BreakpointsOptions = {
   },
 };
 
-const components = {
+const components: ThemeOptions["components"] = {
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        fontSize: defaultTheme.typography.body2.fontSize,
+        padding: defaultTheme.spacing(2),
+        flexDirection: "row-reverse",
+      },
+      expandIconWrapper: {
+        marginRight: defaultTheme.spacing(1.5),
+      },
+      content: {
+        margin: 0,
+        padding: 0,
+      },
+    },
+  },
+  MuiAccordionDetails: {
+    styleOverrides: {
+      root: {
+        backgroundColor: palette.background?.default,
+        padding: defaultTheme.spacing(2),
+      },
+    },
+  },
   MuiDialog: {
     styleOverrides: {
       paper: {
@@ -113,6 +140,29 @@ const components = {
       root: {
         padding: 0,
         marginBottom: defaultTheme.spacing(1.5),
+      },
+    },
+  },
+  MuiInputLabel: {
+    styleOverrides: {
+      shrink: {
+        fontSize: defaultTheme.typography.caption.fontSize,
+        transform: "translate(14px, -8px) scale(0.88)",
+      },
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        padding: `${defaultTheme.spacing(1.5)} ${defaultTheme.spacing(1.75)}`,
+        fontSize: defaultTheme.typography.body2.fontSize,
+        backgroundColor: defaultTheme.palette.background.paper,
+      },
+      input: {
+        padding: 0,
+      },
+      inputMultiline: {
+        padding: 0,
       },
     },
   },
@@ -149,13 +199,23 @@ const components = {
       },
     },
   },
+  MuiPaper: {
+    styleOverrides: {
+      outlined: {
+        borderColor: palette.border.subtle,
+      },
+    },
+  },
 };
 
-const theme = createTheme({
-  palette,
-  typography,
-  breakpoints,
-  components,
-});
-
+const theme = createTheme(
+  {
+    palette,
+    typography,
+    breakpoints,
+    components,
+  },
+  dateFrFR,
+  coreFrFR
+);
 export default theme;
