@@ -1,12 +1,14 @@
 import { Inter } from "@next/font/google";
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import {
+  BreakpointsOptions,
+  Components,
+  createTheme,
+  PaletteOptions,
+  Theme,
+} from "@mui/material/styles";
 import { frFR as coreFrFR } from "@mui/material/locale";
 import { frFR as dateFrFR } from "@mui/x-date-pickers";
-
-export const inter = Inter({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -32,9 +34,23 @@ declare module "@mui/material/styles" {
   }
 }
 
-const defaultTheme = createTheme();
+export const inter = Inter({
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
-const palette: ThemeOptions["palette"] = {
+let theme = createTheme();
+
+const breakpoints: BreakpointsOptions = {
+  values: {
+    sm: 0,
+    md: 1024,
+  },
+};
+
+theme = createTheme({ ...theme, breakpoints });
+
+const palette: PaletteOptions = {
   primary: {
     main: "#EFA815",
   },
@@ -73,33 +89,34 @@ const palette: ThemeOptions["palette"] = {
   },
 };
 
-const typography: ThemeOptions["typography"] = {
+theme = createTheme({ ...theme, palette });
+
+const typography: TypographyOptions = {
   fontFamily: inter.style.fontFamily,
   button: {
     textTransform: "none",
   },
   h5: {
     fontSize: "1.125rem",
+    fontWeight: 600,
+    lineHeight: "24px",
+    letterSpacing: "-0.02em",
+    color: theme.palette.common.black,
   },
 };
 
-const breakpoints: ThemeOptions["breakpoints"] = {
-  values: {
-    sm: 0,
-    md: 1024,
-  },
-};
+theme = createTheme({ ...theme, typography });
 
-const components: ThemeOptions["components"] = {
+const components: Components<Omit<Theme, "components">> = {
   MuiAccordionSummary: {
     styleOverrides: {
       root: {
-        fontSize: defaultTheme.typography.body2.fontSize,
-        padding: defaultTheme.spacing(2),
+        fontSize: theme.typography.body2.fontSize,
+        padding: theme.spacing(2),
         flexDirection: "row-reverse",
       },
       expandIconWrapper: {
-        marginRight: defaultTheme.spacing(1.5),
+        marginRight: theme.spacing(1.5),
       },
       content: {
         margin: 0,
@@ -110,29 +127,29 @@ const components: ThemeOptions["components"] = {
   MuiAccordionDetails: {
     styleOverrides: {
       root: {
-        backgroundColor: palette.background?.default,
-        padding: defaultTheme.spacing(2),
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(2),
       },
     },
   },
   MuiButton: {
     styleOverrides: {
       outlined: {
-        borderColor: palette.border.default,
+        borderColor: theme.palette.border.default,
       },
       outlinedSecondary: {
         borderWidth: 2,
         borderStyle: "solid",
-        borderColor: palette.border.bold,
+        borderColor: theme.palette.border.bold,
         "&:hover ": {
           borderWidth: 2,
           borderStyle: "solid",
-          borderColor: palette.border.bold,
+          borderColor: theme.palette.border.bold,
         },
         "&:focus": {
           borderWidth: 2,
           borderStyle: "solid",
-          borderColor: palette.border.bold,
+          borderColor: theme.palette.border.bold,
         },
       },
     },
@@ -140,14 +157,14 @@ const components: ThemeOptions["components"] = {
   MuiDialog: {
     styleOverrides: {
       paper: {
-        padding: defaultTheme.spacing(3),
+        padding: theme.spacing(3),
       },
     },
   },
   MuiDialogActions: {
     styleOverrides: {
       root: {
-        marginTop: defaultTheme.spacing(3),
+        marginTop: theme.spacing(3),
         justifyContent: "center",
         alignItems: "center",
         padding: 0,
@@ -165,37 +182,41 @@ const components: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         padding: 0,
-        marginBottom: defaultTheme.spacing(1.5),
+        marginBottom: theme.spacing(1.5),
       },
     },
   },
   MuiIconButton: {
     styleOverrides: {
       root: {
-        backgroundColor: palette.background?.default,
+        backgroundColor: theme.palette.background.default,
         "&.Mui-disabled": {
-          backgroundColor: palette.background?.default,
+          backgroundColor: theme.palette.background.default,
         },
       },
       sizeSmall: {
-        padding: defaultTheme.spacing(0.5),
+        padding: theme.spacing(0.5),
       },
     },
   },
   MuiInputLabel: {
     styleOverrides: {
-      shrink: {
-        fontSize: defaultTheme.typography.caption.fontSize,
-        transform: "translate(14px, -8px) scale(0.88)",
+      outlined: {
+        fontSize: theme.typography.body2.fontSize,
+        transform: "translate(14px, 14px) scale(1)",
+        "&.MuiInputLabel-shrink": {
+          fontSize: theme.typography.caption.fontSize,
+          transform: "translate(14px, -8px) scale(0.88)",
+        },
       },
     },
   },
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        padding: `${defaultTheme.spacing(1.5)} ${defaultTheme.spacing(1.75)}`,
-        fontSize: defaultTheme.typography.body2.fontSize,
-        backgroundColor: defaultTheme.palette.background.paper,
+        padding: `${theme.spacing(1.5)} ${theme.spacing(1.75)}`,
+        fontSize: theme.typography.body2.fontSize,
+        backgroundColor: theme.palette.background.paper,
       },
       input: {
         padding: 0,
@@ -217,7 +238,7 @@ const components: ThemeOptions["components"] = {
       root: {
         padding: 0,
         "&:not(:last-child)": {
-          marginBottom: defaultTheme.spacing(1.5),
+          marginBottom: theme.spacing(1.5),
         },
       },
     },
@@ -226,14 +247,14 @@ const components: ThemeOptions["components"] = {
     styleOverrides: {
       root: {
         minWidth: 0,
-        marginRight: defaultTheme.spacing(1.5),
+        marginRight: theme.spacing(1.5),
       },
     },
   },
   MuiListItemText: {
     styleOverrides: {
       primary: {
-        ...defaultTheme.typography.body2,
+        ...theme.typography.body2,
         ...typography,
       },
     },
@@ -241,42 +262,21 @@ const components: ThemeOptions["components"] = {
   MuiPaper: {
     styleOverrides: {
       outlined: {
-        borderColor: palette.border.subtle,
+        borderColor: theme.palette.border.subtle,
       },
     },
   },
   MuiSvgIcon: {
     defaultProps: {
       fontSize: "small",
-    },
-    styleOverrides: {
-      root: {
-        color: palette.text?.secondary,
-      },
-      colorPrimary: {
-        // @ts-ignore
-        color: palette.primary?.main,
-      },
-      colorSecondary: {
-        // @ts-ignore
-        color: palette.secondary?.main,
-      },
-      colorError: {
-        // @ts-ignore
-        color: palette.error?.main,
-      },
-      colorDisabled: {
-        color: palette.text?.disabled,
-      },
+      htmlColor: theme.palette.text.secondary,
     },
   },
 };
 
-const theme = createTheme(
+theme = createTheme(
   {
-    palette,
-    typography,
-    breakpoints,
+    ...theme,
     components,
   },
   dateFrFR,

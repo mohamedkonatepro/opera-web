@@ -16,13 +16,11 @@ export const getAppointmentBooking = async (id: string) => {
     ...response.data.data.attributes,
   };
 
-  // const order = await axios.get(
-  //   `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
-  //   getAxiosOptions()
-  // );
-  appointmentBooking.order = order;
-  appointmentBooking.appointment = null;
-  return appointmentBooking;
+  const orderResponse = await axios.get(
+    `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
+    getAxiosOptions()
+  );
+  appointmentBooking.order = orderResponse.data;
 
   if (appointmentBooking.appointment_id !== null) {
     try {
