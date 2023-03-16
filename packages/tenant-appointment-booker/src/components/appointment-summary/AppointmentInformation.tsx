@@ -20,14 +20,12 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
       <AgendaView appointmentDatetime={appointmentDatetime} />
       <Stack spacing={0.5}>
         <Stack direction="row" spacing={0.5} alignItems="center">
-          <AssignmentOutlined />
+          <AssignmentOutlined sx={{ color: "text.secondary" }} />
           <Typography variant="body2" color="text.secondary">
             {order.familleLongue}
           </Typography>
         </Stack>
-        <Typography variant="h5" fontWeight="500" fontSize="18px">
-          Votre rendez-vous est confirmé !
-        </Typography>
+        <Typography variant="h6">Votre rendez-vous est confirmé !</Typography>
         <Typography variant="body2" color="text.secondary">
           {appointmentDatetime.toFormat("cccc, dd LLLL yyyy à hh:mm")} pour{" "}
           {order.commercialName}

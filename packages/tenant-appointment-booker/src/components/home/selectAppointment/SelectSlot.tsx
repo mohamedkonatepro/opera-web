@@ -53,13 +53,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
         <Grid sm={4} key={slot.stamp}>
           <OutlinedButton
             disabled={disabled}
-            color={selectedSlot?.stamp === slot.stamp ? "secondary" : "inherit"}
-            sx={{
-              color:
-                selectedSlot?.stamp === slot.stamp
-                  ? "secondary"
-                  : "text.secondary",
-            }}
+            selected={selectedSlot?.stamp === slot.stamp}
             padding="small"
             onClick={() => {
               handleOnClickSlot(slot);

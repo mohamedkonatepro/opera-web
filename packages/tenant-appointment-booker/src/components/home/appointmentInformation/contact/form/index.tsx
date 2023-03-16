@@ -31,9 +31,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   return (
     <Stack spacing={2}>
-      <Typography variant="subtitle1" fontWeight="500">
-        Motif de la demande
-      </Typography>
+      <Typography variant="subtitle1">Motif de la demande</Typography>
       <Box>
         <NotAvailableAtDates
           expanded={expanded === ContactReason.NOT_AVAILABLE_AT_DATES}

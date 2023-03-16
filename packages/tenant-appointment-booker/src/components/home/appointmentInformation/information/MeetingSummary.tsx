@@ -11,22 +11,20 @@ const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = ({
   familyLongName,
 }) => {
   return (
-    <Box>
-      <Stack spacing={0.5}>
-        <Typography variant="body2" color="secondary">
-          {commercialName}
+    <Stack spacing={0.5}>
+      <Typography variant="body2" color="secondary.main">
+        {commercialName}
+      </Typography>
+      <Typography variant="h6">
+        Rendez-vous pour votre {familyLongName.toLocaleLowerCase()}
+      </Typography>
+      <Stack direction="row" spacing={1.5}>
+        <AssignmentOutlined sx={{ color: "text.secondary" }} />
+        <Typography variant="body2" color="text.secondary">
+          {familyLongName}
         </Typography>
-        <Typography variant="h5">
-          Rendez-vous pour votre {familyLongName.toLocaleLowerCase()}
-        </Typography>
-        <Stack direction="row" spacing={1.5}>
-          <AssignmentOutlined />
-          <Typography variant="body2" color="text.secondary">
-            {familyLongName}
-          </Typography>
-        </Stack>
       </Stack>
-    </Box>
+    </Stack>
   );
 };
 

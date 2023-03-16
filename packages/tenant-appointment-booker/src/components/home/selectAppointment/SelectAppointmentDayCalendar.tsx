@@ -1,4 +1,4 @@
-import { IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import SelectSlot from "./SelectSlot";
 import Slot from "@/types/slot";
@@ -43,15 +43,17 @@ const SelectAppointmentDayCalendar: React.FC<
     disabled
   );
 
-  const theme = useTheme();
-
   const handleOnClickPage = (page: DateTime) => {
     onSelectDate(page);
   };
 
   return (
     <Stack spacing={1.5}>
-      <Typography variant="body1" textTransform="capitalize">
+      <Typography
+        variant="body2"
+        textTransform="capitalize"
+        color="text.primary"
+      >
         {selectedDate.toFormat("LLLL, yyyy")}
       </Typography>
       <Stack direction="row" spacing={1} justifyContent="space-between">
@@ -67,7 +69,7 @@ const SelectAppointmentDayCalendar: React.FC<
                   alignItems="center"
                 >
                   <Typography
-                    variant="body1"
+                    variant="caption"
                     color="text.secondary"
                     textTransform="capitalize"
                   >
@@ -83,8 +85,8 @@ const SelectAppointmentDayCalendar: React.FC<
                       backgroundColor: selected
                         ? "secondary.main"
                         : "secondary.light",
+                      typography: selected ? "subtitle2" : "body2",
                       color: selected ? "common.white" : "secondary",
-                      typography: "subtitle1",
                       "&:hover": {
                         backgroundColor: selected
                           ? "secondary.main"
@@ -103,9 +105,7 @@ const SelectAppointmentDayCalendar: React.FC<
               const Icon = type === "next" ? ChevronRight : ChevronLeft;
               return (
                 <Stack key={type} spacing={1.75} alignItems="center">
-                  <Typography variant="body1" color="text.secondary">
-                    &nbsp;
-                  </Typography>
+                  <Typography variant="caption">&nbsp;</Typography>
                   <IconButton
                     onClick={onClick}
                     disabled={disabled}

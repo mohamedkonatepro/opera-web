@@ -40,7 +40,7 @@ const AgendaView: React.FC<AgendaViewProps> = ({ appointmentDatetime }) => {
           bgcolor: "background.default",
         }}
       >
-        <Typography variant="h5" color="secondary" fontWeight="500">
+        <Typography variant="h5" color="secondary">
           {appointmentDatetime.toFormat("dd")}
         </Typography>
       </Paper>

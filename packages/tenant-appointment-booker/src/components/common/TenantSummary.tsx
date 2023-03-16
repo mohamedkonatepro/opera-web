@@ -57,7 +57,10 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           </Typography>
           {displayEditButton && (
             <>
-              <UnderlinedButton onClick={handleClickEditButton}>
+              <UnderlinedButton
+                onClick={handleClickEditButton}
+                variant="caption"
+              >
                 Modifier
               </UnderlinedButton>
               <EditDialog
@@ -82,32 +85,28 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
             </>
           )}
         </Stack>
-        <Typography
-          variant="body2"
-          color="text.primary"
-          alignItems="center"
-          display="flex"
-        >
-          <EmojiEmotionsOutlinedIcon sx={{ mr: 1.2 }} /> {locataire.name}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.primary"
-          alignItems="center"
-          display="flex"
-        >
-          <AlternateEmailOutlinedIcon sx={{ mr: 1.2 }} /> {locataire.email}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.primary"
-          alignItems="center"
-          display="flex"
-        >
-          <LocalPhoneOutlinedIcon sx={{ mr: 1.2 }} />
-          {locataire.phoneNumber &&
-            formattedPhoneNumber(locataire.phoneNumber).replace("+33", "(+33)")}
-        </Typography>
+        <Stack direction="row" spacing={1.5}>
+          <EmojiEmotionsOutlinedIcon sx={{ color: "text.secondary" }} />
+          <Typography variant="body2" color="text.primary">
+            {locataire.name}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={1.5}>
+          <AlternateEmailOutlinedIcon sx={{ color: "text.secondary" }} />
+          <Typography variant="body2" color="text.primary">
+            {locataire.email}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={1.5}>
+          <LocalPhoneOutlinedIcon sx={{ color: "text.secondary" }} />
+          <Typography variant="body2" color="text.primary">
+            {locataire.phoneNumber &&
+              formattedPhoneNumber(locataire.phoneNumber).replace(
+                "+33",
+                "(+33)"
+              )}
+          </Typography>
+        </Stack>
       </Stack>
     </Box>
   );

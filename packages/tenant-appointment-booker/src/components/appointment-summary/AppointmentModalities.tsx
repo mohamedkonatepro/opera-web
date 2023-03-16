@@ -24,14 +24,12 @@ const modalities = {
 const AppointmentModalities = () => {
   return (
     <Stack spacing={1.5}>
-      <Typography variant="caption" color="text.secondary">
-        Le jour de l’état des lieux
-      </Typography>
+      <Typography variant="caption">Le jour de l’état des lieux</Typography>
       <List>
         {modalities.EDL.map((modality) => (
           <ListItem key={modality}>
             <ListItemIcon>
-              <ArrowRight sx={{ color: "text.disabled" }} />
+              <ArrowRight />
             </ListItemIcon>
             <ListItemText primary={modality} />
           </ListItem>

@@ -61,12 +61,13 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
             alignItems="center"
             divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
           >
-            <Typography variant="body2" color="text.secondary">
-              Informations du bien
-            </Typography>
+            <Typography variant="caption">Informations du bien</Typography>
             {displayEditButton && (
               <>
-                <UnderlinedButton onClick={handleClickEditButton}>
+                <UnderlinedButton
+                  onClick={handleClickEditButton}
+                  variant="caption"
+                >
                   Modifier
                 </UnderlinedButton>
                 <EditDialog
@@ -88,42 +89,42 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               </>
             )}
           </Stack>
-          <Typography
-            variant="body2"
-            color="text.primary"
-            alignItems="center"
-            display="flex"
-          >
-            <PlaceOutlinedIcon sx={{ mr: 1.2 }} /> {realEstate.Address},{" "}
-            {realEstate.CP} {realEstate.Ville}
-          </Typography>
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            display="flex"
-            divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
-          >
-            <CottageOutlinedIcon />
-            <Typography
-              variant="body2"
-              color="text.primary"
+          <Stack direction="row" spacing={1.5}>
+            <PlaceOutlinedIcon sx={{ color: "text.secondary" }} />
+            <Typography variant="body2" color="text.primary">
+              {realEstate.Address}, {realEstate.CP} {realEstate.Ville}
+            </Typography>
+          </Stack>
+          <Stack direction="row" spacing={1.5}>
+            <CottageOutlinedIcon sx={{ color: "text.secondary" }} />
+
+            <Stack
+              direction="row"
+              spacing={1}
               alignItems="center"
               display="flex"
+              divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
             >
-              {realEstate.libelle} {realEstate.Type}
-              {realEstate.nbpiece},{" "}
-              {realEstate.meuble ? "meublé" : "non-meublé"}
-            </Typography>
-            <Typography variant="body2" color="text.primary">
-              étage : {realEstate.etage}
-            </Typography>
-            {realEstate.code && (
-              <Typography variant="body2" color="text.primary">
-                {" "}
-                code : {realEstate.code}
+              <Typography
+                variant="body2"
+                color="text.primary"
+                alignItems="center"
+                display="flex"
+              >
+                {realEstate.libelle} {realEstate.Type}
+                {realEstate.nbpiece},{" "}
+                {realEstate.meuble ? "meublé" : "non-meublé"}
               </Typography>
-            )}
+              <Typography variant="body2" color="text.primary">
+                Étage : {realEstate.etage}
+              </Typography>
+              {realEstate.code && (
+                <Typography variant="body2" color="text.primary">
+                  {" "}
+                  Code : {realEstate.code}
+                </Typography>
+              )}
+            </Stack>
           </Stack>
         </Stack>
       </Box>

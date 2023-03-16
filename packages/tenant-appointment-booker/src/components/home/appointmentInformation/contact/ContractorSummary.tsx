@@ -26,9 +26,10 @@ const ContractorSummary: React.FC<ContractorSummaryProps> = ({
   contractor,
 }) => {
   const [email, ...emails] = contractor.emails;
-  const phoneNumber = parsePhoneNumber(contractor.phoneNumber, "FR");
-  const formattedPhoneNumber = phoneNumber.formatInternational();
-  const phoneNumberUri = phoneNumber.getURI();
+  const phoneNumber =
+    contractor.phoneNumber && parsePhoneNumber(contractor.phoneNumber, "FR");
+  const formattedPhoneNumber = phoneNumber && phoneNumber.formatInternational();
+  const phoneNumberUri = phoneNumber && phoneNumber.getURI();
 
   return (
     <List>

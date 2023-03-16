@@ -9,6 +9,12 @@ import {
 import { frFR as coreFrFR } from "@mui/material/locale";
 import { frFR as dateFrFR } from "@mui/x-date-pickers";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
+import {
+  ErrorIcon,
+  InfoIcon,
+  SuccessIcon,
+  WarningIcon,
+} from "@/components/common/icons/Icons";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -93,15 +99,53 @@ theme = createTheme({ ...theme, palette });
 
 const typography: TypographyOptions = {
   fontFamily: inter.style.fontFamily,
+  body2: {
+    fontSize: "14px",
+    fontWeight: 400,
+    lineHeight: "20px",
+    letterSpacing: "-0.015em",
+    color: theme.palette.common.black,
+  },
   button: {
     textTransform: "none",
+    fontSize: "14px",
+    fontWeight: 500,
+    lineHeight: "24px",
+    letterSpacing: "-0.01em",
+  },
+  caption: {
+    fontSize: "12px",
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.005em",
+    color: theme.palette.text.secondary,
+  },
+  subtitle1: {
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "24px",
+    letterSpacing: "-0.01em",
+    color: theme.palette.text.primary,
+  },
+  subtitle2: {
+    fontSize: "14px",
+    fontWeight: 500,
+    lineHeight: "20px",
+    letterSpacing: "-0.015em",
+    color: theme.palette.text.primary,
   },
   h5: {
-    fontSize: "1.125rem",
+    fontSize: "24px",
+    fontWeight: 600,
+    lineHeight: "32px",
+    letterSpacing: "-0.01em",
+  },
+  h6: {
+    fontSize: "18px",
     fontWeight: 600,
     lineHeight: "24px",
     letterSpacing: "-0.02em",
-    color: theme.palette.common.black,
+    color: theme.palette.text.primary,
   },
 };
 
@@ -111,7 +155,6 @@ const components: Components<Omit<Theme, "components">> = {
   MuiAccordionSummary: {
     styleOverrides: {
       root: {
-        fontSize: theme.typography.body2.fontSize,
         padding: theme.spacing(2),
         flexDirection: "row-reverse",
       },
@@ -121,6 +164,8 @@ const components: Components<Omit<Theme, "components">> = {
       content: {
         margin: 0,
         padding: 0,
+        ...theme.typography.body2,
+        color: theme.palette.common.black,
       },
     },
   },
@@ -129,6 +174,28 @@ const components: Components<Omit<Theme, "components">> = {
       root: {
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing(2),
+      },
+    },
+  },
+  MuiAlert: {
+    defaultProps: {
+      variant: "outlined",
+      iconMapping: {
+        success: <SuccessIcon />,
+        warning: <WarningIcon />,
+        error: <ErrorIcon />,
+        info: <InfoIcon />,
+      },
+    },
+    styleOverrides: {
+      outlinedWarning: {
+        backgroundColor: theme.palette.warning.light,
+      },
+      outlinedError: {
+        backgroundColor: theme.palette.error.light,
+      },
+      outlinedInfo: {
+        backgroundColor: theme.palette.info.light,
       },
     },
   },
@@ -269,7 +336,6 @@ const components: Components<Omit<Theme, "components">> = {
   MuiSvgIcon: {
     defaultProps: {
       fontSize: "small",
-      htmlColor: theme.palette.text.secondary,
     },
   },
 };
@@ -282,4 +348,5 @@ theme = createTheme(
   dateFrFR,
   coreFrFR
 );
+
 export default theme;
