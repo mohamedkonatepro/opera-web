@@ -21,8 +21,8 @@ export const getAppointmentBooking = async (id: string) => {
   //   getAxiosOptions()
   // );
   appointmentBooking.order = order;
-  appointmentBooking.appointment = null
-  return appointmentBooking
+  appointmentBooking.appointment = null;
+  return appointmentBooking;
 
   if (appointmentBooking.appointment_id !== null) {
     try {

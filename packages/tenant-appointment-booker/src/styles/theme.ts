@@ -1,8 +1,5 @@
 import { Inter } from "@next/font/google";
-import {
-  createTheme,
-  ThemeOptions,
-} from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 import { frFR as coreFrFR } from "@mui/material/locale";
 import { frFR as dateFrFR } from "@mui/x-date-pickers";
 
@@ -136,9 +133,9 @@ const components: ThemeOptions["components"] = {
           borderWidth: 2,
           borderStyle: "solid",
           borderColor: palette.border.bold,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   MuiDialog: {
     styleOverrides: {
@@ -177,8 +174,8 @@ const components: ThemeOptions["components"] = {
       root: {
         backgroundColor: palette.background?.default,
         "&.Mui-disabled": {
-          backgroundColor: palette.background?.default
-        }
+          backgroundColor: palette.background?.default,
+        },
       },
       sizeSmall: {
         padding: defaultTheme.spacing(0.5),
@@ -271,7 +268,7 @@ const components: ThemeOptions["components"] = {
       colorDisabled: {
         color: palette.text?.disabled,
       },
-    }
+    },
   },
 };
 

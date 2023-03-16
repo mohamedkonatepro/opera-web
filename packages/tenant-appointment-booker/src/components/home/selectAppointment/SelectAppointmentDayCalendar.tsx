@@ -43,7 +43,7 @@ const SelectAppointmentDayCalendar: React.FC<
     disabled
   );
 
-  const theme = useTheme()
+  const theme = useTheme();
 
   const handleOnClickPage = (page: DateTime) => {
     onSelectDate(page);
@@ -97,9 +97,10 @@ const SelectAppointmentDayCalendar: React.FC<
                 </Stack>
               );
             }
-            case "next": case "previous": {
-              const onClick = type === "next" ? onClickNext : onClickPrevious
-              const Icon = type === "next" ? ChevronRight : ChevronLeft
+            case "next":
+            case "previous": {
+              const onClick = type === "next" ? onClickNext : onClickPrevious;
+              const Icon = type === "next" ? ChevronRight : ChevronLeft;
               return (
                 <Stack key={type} spacing={1.75} alignItems="center">
                   <Typography variant="body1" color="text.secondary">

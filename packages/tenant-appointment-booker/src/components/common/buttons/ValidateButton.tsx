@@ -1,13 +1,14 @@
 import { Button, ButtonProps } from "@mui/material";
+import ContainedButton from "./ContainedButton";
 
 const ValidateButton: React.FC<ButtonProps> = ({ form, ...rest }) => {
   return (
-    <Button
+    <ContainedButton
       {...rest}
       type="submit"
       form={form}
-      variant="contained"
       color="secondary"
+      padding="large"
     />
   );
 };

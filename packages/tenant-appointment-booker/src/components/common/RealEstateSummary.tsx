@@ -111,8 +111,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               alignItems="center"
               display="flex"
             >
-              {realEstate.libelle}{" "}
-              {realEstate.Type}
+              {realEstate.libelle} {realEstate.Type}
               {realEstate.nbpiece},{" "}
               {realEstate.meuble ? "meublé" : "non-meublé"}
             </Typography>

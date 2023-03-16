@@ -11,6 +11,7 @@ import { updateAppointmentBooking } from "@/queries/appointmentBookings";
 import * as operaSlotsClient from "@/queries/operaSlots";
 import SlotAlreadyTakenErrorDialog from "./SlotAlreadyTakenErrorDialog";
 import NoSlotsAvailableDialog from "./NoSlotsAvailableDialog";
+import ValidateButton from "@/components/common/buttons/ValidateButton";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
@@ -132,8 +133,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           />
         )}
         {hasSlotsBetweenDates && (
-          <Button
-            variant="contained"
+          <ValidateButton
             color="secondary"
             onClick={handleOnClickValidate}
             disabled={!selectedSlot || mutation.isLoading}
@@ -153,7 +153,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
             ) : (
               `Valider`
             )}
-          </Button>
+          </ValidateButton>
         )}
       </Stack>
       <SlotAlreadyTakenErrorDialog
