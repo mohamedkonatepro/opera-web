@@ -5,6 +5,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 import DialogActions from "./DialogActions";
+import DialogSubtitle from "./DialogSubtitle";
 import DialogTitle from "./DialogTitle";
 import { SuccessDialogProps } from "./types";
 
@@ -19,16 +20,7 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({
     <Dialog open={open} maxWidth={false} PaperProps={{ sx: { maxWidth } }}>
       <DialogTitle onClose={onClose} type="success" />
       <DialogContent>
-        {title && (
-          <DialogContentText
-            variant="subtitle1"
-            fontWeight="500"
-            color="text.primary"
-          >
-            {title}
-          </DialogContentText>
-        )}
-        {text && <DialogContentText variant="body2">{text}</DialogContentText>}
+        <DialogSubtitle title={title} text={text} />
       </DialogContent>
       <DialogActions>
         <Button

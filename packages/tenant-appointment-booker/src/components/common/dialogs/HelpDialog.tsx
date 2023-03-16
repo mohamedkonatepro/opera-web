@@ -7,6 +7,7 @@ import {
   Stack,
 } from "@mui/material";
 import DialogActions from "./DialogActions";
+import DialogSubtitle from "./DialogSubtitle";
 import DialogTitle from "./DialogTitle";
 import { HelpDialogProps } from "./types";
 
@@ -24,20 +25,7 @@ const HelpDialog: React.FC<HelpDialogProps> = ({
       <DialogTitle onClose={onClose} type="help" />
       <DialogContent>
         <Stack spacing={3}>
-          <Box>
-            {title && (
-              <DialogContentText
-                variant="subtitle1"
-                fontWeight="500"
-                color="text.primary"
-              >
-                {title}
-              </DialogContentText>
-            )}
-            {text && (
-              <DialogContentText variant="body2">{text}</DialogContentText>
-            )}
-          </Box>
+          <DialogSubtitle title={title} text={text} />
           <Box>{children}</Box>
         </Stack>
       </DialogContent>
