@@ -11,7 +11,7 @@ const processContactForm = async (
 ) => {
   if (type === "CANCEL_APPOINTMENT") {
     return axios.post(
-      `${process.env.SERVER_URL}/api/opera-appointments/cancel-request`,
+      `${process.env.SERVER_BASE_URL}/api/opera-appointments/cancel-request`,
       {
         reason,
         appointmentBookingId,
@@ -21,7 +21,7 @@ const processContactForm = async (
   }
 
   return axios.post(
-    `${process.env.SERVER_URL}/api/opera-appointments/update-date`,
+    `${process.env.SERVER_BASE_URL}/api/opera-appointments/update-date`,
     {
       reason,
       appointmentBookingId,
@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         type,
         newDesiredDate
       );
-      return res.status(200).json(response);
+      return res.status(200).json(response.data);
     } catch (error: any) {
       if (error.response) {
         return res.status(error.response.status).json(error.response.data);

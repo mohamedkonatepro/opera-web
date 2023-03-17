@@ -76,9 +76,13 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
                   open={editDialogOpen}
                   title="Modifier les informations du bien"
                   text="Modifier l'adresse, le type de bien, l'étage ou le digicode."
-                  // mutationIsLoading={mutation.isLoading}
+                  disabled={mutation.isLoading}
                 >
-                  <ModifyRealEstateForm onSubmit={onSubmit} id={formId} />
+                  <ModifyRealEstateForm
+                    onSubmit={onSubmit}
+                    disabled={mutation.isLoading}
+                    id={formId}
+                  />
                 </EditDialog>
                 <SuccessDialog
                   title="Votre demande de modification a été envoyée !"

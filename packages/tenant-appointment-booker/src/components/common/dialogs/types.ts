@@ -17,6 +17,7 @@ export interface EditDialogProps extends CommonDialogProps {
   formId: string;
   submitButtonLabel?: string;
   cancelButtonLabel?: string;
+  disabled?: boolean;
 }
 
 export interface ErrorDialogProps extends CommonDialogProps {}

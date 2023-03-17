@@ -8,10 +8,11 @@ export interface RealEstateFormSubmitValues {
 interface FormProps {
   id: string;
   onSubmit: (values: RealEstateFormSubmitValues) => void;
+  disabled?: boolean;
 }
 
 const ModifyRealEstateForm: React.FunctionComponent<FormProps> = (props) => {
-  const { id, onSubmit } = props;
+  const { id, onSubmit, disabled } = props;
 
   const [message, setMessage] = useState("");
 
@@ -36,6 +37,7 @@ const ModifyRealEstateForm: React.FunctionComponent<FormProps> = (props) => {
         multiline
         required
         value={message}
+        disabled={disabled}
       />
     </Stack>
   );

@@ -8,7 +8,7 @@ const sendNoteToUpdateRealEstateInformation = async (
   note: string
 ) => {
   return axios.post(
-    `${process.env.SERVER_URL}/api/opera-order/${operaOrderId}/send-note`,
+    `${process.env.SERVER_BASE_URL}/api/opera-order/${operaOrderId}/send-note`,
     {
       data: {
         content: note,
@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         operaOrderId,
         note
       );
-      return res.status(200).json(response);
+      return res.status(200).json(response.data);
     } catch (error: any) {
       if (error.response) {
         return res.status(error.response.status).json(error.response.data);
