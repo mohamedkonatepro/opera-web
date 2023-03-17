@@ -29,7 +29,7 @@ export const getAppointmentBooking = async (id: string) => {
         getAxiosOptions()
       );
       const appointment = appointmentResponse.data;
-      appointmentBooking.appointment = appointment.data;
+      appointmentBooking.appointment = appointment;
     } catch (error: any) {
       if (error.response.status === 404) appointmentBooking.appointment = null;
       else throw error;

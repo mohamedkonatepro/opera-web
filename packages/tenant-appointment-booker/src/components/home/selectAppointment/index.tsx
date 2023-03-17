@@ -130,6 +130,7 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
             selectedDate={selectedDate}
             orderType={order.type}
             orderFamily={order.familleInitial}
+            orderFamilyLongName={order.familleLongue}
           />
         )}
         {hasSlotsBetweenDates && (
