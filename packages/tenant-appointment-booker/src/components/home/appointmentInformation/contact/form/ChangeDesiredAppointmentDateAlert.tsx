@@ -58,11 +58,12 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
               />
               <Typography variant="body2">
                 Faire l’état des lieux de sortie le{" "}
-                {newDesiredDate && newDesiredDate.toFormat("d LLLL")} impose de décaler votre période de préavis.
-                Votre demande doit être validée par votre agence.
+                {newDesiredDate && newDesiredDate.toFormat("d LLLL")} impose de
+                décaler votre période de préavis. Votre demande doit être
+                validée par votre agence.
               </Typography>
             </Alert>
-          )
+          );
         }
       }
       case "E": {
