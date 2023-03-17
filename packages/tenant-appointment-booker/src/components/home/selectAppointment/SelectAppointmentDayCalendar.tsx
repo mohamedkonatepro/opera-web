@@ -4,8 +4,6 @@ import SelectSlot from "./SelectSlot";
 import Slot from "@/types/slot";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import useDaysPagination from "./hooks/useDaysPagination";
-import { useQuery } from "@tanstack/react-query";
-import * as operaSlotsClient from "@/queries/operaSlots";
 import NoSlotsBetweenDates from "./NoSlotsAvailable";
 
 interface SelectAppointmentDayCalendarProps {
@@ -51,7 +49,11 @@ const SelectAppointmentDayCalendar: React.FC<
 
   return (
     <Stack spacing={1.5}>
-      <Typography variant="body1" textTransform="capitalize">
+      <Typography
+        variant="body2"
+        textTransform="capitalize"
+        color="text.primary"
+      >
         {selectedDate.toFormat("LLLL, yyyy")}
       </Typography>
       <Stack direction="row" spacing={1} justifyContent="space-between">
@@ -67,7 +69,7 @@ const SelectAppointmentDayCalendar: React.FC<
                   alignItems="center"
                 >
                   <Typography
-                    variant="body1"
+                    variant="caption"
                     color="text.secondary"
                     textTransform="capitalize"
                   >
@@ -83,9 +85,8 @@ const SelectAppointmentDayCalendar: React.FC<
                       backgroundColor: selected
                         ? "secondary.main"
                         : "secondary.light",
+                      typography: selected ? "subtitle2" : "body2",
                       color: selected ? "common.white" : "secondary",
-                      typography: "body2",
-                      fontWeight: "500",
                       "&:hover": {
                         backgroundColor: selected
                           ? "secondary.main"
@@ -98,34 +99,19 @@ const SelectAppointmentDayCalendar: React.FC<
                 </Stack>
               );
             }
-            case "next": {
-              return (
-                <Stack key="next" spacing={1} alignItems="center">
-                  <Typography variant="body1" color="text.secondary">
-                    &nbsp;
-                  </Typography>
-                  <IconButton
-                    onClick={onClickNext}
-                    disabled={disabled}
-                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
-                  >
-                    <ChevronRight />
-                  </IconButton>
-                </Stack>
-              );
-            }
+            case "next":
             case "previous": {
+              const onClick = type === "next" ? onClickNext : onClickPrevious;
+              const Icon = type === "next" ? ChevronRight : ChevronLeft;
               return (
-                <Stack key="previous" spacing={1} alignItems="center">
-                  <Typography variant="body1" color="text.secondary">
-                    &nbsp;
-                  </Typography>
+                <Stack key={type} spacing={1.75} alignItems="center">
+                  <Typography variant="caption">&nbsp;</Typography>
                   <IconButton
-                    onClick={onClickPrevious}
+                    onClick={onClick}
                     disabled={disabled}
-                    sx={{ width: 40, height: 40, backgroundColor: "#F4F4F4" }}
+                    size="small"
                   >
-                    <ChevronLeft />
+                    <Icon />
                   </IconButton>
                 </Stack>
               );

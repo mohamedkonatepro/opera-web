@@ -1,8 +1,9 @@
-import { DateTime } from "luxon";
+import { DateTime, Interval } from "luxon";
 import { useMemo, useState } from "react";
 import { datesAreSame, isItemDisabled } from "../utils";
 
 const DAYS_TO_SHOW_BEFORE_AND_AFTER = 2;
+const DAYS_TO_SHOW = 6;
 
 const useDaysPagination = (
   initialDate: DateTime,
@@ -11,29 +12,23 @@ const useDaysPagination = (
   selectedDate: DateTime,
   disabled: boolean
 ) => {
-  const [halfDate, setHalfDate] = useState(initialDate);
+  const [referenceDay, setReferenceDay] = useState(initialDate.startOf("week"));
 
   const datesToShow = useMemo(() => {
-    const dates = [halfDate];
-    for (let i = 1; i <= DAYS_TO_SHOW_BEFORE_AND_AFTER; i++) {
-      const date = halfDate.minus({ days: i });
-      dates.push(date);
-    }
-    for (let i = 1; i <= DAYS_TO_SHOW_BEFORE_AND_AFTER; i++) {
-      const date = halfDate.plus({ days: i });
-      dates.push(date);
-    }
-    return dates.sort();
-  }, [halfDate]);
+    const endOfWeek = referenceDay.endOf("week").minus({ days: 1 });
+
+    const interval = Interval.fromDateTimes(referenceDay, endOfWeek);
+    const daysToShow = interval.splitBy({ days: 1 });
+
+    return daysToShow.map((day) => day.start);
+  }, [referenceDay]);
 
   const onClickNext = () => {
-    const nextHalfDate = halfDate.plus({ days: 1 });
-    setHalfDate(nextHalfDate);
+    setReferenceDay(referenceDay.plus({ weeks: 1 }));
   };
 
   const onClickPrevious = () => {
-    const previousHalfDate = halfDate.minus({ days: 1 });
-    setHalfDate(previousHalfDate);
+    setReferenceDay(referenceDay.minus({ weeks: 1 }));
   };
 
   return {
@@ -42,7 +37,7 @@ const useDaysPagination = (
         page: undefined,
         type: "previous",
         selected: false,
-        disabled: disabled || datesAreSame(datesToShow[0], minDate),
+        disabled: disabled || minDate >= referenceDay,
       },
       ...datesToShow.map((date) => {
         return {
@@ -56,10 +51,7 @@ const useDaysPagination = (
         page: undefined,
         type: "next",
         selected: false,
-        disabled:
-          disabled ||
-          datesAreSame(datesToShow[datesToShow.length - 1], maxDate) ||
-          datesAreSame(halfDate, maxDate),
+        disabled: disabled || maxDate <= referenceDay.endOf("week"),
       },
     ],
     onClickNext,

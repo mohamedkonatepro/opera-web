@@ -56,6 +56,7 @@ export default function MyApp(props: MyAppProps) {
             sx={{
               mt: { sm: 0, md: 12 },
               mb: { sm: 0, md: 2 },
+              maxWidth: { sm: "100%", md: 992 },
             }}
             fixed
             disableGutters

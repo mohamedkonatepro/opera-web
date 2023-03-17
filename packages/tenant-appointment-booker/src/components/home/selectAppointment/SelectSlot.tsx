@@ -4,6 +4,7 @@ import { Button, Skeleton } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
 import { getOperaSlots } from "@/queries/operaSlots";
+import OutlinedButton from "@/components/common/buttons/OutlinedButton";
 
 interface SelectSlotProps {
   orderId: string;
@@ -49,28 +50,18 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   return (
     <Grid container spacing={1}>
       {operaSlots.map((slot) => (
-        <Grid sm={6} key={slot.stamp}>
-          <Button
-            variant="outlined"
+        <Grid sm={4} key={slot.stamp}>
+          <OutlinedButton
             disabled={disabled}
-            color={selectedSlot?.stamp === slot.stamp ? "secondary" : "inherit"}
-            sx={{
-              borderColor:
-                selectedSlot?.stamp === slot.stamp
-                  ? "border.bold"
-                  : "border.default",
-              color:
-                selectedSlot?.stamp === slot.stamp
-                  ? "secondary"
-                  : "text.secondary",
-            }}
+            selected={selectedSlot?.stamp === slot.stamp}
+            padding="small"
             onClick={() => {
               handleOnClickSlot(slot);
             }}
             fullWidth
           >
             {slot.startTimeSlotOfAppointment}
-          </Button>
+          </OutlinedButton>
         </Grid>
       ))}
     </Grid>

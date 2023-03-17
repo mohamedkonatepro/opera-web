@@ -3,7 +3,8 @@ import axios from "axios";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import appointment from "@/mocks/appointment";
+import order from "@/mocks/order";
+
 export const getAppointmentBooking = async (id: string) => {
   const response = await axios.get(
     `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
@@ -15,11 +16,11 @@ export const getAppointmentBooking = async (id: string) => {
     ...response.data.data.attributes,
   };
 
-  const order = await axios.get(
+  const orderResponse = await axios.get(
     `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
     getAxiosOptions()
   );
-  appointmentBooking.order = order.data;
+  appointmentBooking.order = orderResponse.data;
 
   if (appointmentBooking.appointment_id !== null) {
     try {

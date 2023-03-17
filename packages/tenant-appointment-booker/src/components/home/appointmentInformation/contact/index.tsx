@@ -46,7 +46,7 @@ const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
         spacing={1}
       >
         <Typography variant="body2">Un empêchement, un problème ?</Typography>
-        <UnderlinedButton onClick={handleClickContactButton}>
+        <UnderlinedButton onClick={handleClickContactButton} variant="body2">
           Contactez-nous
         </UnderlinedButton>
       </Stack>

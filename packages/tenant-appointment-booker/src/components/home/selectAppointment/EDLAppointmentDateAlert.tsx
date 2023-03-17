@@ -26,7 +26,7 @@ const EDLAppointmentDateAlert: React.FC<EDLAppointmentDateAlertProps> = ({
     case "ES": {
       if (selectedDate < desiredDateByContractor) {
         return (
-          <Alert severity="warning" sx={{ bgcolor: "warning.light" }}>
+          <Alert severity="warning">
             <CommonEDLAppointmentDateText
               desiredDateByContractor={desiredDateByContractor}
             />
@@ -43,7 +43,7 @@ const EDLAppointmentDateAlert: React.FC<EDLAppointmentDateAlertProps> = ({
     case "E": {
       if (selectedDate > desiredDateByContractor) {
         return (
-          <Alert severity="warning" sx={{ bgcolor: "warning.light" }}>
+          <Alert severity="warning">
             <CommonEDLAppointmentDateText
               desiredDateByContractor={desiredDateByContractor}
             />
@@ -60,7 +60,7 @@ const EDLAppointmentDateAlert: React.FC<EDLAppointmentDateAlertProps> = ({
   }
 
   return (
-    <Alert severity="info" sx={{ bgcolor: "info.light" }}>
+    <Alert severity="info">
       <CommonEDLAppointmentDateText
         desiredDateByContractor={desiredDateByContractor}
       />
