@@ -1,7 +1,7 @@
 import Appointment from "@/types/appointment";
 import { AssignmentOutlined } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import AgendaView from "./AgendaView";
 
 interface AppointmentInformationProps {
@@ -29,6 +29,9 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
         <Typography variant="body2" color="text.secondary">
           {appointmentDatetime.toFormat("cccc, dd LLLL yyyy à hh:mm")} pour{" "}
           {order.commercialName}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          La durée de votre rendez-vous est de {Duration.fromObject({ minute: slot.duration }).toHuman()}.
         </Typography>
       </Stack>
     </Stack>

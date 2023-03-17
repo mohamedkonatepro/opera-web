@@ -89,7 +89,7 @@ const SummaryAppointment = ({
             order={appointmentBooking.order}
             appointmentBookingId={appointmentBookingId}
           />
-          <AppointmentModalities />
+          <AppointmentModalities orderType={appointmentBooking.order.type} />
         </Stack>
       </Paper>
     </>
