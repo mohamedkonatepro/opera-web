@@ -34,7 +34,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
       case "ES": {
         if (newDesiredDate && newDesiredDate < desiredDateByContractor) {
           return (
-            <Alert severity="warning" sx={{ bgcolor: "warning.light" }}>
+            <Alert severity="warning">
               <CommonEDLAppointmentDateText
                 desiredDateByContractor={desiredDateByContractor}
                 familyLongName={order.familleLongue}
@@ -49,6 +49,21 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             </Alert>
           );
         }
+        if (newDesiredDate && newDesiredDate > desiredDateByContractor) {
+          return (
+            <Alert severity="warning">
+              <CommonEDLAppointmentDateText
+                desiredDateByContractor={desiredDateByContractor}
+                familyLongName={order.familleLongue}
+              />
+              <Typography variant="body2">
+                Faire l’état des lieux de sortie le{" "}
+                {newDesiredDate && newDesiredDate.toFormat("d LLLL")} impose de décaler votre période de préavis.
+                Votre demande doit être validée par votre agence.
+              </Typography>
+            </Alert>
+          )
+        }
       }
       case "E": {
         if (
@@ -57,7 +72,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             newDesiredDate < desiredDateByContractor)
         ) {
           return (
-            <Alert severity="warning" sx={{ bgcolor: "warning.light" }}>
+            <Alert severity="warning">
               <CommonEDLAppointmentDateText
                 desiredDateByContractor={desiredDateByContractor}
                 familyLongName={order.familleLongue}
@@ -78,7 +93,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
 
   if (["S", "ES", "E"].includes(order.type)) {
     return (
-      <Alert severity="info" sx={{ bgcolor: "info.light" }}>
+      <Alert severity="info">
         <CommonEDLAppointmentDateText
           desiredDateByContractor={desiredDateByContractor}
           familyLongName={order.familleLongue}
