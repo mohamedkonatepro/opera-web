@@ -37,11 +37,11 @@ export default function MyApp(props: MyAppProps) {
   );
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
         <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="fr">
           <CssBaseline />
           <GlobalStyles
@@ -69,7 +69,7 @@ export default function MyApp(props: MyAppProps) {
             </QueryClientProvider>
           </Container>
         </LocalizationProvider>
-      </ThemeProvider>
-    </CacheProvider>
+      </CacheProvider>
+    </ThemeProvider>
   );
 }

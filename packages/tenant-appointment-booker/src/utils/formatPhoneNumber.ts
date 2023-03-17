@@ -1,8 +1,8 @@
-export function formattedPhoneNumber(phoneNumber: string) {
-  phoneNumber = phoneNumber.replaceAll(".", " ");
-  if (phoneNumber.substring(0, 1) == "0")
-    phoneNumber = phoneNumber.substring(1);
-  if (phoneNumber.indexOf("+33") == -1) phoneNumber = "+33 " + phoneNumber;
+import { parsePhoneNumber } from "libphonenumber-js";
 
-  return phoneNumber;
+export function formattedPhoneNumber(phoneNumber: string) {
+  const digitsOnly = phoneNumber.replace(/\D/g, "");
+  const formattedPhoneNumber = `+33${digitsOnly.slice(-9)}`;
+
+  return parsePhoneNumber(formattedPhoneNumber, "FR").formatInternational();
 }

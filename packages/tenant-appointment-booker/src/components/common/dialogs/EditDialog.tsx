@@ -18,6 +18,7 @@ const EditDialog: React.FC<EditDialogProps> = (props) => {
     title,
     text,
     disabled = false,
+    disabledSubmitButton = false,
   } = props;
 
   return (
@@ -33,7 +34,11 @@ const EditDialog: React.FC<EditDialogProps> = (props) => {
         <CancelButton onClick={onClose} disabled={disabled} fullWidth>
           {cancelButtonLabel}
         </CancelButton>
-        <ValidateButton form={formId} disabled={disabled} fullWidth>
+        <ValidateButton
+          form={formId}
+          disabled={disabled || disabledSubmitButton}
+          fullWidth
+        >
           {submitButtonLabel}
         </ValidateButton>
       </DialogActions>

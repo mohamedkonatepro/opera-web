@@ -7,9 +7,13 @@ import TenantSummary from "../../../common/TenantSummary";
 
 interface InformationProps {
   order: Order;
+  appointmentBookingId: string;
 }
 
-const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
+const Information: React.FunctionComponent<InformationProps> = ({
+  order,
+  appointmentBookingId,
+}) => {
   const { commercialName, familleLongue, bien, locataires } = order;
   const locataire = locataires[0];
 
@@ -29,7 +33,12 @@ const Information: React.FunctionComponent<InformationProps> = ({ order }) => {
           orderId={order.orderId}
           displayEditButton
         />
-        <TenantSummary locataire={locataire} displayEditButton />
+        <TenantSummary
+          locataire={locataire}
+          orderId={order.orderId}
+          displayEditButton
+          appointmentBookingId={appointmentBookingId}
+        />
       </Stack>
     </>
   );

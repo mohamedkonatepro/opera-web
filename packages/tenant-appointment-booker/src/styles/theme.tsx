@@ -151,7 +151,7 @@ const typography: TypographyOptions = {
 
 theme = createTheme({ ...theme, typography });
 
-const components: Components<Omit<Theme, "components">> = {
+const components: Components = {
   MuiAccordionSummary: {
     styleOverrides: {
       root: {

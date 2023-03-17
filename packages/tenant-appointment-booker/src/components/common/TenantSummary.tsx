@@ -5,25 +5,39 @@ import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Tenant from "@/types/tenant";
-import { useState } from "react";
 import EditDialog from "@/components/common/dialogs/EditDialog";
 import SuccessDialog from "./dialogs/SuccessDialog";
+import ModifyTenantForm from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
+import { useState } from "react";
 import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
-import ModifyTenantForm, {
-  TenantFormSubmitValues,
-} from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
+import * as operaOrderClient from "@/queries/operaOrders";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ErrorDialog from "./dialogs/ErrorDialog";
 
 const formId = "modify-tenant-form";
+
 interface TenantSummaryProps {
   locataire: Tenant;
+  orderId: string;
+  appointmentBookingId: string;
   displayEditButton?: boolean;
 }
 
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
-  const { locataire, displayEditButton = false } = props;
-
+  const {
+    locataire,
+    orderId,
+    displayEditButton = false,
+    appointmentBookingId,
+  } = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [tenant, setTenant] = useState(locataire);
+  const [formIsValid, setFormIsValid] = useState(false);
+  tenant.phoneNumber = formattedPhoneNumber(tenant.phoneNumber);
+
+  const queryClient = useQueryClient();
 
   const handleClickEditButton = () => {
     setEditDialogOpen(true);
@@ -35,11 +49,28 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
   const handleCloseConfirmDialog = () => {
     setConfirmDialogOpen(false);
   };
+  const handleCloseErrorDialog = () => {
+    setErrorDialogOpen(false);
+  };
 
-  const onSubmit = (values: TenantFormSubmitValues) => {
-    // TODO: send request to server
-    alert(JSON.stringify(values));
-    setConfirmDialogOpen(true);
+  const mutation = useMutation({
+    mutationFn: operaOrderClient.updateTenantInformations,
+    onSuccess: () => {
+      setConfirmDialogOpen(true);
+      setEditDialogOpen(false);
+      queryClient.invalidateQueries([
+        "appointmentBookings",
+        appointmentBookingId,
+      ]);
+    },
+    onError: () => {
+      setErrorDialogOpen(true);
+      setEditDialogOpen(false);
+    },
+  });
+
+  const onSubmit = (data: Tenant) => {
+      mutation.mutate({ locataire: data, orderId });
   };
 
   return (
@@ -69,11 +100,16 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
                 formId={formId}
                 onClose={handleCloseEditDialog}
                 open={editDialogOpen}
+                disabledSubmitButton={!formIsValid}
+                disabled={mutation.isLoading}
               >
                 <ModifyTenantForm
                   id={formId}
                   onSubmit={onSubmit}
-                  defaultValues={locataire}
+                  defaultValues={tenant}
+                  formIsValid={formIsValid}
+                  setFormIsValid={setFormIsValid}
+                  disabled={mutation.isLoading}
                 />
               </EditDialog>
               <SuccessDialog
@@ -81,6 +117,12 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
                 text="Vos informations personnelles ont été modifiées. Vous pouvez continuer la prise de rendez-vous."
                 onClose={handleCloseConfirmDialog}
                 open={confirmDialogOpen}
+              />
+              <ErrorDialog
+                title="Une erreur est survenue !"
+                text="Une erreur est survenue. Veuillez réessayer plus tard."
+                onClose={handleCloseErrorDialog}
+                open={errorDialogOpen}
               />
             </>
           )}
