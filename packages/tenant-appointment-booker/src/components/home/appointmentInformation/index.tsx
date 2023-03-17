@@ -13,7 +13,7 @@ const AppointmentInformation: React.FunctionComponent<
 > = ({ order, appointmentBookingId }) => {
   return (
     <Stack spacing={3} divider={<Divider orientation="horizontal" flexItem />}>
-      <Information order={order} />
+      <Information order={order} appointmentBookingId={appointmentBookingId} />
       <Contact order={order} appointmentBookingId={appointmentBookingId} />
     </Stack>
   );

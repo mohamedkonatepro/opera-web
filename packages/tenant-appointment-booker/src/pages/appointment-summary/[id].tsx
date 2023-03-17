@@ -85,7 +85,10 @@ const SummaryAppointment = ({
           <AppointmentInformation
             appointment={appointmentBooking.appointment}
           />
-          <RealEstateAndTenantInformation order={appointmentBooking.order} />
+          <RealEstateAndTenantInformation
+            order={appointmentBooking.order}
+            appointmentBookingId={appointmentBookingId}
+          />
           <AppointmentModalities />
         </Stack>
       </Paper>

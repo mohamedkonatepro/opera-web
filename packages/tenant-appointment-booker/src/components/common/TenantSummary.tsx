@@ -11,8 +11,7 @@ import ModifyTenantForm from "@/components/home/appointmentInformation/forms/Mod
 import { useState } from "react";
 import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
 import * as operaOrderClient from "@/queries/operaOrders";
-import { useMutation } from "@tanstack/react-query";
-import { isEqual } from "@/utils/isEqual";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ErrorDialog from "./dialogs/ErrorDialog";
 
 const formId = "modify-tenant-form";
@@ -20,16 +19,25 @@ const formId = "modify-tenant-form";
 interface TenantSummaryProps {
   locataire: Tenant;
   orderId: string;
+  appointmentBookingId: string;
   displayEditButton?: boolean;
 }
 
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
-  const { locataire, orderId, displayEditButton = false } = props;
+  const {
+    locataire,
+    orderId,
+    displayEditButton = false,
+    appointmentBookingId,
+  } = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [tenant, setTenant] = useState(locataire);
+  const [formIsValid, setFormIsValid] = useState(false);
   tenant.phoneNumber = formattedPhoneNumber(tenant.phoneNumber);
+
+  const queryClient = useQueryClient();
 
   const handleClickEditButton = () => {
     setEditDialogOpen(true);
@@ -50,21 +58,19 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
     onSuccess: () => {
       setConfirmDialogOpen(true);
       setEditDialogOpen(false);
+      queryClient.invalidateQueries([
+        "appointmentBookings",
+        appointmentBookingId,
+      ]);
     },
     onError: () => {
-      setTenant(locataire);
       setErrorDialogOpen(true);
       setEditDialogOpen(false);
     },
   });
 
   const onSubmit = (data: Tenant) => {
-    if (!isEqual(data, locataire)) {
-      setTenant(data);
       mutation.mutate({ locataire: data, orderId });
-    } else {
-      setEditDialogOpen(false);
-    }
   };
 
   return (
@@ -94,11 +100,16 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
                 formId={formId}
                 onClose={handleCloseEditDialog}
                 open={editDialogOpen}
+                disabledSubmitButton={!formIsValid}
+                disabled={mutation.isLoading}
               >
                 <ModifyTenantForm
                   id={formId}
                   onSubmit={onSubmit}
                   defaultValues={tenant}
+                  formIsValid={formIsValid}
+                  setFormIsValid={setFormIsValid}
+                  disabled={mutation.isLoading}
                 />
               </EditDialog>
               <SuccessDialog

@@ -22,8 +22,7 @@ const CommonEDLAppointmentDateText: React.FC<{
     <Typography variant="subtitle2" display="inline">
       {" "}
       est initialement prévu le{" "}
-      {desiredDateByContractor.toFormat("EEEE d LLLL yyyy")}. Votre demande sera
-      soumise à validation de l’agence.
+      {desiredDateByContractor.toFormat("EEEE d LLLL yyyy")}.
     </Typography>
   </>
 );
