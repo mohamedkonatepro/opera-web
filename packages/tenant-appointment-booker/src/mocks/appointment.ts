@@ -7,6 +7,7 @@ const appointment: Appointment = {
   order: mockOrder,
   slot: {
     datetime: DateTime.local(2023, 3, 23, 10, 0).toISO(),
+    duration: 60,
   },
 };
 

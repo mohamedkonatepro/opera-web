@@ -5,6 +5,7 @@ interface Appointment {
   order: Order;
   slot: {
     datetime: string;
+    duration: number;
   };
 }
 

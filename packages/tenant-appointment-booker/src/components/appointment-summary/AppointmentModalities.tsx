@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 
-const modalities = {
-  EDL: [
+const appointmentModalities = {
+  "EDL-S": [
     "Attendez l’opérateur en bas de l’immeuble.",
     "Localisez et identifiez tous les compteurs (électricité, gaz, eau).",
     "Veillez à avoir tous les jeux de clés du logement.",
@@ -19,14 +19,36 @@ const modalities = {
     "Présentez à l’opérateur le certificat d’entretien de votre chaudière gaz si le logement est équipé d‘une chaudière de ce type.",
     "Pensez à apporter lors du rendez-vous, un exemplaire du bail et votre attestation d’assurance habitation.",
   ],
+  "EDL-E": [
+    "Être ponctuel et d’attendre l’opérateur au pied de votre immeuble",
+    "De vous munir d’une copie de votre certificat d’assurance MRH",
+    "Si vous vous faites représenter de remettre à votre représentant une procuration manuscrite accompagnée d’une photocopie de votre pièce d’identité"
+  ],
+  "DIAG": [
+    "Donner accès à l'ensemble des pièces, placards, annexes (cave, garage, grenier, ...) du bien",
+    "Donner accès à toutes les prises et appareils de chauffe",
+    "Le diagnostiqueur pourra être amené à couper le compteur électrique et la chaudière le cas échéant"
+  ],
 };
 
-const AppointmentModalities = () => {
+const getAppointmentModalities = (orderType: string) => {
+  switch (orderType) {
+    case "S": case "ES": return appointmentModalities["EDL-S"];
+    case "E": return appointmentModalities["EDL-E"];
+    case "D": return appointmentModalities["DIAG"];
+    default: return [];
+  }
+};
+
+
+const AppointmentModalities = ({ orderType }: { orderType: string }) => {
+  const modalities = getAppointmentModalities(orderType)
+
   return (
     <Stack spacing={1.5}>
       <Typography variant="caption">Le jour de l’état des lieux</Typography>
       <List>
-        {modalities.EDL.map((modality) => (
+        {modalities.map((modality) => (
           <ListItem key={modality}>
             <ListItemIcon>
               <ArrowRight />
