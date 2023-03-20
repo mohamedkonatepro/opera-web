@@ -116,16 +116,14 @@ const Home = ({
       <Paper variant="outlined">
         {matchesMD && (
           <AppointmentBookingDesktop
-            order={order}
-            appointmentBookingId={appointmentBookingId}
+            appointmentBooking={appointmentBooking}
             minDate={minDate}
             maxDate={maxDate}
           />
         )}
         {!matchesMD && (
           <AppointmentBookingMobile
-            order={order}
-            appointmentBookingId={appointmentBookingId}
+            appointmentBooking={appointmentBooking}
             minDate={minDate}
             maxDate={maxDate}
           />

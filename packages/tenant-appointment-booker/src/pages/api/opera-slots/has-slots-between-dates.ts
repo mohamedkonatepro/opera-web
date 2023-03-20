@@ -10,8 +10,8 @@ export const hasOperaSlotsBetweenDates = async (
   endDate: string
 ) => {
   const interval = Interval.fromDateTimes(
-    DateTime.fromISO(startDate),
-    DateTime.fromISO(endDate)
+    DateTime.fromISO(startDate).startOf("day"),
+    DateTime.fromISO(endDate).endOf("day")
   );
   const dates = interval.splitBy({ days: 1 }).map((i) => i.start.toISODate());
   const promises = dates.map((date) => getOperaSlotsForDate(orderId, date));

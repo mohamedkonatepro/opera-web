@@ -8,6 +8,7 @@ const appointment: Appointment = {
   slot: {
     datetime: DateTime.local(2023, 3, 23, 10, 0).toISO(),
     duration: 60,
+    appointment_date: "2023-03-23",
   },
 };
 
