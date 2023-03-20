@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import MeetingSummary from "./MeetingSummary";
 import RealEstateSummary from "../../../common/RealEstateSummary";
 import TenantSummary from "../../../common/TenantSummary";
+import getFamilyLongName from "@/utils/getFamilyLongName";
 
 interface InformationProps {
   order: Order;
@@ -14,7 +15,14 @@ const Information: React.FunctionComponent<InformationProps> = ({
   order,
   appointmentBookingId,
 }) => {
-  const { commercialName, familleLongue, bien, locataires } = order;
+  const {
+    commercialName,
+    familleLongue,
+    bien,
+    locataires,
+    type,
+    desiredDateByContractor,
+  } = order;
   const locataire = locataires[0];
 
   return (
@@ -26,7 +34,8 @@ const Information: React.FunctionComponent<InformationProps> = ({
       >
         <MeetingSummary
           commercialName={commercialName}
-          familyLongName={familleLongue}
+          familyLongName={getFamilyLongName(type, familleLongue)}
+          desiredDateByContractor={desiredDateByContractor}
         />
         <RealEstateSummary
           realEstate={bien}

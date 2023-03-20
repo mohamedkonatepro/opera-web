@@ -4,6 +4,7 @@ import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import order from "@/mocks/order";
+import handleError from "@/apiUtils/handleError";
 
 export const getAppointmentBooking = async (id: string) => {
   const response = await axios.get(
@@ -20,6 +21,7 @@ export const getAppointmentBooking = async (id: string) => {
     `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
     getAxiosOptions()
   );
+
   appointmentBooking.order = orderResponse.data;
 
   if (appointmentBooking.appointment_id !== null) {
@@ -70,13 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(405).json({ error: "Method not allowed" });
   } catch (error: any) {
-    if (error.response) {
-      return res.status(error.response.status).json(error.response.data);
-    } else if (error.request) {
-      return res.status(500).json({ error: "No response from server" });
-    } else {
-      return res.status(500).json({ error: "Unknown error" });
-    }
+    handleError(error, res);
   }
 };
 

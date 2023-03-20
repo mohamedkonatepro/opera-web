@@ -1,4 +1,5 @@
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
+import handleError from "@/apiUtils/handleError";
 import { DateTime, Interval } from "luxon";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getOperaSlotsForDate } from ".";
@@ -30,13 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       return res.status(200).json(hasSlots);
     } catch (error: any) {
-      if (error.response) {
-        return res.status(error.response.status).json(error.response.data);
-      } else if (error.request) {
-        return res.status(500).json({ error: "No response from server" });
-      } else {
-        return res.status(500).json({ error: "Unknown error" });
-      }
+      handleError(error, res);
     }
   }
   return res.status(405).json({ error: "Method not allowed" });

@@ -66,7 +66,7 @@ const NotAvailableAtDates: React.FC<NotAvailableAtDatesProps> = ({
             spacing={1.5}
           >
             <DatePicker
-              label="À quelle date souhaitez-vous faire l’état des lieux ?"
+              label="À quelle date souhaitez-vous faire votre RDV ?"
               format="EEEE, d MMMM yyyy"
               value={date}
               disablePast

@@ -1,3 +1,4 @@
+import getFamilyLongName from "@/utils/getFamilyLongName";
 import { Alert, Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import { ChangeDesiredAppointmentDateAlertProps, ContactReason } from "./types";
@@ -8,7 +9,7 @@ const CommonEDLAppointmentDateText: React.FC<{
 }> = ({ desiredDateByContractor, familyLongName }) => (
   <>
     <Typography variant="subtitle2" display="inline">
-      L’
+      Votre
     </Typography>
     <Typography variant="subtitle2" textTransform="lowercase" display="inline">
       {familyLongName}
@@ -37,10 +38,13 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             <Alert severity="warning">
               <CommonEDLAppointmentDateText
                 desiredDateByContractor={desiredDateByContractor}
-                familyLongName={order.familleLongue}
+                familyLongName={getFamilyLongName(
+                  order.type,
+                  order.familleLongue
+                )}
               />
               <Typography variant="body2">
-                Faire l’état des lieux de sortie le{" "}
+                Faire votre état des lieux de sortie le{" "}
                 {newDesiredDate && newDesiredDate.toFormat("d LLLL")} ne vous
                 exonère pas du paiement du loyer et des charges pendant la durée
                 totale du préavis, soit jusqu’au{" "}
@@ -54,10 +58,13 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             <Alert severity="warning">
               <CommonEDLAppointmentDateText
                 desiredDateByContractor={desiredDateByContractor}
-                familyLongName={order.familleLongue}
+                familyLongName={getFamilyLongName(
+                  order.type,
+                  order.familleLongue
+                )}
               />
               <Typography variant="body2">
-                Faire l’état des lieux de sortie le{" "}
+                Faire votre état des lieux de sortie le{" "}
                 {newDesiredDate && newDesiredDate.toFormat("d LLLL")} impose de
                 décaler votre période de préavis. Votre demande doit être
                 validée par votre agence.
@@ -76,10 +83,13 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             <Alert severity="warning">
               <CommonEDLAppointmentDateText
                 desiredDateByContractor={desiredDateByContractor}
-                familyLongName={order.familleLongue}
+                familyLongName={getFamilyLongName(
+                  order.type,
+                  order.familleLongue
+                )}
               />
               <Typography variant="body2">
-                Faire l’état des lieux d’entrée le{" "}
+                Faire votre état des lieux d’entrée le{" "}
                 {newDesiredDate.toFormat("d LLLL")} ne vous exonère pas du
                 règlement du loyer et des charges à la date stipulée sur votre
                 bail, soit à partir du{" "}
@@ -97,7 +107,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
       <Alert severity="info">
         <CommonEDLAppointmentDateText
           desiredDateByContractor={desiredDateByContractor}
-          familyLongName={order.familleLongue}
+          familyLongName={getFamilyLongName(order.type, order.familleLongue)}
         />
       </Alert>
     );

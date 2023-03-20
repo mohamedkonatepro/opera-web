@@ -47,6 +47,8 @@ const SelectAppointmentDayCalendar: React.FC<
     onSelectDate(page);
   };
 
+  const currentMinPage = items[2].page as DateTime;
+
   return (
     <Stack spacing={1.5}>
       <Typography
@@ -54,7 +56,7 @@ const SelectAppointmentDayCalendar: React.FC<
         textTransform="capitalize"
         color="text.primary"
       >
-        {selectedDate.toFormat("LLLL, yyyy")}
+        {currentMinPage.toFormat("LLLL, yyyy")}
       </Typography>
       <Stack direction="row" spacing={1} justifyContent="space-between">
         {items.map(({ page, type, selected, disabled }) => {

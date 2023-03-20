@@ -1,5 +1,6 @@
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import getAxiosOptions from "@/apiUtils/getAxiosOptions";
+import handleError from "@/apiUtils/handleError";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -19,13 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       await sendNoSlotsAvailableEmail(appointmentBookingId as string);
       return res.status(200).json({ success: true });
     } catch (error: any) {
-      if (error.response) {
-        return res.status(error.response.status).json(error.response.data);
-      } else if (error.request) {
-        return res.status(500).json({ error: "No response from server" });
-      } else {
-        return res.status(500).json({ error: "Unknown error" });
-      }
+      handleError(error, res);
     }
   }
 

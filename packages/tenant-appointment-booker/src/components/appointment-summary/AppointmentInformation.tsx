@@ -31,7 +31,8 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
           {order.commercialName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          La durée de votre rendez-vous est de {Duration.fromObject({ minute: slot.duration }).toHuman()}.
+          La durée de votre rendez-vous est de{" "}
+          {Duration.fromObject({ minute: slot.duration }).toHuman()}.
         </Typography>
       </Stack>
     </Stack>

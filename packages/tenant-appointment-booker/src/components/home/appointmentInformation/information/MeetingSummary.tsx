@@ -1,14 +1,17 @@
 import { AssignmentOutlined } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
+import { DateTime } from "luxon";
 
 interface MeetingSummaryProps {
   commercialName: string;
   familyLongName: string;
+  desiredDateByContractor: string;
 }
 
 const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = ({
   commercialName,
   familyLongName,
+  desiredDateByContractor,
 }) => {
   return (
     <Stack spacing={0.5}>
@@ -24,6 +27,10 @@ const MeetingSummary: React.FunctionComponent<MeetingSummaryProps> = ({
           {familyLongName}
         </Typography>
       </Stack>
+      <Typography variant="body2" color="text.secondary">
+        Date souhaitée de RDV :{" "}
+        {DateTime.fromISO(desiredDateByContractor).toFormat("dd/MM/yyyy")}
+      </Typography>
     </Stack>
   );
 };

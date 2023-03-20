@@ -70,7 +70,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
   });
 
   const onSubmit = (data: Tenant) => {
-      mutation.mutate({ locataire: data, orderId });
+    mutation.mutate({ locataire: data, orderId });
   };
 
   return (
