@@ -22,27 +22,31 @@ const appointmentModalities = {
   "EDL-E": [
     "Être ponctuel et d’attendre l’opérateur au pied de votre immeuble",
     "De vous munir d’une copie de votre certificat d’assurance MRH",
-    "Si vous vous faites représenter de remettre à votre représentant une procuration manuscrite accompagnée d’une photocopie de votre pièce d’identité"
+    "Si vous vous faites représenter de remettre à votre représentant une procuration manuscrite accompagnée d’une photocopie de votre pièce d’identité",
   ],
-  "DIAG": [
+  DIAG: [
     "Donner accès à l'ensemble des pièces, placards, annexes (cave, garage, grenier, ...) du bien",
     "Donner accès à toutes les prises et appareils de chauffe",
-    "Le diagnostiqueur pourra être amené à couper le compteur électrique et la chaudière le cas échéant"
+    "Le diagnostiqueur pourra être amené à couper le compteur électrique et la chaudière le cas échéant",
   ],
 };
 
 const getAppointmentModalities = (orderType: string) => {
   switch (orderType) {
-    case "S": case "ES": return appointmentModalities["EDL-S"];
-    case "E": return appointmentModalities["EDL-E"];
-    case "D": return appointmentModalities["DIAG"];
-    default: return [];
+    case "S":
+    case "ES":
+      return appointmentModalities["EDL-S"];
+    case "E":
+      return appointmentModalities["EDL-E"];
+    case "D":
+      return appointmentModalities["DIAG"];
+    default:
+      return [];
   }
 };
 
-
 const AppointmentModalities = ({ orderType }: { orderType: string }) => {
-  const modalities = getAppointmentModalities(orderType)
+  const modalities = getAppointmentModalities(orderType);
 
   return (
     <Stack spacing={1.5}>

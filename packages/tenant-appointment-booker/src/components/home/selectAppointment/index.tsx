@@ -12,6 +12,7 @@ import * as operaSlotsClient from "@/queries/operaSlots";
 import SlotAlreadyTakenErrorDialog from "./SlotAlreadyTakenErrorDialog";
 import NoSlotsAvailableDialog from "./NoSlotsAvailableDialog";
 import ValidateButton from "@/components/common/buttons/ValidateButton";
+import getFamilyLongName from "@/utils/getFamilyLongName";
 interface SelectAppointmentProps {
   order: Order;
   appointmentBookingId: string;
@@ -130,7 +131,10 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
             selectedDate={selectedDate}
             orderType={order.type}
             orderFamily={order.familleInitial}
-            orderFamilyLongName={order.familleLongue}
+            orderFamilyLongName={getFamilyLongName(
+              order.type,
+              order.familleLongue
+            )}
           />
         )}
         {hasSlotsBetweenDates && (

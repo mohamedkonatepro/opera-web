@@ -14,7 +14,7 @@ const CommonEDLAppointmentDateText: React.FC<{
 }> = ({ desiredDateByContractor, familyLongName }) => (
   <>
     <Typography variant="subtitle2" display="inline">
-      L’
+      Votre
     </Typography>
     <Typography variant="subtitle2" textTransform="lowercase" display="inline">
       {familyLongName}
@@ -44,7 +44,7 @@ const EDLAppointmentDateAlert: React.FC<EDLAppointmentDateAlertProps> = ({
               familyLongName={familyLongName}
             />
             <Typography variant="body2" color="text.secondary">
-              Faire l’état des lieux de sortie le{" "}
+              Faire votre état des lieux de sortie le{" "}
               {selectedDate.toFormat("d LLLL")} ne vous exonère pas du paiement
               du loyer et des charges pendant la durée totale du préavis, soit
               jusqu’au {desiredDateByContractor.toFormat("EEEE d LLLL")}.
@@ -62,7 +62,7 @@ const EDLAppointmentDateAlert: React.FC<EDLAppointmentDateAlertProps> = ({
               familyLongName={familyLongName}
             />
             <Typography variant="body2" color="text.secondary">
-              Faire l’état des lieux d’entrée le{" "}
+              Faire votre état des lieux d’entrée le{" "}
               {selectedDate.toFormat("d LLLL")} ne vous exonère pas du règlement
               du loyer et des charges à la date stipulée sur votre bail, soit à
               partir du {desiredDateByContractor.toFormat("EEEE d LLLL")}.
