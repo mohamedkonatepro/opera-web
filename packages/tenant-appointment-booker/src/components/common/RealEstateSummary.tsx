@@ -12,11 +12,14 @@ import ModifyRealEstateForm, {
 } from "../home/appointmentInformation/forms/ModifyRealEstateForm";
 import * as operaOrderClient from "@/queries/operaOrders";
 import { useMutation } from "@tanstack/react-query";
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import TenantRequestProps from "@/types/tenantResquestProps";
 
 interface RealEstateSummaryProps {
   realEstate: RealEstate;
   orderId: string;
   displayEditButton?: boolean;
+  tenantRequest?: TenantRequestProps;
 }
 
 const formId = "modify-real-estate-form";
@@ -24,7 +27,7 @@ const formId = "modify-real-estate-form";
 const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   props
 ) => {
-  const { realEstate, orderId, displayEditButton = false } = props;
+  const { realEstate, orderId, displayEditButton = false, tenantRequest} = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
@@ -62,7 +65,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
             divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
           >
             <Typography variant="caption">Informations du bien</Typography>
-            {displayEditButton && (
+            {displayEditButton && !tenantRequest && (
               <>
                 <UnderlinedButton
                   onClick={handleClickEditButton}
@@ -93,6 +96,25 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               </>
             )}
           </Stack>
+
+          {tenantRequest && (
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            display="flex"
+            divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
+          >
+            <Typography
+              variant="body2"
+              color="text.primary"
+              alignItems="center"
+              display="flex"
+            >
+              <CottageOutlinedIcon sx={{ mr: 1.2 }} /> Propriétaire : {realEstate.proprietaire}
+            </Typography>
+          </Stack>
+        )}
           <Stack direction="row" spacing={1.5}>
             <PlaceOutlinedIcon sx={{ color: "text.secondary" }} />
             <Typography variant="body2" color="text.primary">
@@ -130,6 +152,40 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               )}
             </Stack>
           </Stack>
+
+          {tenantRequest && (
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            display="flex"
+            divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
+          >
+            <Typography
+              variant="body2"
+              color="text.primary"
+              alignItems="center"
+              display="flex"
+            >
+              <FolderOpenIcon sx={{ mr: 1.2 }} /> Réf. immeuble : {realEstate.numeroImmeuble}
+            </Typography>
+            <Typography variant="body2" color="text.primary">
+              N° Lot : {realEstate.numeroLot}
+            </Typography>
+            {realEstate.numeroMandat && (
+              <Typography variant="body2" color="text.primary">
+                {" "}
+                Mandat : {realEstate.numeroMandat}
+              </Typography>
+            )}
+            {realEstate.numeroBail && (
+              <Typography variant="body2" color="text.primary">
+                {" "}
+                Code bail : {realEstate.numeroBail}
+              </Typography>
+            )}
+          </Stack>
+        )}
         </Stack>
       </Box>
     </>
