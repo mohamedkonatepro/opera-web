@@ -1,5 +1,13 @@
 import Head from "next/head";
-import { Box, Paper, Theme, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Link,
+  Paper,
+  Stack,
+  Theme,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPageContext } from "next";
 import AppointmentBookingDesktop from "@/components/home/desktop";
@@ -9,9 +17,10 @@ import * as hasOperaSlotsApi from "@/pages/api/opera-slots/has-slots-between-dat
 import * as appointmentBookingClient from "@/queries/appointmentBookings";
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
+import { ChevronRight } from "@mui/icons-material";
 
 export const getServerSideProps = async (context: NextPageContext) => {
-  const { appointmentBookingId } = context.query;
+  const { appointmentBookingId, isEdit } = context.query;
 
   const queryClient = new QueryClient({
     defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -23,7 +32,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
       appointmentBookingApi.getAppointmentBooking(queryKey[1] as string),
   });
 
-  if (appointmentBooking.appointment !== null) {
+  if (appointmentBooking.appointment !== null && !isEdit) {
     return {
       redirect: {
         destination: `/appointment-summary/${appointmentBookingId}`,
@@ -85,18 +94,20 @@ const Home = ({
   maxDate: string;
 }) => {
   const router = useRouter();
+  const { isEdit } = router.query;
 
   const { data, isFetching, isLoading, isSuccess } = useQuery({
     queryKey: ["appointmentBookings", appointmentBookingId],
     queryFn: ({ queryKey }) =>
       appointmentBookingClient.getAppointmentBooking(queryKey[1] as string),
     onSuccess: (appointmentBooking) => {
-      if (appointmentBooking.appointment !== null) {
+      if (appointmentBooking.appointment !== null && !isEdit) {
         router.push(`/appointment-summary/${appointmentBookingId}`);
       }
     },
   });
 
+  const theme = useTheme();
   const matchesMD = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
   if (isFetching || isLoading || !isSuccess) return null;
@@ -105,6 +116,7 @@ const Home = ({
 
   const appointmentBooking = data;
   const order = appointmentBooking.order;
+  const appointment = appointmentBooking.appointment;
 
   return (
     <>
@@ -113,22 +125,45 @@ const Home = ({
         <meta name="description" content="Prise de RDV locataire" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Paper variant="outlined">
-        {matchesMD && (
-          <AppointmentBookingDesktop
-            appointmentBooking={appointmentBooking}
-            minDate={minDate}
-            maxDate={maxDate}
-          />
+      <Stack spacing={6} justifyContent="center">
+        <Paper variant="outlined">
+          {matchesMD && (
+            <AppointmentBookingDesktop
+              appointmentBooking={appointmentBooking}
+              minDate={minDate}
+              maxDate={maxDate}
+            />
+          )}
+          {!matchesMD && (
+            <AppointmentBookingMobile
+              appointmentBooking={appointmentBooking}
+              minDate={minDate}
+              maxDate={maxDate}
+            />
+          )}
+        </Paper>
+        {isEdit && appointment && (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={0.5}
+            component={Link}
+            href={`/appointment-summary/${appointmentBookingId}`}
+            variant="body2"
+            color="text.secondary"
+            sx={{ textDecorationColor: theme.palette.text.secondary }}
+          >
+            <span>
+              Je souhaite conserver mon rendez-vous du{" "}
+              {DateTime.fromISO(appointment.slot.datetime).toFormat(
+                "EEEE d LLLL à HH:mm"
+              )}
+            </span>
+            <ChevronRight />
+          </Stack>
         )}
-        {!matchesMD && (
-          <AppointmentBookingMobile
-            appointmentBooking={appointmentBooking}
-            minDate={minDate}
-            maxDate={maxDate}
-          />
-        )}
-      </Paper>
+      </Stack>
     </>
   );
 };

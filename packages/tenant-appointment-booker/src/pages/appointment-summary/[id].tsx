@@ -8,7 +8,6 @@ import Head from "next/head";
 import * as appointmentBookingApi from "@/pages/api/appointment-bookings/[id]";
 import * as appointmentBookingClient from "@/queries/appointmentBookings";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
@@ -84,6 +83,7 @@ const SummaryAppointment = ({
         >
           <AppointmentInformation
             appointment={appointmentBooking.appointment}
+            appointmentBookingId={appointmentBookingId}
           />
           <RealEstateAndTenantInformation
             order={appointmentBooking.order}
