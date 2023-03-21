@@ -7,7 +7,7 @@ import TenantRequestProps from "@/types/tenantResquestProps";
 interface AppointmentInformationProps {
   order: Order;
   appointmentBookingId: string;
-  tenantRequest: TenantRequestProps;
+  tenantRequest?: TenantRequestProps;
 }
 
 const AppointmentInformation: React.FunctionComponent<

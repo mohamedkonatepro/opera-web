@@ -111,7 +111,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               alignItems="center"
               display="flex"
             >
-              <CottageOutlinedIcon sx={{ mr: 1.2 }} /> Propriétaire : {realEstate.proprietaire}
+              <CottageOutlinedIcon sx={{ mr: 1.5, color: "text.secondary" }} /> Propriétaire : {realEstate.proprietaire}
             </Typography>
           </Stack>
         )}
@@ -167,7 +167,7 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               alignItems="center"
               display="flex"
             >
-              <FolderOpenIcon sx={{ mr: 1.2 }} /> Réf. immeuble : {realEstate.numeroImmeuble}
+              <FolderOpenIcon sx={{ mr: 1.5, color: "text.secondary" }} /> Réf. immeuble : {realEstate.numeroImmeuble}
             </Typography>
             <Typography variant="body2" color="text.primary">
               N° Lot : {realEstate.numeroLot}

@@ -19,11 +19,6 @@ interface RealEstate {
   grenier: boolean;
   parking: boolean;
   garage: boolean;
-  numeroImmeuble: string;
-  numeroLot: string;
-  numeroMandat: string;
-  numeroBail: string;
-  proprietaire: string;
 }
 
 export default RealEstate;

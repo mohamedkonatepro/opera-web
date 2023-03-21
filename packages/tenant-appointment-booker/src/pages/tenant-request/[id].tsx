@@ -66,7 +66,7 @@ const TenantRequest = () => {
         alignItems: 'center',
         marginTop: '16px'
       }}>
-        {!appointmentBooking?.tenant_request.treated && (
+        {!appointmentBooking?.tenant_request?.treated && (
         <Paper variant="outlined" sx={{ width: '656px' }}>
           <Stack
             direction="row"
