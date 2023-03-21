@@ -1,34 +1,14 @@
 import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import SuccessDialog from "@/components/common/dialogs/SuccessDialog";
 import { processContactForm } from "@/queries/operaAppointments";
-import AppointmentBooking from "@/types/appointmentBooking";
-import getPreviousNearestBusinessDay from "@/utils/getPreviousNearestBusinessDay";
-import orderIsEDL from "@/utils/orderIsEDL";
+import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 import { Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { DateTime } from "luxon";
 import { useState } from "react";
 import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
 import ContactDialog from "./ContactDialog";
 import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
-
-const desiredAppointmentDateIsTooLateToCancel = (
-  appointmentBooking: AppointmentBooking
-): boolean => {
-  if (appointmentBooking.appointment) return false;
-  const dateToTest = getPreviousNearestBusinessDay(
-    DateTime.fromISO(appointmentBooking.order.desiredDateByContractor)
-  );
-  const today = DateTime.now();
-
-  if (orderIsEDL(appointmentBooking.order.type)) {
-    if (dateToTest < today) return true;
-    return dateToTest.diff(today, "hours").hours < 48;
-  }
-
-  return false;
-};
 
 const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
@@ -37,14 +17,12 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     useState(false);
 
   const handleClickContactButton = () => {
-    if (desiredAppointmentDateIsTooLateToCancel(appointmentBooking)) {
+    if (appointmentDateIsTooLate(appointmentBooking.order.desiredDateByContractor, appointmentBooking.order.type)) {
       setAppointmentTooLateDialogOpen(true);
     } else {
       setContactDialogOpen(true);
     }
   };
-
-  const today = DateTime.now();
 
   const handleOnCloseContactDialog = () => {
     setContactDialogOpen(false);

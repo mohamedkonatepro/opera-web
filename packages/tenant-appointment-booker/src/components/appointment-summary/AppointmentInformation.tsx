@@ -1,29 +1,11 @@
-import Appointment from "@/types/appointment";
 import { AssignmentOutlined, FiberManualRecord } from "@mui/icons-material";
 import { Link, Stack, Typography, useTheme } from "@mui/material";
 import { DateTime, Duration } from "luxon";
 import CalendarEditOutlined from "@/components/common/icons/CalendarEditOutlined";
 import AgendaView from "./AgendaView";
 import { AppointmentInformationProps } from "./types";
-import getPreviousNearestBusinessDay from "@/utils/getPreviousNearestBusinessDay";
-import orderIsEDL from "@/utils/orderIsEDL";
 import Slot from "@/types/slot";
-
-const effectiveAppointmentDateTooLate = (appointment: Appointment): boolean => {
-  const previousNearestBusinessDay = getPreviousNearestBusinessDay(
-    DateTime.fromISO(appointment.order.desiredDateByContractor)
-  );
-  const today = DateTime.now();
-  if (previousNearestBusinessDay < today) return true;
-
-  if (orderIsEDL(appointment.order.type)) {
-    return previousNearestBusinessDay.diff(today, "hours").hours < 48;
-  } else if (appointment.order.type === "D") {
-    return previousNearestBusinessDay.diff(today, "hours").hours < 24;
-  }
-
-  return false;
-};
+import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 
 const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
   appointment,
@@ -35,7 +17,7 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
 
   const theme = useTheme();
 
-  const appointmentDateIsTooLate = effectiveAppointmentDateTooLate(appointment);
+  const isTooLate = appointmentDateIsTooLate(appointmentSlot.appointment_date, order.type);
 
   return (
     <Stack direction={{ sm: "column", md: "row" }} spacing={3}>
@@ -58,7 +40,7 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
             {Duration.fromObject({ minute: appointmentSlot.duration }).toHuman()}.
           </Typography>
         </Stack>
-        {!appointmentDateIsTooLate && (
+        {!isTooLate && (
           <Stack
             spacing={1}
             divider={<FiberManualRecord sx={{ width: 4 }} />}
