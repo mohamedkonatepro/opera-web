@@ -40,6 +40,21 @@ export const getAppointmentBooking = async (id: string) => {
     appointmentBooking.appointment = null;
   }
 
+  if (appointmentBooking.tenant_request_id !== null) {
+    try {
+      const requestResponse = await axios.get(
+        `${process.env.SERVER_BASE_URL}/api/opera-appointments/request-tracking/${appointmentBooking.tenant_request_id}`,
+        getAxiosOptions()
+      );
+      appointmentBooking.tenant_request = requestResponse.data;
+    } catch (error: any) {
+      if (error.response.status === 404) appointmentBooking.tenant_request = null;
+      else throw error;
+    }
+  } else {
+    appointmentBooking.tenant_request = null;
+  }
+
   return appointmentBooking;
 };
 

@@ -7,12 +7,13 @@ import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Tenant from "@/types/tenant";
 import EditDialog from "@/components/common/dialogs/EditDialog";
 import SuccessDialog from "./dialogs/SuccessDialog";
-import ModifyTenantForm from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
 import { useState } from "react";
 import { formattedPhoneNumber } from "@/utils/formatPhoneNumber";
 import * as operaOrderClient from "@/queries/operaOrders";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ErrorDialog from "./dialogs/ErrorDialog";
+import ModifyTenantForm from "@/components/home/appointmentInformation/forms/ModifyTenantForm";
+import TenantRequestProps from "@/types/tenantResquestProps";
 
 const formId = "modify-tenant-form";
 
@@ -21,6 +22,7 @@ interface TenantSummaryProps {
   orderId: string;
   appointmentBookingId: string;
   displayEditButton?: boolean;
+  tenantRequest?: TenantRequestProps
 }
 
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
@@ -29,6 +31,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
     orderId,
     displayEditButton = false,
     appointmentBookingId,
+    tenantRequest,
   } = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -86,7 +89,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           <Typography variant="body2" color="text.secondary">
             Locataire
           </Typography>
-          {displayEditButton && (
+          {displayEditButton && !tenantRequest && (
             <>
               <UnderlinedButton
                 onClick={handleClickEditButton}
