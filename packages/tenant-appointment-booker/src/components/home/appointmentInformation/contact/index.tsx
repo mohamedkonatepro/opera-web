@@ -2,34 +2,25 @@ import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import SuccessDialog from "@/components/common/dialogs/SuccessDialog";
 import { processContactForm } from "@/queries/operaAppointments";
 import AppointmentBooking from "@/types/appointmentBooking";
-import dateIsBussinessDay from "@/utils/dateIsBussinessDay";
+import getPreviousNearestBusinessDay from "@/utils/getPreviousNearestBusinessDay";
 import orderIsEDL from "@/utils/orderIsEDL";
 import { Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { DateTime, Interval } from "luxon";
-import { useEffect, useState } from "react";
+import { DateTime } from "luxon";
+import { useState } from "react";
 import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
 import ContactDialog from "./ContactDialog";
 import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
 
-const getDateToTest = (desiredDate: DateTime): DateTime => {
-  const dateToTest = desiredDate.minus({ days: 1 }).set({ hour: 18 });
-  if (!dateIsBussinessDay(dateToTest)) return getDateToTest(dateToTest);
-
-  return dateToTest;
-};
-
 const desiredAppointmentDateIsTooLateToCancel = (
   appointmentBooking: AppointmentBooking
 ): boolean => {
   if (appointmentBooking.appointment) return false;
-  const dateToTest = getDateToTest(
+  const dateToTest = getPreviousNearestBusinessDay(
     DateTime.fromISO(appointmentBooking.order.desiredDateByContractor)
   );
   const today = DateTime.now();
-
-  console.log(dateToTest, today);
 
   if (orderIsEDL(appointmentBooking.order.type)) {
     if (dateToTest < today) return true;

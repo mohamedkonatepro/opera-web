@@ -4,21 +4,38 @@ import { Link, Stack, Typography, useTheme } from "@mui/material";
 import { DateTime, Duration } from "luxon";
 import CalendarEditOutlined from "@/components/common/icons/CalendarEditOutlined";
 import AgendaView from "./AgendaView";
+import { AppointmentInformationProps } from "./types";
+import getPreviousNearestBusinessDay from "@/utils/getPreviousNearestBusinessDay";
+import orderIsEDL from "@/utils/orderIsEDL";
+import Slot from "@/types/slot";
 
-interface AppointmentInformationProps {
-  appointment: Appointment;
-  appointmentBookingId: string;
-}
+const effectiveAppointmentDateTooLate = (appointment: Appointment): boolean => {
+  const previousNearestBusinessDay = getPreviousNearestBusinessDay(
+    DateTime.fromISO(appointment.order.desiredDateByContractor)
+  );
+  const today = DateTime.now();
+  if (previousNearestBusinessDay < today) return true;
+
+  if (orderIsEDL(appointment.order.type)) {
+    return previousNearestBusinessDay.diff(today, "hours").hours < 48;
+  } else if (appointment.order.type === "D") {
+    return previousNearestBusinessDay.diff(today, "hours").hours < 24;
+  }
+
+  return false;
+};
 
 const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
   appointment,
   appointmentBookingId,
 }) => {
   const { slot, order } = appointment;
-
-  const appointmentDatetime = DateTime.fromISO(slot.datetime);
+  const appointmentSlot = slot as Slot;
+  const appointmentDatetime = DateTime.fromISO(appointmentSlot.datetime);
 
   const theme = useTheme();
+
+  const appointmentDateIsTooLate = effectiveAppointmentDateTooLate(appointment);
 
   return (
     <Stack direction={{ sm: "column", md: "row" }} spacing={3}>
@@ -38,27 +55,29 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
           </Typography>
           <Typography variant="body2" color="text.secondary">
             La durée de votre rendez-vous est de{" "}
-            {Duration.fromObject({ minute: slot.duration }).toHuman()}.
+            {Duration.fromObject({ minute: appointmentSlot.duration }).toHuman()}.
           </Typography>
         </Stack>
-        <Stack
-          spacing={1}
-          divider={<FiberManualRecord sx={{ width: 4 }} />}
-          justifyContent="center"
-        >
+        {!appointmentDateIsTooLate && (
           <Stack
-            spacing={0.5}
-            component={Link}
-            href={`/?appointmentBookingId=${appointmentBookingId}&isEdit=true`}
-            color="secondary.main"
-            variant="body2"
-            direction="row"
-            sx={{ textDecorationColor: theme.palette.secondary.main }}
+            spacing={1}
+            divider={<FiberManualRecord sx={{ width: 4 }} />}
+            justifyContent="center"
           >
-            <CalendarEditOutlined />
-            <span>Déplacer le rendez-vous</span>
+            <Stack
+              spacing={0.5}
+              component={Link}
+              href={`/?appointmentBookingId=${appointmentBookingId}&isEdit=true`}
+              color="secondary.main"
+              variant="body2"
+              direction="row"
+              sx={{ textDecorationColor: theme.palette.secondary.main }}
+            >
+              <CalendarEditOutlined />
+              <span>Déplacer le rendez-vous</span>
+            </Stack>
           </Stack>
-        </Stack>
+        )}
       </Stack>
     </Stack>
   );

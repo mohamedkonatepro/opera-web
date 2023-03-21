@@ -20,6 +20,8 @@ const AppointmentBookingMobile: React.FC<AppointmentBookingProps> = ({
             appointmentBookingId={appointmentBooking.id}
             minDate={minDate}
             maxDate={maxDate}
+            appointment={appointmentBooking.appointment}
+            isEdit={!!appointmentBooking.appointment}
           />
         </Box>
       </Box>
