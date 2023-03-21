@@ -1,3 +1,4 @@
+import AppointmentBooking from "@/types/appointmentBooking";
 import Order from "@/types/order";
 import { DateTime } from "luxon";
 
@@ -19,7 +20,7 @@ export interface ContactFormSubmitValuesWithType {
 
 export interface ContactFormProps {
   id: string;
-  order: Order;
+  appointmentBooking: AppointmentBooking;
   disabled: boolean;
   onSubmit: (values: ContactFormSubmitValuesWithType) => void;
   setFormIsValid: (isValid: boolean) => void;

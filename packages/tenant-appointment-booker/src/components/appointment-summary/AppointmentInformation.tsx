@@ -17,7 +17,10 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
 
   const theme = useTheme();
 
-  const isTooLate = appointmentDateIsTooLate(appointmentSlot.appointment_date, order.type);
+  const isTooLate = appointmentDateIsTooLate(
+    appointmentSlot.appointment_date,
+    order.type
+  );
 
   return (
     <Stack direction={{ sm: "column", md: "row" }} spacing={3}>
@@ -37,7 +40,10 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
           </Typography>
           <Typography variant="body2" color="text.secondary">
             La durée de votre rendez-vous est de{" "}
-            {Duration.fromObject({ minute: appointmentSlot.duration }).toHuman()}.
+            {Duration.fromObject({
+              minute: appointmentSlot.duration,
+            }).toHuman()}
+            .
           </Typography>
         </Stack>
         {!isTooLate && (

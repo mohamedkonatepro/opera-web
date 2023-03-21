@@ -16,7 +16,7 @@ import getFamilyLongName from "@/utils/getFamilyLongName";
 import Appointment from "@/types/appointment";
 interface SelectAppointmentProps {
   order: Order;
-  appointment?: Appointment
+  appointment?: Appointment;
   appointmentBookingId: string;
   minDate: string;
   maxDate: string;
@@ -29,17 +29,21 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
   appointmentBookingId,
   minDate: minDateString,
   maxDate: maxDateString,
-  isEdit
+  isEdit,
 }) => {
   const desiredDateByContractor = DateTime.fromISO(
     order.desiredDateByContractor
   );
 
   const [selectedDate, setSelectedDate] = useState<DateTime>(
-    appointment && appointment.slot ? DateTime.fromISO(appointment.slot.appointment_date) : desiredDateByContractor
+    appointment && appointment.slot
+      ? DateTime.fromISO(appointment.slot.appointment_date)
+      : desiredDateByContractor
   );
   const initialSlot = appointment && appointment.slot;
-  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>(initialSlot);
+  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>(
+    initialSlot
+  );
 
   const [slotAlreadyTakenDialogOpened, setSlotAlreadyTakenDialogOpened] =
     useState(false);
@@ -113,7 +117,8 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
     mutation.isLoading ||
     hasSlotsBetweenDatesQueryRes.isLoading;
 
-  const isInitialSlotSelected = initialSlot && initialSlot.id === selectedSlot?.id;
+  const isInitialSlotSelected =
+    initialSlot && initialSlot.id === selectedSlot?.id;
 
   return (
     <div>
@@ -149,11 +154,14 @@ const SelectAppointment: React.FC<SelectAppointmentProps> = ({
           <ValidateButton
             color="secondary"
             onClick={handleOnClickValidate}
-            disabled={!selectedSlot || mutation.isLoading || isInitialSlotSelected}
+            disabled={
+              !selectedSlot || mutation.isLoading || isInitialSlotSelected
+            }
           >
             {selectedDate && selectedSlot ? (
               <>
-                {isEdit && !isInitialSlotSelected ? "Changer" : "Valider"} pour le&nbsp;
+                {isEdit && !isInitialSlotSelected ? "Changer" : "Valider"} pour
+                le&nbsp;
                 <Typography
                   variant="button"
                   sx={{ ":first-letter": { textTransform: "uppercase" } }}

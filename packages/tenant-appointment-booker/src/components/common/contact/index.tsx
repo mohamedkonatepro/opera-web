@@ -17,7 +17,12 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     useState(false);
 
   const handleClickContactButton = () => {
-    if (appointmentDateIsTooLate(appointmentBooking.order.desiredDateByContractor, appointmentBooking.order.type)) {
+    if (
+      appointmentDateIsTooLate(
+        appointmentBooking.order.desiredDateByContractor,
+        appointmentBooking.order.type
+      )
+    ) {
       setAppointmentTooLateDialogOpen(true);
     } else {
       setContactDialogOpen(true);
@@ -65,7 +70,7 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
       <ContactDialog
         open={contactDialogOpen}
         onClose={handleOnCloseContactDialog}
-        order={appointmentBooking.order}
+        appointmentBooking={appointmentBooking}
         onSubmit={handleOnSubmitContactForm}
         disabled={mutation.isLoading}
       />

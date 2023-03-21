@@ -19,7 +19,7 @@ const AppointmentInformation: React.FunctionComponent<
         appointmentBookingId={appointmentBooking.id}
         tenantRequest={tenantRequest}
       />
-      { !tenantRequest && (<Contact appointmentBooking={appointmentBooking} />)}
+      {!tenantRequest && <Contact appointmentBooking={appointmentBooking} />}
     </Stack>
   );
 };

@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import { RadioGroup, FormControlLabel, Radio, Typography, Button } from '@mui/material';
-import SuccessDialog from './dialogs/SuccessDialog';
-import TenantRequestProps from '@/types/tenantResquestProps';
+import React, { useState } from "react";
+import {
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+  Button,
+} from "@mui/material";
+import SuccessDialog from "./dialogs/SuccessDialog";
+import TenantRequestProps from "@/types/tenantResquestProps";
 import { useMutation } from "@tanstack/react-query";
 import * as operaOrderClient from "@/queries/operaTenantRequest";
 
@@ -39,19 +45,25 @@ const getButtonLabels = (tenantRequest: TenantRequestProps) => {
   return { accepted, denied };
 };
 
-const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({ selectedValue, handleChange, orderId, tenantRequest, appointmentBookingId }) => {
+const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
+  selectedValue,
+  handleChange,
+  orderId,
+  tenantRequest,
+  appointmentBookingId,
+}) => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   const handleOpenConfirmDialog = () => {
-    if (selectedValue === 'denied') {
+    if (selectedValue === "denied") {
       mutationCancelTenantRequest.mutate({ appointmentBookingId, orderId });
-    } else if (selectedValue === 'accepted') {
+    } else if (selectedValue === "accepted") {
       mutationConfirmTenantRequest.mutate({ appointmentBookingId, orderId });
     }
   };
 
   const handleCloseDialog = () => {
-    setConfirmDialogOpen(prevState => !prevState);
+    setConfirmDialogOpen((prevState) => !prevState);
   };
 
   const { accepted, denied } = getButtonLabels(tenantRequest);
@@ -59,14 +71,14 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
   const mutationCancelTenantRequest = useMutation({
     mutationFn: operaOrderClient.cancelTenantRequest,
     onSuccess: () => {
-      setConfirmDialogOpen(prevState => !prevState);
+      setConfirmDialogOpen((prevState) => !prevState);
     },
   });
 
   const mutationConfirmTenantRequest = useMutation({
     mutationFn: operaOrderClient.cancelTenantRequest,
     onSuccess: () => {
-      setConfirmDialogOpen(prevState => !prevState);
+      setConfirmDialogOpen((prevState) => !prevState);
     },
   });
 
@@ -78,15 +90,23 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
         open={confirmDialogOpen}
         maxWidth={456}
       />
-      <RadioGroup color="text.secondary" value={selectedValue} onChange={handleChange}>
+      <RadioGroup
+        color="text.secondary"
+        value={selectedValue}
+        onChange={handleChange}
+      >
         <FormControlLabel
           color="red"
           value="accepted"
           control={<Radio color="secondary" />}
           label={accepted.primary}
-          sx={{ height: '20px'}}
+          sx={{ height: "20px" }}
         />
-        <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '2rem', height: '20px' }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ marginLeft: "2rem", height: "20px" }}
+        >
           {accepted.secondary}
         </Typography>
         <FormControlLabel
@@ -94,13 +114,22 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
           value="denied"
           control={<Radio color="secondary" />}
           label={denied.primary}
-          sx={{ height: '20px', marginTop: '24px'}}
+          sx={{ height: "20px", marginTop: "24px" }}
         />
-        <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '2rem', height: '20px' }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ marginLeft: "2rem", height: "20px" }}
+        >
           {denied.secondary}
         </Typography>
       </RadioGroup>
-      <Button variant="contained" color="secondary" sx={{ textTransform: 'none', width: '100%', marginTop: '24px'}} onClick={handleOpenConfirmDialog}>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ textTransform: "none", width: "100%", marginTop: "24px" }}
+        onClick={handleOpenConfirmDialog}
+      >
         Confirmer la réponse au locataire
       </Button>
     </>

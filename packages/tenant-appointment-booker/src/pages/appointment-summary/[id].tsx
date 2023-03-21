@@ -49,6 +49,7 @@ const SummaryAppointment = ({
   if (!data) return null;
 
   const appointmentBooking = data;
+  const tenantRequest = appointmentBooking.tenant_request;
 
   if (!appointmentBooking.appointment) {
     return (
@@ -92,7 +93,9 @@ const SummaryAppointment = ({
             appointmentBookingId={appointmentBookingId}
           />
           <AppointmentModalities orderType={appointmentBooking.order.type} />
-          <Contact appointmentBooking={appointmentBooking} />
+          {!tenantRequest && (
+            <Contact appointmentBooking={appointmentBooking} />
+          )}
         </Stack>
       </Paper>
     </>
