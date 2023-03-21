@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Head from "next/head";
 import { Box, Divider, Paper, Stack } from "@mui/material";
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { useQuery } from "@tanstack/react-query";
 import AppointmentInformation from '@/components/home/appointmentInformation';
 import AppointmentResponseOptions from '@/components/common/AppointmentResponseOptions';
@@ -13,7 +12,8 @@ const TenantRequest = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: appointmentBooking, isLoading, isError } = useQuery(['appointmentBooking', id], () => getAppointmentBooking(id as string));
+  const { data: appointmentBooking, isLoading, isError } = useQuery(['appointmentBooking', id], () => getAppointmentBooking(id as string), {
+    enabled: !!id });
 
   const [selectedValue, setSelectedValue] = useState('');
 
@@ -21,7 +21,6 @@ const TenantRequest = () => {
     setSelectedValue(event.target.value);
   };
 
-  console.log(appointmentBooking.tenant_request.treated)
   return (
     <>
       <Head>
@@ -67,7 +66,7 @@ const TenantRequest = () => {
         alignItems: 'center',
         marginTop: '16px'
       }}>
-        {!appointmentBooking.tenant_request.treated && (
+        {!appointmentBooking?.tenant_request.treated && (
         <Paper variant="outlined" sx={{ width: '656px' }}>
           <Stack
             direction="row"
@@ -87,6 +86,7 @@ const TenantRequest = () => {
                       handleChange={handleChange}
                       orderId={appointmentBooking.order_id}
                       tenantRequest={appointmentBooking.tenant_request}
+                      appointmentBookingId={appointmentBooking.id}
                     />
                   </>
                 )}
