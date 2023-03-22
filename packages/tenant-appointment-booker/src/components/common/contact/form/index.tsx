@@ -12,7 +12,7 @@ import {
 
 const ContactForm: React.FC<ContactFormProps> = ({
   id,
-  order,
+  appointmentBooking,
   disabled,
   onSubmit,
   setFormIsValid,
@@ -38,21 +38,23 @@ const ContactForm: React.FC<ContactFormProps> = ({
           onChange={handleOnChangeAccordion(
             ContactReason.NOT_AVAILABLE_AT_DATES
           )}
-          order={order}
+          order={appointmentBooking.order}
           onSubmit={handleOnSubmit}
           formId={id}
           setFormIsValid={setFormIsValid}
           disabled={disabled}
         />
 
-        <CancelAppointment
-          expanded={expanded === ContactReason.CANCEL_APPOINTMENT}
-          onChange={handleOnChangeAccordion(ContactReason.CANCEL_APPOINTMENT)}
-          onSubmit={handleOnSubmit}
-          formId={id}
-          setFormIsValid={setFormIsValid}
-          order={order}
-        />
+        {!appointmentBooking.appointment && (
+          <CancelAppointment
+            expanded={expanded === ContactReason.CANCEL_APPOINTMENT}
+            onChange={handleOnChangeAccordion(ContactReason.CANCEL_APPOINTMENT)}
+            onSubmit={handleOnSubmit}
+            formId={id}
+            setFormIsValid={setFormIsValid}
+            order={appointmentBooking.order}
+          />
+        )}
       </Box>
     </Stack>
   );

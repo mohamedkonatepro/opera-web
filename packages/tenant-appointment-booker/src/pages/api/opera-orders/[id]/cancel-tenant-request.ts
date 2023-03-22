@@ -6,12 +6,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const cancelTenantRequest = async (
   operaOrderId: string,
-  appointmentBookingId: string,
+  appointmentBookingId: string
 ) => {
   return await axios.post(
     `${process.env.SERVER_BASE_URL}/api/opera-order/${operaOrderId}/cancel-tenant-request`,
     {
-      appointmentBookingId
+      appointmentBookingId,
     },
     getAxiosOptions()
   );

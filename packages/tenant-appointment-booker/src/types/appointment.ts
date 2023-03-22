@@ -1,13 +1,10 @@
 import Order from "./order";
+import Slot from "./slot";
 
 interface Appointment {
   id: number;
   order: Order;
-  slot: {
-    datetime: string;
-    duration: number;
-    appointment_date: string;
-  };
+  slot?: Slot;
 }
 
 export default Appointment;

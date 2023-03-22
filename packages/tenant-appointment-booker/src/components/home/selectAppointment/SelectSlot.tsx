@@ -50,10 +50,10 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   return (
     <Grid container spacing={1}>
       {operaSlots.map((slot) => (
-        <Grid sm={4} key={slot.stamp}>
+        <Grid sm={4} key={slot.id}>
           <OutlinedButton
             disabled={disabled}
-            selected={selectedSlot?.stamp === slot.stamp}
+            selected={selectedSlot?.id === slot.id}
             padding="small"
             onClick={() => {
               handleOnClickSlot(slot);

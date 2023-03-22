@@ -48,7 +48,8 @@ export const getAppointmentBooking = async (id: string) => {
       );
       appointmentBooking.tenant_request = requestResponse.data;
     } catch (error: any) {
-      if (error.response.status === 404) appointmentBooking.tenant_request = null;
+      if (error.response.status === 404)
+        appointmentBooking.tenant_request = null;
       else throw error;
     }
   } else {

@@ -12,14 +12,14 @@ const formId = "contact-form";
 const ContactDialog: React.FC<ContactDialogProps> = ({
   open,
   onClose,
-  order,
+  appointmentBooking,
   onSubmit,
   disabled,
 }) => {
   const contractor = {
-    commercialName: order.commercialName,
-    phoneNumber: order.commercialPhoneNumber,
-    emails: order.emails,
+    commercialName: appointmentBooking.order.commercialName,
+    phoneNumber: appointmentBooking.order.commercialPhoneNumber,
+    emails: appointmentBooking.order.emails,
   };
 
   const [formIsValid, setFormIsValid] = useState(false);
@@ -53,7 +53,7 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
         <ContractorSummary contractor={contractor} />
         <ContactForm
           id={formId}
-          order={order}
+          appointmentBooking={appointmentBooking}
           onSubmit={onSubmit}
           setFormIsValid={setFormIsValid}
           disabled={disabled}

@@ -1,4 +1,4 @@
-import { ContactReason } from "@/components/home/appointmentInformation/contact/form/types";
+import { ContactReason } from "@/components/common/contact/form/types";
 import axios from "axios";
 import { DateTime } from "luxon";
 

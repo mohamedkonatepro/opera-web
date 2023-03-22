@@ -12,7 +12,7 @@ import ModifyRealEstateForm, {
 } from "../home/appointmentInformation/forms/ModifyRealEstateForm";
 import * as operaOrderClient from "@/queries/operaOrders";
 import { useMutation } from "@tanstack/react-query";
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import TenantRequestProps from "@/types/tenantResquestProps";
 
 interface RealEstateSummaryProps {
@@ -27,7 +27,12 @@ const formId = "modify-real-estate-form";
 const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
   props
 ) => {
-  const { realEstate, orderId, displayEditButton = false, tenantRequest} = props;
+  const {
+    realEstate,
+    orderId,
+    displayEditButton = false,
+    tenantRequest,
+  } = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
@@ -98,23 +103,26 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
           </Stack>
 
           {tenantRequest && (
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            display="flex"
-            divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
-          >
-            <Typography
-              variant="body2"
-              color="text.primary"
+            <Stack
+              direction="row"
+              spacing={1}
               alignItems="center"
               display="flex"
+              divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
             >
-              <CottageOutlinedIcon sx={{ mr: 1.5, color: "text.secondary" }} /> Propriétaire : {realEstate.proprietaire}
-            </Typography>
-          </Stack>
-        )}
+              <Typography
+                variant="body2"
+                color="text.primary"
+                alignItems="center"
+                display="flex"
+              >
+                <CottageOutlinedIcon
+                  sx={{ mr: 1.5, color: "text.secondary" }}
+                />{" "}
+                Propriétaire : {realEstate.proprietaire}
+              </Typography>
+            </Stack>
+          )}
           <Stack direction="row" spacing={1.5}>
             <PlaceOutlinedIcon sx={{ color: "text.secondary" }} />
             <Typography variant="body2" color="text.primary">
@@ -154,38 +162,39 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
           </Stack>
 
           {tenantRequest && (
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            display="flex"
-            divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
-          >
-            <Typography
-              variant="body2"
-              color="text.primary"
+            <Stack
+              direction="row"
+              spacing={1}
               alignItems="center"
               display="flex"
+              divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
             >
-              <FolderOpenIcon sx={{ mr: 1.5, color: "text.secondary" }} /> Réf. immeuble : {realEstate.numeroImmeuble}
-            </Typography>
-            <Typography variant="body2" color="text.primary">
-              N° Lot : {realEstate.numeroLot}
-            </Typography>
-            {realEstate.numeroMandat && (
-              <Typography variant="body2" color="text.primary">
-                {" "}
-                Mandat : {realEstate.numeroMandat}
+              <Typography
+                variant="body2"
+                color="text.primary"
+                alignItems="center"
+                display="flex"
+              >
+                <FolderOpenIcon sx={{ mr: 1.5, color: "text.secondary" }} />{" "}
+                Réf. immeuble : {realEstate.numeroImmeuble}
               </Typography>
-            )}
-            {realEstate.numeroBail && (
               <Typography variant="body2" color="text.primary">
-                {" "}
-                Code bail : {realEstate.numeroBail}
+                N° Lot : {realEstate.numeroLot}
               </Typography>
-            )}
-          </Stack>
-        )}
+              {realEstate.numeroMandat && (
+                <Typography variant="body2" color="text.primary">
+                  {" "}
+                  Mandat : {realEstate.numeroMandat}
+                </Typography>
+              )}
+              {realEstate.numeroBail && (
+                <Typography variant="body2" color="text.primary">
+                  {" "}
+                  Code bail : {realEstate.numeroBail}
+                </Typography>
+              )}
+            </Stack>
+          )}
         </Stack>
       </Box>
     </>

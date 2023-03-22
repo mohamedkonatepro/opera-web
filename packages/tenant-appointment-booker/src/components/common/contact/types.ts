@@ -8,7 +8,7 @@ export interface ContactProps {
 
 export interface ContactDialogProps {
   open: boolean;
-  order: Order;
+  appointmentBooking: AppointmentBooking;
   disabled: boolean;
   onClose: () => void;
   onSubmit: (values: ContactFormSubmitValuesWithType) => void;

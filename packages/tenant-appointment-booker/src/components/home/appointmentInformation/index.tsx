@@ -1,6 +1,6 @@
 import AppointmentBooking from "@/types/appointmentBooking";
 import { Divider, Stack } from "@mui/material";
-import Contact from "./contact";
+import Contact from "../../common/contact";
 import Information from "./information";
 import TenantRequestProps from "@/types/tenantResquestProps";
 
@@ -19,7 +19,7 @@ const AppointmentInformation: React.FunctionComponent<
         appointmentBookingId={appointmentBooking.id}
         tenantRequest={tenantRequest}
       />
-      { !tenantRequest && (<Contact appointmentBooking={appointmentBooking} />)}
+      {!tenantRequest && <Contact appointmentBooking={appointmentBooking} />}
     </Stack>
   );
 };

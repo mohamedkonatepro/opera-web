@@ -37,22 +37,23 @@ const Information: React.FunctionComponent<InformationProps> = ({
         divider={<Divider orientation="horizontal" flexItem />}
         spacing={3}
       >
-        { !tenantRequest && (
-        <MeetingSummary
-          commercialName={commercialName}
-          familyLongName={getFamilyLongName(type, familleLongue)}
-          desiredDateByContractor={desiredDateByContractor}
-        />)}
-        
-        { tenantRequest && (
+        {!tenantRequest && (
+          <MeetingSummary
+            commercialName={commercialName}
+            familyLongName={getFamilyLongName(type, familleLongue)}
+            desiredDateByContractor={desiredDateByContractor}
+          />
+        )}
+
+        {tenantRequest && (
           <TenantRequestSummary
             familyLongName={familleLongue}
             orderId={order.orderId}
             tenantRequest={tenantRequest}
-          /> 
+          />
         )}
-        
-        { tenantRequest && !tenantRequest.treated && (
+
+        {tenantRequest && !tenantRequest.treated && (
           <InformationsSummary tenantRequest={tenantRequest} />
         )}
         <RealEstateSummary

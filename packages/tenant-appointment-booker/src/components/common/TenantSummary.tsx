@@ -22,7 +22,7 @@ interface TenantSummaryProps {
   orderId: string;
   appointmentBookingId: string;
   displayEditButton?: boolean;
-  tenantRequest?: TenantRequestProps
+  tenantRequest?: TenantRequestProps;
 }
 
 const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {

@@ -1,15 +1,16 @@
 import AppointmentInformation from "@/components/appointment-summary/AppointmentInformation";
 import AppointmentModalities from "@/components/appointment-summary/AppointmentModalities";
 import RealEstateAndTenantInformation from "@/components/appointment-summary/RealEstateAndTenantInformation";
-import { Divider, Paper, Stack } from "@mui/material";
+import { Divider, Paper, Stack, Typography } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPageContext } from "next";
 import Head from "next/head";
 import * as appointmentBookingApi from "@/pages/api/appointment-bookings/[id]";
 import * as appointmentBookingClient from "@/queries/appointmentBookings";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
+import Contact from "@/components/common/contact";
+import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
@@ -48,6 +49,7 @@ const SummaryAppointment = ({
   if (!data) return null;
 
   const appointmentBooking = data;
+  const tenantRequest = appointmentBooking.tenant_request;
 
   if (!appointmentBooking.appointment) {
     return (
@@ -84,12 +86,16 @@ const SummaryAppointment = ({
         >
           <AppointmentInformation
             appointment={appointmentBooking.appointment}
+            appointmentBookingId={appointmentBookingId}
           />
           <RealEstateAndTenantInformation
             order={appointmentBooking.order}
             appointmentBookingId={appointmentBookingId}
           />
           <AppointmentModalities orderType={appointmentBooking.order.type} />
+          {!tenantRequest && (
+            <Contact appointmentBooking={appointmentBooking} />
+          )}
         </Stack>
       </Paper>
     </>
