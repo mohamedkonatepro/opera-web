@@ -5,8 +5,7 @@ import AppointmentInformation from "./appointmentInformation";
 import SelectAppointment from "./selectAppointment";
 
 const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
-  order,
-  appointmentBookingId,
+  appointmentBooking,
   minDate,
   maxDate,
 }) => {
@@ -18,18 +17,15 @@ const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
     >
       <Box m={3} mr={0}>
         <Box width={540}>
-          <AppointmentInformation
-            order={order}
-            appointmentBookingId={appointmentBookingId}
-          />
+          <AppointmentInformation appointmentBooking={appointmentBooking} />
         </Box>
       </Box>
       <Box width={1}>
         <Box m={3} ml={0}>
           <Box width={356}>
             <SelectAppointment
-              order={order}
-              appointmentBookingId={appointmentBookingId}
+              order={appointmentBooking.order}
+              appointmentBookingId={appointmentBooking.id}
               minDate={minDate}
               maxDate={maxDate}
             />

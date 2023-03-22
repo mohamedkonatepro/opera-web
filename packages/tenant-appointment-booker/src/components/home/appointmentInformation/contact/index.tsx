@@ -1,20 +1,59 @@
 import UnderlinedButton from "@/components/common/buttons/UnderlinedButton";
 import SuccessDialog from "@/components/common/dialogs/SuccessDialog";
 import { processContactForm } from "@/queries/operaAppointments";
+import AppointmentBooking from "@/types/appointmentBooking";
+import dateIsBussinessDay from "@/utils/dateIsBussinessDay";
+import orderIsEDL from "@/utils/orderIsEDL";
 import { Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { DateTime, Interval } from "luxon";
+import { useEffect, useState } from "react";
+import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
 import ContactDialog from "./ContactDialog";
 import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
 
-const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
+const getDateToTest = (desiredDate: DateTime): DateTime => {
+  const dateToTest = desiredDate.minus({ days: 1 }).set({ hour: 18 });
+  if (!dateIsBussinessDay(dateToTest)) return getDateToTest(dateToTest);
+
+  return dateToTest;
+};
+
+const desiredAppointmentDateIsTooLateToCancel = (
+  appointmentBooking: AppointmentBooking
+): boolean => {
+  if (appointmentBooking.appointment) return false;
+  const dateToTest = getDateToTest(
+    DateTime.fromISO(appointmentBooking.order.desiredDateByContractor)
+  );
+  const today = DateTime.now();
+
+  console.log(dateToTest, today);
+
+  if (orderIsEDL(appointmentBooking.order.type)) {
+    if (dateToTest < today) return true;
+    return dateToTest.diff(today, "hours").hours < 48;
+  }
+
+  return false;
+};
+
+const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [appointmentTooLateDialogOpen, setAppointmentTooLateDialogOpen] =
+    useState(false);
 
   const handleClickContactButton = () => {
-    setContactDialogOpen(true);
+    if (desiredAppointmentDateIsTooLateToCancel(appointmentBooking)) {
+      setAppointmentTooLateDialogOpen(true);
+    } else {
+      setContactDialogOpen(true);
+    }
   };
+
+  const today = DateTime.now();
 
   const handleOnCloseContactDialog = () => {
     setContactDialogOpen(false);
@@ -22,6 +61,10 @@ const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
 
   const handleOnCloseSuccessDialog = () => {
     setSuccessDialogOpen(false);
+  };
+
+  const handleOnCloseAppointmentTooLateDialog = () => {
+    setAppointmentTooLateDialogOpen(false);
   };
 
   const mutation = useMutation({
@@ -35,7 +78,7 @@ const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
   const handleOnSubmitContactForm = (
     values: ContactFormSubmitValuesWithType
   ) => {
-    mutation.mutate({ ...values, appointmentBookingId });
+    mutation.mutate({ ...values, appointmentBookingId: appointmentBooking.id });
   };
 
   return (
@@ -53,10 +96,16 @@ const Contact: React.FC<ContactProps> = ({ order, appointmentBookingId }) => {
       <ContactDialog
         open={contactDialogOpen}
         onClose={handleOnCloseContactDialog}
-        order={order}
+        order={appointmentBooking.order}
         onSubmit={handleOnSubmitContactForm}
         disabled={mutation.isLoading}
       />
+      <AppointmentTooLateDialog
+        open={appointmentTooLateDialogOpen}
+        onClose={handleOnCloseAppointmentTooLateDialog}
+        appointmentBooking={appointmentBooking}
+      />
+
       <SuccessDialog
         open={successDialogOpen}
         onClose={handleOnCloseSuccessDialog}

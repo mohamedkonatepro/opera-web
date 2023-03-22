@@ -14,7 +14,7 @@ const CommonEDLAppointmentDateText: React.FC<{
 }> = ({ desiredDateByContractor, familyLongName }) => (
   <>
     <Typography variant="subtitle2" display="inline">
-      Votre
+      Votre{" "}
     </Typography>
     <Typography variant="subtitle2" textTransform="lowercase" display="inline">
       {familyLongName}

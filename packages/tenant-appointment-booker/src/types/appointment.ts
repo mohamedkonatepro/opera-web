@@ -6,6 +6,7 @@ interface Appointment {
   slot: {
     datetime: string;
     duration: number;
+    appointment_date: string;
   };
 }
 

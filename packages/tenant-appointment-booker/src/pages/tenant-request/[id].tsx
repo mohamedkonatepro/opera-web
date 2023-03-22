@@ -48,9 +48,8 @@ const TenantRequest = () => {
                 ) : (
                   <>
                     <AppointmentInformation
-                      order={appointmentBooking.order}
+                      appointmentBooking={appointmentBooking}
                       tenantRequest={appointmentBooking.tenant_request}
-                      appointmentBookingId={appointmentBooking.id}
                     />
                   </>
                 )}

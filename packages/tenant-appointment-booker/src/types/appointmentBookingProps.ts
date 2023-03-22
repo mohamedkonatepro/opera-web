@@ -1,8 +1,7 @@
-import Order from "./order";
+import AppointmentBooking from "./appointmentBooking";
 
 interface AppointmentBookingProps {
-  order: Order;
-  appointmentBookingId: string;
+  appointmentBooking: AppointmentBooking;
   minDate: string;
   maxDate: string;
 }
