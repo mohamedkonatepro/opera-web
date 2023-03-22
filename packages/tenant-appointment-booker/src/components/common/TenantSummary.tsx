@@ -86,7 +86,7 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
           display="flex"
           divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
         >
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="caption" color="text.secondary">
             Locataire
           </Typography>
           {displayEditButton && !tenantRequest && (

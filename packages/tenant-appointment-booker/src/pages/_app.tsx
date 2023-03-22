@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../styles/theme";
 import createEmotionCache from "../styles/createEmotionCache";
-import { Container, GlobalStyles } from "@mui/material";
+import { Container, GlobalStyles, Stack, Typography } from "@mui/material";
 import {
   Hydrate,
   QueryClient,
@@ -16,6 +16,7 @@ import { Settings } from "luxon";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
+import Image from "next/image";
 
 Settings.defaultLocale = "fr";
 Settings.defaultZone = "Europe/Paris";
@@ -46,28 +47,49 @@ export default function MyApp(props: MyAppProps) {
           <CssBaseline />
           <GlobalStyles
             styles={{
+              html: {
+                height: "100vh",
+              },
               body: {
+                height: "inherit",
                 backgroundColor: "#F4F4F4",
+                "& > div:first-of-type": {
+                  height: "inherit",
+                },
               },
             }}
           />
-          <Container
-            component="main"
-            sx={{
-              mt: { sm: 0, md: 12 },
-              mb: { sm: 0, md: 2 },
-              maxWidth: { sm: "100%", md: 992 },
-            }}
-            fixed
-            disableGutters
-          >
-            <QueryClientProvider client={queryClient}>
-              <Hydrate state={pageProps.dehydratedState}>
-                <Component {...pageProps} />
-              </Hydrate>
-              <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-          </Container>
+          <Stack component="main" height={1} justifyContent="space-between">
+            <Container
+              sx={{
+                mt: { sm: 0, md: 12 },
+                maxWidth: { sm: "100%", md: 992 },
+              }}
+              fixed
+              disableGutters
+            >
+              <QueryClientProvider client={queryClient}>
+                <Hydrate state={pageProps.dehydratedState}>
+                  <Component {...pageProps} />
+                </Hydrate>
+                <ReactQueryDevtools initialIsOpen={false} />
+              </QueryClientProvider>
+            </Container>
+            <Stack alignItems="center" sx={{ mb: 2 }} spacing={1}>
+              <Image src="/logo.svg" alt="Logo" width={120} height={64} />
+              <Typography
+                component="span"
+                fontSize="11px"
+                fontStyle="normal"
+                fontWeight="400"
+                lineHeight="12px"
+                letterSpacing="0.01em"
+                color="text.disabled"
+              >
+                BY OPÉRA GROUPE
+              </Typography>
+            </Stack>
+          </Stack>
         </LocalizationProvider>
       </CacheProvider>
     </ThemeProvider>

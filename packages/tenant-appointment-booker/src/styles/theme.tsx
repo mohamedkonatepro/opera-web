@@ -205,16 +205,16 @@ const components: Components = {
         borderColor: theme.palette.border.default,
       },
       outlinedSecondary: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderStyle: "solid",
         borderColor: theme.palette.border.bold,
         "&:hover ": {
-          borderWidth: 2,
+          borderWidth: 1,
           borderStyle: "solid",
           borderColor: theme.palette.border.bold,
         },
         "&:focus": {
-          borderWidth: 2,
+          borderWidth: 1,
           borderStyle: "solid",
           borderColor: theme.palette.border.bold,
         },

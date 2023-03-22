@@ -25,25 +25,29 @@ const ContactForm: React.FC<ContactFormProps> = ({
     setExpanded(panel);
   };
 
-  const handleOnSubmit = (values: ContactFormSubmitValues) => {
+  const handleOnSubmit = (values: ContactFormSubmitValues): void => {
     onSubmit({ ...values, type: expanded });
   };
+
+  const orderIsDiagnostic = appointmentBooking.order.type === "D";
 
   return (
     <Stack spacing={2}>
       <Typography variant="subtitle1">Motif de la demande</Typography>
       <Box>
-        <NotAvailableAtDates
-          expanded={expanded === ContactReason.NOT_AVAILABLE_AT_DATES}
-          onChange={handleOnChangeAccordion(
-            ContactReason.NOT_AVAILABLE_AT_DATES
-          )}
-          order={appointmentBooking.order}
-          onSubmit={handleOnSubmit}
-          formId={id}
-          setFormIsValid={setFormIsValid}
-          disabled={disabled}
-        />
+        {!orderIsDiagnostic && (
+          <NotAvailableAtDates
+            expanded={expanded === ContactReason.NOT_AVAILABLE_AT_DATES}
+            onChange={handleOnChangeAccordion(
+              ContactReason.NOT_AVAILABLE_AT_DATES
+            )}
+            order={appointmentBooking.order}
+            onSubmit={handleOnSubmit}
+            formId={id}
+            setFormIsValid={setFormIsValid}
+            disabled={disabled}
+          />
+        )}
 
         {!appointmentBooking.appointment && (
           <CancelAppointment
