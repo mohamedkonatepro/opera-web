@@ -23,7 +23,11 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
   );
 
   return (
-    <Stack direction={{ sm: "column", md: "row" }} spacing={3}>
+    <Stack
+      direction={{ sm: "column", md: "row" }}
+      spacing={3}
+      alignItems="flex-start"
+    >
       <AgendaView appointmentDatetime={appointmentDatetime} />
       <Stack spacing={1}>
         <Stack spacing={0.5}>
