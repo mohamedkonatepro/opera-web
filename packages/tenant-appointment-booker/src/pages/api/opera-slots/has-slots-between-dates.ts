@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       return res.status(200).json(hasSlots);
     } catch (error: any) {
-      handleError(error, res);
+      return handleError(error, res);
     }
   }
   return res.status(405).json({ error: "Method not allowed" });

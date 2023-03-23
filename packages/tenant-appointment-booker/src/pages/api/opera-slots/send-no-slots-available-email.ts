@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       await sendNoSlotsAvailableEmail(appointmentBookingId as string);
       return res.status(200).json({ success: true });
     } catch (error: any) {
-      handleError(error, res);
+      return handleError(error, res);
     }
   }
 

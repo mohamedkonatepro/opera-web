@@ -1,3 +1,4 @@
+import orderIsEDL from "@/utils/orderIsEDL";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { DateTime } from "luxon";
@@ -29,13 +30,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
     onSubmit({ ...values, type: expanded });
   };
 
-  const orderIsDiagnostic = appointmentBooking.order.type === "D";
+  const canChangeDate = orderIsEDL(appointmentBooking.order.type)
 
   return (
     <Stack spacing={2}>
       <Typography variant="subtitle1">Motif de la demande</Typography>
       <Box>
-        {!orderIsDiagnostic && (
+        {canChangeDate && (
           <NotAvailableAtDates
             expanded={expanded === ContactReason.NOT_AVAILABLE_AT_DATES}
             onChange={handleOnChangeAccordion(

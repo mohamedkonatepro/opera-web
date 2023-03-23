@@ -28,7 +28,7 @@ const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       return res.status(200).json(slots);
     } catch (error: any) {
-      handleError(error, res);
+      return handleError(error, res);
     }
   }
 

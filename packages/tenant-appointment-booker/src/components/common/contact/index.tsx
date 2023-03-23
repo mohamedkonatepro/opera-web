@@ -5,6 +5,7 @@ import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 import { Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import ErrorDialog from "../dialogs/ErrorDialog";
 import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
 import ContactDialog from "./ContactDialog";
 import { ContactFormSubmitValuesWithType } from "./form/types";
@@ -13,6 +14,7 @@ import { ContactProps } from "./types";
 const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
   const [appointmentTooLateDialogOpen, setAppointmentTooLateDialogOpen] =
     useState(false);
 
@@ -47,6 +49,10 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
       setContactDialogOpen(false);
       setSuccessDialogOpen(true);
     },
+    onError: () => {
+      setContactDialogOpen(false);
+      setErrorDialogOpen(true);
+    }
   });
 
   const handleOnSubmitContactForm = (
@@ -86,6 +92,12 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
         title="Votre message a été envoyé !"
         text="Votre message a été transmis à l’agence. Vous serez contacté au plus vite pour confirmer votre nouveau rendez-vous."
         maxWidth={456}
+      />
+      <ErrorDialog
+        title="Une erreur est survenue"
+        text="Une erreur est survenue lors de l’envoi de votre demande. Veuillez réessayer ultérieurement."
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
       />
     </>
   );

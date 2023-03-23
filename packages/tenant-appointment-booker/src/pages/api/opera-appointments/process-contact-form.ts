@@ -45,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       return res.status(200).json(response.data);
     } catch (error: any) {
-      handleError(error, res);
+      return handleError(error, res);
     }
   }
   return res.status(405).json({ message: "Method not allowed" });
