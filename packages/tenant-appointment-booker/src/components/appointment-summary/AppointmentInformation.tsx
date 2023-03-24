@@ -39,11 +39,11 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
           </Stack>
           <Typography variant="h6">Votre rendez-vous est confirmé !</Typography>
           <Typography variant="body2" color="text.secondary">
-            {appointmentDatetime.toFormat("cccc, dd LLLL yyyy à hh:mm")} pour{" "}
+            {appointmentDatetime.toFormat("cccc, dd LLLL yyyy à HH:mm")} pour{" "}
             {order.commercialName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            La durée de votre rendez-vous est de{" "}
+            La durée de votre rendez-vous est estimé à{" "}
             {Duration.fromObject({
               minute: appointmentSlot.duration,
             }).toHuman()}
