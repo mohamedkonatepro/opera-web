@@ -85,8 +85,7 @@ const SummaryAppointment = ({
           p={3}
         >
           <AppointmentInformation
-            appointment={appointmentBooking.appointment}
-            appointmentBookingId={appointmentBookingId}
+            appointmentBooking={appointmentBooking}
           />
           <RealEstateAndTenantInformation
             order={appointmentBooking.order}

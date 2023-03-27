@@ -6,12 +6,14 @@ import AgendaView from "./AgendaView";
 import { AppointmentInformationProps } from "./types";
 import Slot from "@/types/slot";
 import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
+import Appointment from "@/types/appointment";
 
 const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
-  appointment,
-  appointmentBookingId,
+  appointmentBooking,
 }) => {
-  const { slot, order } = appointment;
+  const { id, order } = appointmentBooking;
+  const appointment = appointmentBooking.appointment as Appointment;
+  const { slot } = appointment;
   const appointmentSlot = slot as Slot;
   const appointmentDatetime = DateTime.fromISO(appointmentSlot.datetime);
 
@@ -59,7 +61,7 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
             <Stack
               spacing={0.5}
               component={Link}
-              href={`/?appointmentBookingId=${appointmentBookingId}&isEdit=true`}
+              href={`/?appointmentBookingId=${id}&isEdit=true`}
               color="secondary.main"
               variant="body2"
               direction="row"

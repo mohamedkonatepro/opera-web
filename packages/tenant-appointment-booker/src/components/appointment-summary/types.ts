@@ -1,6 +1,5 @@
-import Appointment from "@/types/appointment";
+import AppointmentBooking from "@/types/appointmentBooking";
 
 export interface AppointmentInformationProps {
-  appointment: Appointment;
-  appointmentBookingId: string;
+  appointmentBooking: AppointmentBooking;
 }
