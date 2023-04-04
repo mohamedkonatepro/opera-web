@@ -76,7 +76,7 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
   });
 
   const mutationConfirmTenantRequest = useMutation({
-    mutationFn: operaOrderClient.cancelTenantRequest,
+    mutationFn: operaOrderClient.confirmTenantRequest,
     onSuccess: () => {
       setConfirmDialogOpen((prevState) => !prevState);
     },
