@@ -10,7 +10,6 @@ import * as appointmentBookingClient from "@/queries/appointmentBookings";
 import { useRouter } from "next/router";
 import ErrorDialog from "@/components/common/dialogs/ErrorDialog";
 import Contact from "@/components/common/contact";
-import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const appointmentBookingId = ctx.query.id as string;
