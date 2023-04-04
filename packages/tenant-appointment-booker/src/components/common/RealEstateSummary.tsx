@@ -180,9 +180,11 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
                   Réf. immeuble : {realEstate.numeroImmeuble}
                 </Typography>
               )}
-              {realEstate.numeroLot && (<Typography variant="body2" color="text.primary">
-                N° Lot : {realEstate.numeroLot}
-              </Typography>)}
+              {realEstate.numeroLot && (
+                <Typography variant="body2" color="text.primary">
+                  N° Lot : {realEstate.numeroLot}
+                </Typography>
+              )}
               {realEstate.numeroMandat && (
                 <Typography variant="body2" color="text.primary">
                   {" "}

@@ -52,7 +52,7 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     onError: () => {
       setContactDialogOpen(false);
       setErrorDialogOpen(true);
-    }
+    },
   });
 
   const handleOnSubmitContactForm = (
