@@ -57,4 +57,4 @@ jobs:
         with:
           args: |
             helm repo add opera-groupe https://opera-groupe.github.io/opera-groupe-helm/charts
-            helm upgrade -i frontend-tenant-appointment-booker opera-groupe/frontend-tenant-appointment-booker --set image.tag=${{ steps.metadata.outputs.version }} --create-namespace --namespace=opera-groupe-staging
+            helm upgrade -i tenant-appointment-booker-frontend-tenant-appointment-booker opera-groupe/frontend-tenant-appointment-booker --set image.tag=${{ steps.metadata.outputs.version }} --namespace=tenant-appointment-booker
