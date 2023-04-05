@@ -58,13 +58,11 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
 
   const mutation = useMutation({
     mutationFn: operaOrderClient.updateTenantInformations,
-    onSuccess: () => {
+    onSuccess: async () => {
       setConfirmDialogOpen(true);
       setEditDialogOpen(false);
-      queryClient.invalidateQueries([
-        "appointmentBookings",
-        appointmentBookingId,
-      ]);
+
+      await queryClient.invalidateQueries(["appointmentBookings", appointmentBookingId]);
     },
     onError: () => {
       setErrorDialogOpen(true);

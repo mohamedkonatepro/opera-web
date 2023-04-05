@@ -13,7 +13,7 @@ export const getAppointmentBooking = async (id: string) => {
   );
 
   const appointmentBooking = {
-    id: response.data.data.id,
+    id: response.data.data.id.toString(),
     ...response.data.data.attributes,
   };
 

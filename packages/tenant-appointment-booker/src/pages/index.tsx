@@ -21,7 +21,11 @@ import { ChevronRight } from "@mui/icons-material";
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { appointmentBookingId, isEdit } = context.query;
-
+  if (!appointmentBookingId) {
+    return {
+      notFound: true,
+    };
+  }
   const queryClient = new QueryClient({
     defaultOptions: { queries: { refetchOnWindowFocus: false } },
   });
@@ -77,7 +81,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      appointmentBookingId: appointmentBookingId,
+      appointmentBookingId,
       minDate,
       maxDate,
     },
@@ -115,7 +119,6 @@ const Home = ({
   if (!data) return null;
 
   const appointmentBooking = data;
-  const order = appointmentBooking.order;
   const appointment = appointmentBooking.appointment;
 
   return (

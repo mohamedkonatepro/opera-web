@@ -16,13 +16,13 @@ const SlotAlreadyTakenErrorDialog: React.FC<
 > = ({ open, setOpenedState, orderId, selectedDate, minDate, maxDate }) => {
   const queryClient = useQueryClient();
 
-  const onCloseSlotAlreadyTakenDialog = () => {
+  const onCloseSlotAlreadyTakenDialog = async () => {
     setOpenedState(false);
-    queryClient.invalidateQueries({
+    await queryClient.invalidateQueries({
       queryKey: ["operaSlots", orderId, selectedDate],
       exact: true,
     });
-    queryClient.invalidateQueries({
+    await queryClient.invalidateQueries({
       queryKey: ["hasOperaSlotsBetweenDates", orderId, minDate, maxDate],
       exact: true,
     });

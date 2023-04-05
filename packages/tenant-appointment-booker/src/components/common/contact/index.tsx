@@ -3,7 +3,7 @@ import SuccessDialog from "@/components/common/dialogs/SuccessDialog";
 import { processContactForm } from "@/queries/operaAppointments";
 import appointmentDateIsTooLate from "@/utils/appointmentDateIsTooLate";
 import { Stack, Typography } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
@@ -12,6 +12,9 @@ import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
 
 const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
+
+  const queryClient = useQueryClient();
+
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [errorDialogOpen, setErrorDialogOpen] = useState(false);
@@ -45,14 +48,15 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
 
   const mutation = useMutation({
     mutationFn: processContactForm,
-    onSuccess: () => {
+    onSuccess: async () => {
       setContactDialogOpen(false);
       setSuccessDialogOpen(true);
+      await queryClient.invalidateQueries(["appointmentBookings", appointmentBooking.id]);
     },
     onError: () => {
       setContactDialogOpen(false);
       setErrorDialogOpen(true);
-    }
+    },
   });
 
   const handleOnSubmitContactForm = (

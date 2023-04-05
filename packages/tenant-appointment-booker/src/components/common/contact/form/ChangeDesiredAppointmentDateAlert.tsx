@@ -74,6 +74,25 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
         }
       }
       case "E": {
+        if (newDesiredDate && newDesiredDate > desiredDateByContractor) {
+          return (
+            <Alert severity="warning">
+              <CommonEDLAppointmentDateText
+                desiredDateByContractor={desiredDateByContractor}
+                familyLongName={getFamilyLongName(
+                  order.type,
+                  order.familleLongue
+                )}
+              />
+              <Typography variant="body2">
+                Faire votre état des lieux d’entrée le{" "}
+                {newDesiredDate && newDesiredDate.toFormat("d LLLL")} impose de
+                décaler votre date de début de bail. Votre demande doit être
+                validée par votre agence.
+              </Typography>
+            </Alert>
+          );
+        }
         if (
           newDesiredDate &&
           (newDesiredDate > desiredDateByContractor ||

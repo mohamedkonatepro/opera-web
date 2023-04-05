@@ -169,18 +169,22 @@ const RealEstateSummary: React.FunctionComponent<RealEstateSummaryProps> = (
               display="flex"
               divider={<FiberManualRecordIcon sx={{ width: 4 }} />}
             >
-              <Typography
-                variant="body2"
-                color="text.primary"
-                alignItems="center"
-                display="flex"
-              >
-                <FolderOpenIcon sx={{ mr: 1.5, color: "text.secondary" }} />{" "}
-                Réf. immeuble : {realEstate.numeroImmeuble}
-              </Typography>
-              <Typography variant="body2" color="text.primary">
-                N° Lot : {realEstate.numeroLot}
-              </Typography>
+              {realEstate.numeroImmeuble && (
+                <Typography
+                  variant="body2"
+                  color="text.primary"
+                  alignItems="center"
+                  display="flex"
+                >
+                  <FolderOpenIcon sx={{ mr: 1.5, color: "text.secondary" }} />{" "}
+                  Réf. immeuble : {realEstate.numeroImmeuble}
+                </Typography>
+              )}
+              {realEstate.numeroLot && (
+                <Typography variant="body2" color="text.primary">
+                  N° Lot : {realEstate.numeroLot}
+                </Typography>
+              )}
               {realEstate.numeroMandat && (
                 <Typography variant="body2" color="text.primary">
                   {" "}

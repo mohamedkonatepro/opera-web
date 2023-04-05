@@ -48,6 +48,8 @@ const getAppointmentModalities = (orderType: string) => {
 const AppointmentModalities = ({ orderType }: { orderType: string }) => {
   const modalities = getAppointmentModalities(orderType);
 
+  if (modalities.length === 0) return null;
+
   return (
     <Stack spacing={1.5}>
       <Typography variant="caption">Le jour de l’état des lieux</Typography>
