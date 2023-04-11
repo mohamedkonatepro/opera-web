@@ -1,0 +1,24 @@
+name: "Get Tags for workflow"
+description: "Get the tags for the current workflow"
+author: "Vincent METTON"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get branch name
+      id: get-branch
+      uses: ./.github/actions/get-branch-name
+
+    - name: Generate tags
+      id: generate-tags
+      shell: bash
+      run: |
+          echo "TAGS=type=sha,prefix=${{ env.BRANCH_NAME }}-" >> $GITHUB_ENV
+          echo "TAGS=${{ env.TAGS }},type=semver,enable=true,pattern={{version}}" >> $GITHUB_ENV
+          echo "TAGS=${{ env.TAGS }},type=raw,value=latest,enable={{is_default_branch}}" >> $GITHUB_ENV
+
+
+    - name: Echo tags
+      run: |
+        echo "Tags: ${{ env.TAGS }}"
+      shell: bash
