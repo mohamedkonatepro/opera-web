@@ -1,22 +1,17 @@
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import handleError from "@/apiUtils/handleError";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const sendNoteToUpdateRealEstateInformation = async (
   operaOrderId: string,
   note: string
 ) => {
-  return axios.post(
-    `${process.env.SERVER_BASE_URL}/api/opera-order/${operaOrderId}/send-note`,
-    {
-      data: {
-        content: note,
-      },
+  return apiAxiosInstance.post(`/api/opera-order/${operaOrderId}/send-note`, {
+    data: {
+      content: note,
     },
-    getAxiosOptions()
-  );
+  });
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

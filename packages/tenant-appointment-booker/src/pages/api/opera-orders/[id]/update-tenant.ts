@@ -1,19 +1,17 @@
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import handleError from "@/apiUtils/handleError";
 import Tenant from "@/types/tenant";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const updateTenantInformations = async (
   operaOrderId: string,
   locataire: Tenant
 ) => {
-  return axios.put(
-    `${process.env.SERVER_BASE_URL}/api/opera-order/${operaOrderId}/update-tenant`,
+  return apiAxiosInstance.put(
+    `/api/opera-order/${operaOrderId}/update-tenant`,
     {
       data: locataire,
-    },
-    getAxiosOptions()
+    }
   );
 };
 

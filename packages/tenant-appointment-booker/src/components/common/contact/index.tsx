@@ -12,7 +12,6 @@ import { ContactFormSubmitValuesWithType } from "./form/types";
 import { ContactProps } from "./types";
 
 const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
-
   const queryClient = useQueryClient();
 
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
@@ -51,7 +50,10 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     onSuccess: async () => {
       setContactDialogOpen(false);
       setSuccessDialogOpen(true);
-      await queryClient.invalidateQueries(["appointmentBookings", appointmentBooking.id]);
+      await queryClient.invalidateQueries([
+        "appointmentBookings",
+        appointmentBooking.id,
+      ]);
     },
     onError: () => {
       setContactDialogOpen(false);

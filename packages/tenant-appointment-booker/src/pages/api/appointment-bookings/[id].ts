@@ -1,15 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import Slot from "@/types/slot";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import order from "@/mocks/order";
 import handleError from "@/apiUtils/handleError";
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 
 export const getAppointmentBooking = async (id: string) => {
-  const response = await axios.get(
-    `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
-    getAxiosOptions()
+  const response = await apiAxiosInstance.get(
+    `/api/appointment-bookings/${id}`
   );
 
   const appointmentBooking = {
@@ -17,18 +14,16 @@ export const getAppointmentBooking = async (id: string) => {
     ...response.data.data.attributes,
   };
 
-  const orderResponse = await axios.get(
-    `${process.env.SERVER_BASE_URL}/api/opera-order/${appointmentBooking.order_id}`,
-    getAxiosOptions()
+  const orderResponse = await apiAxiosInstance.get(
+    `/api/opera-order/${appointmentBooking.order_id}`
   );
 
   appointmentBooking.order = orderResponse.data;
 
   if (appointmentBooking.appointment_id !== null) {
     try {
-      const appointmentResponse = await axios.get(
-        `${process.env.SERVER_BASE_URL}/api/opera-appointments/${appointmentBooking.appointment_id}`,
-        getAxiosOptions()
+      const appointmentResponse = await apiAxiosInstance.get(
+        `/api/opera-appointments/${appointmentBooking.appointment_id}`
       );
       const appointment = appointmentResponse.data;
       appointmentBooking.appointment = appointment;
@@ -42,9 +37,8 @@ export const getAppointmentBooking = async (id: string) => {
 
   if (appointmentBooking.tenant_request_id !== null) {
     try {
-      const requestResponse = await axios.get(
-        `${process.env.SERVER_BASE_URL}/api/opera-appointments/request-tracking/${appointmentBooking.tenant_request_id}`,
-        getAxiosOptions()
+      const requestResponse = await apiAxiosInstance.get(
+        `/api/opera-appointments/request-tracking/${appointmentBooking.tenant_request_id}`
       );
       appointmentBooking.tenant_request = requestResponse.data;
     } catch (error: any) {
@@ -63,11 +57,9 @@ export const updateAppointmentBooking = async (
   id: string,
   selectedSlot: Slot
 ) => {
-  await axios.put(
-    `${process.env.SERVER_BASE_URL}/api/appointment-bookings/${id}`,
-    { data: selectedSlot },
-    getAxiosOptions()
-  );
+  await apiAxiosInstance.put(`/api/appointment-bookings/${id}`, {
+    data: selectedSlot,
+  });
   return getAppointmentBooking(id);
 };
 

@@ -62,7 +62,10 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
       setConfirmDialogOpen(true);
       setEditDialogOpen(false);
 
-      await queryClient.invalidateQueries(["appointmentBookings", appointmentBookingId]);
+      await queryClient.invalidateQueries([
+        "appointmentBookings",
+        appointmentBookingId,
+      ]);
     },
     onError: () => {
       setErrorDialogOpen(true);

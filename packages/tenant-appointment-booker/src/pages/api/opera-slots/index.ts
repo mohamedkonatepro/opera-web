@@ -1,17 +1,15 @@
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import handleError from "@/apiUtils/handleError";
 import Slot from "@/types/slot";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const getOperaSlotsForDate = async (
   orderId: string,
   date: string
 ): Promise<Slot[]> => {
-  const response = await axios.get(
-    `${process.env.SERVER_BASE_URL}/api/opera-slots/${orderId}/${date}`,
-    getAxiosOptions()
+  const response = await apiAxiosInstance.get(
+    `/api/opera-slots/${orderId}/${date}`
   );
   const slots = response.data;
   return slots;

@@ -30,7 +30,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
     onSubmit({ ...values, type: expanded });
   };
 
-  const canChangeDate = orderIsEDL(appointmentBooking.order.type);
+  const canChangeDate =
+    orderIsEDL(appointmentBooking.order.type) &&
+    !appointmentBooking.appointment;
 
   return (
     <Stack spacing={2}>
