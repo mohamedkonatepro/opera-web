@@ -1,19 +1,17 @@
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import handleError from "@/apiUtils/handleError";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const cancelTenantRequest = async (
   operaOrderId: string,
   appointmentBookingId: string
 ) => {
-  return await axios.post(
-    `${process.env.SERVER_BASE_URL}/api/opera-order/${operaOrderId}/confirm-tenant-request`,
+  return await apiAxiosInstance.post(
+    `/api/opera-order/${operaOrderId}/confirm-tenant-request`,
     {
       appointmentBookingId,
-    },
-    getAxiosOptions()
+    }
   );
 };
 

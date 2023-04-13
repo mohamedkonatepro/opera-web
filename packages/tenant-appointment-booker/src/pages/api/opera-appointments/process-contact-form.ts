@@ -1,7 +1,6 @@
+import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
-import getAxiosOptions from "@/apiUtils/getAxiosOptions";
 import handleError from "@/apiUtils/handleError";
-import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const processContactForm = async (
@@ -11,25 +10,17 @@ const processContactForm = async (
   newDesiredDate?: string
 ) => {
   if (type === "CANCEL_APPOINTMENT") {
-    return axios.post(
-      `${process.env.SERVER_BASE_URL}/api/opera-appointments/cancel-request`,
-      {
-        reason,
-        appointmentBookingId,
-      },
-      getAxiosOptions()
-    );
-  }
-
-  return axios.post(
-    `${process.env.SERVER_BASE_URL}/api/opera-appointments/update-date`,
-    {
+    return apiAxiosInstance.post(`/api/opera-appointments/cancel-request`, {
       reason,
       appointmentBookingId,
-      newDesiredDate,
-    },
-    getAxiosOptions()
-  );
+    });
+  }
+
+  return apiAxiosInstance.post(`/api/opera-appointments/update-date`, {
+    reason,
+    appointmentBookingId,
+    newDesiredDate,
+  });
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
