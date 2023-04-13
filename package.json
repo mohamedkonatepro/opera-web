@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "w": "yarn workspace",
+    "c": "yarn workspace contractor-extranet",
     "b": "yarn workspace tenant-appointment-booker"
   },
   "dependencies": {
