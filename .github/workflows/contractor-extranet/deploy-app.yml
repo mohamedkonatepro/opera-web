@@ -2,7 +2,7 @@ name: Deploy App
 on:
   workflow_dispatch:
     paths:
-      - packages/tenant-appointment-booker/**
+      - packages/contractor-extranet/**
 
 jobs:
   deploy-app:
@@ -17,7 +17,7 @@ jobs:
         with:
           registry_server: ${{ secrets.REGISTRY_SERVER }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: tenant-appointment-booker
+          workspace: contractor-extranet
 
       - name: Deploy to cluster
         uses: wahyd4/kubectl-helm-action@master
@@ -26,4 +26,4 @@ jobs:
         with:
           args: |
             helm repo add opera-groupe https://opera-groupe.github.io/opera-groupe-helm/charts
-            helm upgrade -i tenant-appointment-booker opera-groupe/frontend-tenant-appointment-booker --set image.tag=${{ env.DOCKER_METADATA_OUTPUT_VERSION }} --namespace=tenant-appointment-booker
+            helm upgrade -i contractor-extranet opera-groupe/frontend-contractor-extranet --set image.tag=${{ env.DOCKER_METADATA_OUTPUT_VERSION }} --namespace=contractor-extranet

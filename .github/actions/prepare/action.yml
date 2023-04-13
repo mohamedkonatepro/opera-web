@@ -7,6 +7,9 @@ inputs:
   npm_token:
     description: "The NPM token to use for authentication"
     required: true
+  workspace:
+    description: "The workspace"
+    required: true
 
 runs:
   using: "composite"

@@ -2,6 +2,17 @@ name: "Get Tags for workflow"
 description: "Get the tags for the current workflow"
 author: "Vincent METTON"
 
+inputs:
+  registry_server:
+    description: "The registry server"
+    required: true
+  github_token:
+    description: "The github token"
+    required: true
+  workspace:
+    description: "The workspace"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -9,16 +20,17 @@ runs:
       id: get-branch
       uses: ./.github/actions/get-branch-name
 
-    - name: Generate tags
-      id: generate-tags
-      shell: bash
-      run: |
-          echo "TAGS=type=sha,prefix=${{ env.BRANCH_NAME }}-" >> $GITHUB_ENV
-          echo "TAGS=${{ env.TAGS }},type=semver,enable=true,pattern={{version}}" >> $GITHUB_ENV
-          echo "TAGS=${{ env.TAGS }},type=raw,value=latest,enable={{is_default_branch}}" >> $GITHUB_ENV
-
-
-    - name: Echo tags
-      run: |
-        echo "Tags: ${{ env.TAGS }}"
-      shell: bash
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        github-token: ${{ inputs.github_token }}
+        # list of Docker images to use as base name for tags
+        images: |
+          ${{ inputs.registry_server }}/${{ inputs.workspace }}
+        tags: |
+          type=sha,prefix=${{ env.BRANCH_NAME }}-
+          type=semver,enable=true,pattern={{version}}
+          type=raw,value=latest,enable=${{ env.BRANCH_NAME == 'main'}}
+          type=raw,value=develop,enable=${{ env.BRANCH_NAME == 'develop'}}
+        flavor: latest=false
