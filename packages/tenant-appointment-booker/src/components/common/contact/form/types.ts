@@ -22,6 +22,8 @@ export interface ContactFormProps {
   id: string;
   appointmentBooking: AppointmentBooking;
   disabled: boolean;
+  canChangeDate: boolean;
+  canCancelAppointment: boolean;
   onSubmit: (values: ContactFormSubmitValuesWithType) => void;
   setFormIsValid: (isValid: boolean) => void;
 }
