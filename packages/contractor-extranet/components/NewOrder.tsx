@@ -7,7 +7,7 @@ const NewOrder: React.FunctionComponent = () => {
     <Paper
     elevation={3}
     sx={{
-      margin: "24px 32px 24px 320px", 
+      margin: "24px 32px 24px 320px",
       bgcolor: "background.default",
       display: "flex"
     }}
@@ -22,7 +22,7 @@ const NewOrder: React.FunctionComponent = () => {
             Créer une commande sans référence
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: "8px" }}>
-            Vous n’avez pas de référence associée au bien et vous souhaitez créer une commande. 
+            Vous n’avez pas de référence associée au bien et vous souhaitez créer une commande.
             En cliquant sur le bouton ci-dessous vous pourrez configurer une nouvelle commande avec toutes les options qui vous conviennent.
           </Typography>
         </Stack>

@@ -2,7 +2,7 @@ import { Button, ButtonProps } from "@mui/material";
 
 interface ContainedButtonProps extends Omit<ButtonProps, "variant"> {
   padding: "large" | "small";
-  width: "100%";
+  width: string;
 
 }
 
