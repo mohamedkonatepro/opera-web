@@ -1,10 +1,9 @@
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import {
   BreakpointsOptions,
   Components,
   createTheme,
   PaletteOptions,
-  Theme,
 } from "@mui/material/styles";
 import { frFR as coreFrFR } from "@mui/material/locale";
 import { frFR as dateFrFR } from "@mui/x-date-pickers";
@@ -116,9 +115,9 @@ const typography: TypographyOptions = {
   },
   subtitle1: {
     fontSize: "16px",
-    fontWeight: 500,
+    fontWeight: 600,
     lineHeight: "24px",
-    letterSpacing: "-0.01em",
+    letterSpacing: "-0.003em",
     color: theme.palette.text.primary,
   },
   subtitle2: {
@@ -128,11 +127,17 @@ const typography: TypographyOptions = {
     letterSpacing: "-0.015em",
     color: theme.palette.text.primary,
   },
-  h5: {
+  h4: {
     fontSize: "24px",
     fontWeight: 600,
     lineHeight: "32px",
     letterSpacing: "-0.01em",
+  },
+  h5: {
+    fontSize: "20px",
+    fontWeight: 600,
+    lineHeight: "28px",
+    letterSpacing: "-0.008em",
   },
   h6: {
     fontSize: "18px",
@@ -238,6 +243,13 @@ const components: Components = {
       root: {
         padding: 0,
         marginBottom: theme.spacing(1.5),
+      },
+    },
+  },
+  MuiDivider: {
+    styleOverrides: {
+      root: {
+        borderColor: theme.palette.border.default,
       },
     },
   },
