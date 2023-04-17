@@ -1,0 +1,29 @@
+name: Deploy App
+on:
+  workflow_dispatch:
+    paths:
+      - packages/contractor-extranet/**
+
+jobs:
+  deploy-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get tags
+        id: tags
+        uses: ./.github/actions/generate-tags
+        with:
+          registry_server: ${{ secrets.REGISTRY_SERVER }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workspace: contractor-extranet
+
+      - name: Deploy to cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: |
+            helm repo add opera-groupe https://opera-groupe.github.io/opera-groupe-helm/charts
+            helm upgrade -i contractor-extranet opera-groupe/frontend-contractor-extranet --set image.tag=${{ env.DOCKER_METADATA_OUTPUT_VERSION }} --namespace=contractor-extranet

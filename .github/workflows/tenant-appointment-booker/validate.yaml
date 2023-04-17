@@ -1,0 +1,38 @@
+name: Validate
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - packages/tenant-appointment-booker/**
+  pull_request:
+    paths:
+      - packages/tenant-appointment-booker/**
+  workflow_dispatch:
+    paths:
+      - packages/tenant-appointment-booker/**
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/prepare
+        with:
+          workspace: tenant-appointment-booker
+
+      - name: Lint
+        run: yarn workspace tenant-appointment-booker lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/prepare
+        with:
+          workspace: tenant-appointment-booker
+      - name: Build
+        run: yarn workspace tenant-appointment-booker build
+
+
