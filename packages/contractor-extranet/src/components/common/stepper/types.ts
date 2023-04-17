@@ -1,8 +1,12 @@
 export interface StepDefinition {
+  id: string;
   title: string;
   label: string;
   description: string;
-  form: React.FC;
+  form: React.FC<{
+    formId: string;
+    onSubmit: (formState: any) => void;
+  }>;
 }
 
 export interface StepHeaderProps extends Omit<StepDefinition, "form"> {
@@ -17,4 +21,13 @@ export interface StepsSummaryProps {
 export interface StepContentProps {
   currentStepNumber: number;
   step: StepDefinition;
+  handleNext: (formState: any) => void;
+  handleBack: () => void;
+  handleReset: () => void;
+}
+
+export interface StepFooterProps {
+  formId: string;
+  handleBack: () => void;
+  handleReset: () => void;
 }

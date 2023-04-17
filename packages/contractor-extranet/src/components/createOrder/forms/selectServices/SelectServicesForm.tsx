@@ -11,58 +11,83 @@ import {
   Stack,
   useTheme,
 } from "@mui/material";
-import { FC, useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import SelectServiceType from "./SelectServiceType";
-import {
-  RadioButtonChecked,
-  RadioButtonUnchecked,
-} from "@mui/icons-material";
+import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
+import { SelectServicesFormProps } from "./types";
+import { ServiceOption } from "@/types/ServiceOption";
+import { Family } from "@/types/Family";
 
-const SelectServicesForm: FC<{ families: any[] }> = ({ families }) => {
+const SelectServicesForm: FC<SelectServicesFormProps> = ({
+  families,
+  formId,
+  onSubmit,
+}) => {
   const theme = useTheme();
 
-  const [currentFamily, setCurrentFamily] = useState<number | null>(null);
+  const [selectedFamily, setSelectedFamily] = useState<number | null>(null);
 
-  const [services, setServices] = useState<number[]>([]);
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
-  const [options, setOptions] = useState<number[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   const handleOnChangeAccordion = (family: number) => () => {
-    setCurrentFamily(family);
-    setServices([]);
+    setSelectedFamily(family);
+    setSelectedServices([]);
   };
 
   const handleOnChangeService = (service: number) => () => {
-    if (services.includes(service)) {
-      setServices(services.filter((s) => s !== service));
+    if (selectedServices.includes(service)) {
+      setSelectedServices(selectedServices.filter((s) => s !== service));
     } else {
-      setServices([...services, service]);
+      setSelectedServices([...selectedServices, service]);
     }
-    setOptions([]);
+    setSelectedOptions([]);
   };
 
   const handleOnChangeOption = (option: number) => () => {
-    if (options.includes(option)) {
-      setOptions(options.filter((o) => o !== option));
+    if (selectedOptions.includes(option)) {
+      setSelectedOptions(selectedOptions.filter((o) => o !== option));
     } else {
-      setOptions([...options, option]);
+      setSelectedOptions([...selectedOptions, option]);
     }
   };
 
   const proposedOptions = useMemo(() => {
-    const options: any[] = [];
-    services.forEach((service) => {
-      const serviceOptions = families
-          .find((family) => family.id === currentFamily)
-          .services.find((s: any) => s.id === service).options;
-      options.push(...serviceOptions);
+    const options: ServiceOption[] = [];
+    const family = families.find((family) => family.id === selectedFamily);
+    if (!family) return [];
+    const services = family.services.filter((service) =>
+      selectedServices.includes(service.id)
+    );
+
+    return services.reduce((acc, service) => {
+      return [...acc, ...service.options];
+    }, options);
+  }, [selectedFamily, selectedServices]);
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const family = families.find(
+      (family: any) => family.id === selectedFamily
+    ) as Family;
+    const services = family.services.filter((service) =>
+      selectedServices.includes(service.id)
+    );
+    const options = proposedOptions.filter((option) =>
+      selectedOptions.includes(option.id)
+    );
+
+    onSubmit({
+      family,
+      services,
+      options,
     });
-    return options;
-  }, [services, currentFamily]);
-
-
+  };
   return (
-    <Stack spacing={5} component="form">
+    <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <SelectServiceType />
       <FormControl>
         <FormLabel
@@ -74,7 +99,7 @@ const SelectServicesForm: FC<{ families: any[] }> = ({ families }) => {
         </FormLabel>
         <Stack spacing={1}>
           {families.map((family) => {
-            const isExpanded = currentFamily === family.id;
+            const isExpanded = selectedFamily === family.id;
             return (
               <Accordion
                 expanded={isExpanded}
@@ -107,13 +132,13 @@ const SelectServicesForm: FC<{ families: any[] }> = ({ families }) => {
                   {isExpanded && (
                     <Stack spacing={2} divider={<Divider flexItem />}>
                       <FormGroup>
-                        {family.services.map((service: any) => (
+                        {family.services.map((service) => (
                           <FormControlLabel
                             control={
                               <Checkbox
                                 color="secondary"
                                 size="small"
-                                checked={services.includes(service.id)}
+                                checked={selectedServices.includes(service.id)}
                                 onChange={handleOnChangeService(service.id)}
                                 value={service.id}
                                 name={service.code}
@@ -126,10 +151,13 @@ const SelectServicesForm: FC<{ families: any[] }> = ({ families }) => {
                         ))}
                       </FormGroup>
                       {proposedOptions.length > 0 && (
-                        <FormControl
-                          focused={false}
-                        >
-                          <FormLabel sx={{ ...theme.typography.subtitle2, marginBottom: 1.5 }}>
+                        <FormControl focused={false}>
+                          <FormLabel
+                            sx={{
+                              ...theme.typography.subtitle2,
+                              marginBottom: 1.5,
+                            }}
+                          >
                             Ajouter des options
                           </FormLabel>
                           <FormGroup>
@@ -139,7 +167,9 @@ const SelectServicesForm: FC<{ families: any[] }> = ({ families }) => {
                                   <Checkbox
                                     color="secondary"
                                     size="small"
-                                    checked={options.includes(option.id)}
+                                    checked={selectedOptions.includes(
+                                      option.id
+                                    )}
                                     onChange={handleOnChangeOption(option.id)}
                                     value={option.id}
                                     name={option.code}

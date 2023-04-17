@@ -1,25 +1,11 @@
 import { getFamilies } from "@/queries/families";
-import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import SelectServicesForm from "./SelectServicesForm";
+import { SelectServicesProps } from "./types";
 
-const SelectServices: FC = () => {
+const SelectServices: FC<SelectServicesProps> = (props) => {
   const theme = useTheme();
 
   const {
@@ -46,7 +32,7 @@ const SelectServices: FC = () => {
     );
   }
 
-  return <SelectServicesForm families={families} />;
+  return <SelectServicesForm families={families} {...props} />;
 };
 
 export default SelectServices;
