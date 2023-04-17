@@ -30,7 +30,7 @@ const StepContent: FC<StepContentProps> = ({
         </Box>
       </Box>
 
-      <Box mr={4} display="flex" justifyContent="center">
+      <Box mr={4} display="flex" justifyContent="center" mb={6}>
         <Box width={width}>
           <StepFooter
             formId={`${step.id}-form`}

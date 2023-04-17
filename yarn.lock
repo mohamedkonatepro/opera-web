@@ -924,13 +924,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.2.1":
-  version: 13.2.1
-  resolution: "@next/font@npm:13.2.1"
-  checksum: 6231ca2d3fc887c0dd4e25ae8cebb090c477c6fc980b96b56f43b2ad6b989c9f588490ae680fc578b5584ae3b18a40d129c27b642afe9cfc4a953ea43145b1ee
-  languageName: node
-  linkType: hard
-
 "@next/swc-darwin-arm64@npm:13.3.0":
   version: 13.3.0
   resolution: "@next/swc-darwin-arm64@npm:13.3.0"
@@ -1837,7 +1830,6 @@ __metadata:
     "@mui/material": ^5.12.0
     "@mui/system": ^5.11.13
     "@mui/x-date-pickers": ^6.0.1
-    "@next/font": ^13.2.1
     "@next/swc-linux-x64-gnu": ^13.1.6
     "@next/swc-linux-x64-musl": ^13.1.6
     "@tanstack/react-query": ^4.26.1
@@ -4980,7 +4972,6 @@ __metadata:
     "@mui/material": ^5.11.10
     "@mui/system": ^5.11.13
     "@mui/x-date-pickers": ^6.0.1
-    "@next/font": ^13.2.1
     "@next/swc-linux-x64-gnu": ^13.1.6
     "@next/swc-linux-x64-musl": ^13.1.6
     "@tanstack/react-query": ^4.26.1
