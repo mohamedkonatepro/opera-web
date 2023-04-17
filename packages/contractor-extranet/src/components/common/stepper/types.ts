@@ -11,6 +11,7 @@ export interface StepDefinition {
 
 export interface StepHeaderProps extends Omit<StepDefinition, "form"> {
   stepNumber: number;
+  width?: number;
 }
 
 export interface StepsSummaryProps {
@@ -21,6 +22,7 @@ export interface StepsSummaryProps {
 export interface StepContentProps {
   currentStepNumber: number;
   step: StepDefinition;
+  width?: number;
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;

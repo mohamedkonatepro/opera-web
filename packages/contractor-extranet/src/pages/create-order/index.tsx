@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { useState } from "react";
 import StepsSummary from "@/components/common/stepper/StepsSummary";
 import StepContent from "@/components/common/stepper/StepContent";
@@ -68,6 +68,7 @@ const CreateOrderStepper = () => {
         handleNext={handleNext}
         handleBack={handleBack}
         handleReset={handleReset}
+        width={536}
       />
     </Box>
   );
