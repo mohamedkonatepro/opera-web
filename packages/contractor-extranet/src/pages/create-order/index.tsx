@@ -11,7 +11,7 @@ const steps: StepDefinition[] = [
     title: "Services et options de ma commande",
     description:
       "Une fois votre sélection terminée, passez à l'étape suivante.",
-    form: SelectServices
+    form: SelectServices,
   },
 ];
 
@@ -36,10 +36,7 @@ const CreateOrderStepper = () => {
     <Box display="flex" height={1} width={1}>
       <StepsSummary steps={steps} currentStepNumber={activeStep + 1} />
       <Divider flexItem orientation="vertical" />
-      <StepContent
-        step={currentStep}
-        currentStepNumber={activeStep + 1}
-      />
+      <StepContent step={currentStep} currentStepNumber={activeStep + 1} />
     </Box>
   );
 };

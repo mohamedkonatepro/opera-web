@@ -4,7 +4,6 @@ import { ContainedButtonProps } from "./types";
 const ContainedButton: React.FC<ContainedButtonProps> = ({
   sx,
   padding,
-  minWidth,
   ...rest
 }) => {
   const paddingSize = padding === "large" ? 1.5 : 1;
@@ -14,7 +13,7 @@ const ContainedButton: React.FC<ContainedButtonProps> = ({
       sx={{
         pt: paddingSize,
         pb: paddingSize,
-        minWidth,
+        ...sx,
       }}
       {...rest}
     />

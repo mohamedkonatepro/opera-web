@@ -5,7 +5,7 @@ export interface StepDefinition {
   form: React.FC;
 }
 
-export interface StepHeaderProps extends Omit<StepDefinition, 'form'> {
+export interface StepHeaderProps extends Omit<StepDefinition, "form"> {
   stepNumber: number;
 }
 

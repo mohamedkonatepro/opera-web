@@ -9,7 +9,7 @@ const StepHeader: FC<StepHeaderProps> = ({
   stepNumber,
 }) => {
   return (
-    <Box mr={4} display='flex' justifyContent="center">
+    <Box mr={4} display="flex" justifyContent="center">
       <Stack spacing={1}>
         <Typography variant="caption" fontWeight={500} color="border.bold">
           Étape {stepNumber} : {label}

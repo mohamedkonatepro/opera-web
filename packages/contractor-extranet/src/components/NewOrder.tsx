@@ -34,11 +34,12 @@ const NewOrder: React.FunctionComponent = () => {
           </Stack>
 
           <ContainedButton
-            type="submit"
             color="secondary"
             padding="large"
             href="/create-order"
-            minWidth="167px"
+            sx={{
+              width: "167px",
+            }}
           >
             Nouvelle commande
           </ContainedButton>

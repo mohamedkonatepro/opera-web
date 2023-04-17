@@ -151,31 +151,30 @@ const typography: TypographyOptions = {
 theme = createTheme({ ...theme, typography });
 
 const components: Components = {
-  MuiAccordionSummary: {
-    styleOverrides: {
-      root: {
-        padding: theme.spacing(2),
-        flexDirection: "row-reverse",
-      },
-      expandIconWrapper: {
-        marginRight: theme.spacing(1.5),
-      },
-      content: {
-        margin: 0,
-        padding: 0,
-        ...theme.typography.body2,
-        color: theme.palette.common.black,
-      },
-    },
-  },
-  MuiAccordionDetails: {
-    styleOverrides: {
-      root: {
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing(2),
-      },
-    },
-  },
+  //   MuiAccordionSummary: {
+  //     styleOverrides: {
+  //       root: {
+  //         padding: theme.spacing(2),
+  //         flexDirection: "row-reverse",
+  //       },
+  //       expandIconWrapper: {
+  //         marginRight: theme.spacing(1.5),
+  //       },
+  //       content: {
+  //         margin: 0,
+  //         padding: 0,
+  //         ...theme.typography.body2,
+  //         color: theme.palette.common.black,
+  //       },
+  //     },
+  //   },
+  // MuiAccordionDetails: {
+  //   styleOverrides: {
+  //     root: {
+  //       padding: theme.spacing(2),
+  //     },
+  //   },
+  // },
   MuiAlert: {
     defaultProps: {
       variant: "outlined",

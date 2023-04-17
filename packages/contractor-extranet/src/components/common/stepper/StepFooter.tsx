@@ -5,10 +5,12 @@ import { FC } from "react";
 
 const StepFooter: FC = () => {
   return (
-    <Box mr={4} display='flex' justifyContent="center">
+    <Box mr={4} display="flex" justifyContent="center">
       <Stack direction="row">
-        <CancelButton minWidth='130px'>Annuler</CancelButton>
-        <ValidateButton minWidth='130px'>Étape suivante</ValidateButton>
+        <CancelButton sx={{ minWidth: "130px" }}>Annuler</CancelButton>
+        <ValidateButton sx={{ minWidth: "130px" }}>
+          Étape suivante
+        </ValidateButton>
       </Stack>
     </Box>
   );

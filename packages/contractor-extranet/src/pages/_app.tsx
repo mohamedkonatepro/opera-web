@@ -5,7 +5,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../styles/theme";
 import createEmotionCache from "../styles/createEmotionCache";
-import { Box, Container, CssBaseline, GlobalStyles, Stack } from "@mui/material";
+import {
+  Box,
+  Container,
+  CssBaseline,
+  GlobalStyles,
+  Stack,
+} from "@mui/material";
 import {
   Hydrate,
   QueryClient,
@@ -67,7 +73,7 @@ export default function MyApp(props: MyAppProps) {
               fixed
               disableGutters
             >
-              <Box minWidth={288} height={1} bgcolor="#F4F4F4" />
+              {/* <Box minWidth={288} height={1} bgcolor="#F4F4F4" /> */}
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                   <Component {...pageProps} />
