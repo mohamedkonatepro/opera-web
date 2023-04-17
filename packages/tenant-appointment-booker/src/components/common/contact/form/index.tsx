@@ -1,8 +1,4 @@
-import orderIsEDL from "@/utils/orderIsEDL";
-import { Box, Paper, Stack, Typography } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { DateTime } from "luxon";
-import { useState } from "react";
+import { Box, Stack, Typography } from "@mui/material";
 import CancelAppointment from "./CancelAppointment";
 import NotAvailableAtDates from "./NotAvailableAtDates";
 import {
@@ -10,6 +6,7 @@ import {
   ContactFormSubmitValues,
   ContactReason,
 } from "./types";
+import { useState } from "react";
 
 const ContactForm: React.FC<ContactFormProps> = ({
   id,
@@ -17,6 +14,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
   disabled,
   onSubmit,
   setFormIsValid,
+  canChangeDate,
+  canCancelAppointment,
 }) => {
   const [expanded, setExpanded] = useState<ContactReason>(
     ContactReason.NOT_AVAILABLE_AT_DATES
@@ -29,10 +28,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const handleOnSubmit = (values: ContactFormSubmitValues): void => {
     onSubmit({ ...values, type: expanded });
   };
-
-  const canChangeDate =
-    orderIsEDL(appointmentBooking.order.type) &&
-    !appointmentBooking.appointment;
 
   return (
     <Stack spacing={2}>
@@ -52,7 +47,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           />
         )}
 
-        {!appointmentBooking.appointment && (
+        {canCancelAppointment && (
           <CancelAppointment
             expanded={expanded === ContactReason.CANCEL_APPOINTMENT}
             onChange={handleOnChangeAccordion(ContactReason.CANCEL_APPOINTMENT)}

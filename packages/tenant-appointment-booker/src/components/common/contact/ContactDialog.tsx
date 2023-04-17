@@ -6,6 +6,7 @@ import ContactForm from "./form";
 import ContractorSummary from "./ContractorSummary";
 import { ContactDialogProps } from "./types";
 import { useState } from "react";
+import orderIsEDL from "@/utils/orderIsEDL";
 
 const formId = "contact-form";
 
@@ -24,6 +25,11 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
 
   const [formIsValid, setFormIsValid] = useState(false);
 
+  const canChangeDate =
+    orderIsEDL(appointmentBooking.order.type) &&
+    !appointmentBooking.appointment;
+  const canCancelAppointment = !appointmentBooking.appointment;
+
   return (
     <HelpDialog
       open={open}
@@ -32,18 +38,20 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
       text="Contactez votre conseiller d’agence par téléphone, ou remplissez le formulaire de contact."
       maxWidth={600}
       actions={
-        <>
-          <CancelButton fullWidth onClick={onClose} disabled={disabled}>
-            Annuler
-          </CancelButton>
-          <ValidateButton
-            fullWidth
-            form={formId}
-            disabled={disabled || !formIsValid}
-          >
-            Envoyer
-          </ValidateButton>
-        </>
+        (canChangeDate || canCancelAppointment) && (
+          <>
+            <CancelButton fullWidth onClick={onClose} disabled={disabled}>
+              Annuler
+            </CancelButton>
+            <ValidateButton
+              fullWidth
+              form={formId}
+              disabled={disabled || !formIsValid}
+            >
+              Envoyer
+            </ValidateButton>
+          </>
+        )
       }
     >
       <Stack
@@ -51,13 +59,17 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
         divider={<Divider orientation="horizontal" flexItem />}
       >
         <ContractorSummary contractor={contractor} />
-        <ContactForm
-          id={formId}
-          appointmentBooking={appointmentBooking}
-          onSubmit={onSubmit}
-          setFormIsValid={setFormIsValid}
-          disabled={disabled}
-        />
+        {(canChangeDate || canCancelAppointment) && (
+          <ContactForm
+            id={formId}
+            appointmentBooking={appointmentBooking}
+            onSubmit={onSubmit}
+            setFormIsValid={setFormIsValid}
+            disabled={disabled}
+            canChangeDate={canChangeDate}
+            canCancelAppointment={canCancelAppointment}
+          />
+        )}
       </Stack>
     </HelpDialog>
   );
