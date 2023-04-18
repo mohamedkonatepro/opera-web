@@ -7,7 +7,7 @@ const NewOrder: React.FunctionComponent = () => {
     <Paper
     elevation={3}
     sx={{
-      margin: "24px 32px 24px 320px",
+      margin: "24px 32px 24px 32px",
       bgcolor: "background.default",
       display: "flex"
     }}
