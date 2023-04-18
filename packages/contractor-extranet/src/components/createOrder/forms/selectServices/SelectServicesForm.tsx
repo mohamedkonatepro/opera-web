@@ -64,7 +64,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     return services.reduce((acc, service) => {
       return [...acc, ...service.options];
     }, options);
-  }, [selectedFamily, selectedServices]);
+  }, [selectedFamily, selectedServices, families]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,6 +107,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                 elevation={0}
                 variant="outlined"
                 disableGutters
+                key={family.id}
               >
                 <AccordionSummary
                   sx={{
@@ -147,6 +148,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                             label={service.name}
                             disableTypography
                             sx={{ ...theme.typography.body2 }}
+                            key={service.id}
                           />
                         ))}
                       </FormGroup>
@@ -178,6 +180,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                                 label={option.name}
                                 disableTypography
                                 sx={{ ...theme.typography.body2 }}
+                                key={option.id}
                               />
                             ))}
                           </FormGroup>
