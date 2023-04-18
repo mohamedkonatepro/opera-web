@@ -1,0 +1,38 @@
+name: Validate Contractor Extranet
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - packages/contractor-extranet/**
+  pull_request:
+    paths:
+      - packages/contractor-extranet/**
+  workflow_dispatch:
+    paths:
+      - packages/contractor-extranet/**
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/prepare
+        with:
+          workspace: contractor-extranet
+
+      - name: Lint
+        run: yarn workspace contractor-extranet lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/prepare
+        with:
+          workspace: contractor-extranet
+      - name: Build
+        run: yarn workspace contractor-extranet build
+
+
