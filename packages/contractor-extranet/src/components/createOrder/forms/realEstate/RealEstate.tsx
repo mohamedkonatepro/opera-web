@@ -30,7 +30,7 @@ const RealEstate = () => {
           color="secondary"
           required
           fullWidth
-          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          inputProps={{ inputMode: 'numeric', pattern: '^(?:0|[1-9]\d*)(?:\.\d+)?$' }}
         />
       </Stack>
       <Stack spacing={2} direction="row">
@@ -38,7 +38,7 @@ const RealEstate = () => {
           label="Nombre de pièces"
           color="secondary"
           required
-          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          inputProps={{ inputMode: 'numeric', pattern: '^\d+$' }}
           fullWidth
         />
         <TextField
