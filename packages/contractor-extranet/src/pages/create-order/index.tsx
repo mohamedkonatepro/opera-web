@@ -4,6 +4,7 @@ import StepsSummary from "@/components/common/stepper/StepsSummary";
 import StepContent from "@/components/common/stepper/StepContent";
 import SelectServices from "@/components/createOrder/forms/selectServices";
 import { StepDefinition } from "@/components/common/stepper/types";
+import RealEstateForm from "@/components/createOrder/forms/realEstate";
 
 const steps: StepDefinition[] = [
   {
@@ -15,17 +16,17 @@ const steps: StepDefinition[] = [
     form: SelectServices,
   },
   {
-    id: "contacts",
-    label: "Informations de contact",
-    title: "Informations de contact",
+    id: "realEstate",
+    label: "Informations du bien",
+    title: "Informations du bien",
     description:
-      "Une fois votre sélection terminée, passez à l'étape suivante.",
-    form: () => <div>Contacts</div>,
+      "Une fois votre sélection terminée, passez à l’étape suivante.",
+    form: RealEstateForm,
   },
 ];
 
 const CreateOrderStepper = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
 
   const currentStep = steps[activeStep];
 
