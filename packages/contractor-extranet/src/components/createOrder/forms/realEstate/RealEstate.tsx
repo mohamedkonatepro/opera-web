@@ -1,3 +1,6 @@
+import FloorSelect from "@/components/inputs/FloorSelect";
+import PurposeSelect from "@/components/inputs/PurposeSelect";
+import RealEstateTypeSelect from "@/components/inputs/RealEstateTypeSelect";
 import { Stack, TextField, Typography } from "@mui/material";
 
 const RealEstate = () => {
@@ -5,9 +8,9 @@ const RealEstate = () => {
     <Stack spacing={2}>
       <Typography variant="subtitle1">Détails du bien</Typography>
       <Stack spacing={2} direction="row">
-        <TextField label="Type" color="secondary" required select fullWidth />
-        <TextField label="Étage" color="secondary" select fullWidth required />
-        <TextField label="Usage" color="secondary" select fullWidth />
+        <RealEstateTypeSelect />
+        <FloorSelect />
+        <PurposeSelect />
         <TextField
           label="Surface"
           color="secondary"

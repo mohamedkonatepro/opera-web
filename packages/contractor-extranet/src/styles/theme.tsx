@@ -150,6 +150,8 @@ const typography: TypographyOptions = {
 
 theme = createTheme({ ...theme, typography });
 
+const ITEM_HEIGHT = 48;
+
 const components: Components = {
   //   MuiAccordionSummary: {
   //     styleOverrides: {
@@ -329,6 +331,19 @@ const components: Components = {
     styleOverrides: {
       outlined: {
         borderColor: theme.palette.border.subtle,
+      },
+    },
+  },
+  MuiTextField: {
+    defaultProps: {
+      SelectProps: {
+        MenuProps: {
+          PaperProps: {
+            sx: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+            },
+          },
+        },
       },
     },
   },

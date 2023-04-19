@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { nanoid } from "nanoid";
 import { useState } from "react";
+import BuildingAnnexTypeSelect from "@/components/inputs/BuildingAnnexTypeSelect";
 
 const Annexes = () => {
   const [annexes, setAnnexes] = useState<any[]>([]);
@@ -36,13 +37,7 @@ const Annexes = () => {
       {annexes.map((annex, index) => {
         return (
           <Stack key={annex.id} spacing={2} direction="row">
-            <TextField
-              label="Type"
-              color="secondary"
-              required
-              select
-              fullWidth
-            />
+            <BuildingAnnexTypeSelect />
             <TextField
               label="Numéro de lot"
               color="secondary"

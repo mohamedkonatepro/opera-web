@@ -1,6 +1,7 @@
 import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
+import { RealEstateType } from "@/types/RealEstateType";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).json({ error: "Method not allowed" });
 };
 
-const formatRealEstateType = (realEstateType: any) => {
+const formatRealEstateType = (realEstateType: any): RealEstateType => {
   const { id, attributes } = realEstateType;
   const { name, code } = attributes;
 

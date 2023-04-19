@@ -9,7 +9,6 @@ const SelectServices: FC<SelectServicesProps> = (props) => {
   const theme = useTheme();
 
   const {
-    isFetching,
     isLoading,
     isSuccess,
     data: families,
@@ -18,7 +17,7 @@ const SelectServices: FC<SelectServicesProps> = (props) => {
     queryFn: () => getFamilies(),
   });
 
-  if (isFetching || isLoading) {
+  if (isLoading) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>
         Chargement...

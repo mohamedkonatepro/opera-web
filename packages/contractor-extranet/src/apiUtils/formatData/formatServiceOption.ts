@@ -5,6 +5,6 @@ const formatServiceOption = (serviceOption: any): ServiceOption => {
   const { name, code } = attributes;
 
   return { id, name, code };
-}
+};
 
 export default formatServiceOption;
