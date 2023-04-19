@@ -20,4 +20,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).json({ error: "Method not allowed" });
 };
 
+const formatFamily = (family: any) => {
+    const { id, attributes } = family;
+    const { name, code, services } = attributes;
+    const formattedServices = services.data.map(formatService);
+
+    return { id, name, code, services: formattedServices };
+}
+
+const formatService = (service: any) => {
+    const { id, attributes } = service;
+    const { name, code, service_options } = attributes;
+    const formattedServiceOptions = service_options.data.map(formatServiceOption);
+
+    return { id, name, code, options: formattedServiceOptions };
+}
+
+const formatServiceOption = (serviceOption: any) => {
+    const { id, attributes } = serviceOption;
+    const { name, code } = attributes;
+
+    return { id, name, code };
+}
+
 export default handler;
