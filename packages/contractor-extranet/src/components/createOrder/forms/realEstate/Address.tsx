@@ -1,4 +1,4 @@
-import { Stack, TextField, Typography } from "@mui/material"
+import { Stack, TextField, Typography } from "@mui/material";
 
 const Address = () => {
   return (
@@ -11,12 +11,8 @@ const Address = () => {
         color="secondary"
         fullWidth
       />
-      <TextField
-        label="Complément d'adresse"
-        color="secondary"
-        fullWidth
-      />
-      <Stack spacing={2} direction='row'>
+      <TextField label="Complément d'adresse" color="secondary" fullWidth />
+      <Stack spacing={2} direction="row">
         <TextField
           label="Code Postal"
           color="secondary"
@@ -33,7 +29,7 @@ const Address = () => {
         />
       </Stack>
     </Stack>
-  )
-}
+  );
+};
 
-export default Address
+export default Address;

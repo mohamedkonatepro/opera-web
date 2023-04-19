@@ -7,12 +7,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     try {
-      const response = await apiAxiosInstance.get(
-        `/floors`
-      );
-      return res.status(200).json(
-        response.data.data.map(formatFloor)
-      );
+      const response = await apiAxiosInstance.get(`/floors`);
+      return res.status(200).json(response.data.data.map(formatFloor));
     } catch (error: any) {
       return handleError(error, res);
     }
@@ -26,6 +22,6 @@ const formatFloor = (floor: any) => {
   const { name, code } = attributes;
 
   return { id, name, code };
-}
+};
 
 export default handler;

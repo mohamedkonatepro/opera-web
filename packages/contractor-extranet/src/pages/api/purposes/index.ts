@@ -7,12 +7,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     try {
-      const response = await apiAxiosInstance.get(
-        `/purposes`
-      );
-      return res.status(200).json(
-        response.data.data.map(formatPurpose)
-      );
+      const response = await apiAxiosInstance.get(`/purposes`);
+      return res.status(200).json(response.data.data.map(formatPurpose));
     } catch (error: any) {
       return handleError(error, res);
     }
@@ -26,6 +22,6 @@ const formatPurpose = (purpose: any) => {
   const { name, code } = attributes;
 
   return { id, name, code };
-}
+};
 
 export default handler;

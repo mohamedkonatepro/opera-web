@@ -10,9 +10,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const response = await apiAxiosInstance.get(
         `/water-heating-energy-types`
       );
-      return res.status(200).json(
-        response.data.data.map(formatWaterHeatingEnergyType)
-      );
+      return res
+        .status(200)
+        .json(response.data.data.map(formatWaterHeatingEnergyType));
     } catch (error: any) {
       return handleError(error, res);
     }
@@ -26,6 +26,6 @@ const formatWaterHeatingEnergyType = (waterHeatingEnergyType: any) => {
   const { name, code } = attributes;
 
   return { id, name, code };
-}
+};
 
 export default handler;

@@ -21,26 +21,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const formatFamily = (family: any) => {
-    const { id, attributes } = family;
-    const { name, code, services } = attributes;
-    const formattedServices = services.data.map(formatService);
+  const { id, attributes } = family;
+  const { name, code, services } = attributes;
+  const formattedServices = services.data.map(formatService);
 
-    return { id, name, code, services: formattedServices };
-}
+  return { id, name, code, services: formattedServices };
+};
 
 const formatService = (service: any) => {
-    const { id, attributes } = service;
-    const { name, code, service_options } = attributes;
-    const formattedServiceOptions = service_options.data.map(formatServiceOption);
+  const { id, attributes } = service;
+  const { name, code, service_options } = attributes;
+  const formattedServiceOptions = service_options.data.map(formatServiceOption);
 
-    return { id, name, code, options: formattedServiceOptions };
-}
+  return { id, name, code, options: formattedServiceOptions };
+};
 
 const formatServiceOption = (serviceOption: any) => {
-    const { id, attributes } = serviceOption;
-    const { name, code } = attributes;
+  const { id, attributes } = serviceOption;
+  const { name, code } = attributes;
 
-    return { id, name, code };
-}
+  return { id, name, code };
+};
 
 export default handler;
