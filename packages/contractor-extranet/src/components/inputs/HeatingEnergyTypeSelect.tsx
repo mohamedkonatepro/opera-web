@@ -1,8 +1,17 @@
 import { getHeatingEnergyTypes } from "@/queries/heatingEnergyTypes";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { FC } from "react";
 
-const HeatingEnergyTypeSelect = () => {
+interface HeatingEnergyTypeSelectProps {
+  value: string;
+  setValue: (value: string) => void;
+}
+
+const HeatingEnergyTypeSelect: FC<HeatingEnergyTypeSelectProps> = ({
+  value,
+  setValue,
+}) => {
   const {
     isLoading,
     error,
@@ -26,11 +35,13 @@ const HeatingEnergyTypeSelect = () => {
 
   return (
     <TextField
-      id="heatingEnergyType"
+      id="heating-energy-type"
       label="Énergie utilisée"
       color="secondary"
       select
       fullWidth
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
     >
       {heatingEnergyTypes.map((heatingEnergyType) => (
         <MenuItem

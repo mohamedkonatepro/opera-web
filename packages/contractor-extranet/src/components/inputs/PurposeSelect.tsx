@@ -1,8 +1,14 @@
 import { getPurposes } from "@/queries/purposes";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { FC } from "react";
 
-const PurposeSelect = () => {
+interface PurposeSelectProps {
+  value: string;
+  setValue: (value: string) => void;
+}
+
+const PurposeSelect: FC<PurposeSelectProps> = ({ value, setValue }) => {
   const {
     isLoading,
     error,
@@ -22,7 +28,15 @@ const PurposeSelect = () => {
   }
 
   return (
-    <TextField id="purpose" label="Usage" color="secondary" select fullWidth>
+    <TextField
+      id="purpose"
+      label="Usage"
+      color="secondary"
+      select
+      fullWidth
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+    >
       {purposes.map((purpose) => (
         <MenuItem key={purpose.id} value={purpose.id} color="secondary">
           {purpose.name}
