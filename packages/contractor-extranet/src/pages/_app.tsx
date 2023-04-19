@@ -5,7 +5,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../styles/theme";
 import createEmotionCache from "../styles/createEmotionCache";
-import { Container, Stack } from "@mui/material";
+import {
+  Box,
+  Container,
+  CssBaseline,
+  GlobalStyles,
+  Stack,
+} from "@mui/material";
 import {
   Hydrate,
   QueryClient,
@@ -42,14 +48,32 @@ export default function MyApp(props: MyAppProps) {
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="fr">
+          <CssBaseline />
+          <GlobalStyles
+            styles={{
+              html: {
+                height: "100vh",
+              },
+              body: {
+                height: "inherit",
+                backgroundColor: "#FFFFFF",
+                "& > div:first-of-type": {
+                  height: "inherit",
+                },
+              },
+            }}
+          />
           <Stack component="main" height={1} justifyContent="space-between">
             <Container
               sx={{
                 maxWidth: { sm: "100%" },
+                height: "100%",
+                display: "flex",
               }}
               fixed
               disableGutters
             >
+              {/* <Box minWidth={288} height={1} bgcolor="#F4F4F4" /> */}
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                   <Component {...pageProps} />
