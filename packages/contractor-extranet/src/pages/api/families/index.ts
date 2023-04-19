@@ -1,5 +1,6 @@
 import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
+import formatFamily from "@/apiUtils/formatData/formatFamily";
 import handleError from "@/apiUtils/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -10,25 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const response = await apiAxiosInstance.get(
         `/families?populate=services.service_options`
       );
-      return res.status(200).json(
-        response.data.data.map((family: any) => ({
-          id: family.id,
-          name: family.attributes.name,
-          code: family.attributes.code,
-          services: family.attributes.services.data.map((service: any) => ({
-            id: service.id,
-            name: service.attributes.name,
-            code: service.attributes.code,
-            options: service.attributes.service_options.data.map(
-              (option: any) => ({
-                id: option.id,
-                name: option.attributes.name,
-                code: option.attributes.code,
-              })
-            ),
-          })),
-        }))
-      );
+      return res.status(200).json(response.data.data.map(formatFamily));
     } catch (error: any) {
       return handleError(error, res);
     }
