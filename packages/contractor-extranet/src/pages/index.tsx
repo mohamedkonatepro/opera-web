@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, Divider } from '@mui/material';
 import NewOrder from '../components/NewOrder';
-import RealEstateFilter from '../components/RealEstateFilter';
+import RealEstateFilterableList from '../components/RealEstateFilterableList';
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
         }}
       >
       <NewOrder />
-      <RealEstateFilter />
+      <RealEstateFilterableList />
     </Stack>
   )
 }

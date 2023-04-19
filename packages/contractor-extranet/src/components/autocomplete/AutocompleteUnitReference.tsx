@@ -1,9 +1,9 @@
 import { TextField, Autocomplete } from '@mui/material';
 import realEstateRemoveDuplicates from "@/utils/realEstateRemoveDuplicates";
-import RealEstateListResponse from "@/types/realEstateListResponse";
+import RealEstate from '@/types/realEstates';
 
 interface AutocompleteUnitReferenceProps {
-  realEstatesData: RealEstateListResponse['data'];
+  realEstatesData: RealEstate[];
   isLoading: boolean;
   onInputChange: (event: any, value: string) => void;
 }
@@ -17,7 +17,7 @@ const AutocompleteUnitReference: React.FunctionComponent<AutocompleteUnitReferen
           if (typeof option === 'string') {
             return option;
           }
-          return option.attributes.unitReference;
+          return option.unitReference;
         } }
         renderInput={(params) => (
           <TextField

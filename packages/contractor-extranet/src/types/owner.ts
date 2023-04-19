@@ -1,17 +1,13 @@
-export interface Owner {
+interface Owner {
   id: number;
-  attributes: {
-    firstname: string;
-    lastname: string | null;
-    mobileNumber: string | null;
-    landlineNumber: string | null;
-    email: string | null;
-    fiscalInvariant: string | null;
-    createdAt: string;
-    updatedAt: string;
-  };
+  firstname: string;
+  lastname?: string;
+  mobileNumber: string;
+  landlineNumber?: string;
+  email?: string;
+  fiscalInvariant?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface OwnerResponse {
-  data: Owner;
-}
+export default Owner;

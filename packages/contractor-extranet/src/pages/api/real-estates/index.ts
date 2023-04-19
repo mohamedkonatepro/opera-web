@@ -3,6 +3,7 @@ import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import RealEstateListResponse from "@/types/realEstateListResponse";
 import { NextApiRequest, NextApiResponse } from "next";
+import { formatRealEstateData } from "@/utils/dataFormattingUtils";
 
 interface Filters {
   address?: string | string[]
@@ -27,9 +28,11 @@ export const getRealEstates = async (filters: Filters): Promise<RealEstateListRe
 
   const { data } = await apiAxiosInstance.get(url);
 
+  
+  data.data = data.data.map(formatRealEstateData)
+
   return data;
 };
-
 
 const realEstates = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);

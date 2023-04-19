@@ -31,17 +31,17 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({realEst
           </TableHead>
           <TableBody>
             {realEstates.map((realEstate) => {
-              const { address, postalCode, city, buildingReference, unitReference, staircaseNumber, surface, real_estate_type, owner, tenants } = realEstate.attributes;
-              const tenantName = tenants.data.map((tenant) => `${tenant.attributes.firstname ?? ''} ${tenant.attributes.lastname ?? ''}`);
+              const { address, postalCode, city, buildingReference, unitReference, staircaseNumber, surface, real_estate_type, owner, tenants } = realEstate;
+              const tenantName = tenants.map((tenant) => `${tenant.firstname ?? ''} ${tenant.lastname ?? ''}`);
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>{address} {postalCode} {city}</TableCell>
-                  <TableCell>{real_estate_type?.data?.attributes?.name}</TableCell>
+                  <TableCell>{real_estate_type?.name}</TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
                   <TableCell>{staircaseNumber}</TableCell>
                   <TableCell>{surface}</TableCell>
-                  <TableCell>{owner?.data?.attributes?.firstname} {owner?.data?.attributes?.lastname}</TableCell>
+                  <TableCell>{owner?.firstname} {owner?.lastname}</TableCell>
                   <TableCell>{tenantName.join(' ')}</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
