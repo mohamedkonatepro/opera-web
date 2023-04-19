@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { getRealEstates } from "@/queries/realEstates";
 import { useQuery } from "@tanstack/react-query";
 import ContainedButton from "./common/buttons/ContainedButton";
@@ -87,32 +87,52 @@ const RealEstateFilter: React.FunctionComponent = () => {
     setCurrentPage(newPage);
   };
   return (
-    <Stack spacing={4}>
-    <Box sx={{ display: 'flex' }}>
-      <AutocompleteAddress isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onAddressChange={handleAddressAutocompleteChange} onInputChange={handleAddressInputChange} />
-      <AutocompleteBuildingReference isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onInputChange={handleInputBuildingReferenceChange} />
-      <AutocompleteUnitReference isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onInputChange={handleInputUnitReferenceChange} />
+    <Box
+      sx={{
+        margin: "24px 32px 24px 32px",
+        display: "flex"
+      }}
+    >
+      <Stack spacing={3}>
+        <Stack spacing={1}>
+          <Typography variant="body2" color="secondary.main">
+            Nouvelle commande
+          </Typography>
+          <Typography variant="h6" sx={{ marginTop: "8px" }}>
+            Créer une commande à partir d&apos;une référence
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ marginTop: "8px" }}>
+            Utilisez les filtres ci-dessous pour trouver un bien.
+          </Typography>
+        </Stack>
+        <Stack spacing={4}>
+        <Box sx={{ display: 'flex' }}>
+          <AutocompleteAddress isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onAddressChange={handleAddressAutocompleteChange} onInputChange={handleAddressInputChange} />
+          <AutocompleteBuildingReference isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onInputChange={handleInputBuildingReferenceChange} />
+          <AutocompleteUnitReference isLoading={isRealEstateDataLoading} realEstatesData={realEstates} onInputChange={handleInputUnitReferenceChange} />
 
-      <ContainedButton
-        disabled={queryEnabled ? false : true}
-        type="submit"
-        onClick={handleClickFilter}
-        color="secondary"
-        padding="small"
-        width="140px"
-      >
-        <SearchTwoToneIcon sx={{ marginRight: '5px' }} />
-        Rechercher
-      </ContainedButton>
-    </Box>
-    
-    {filterEnabled && realEstates.length > 0 && (
-      <Stack spacing={4}>
-        <RealEstateTable realEstates={realEstates}/>
-        { pagination && <CustomPagination pagination={pagination} onChange={handlePageChange} />}
+          <ContainedButton
+            disabled={queryEnabled ? false : true}
+            type="submit"
+            onClick={handleClickFilter}
+            color="secondary"
+            padding="small"
+            width="140px"
+          >
+            <SearchTwoToneIcon sx={{ marginRight: '5px' }} />
+            Rechercher
+          </ContainedButton>
+        </Box>
+        
+        {filterEnabled && realEstates.length > 0 && (
+          <Stack spacing={4}>
+            <RealEstateTable realEstates={realEstates}/>
+            { pagination && <CustomPagination pagination={pagination} onChange={handlePageChange} />}
+          </Stack>
+        )}
+        </Stack>
       </Stack>
-    )}
-    </Stack>
+    </Box>
   );
 };
 
