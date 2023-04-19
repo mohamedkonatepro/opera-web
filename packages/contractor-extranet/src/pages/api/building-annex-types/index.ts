@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/building-annex-types`
       );
       return res.status(200).json(
-        response.data.data.map((buildingAnnexType: any) => ({
-          id: buildingAnnexType.id,
-          name: buildingAnnexType.attributes.name,
-          code: buildingAnnexType.attributes.code,
-        }))
+        response.data.data.map(formatBuildingAnnexType)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatBuildingAnnexType = (buildingAnnexType: any) => {
+  const { id, attributes } = buildingAnnexType;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;

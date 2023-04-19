@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/heating-types`
       );
       return res.status(200).json(
-        response.data.data.map((heatingType: any) => ({
-          id: heatingType.id,
-          name: heatingType.attributes.name,
-          code: heatingType.attributes.code,
-        }))
+        response.data.data.map(formatHeatingType)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatHeatingType = (heatingType: any) => {
+  const { id, attributes } = heatingType;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;

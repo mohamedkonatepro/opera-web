@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/purposes`
       );
       return res.status(200).json(
-        response.data.data.map((purpose: any) => ({
-          id: purpose.id,
-          name: purpose.attributes.name,
-          code: purpose.attributes.code,
-        }))
+        response.data.data.map(formatPurpose)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatPurpose = (purpose: any) => {
+  const { id, attributes } = purpose;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;

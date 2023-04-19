@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/real-estate-types`
       );
       return res.status(200).json(
-        response.data.data.map((realEstateType: any) => ({
-          id: realEstateType.id,
-          name: realEstateType.attributes.name,
-          code: realEstateType.attributes.code,
-        }))
+        response.data.data.map(formatRealEstateType)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatRealEstateType = (realEstateType: any) => {
+  const { id, attributes } = realEstateType;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;

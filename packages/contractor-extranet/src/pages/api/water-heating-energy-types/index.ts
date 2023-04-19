@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/water-heating-energy-types`
       );
       return res.status(200).json(
-        response.data.data.map((waterHeatingEnergyType: any) => ({
-          id: waterHeatingEnergyType.id,
-          name: waterHeatingEnergyType.attributes.name,
-          code: waterHeatingEnergyType.attributes.code,
-        }))
+        response.data.data.map(formatWaterHeatingEnergyType)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatWaterHeatingEnergyType = (waterHeatingEnergyType: any) => {
+  const { id, attributes } = waterHeatingEnergyType;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;

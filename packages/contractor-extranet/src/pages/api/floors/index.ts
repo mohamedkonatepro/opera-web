@@ -11,11 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         `/floors`
       );
       return res.status(200).json(
-        response.data.data.map((floor: any) => ({
-          id: floor.id,
-          name: floor.attributes.name,
-          code: floor.attributes.code,
-        }))
+        response.data.data.map(formatFloor)
       );
     } catch (error: any) {
       return handleError(error, res);
@@ -24,5 +20,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(405).json({ error: "Method not allowed" });
 };
+
+const formatFloor = (floor: any) => {
+  const { id, attributes } = floor;
+  const { name, code } = attributes;
+
+  return { id, name, code };
+}
 
 export default handler;
