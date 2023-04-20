@@ -47,7 +47,7 @@ const Contractor: FC<ContractorFormProps> = ({
           }}
         />
       </Stack>
-      <Alert variant="outlined" severity="info">
+      <Alert severity="info">
         <Typography variant="subtitle2">
           La personne renseignée recevra les mails de suivi et de gestion de
           RDV.

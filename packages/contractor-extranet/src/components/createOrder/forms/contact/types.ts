@@ -1,7 +1,7 @@
 export interface ContactFormProps {
   formId: string;
   onSubmit: (values: any) => void;
-  stepStates: any;
+  contextValues: any;
 }
 
 export interface EnteringTenantsFormProps {

@@ -11,7 +11,7 @@ const StepContent: FC<StepContentProps> = ({
   handleBack,
   handleReset,
   width,
-  stepStates,
+  contextValues,
 }) => {
   const StepForm = step.form;
   return (
@@ -29,7 +29,7 @@ const StepContent: FC<StepContentProps> = ({
           <StepForm
             formId={`${step.id}-form`}
             onSubmit={handleNext}
-            stepStates={stepStates}
+            contextValues={contextValues}
           />
         </Box>
       </Box>
