@@ -43,8 +43,8 @@ const Unit: FC<UnitFormProps> = ({
           onChange={(event) => setMandateReference(event.target.value)}
         />
       </Stack>
-      <Stack direction='row' spacing={2}>
-      <TextField
+      <Stack direction="row" spacing={2}>
+        <TextField
           id="lease-reference"
           label="Code bail"
           color="secondary"

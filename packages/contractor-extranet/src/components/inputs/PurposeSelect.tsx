@@ -38,7 +38,9 @@ const PurposeSelect: FC<PurposeSelectProps> = ({ value, setValue }) => {
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const purpose = purposes.find((purpose) => purpose.id.toString() === value) as Purpose;
+        const purpose = purposes.find(
+          (purpose) => purpose.id.toString() === value
+        ) as Purpose;
         setValue(purpose);
       }}
     >

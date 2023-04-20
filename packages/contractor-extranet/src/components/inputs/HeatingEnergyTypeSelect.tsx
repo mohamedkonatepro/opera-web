@@ -44,7 +44,9 @@ const HeatingEnergyTypeSelect: FC<HeatingEnergyTypeSelectProps> = ({
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const heatingEnergyType = heatingEnergyTypes.find((heatingEnergyType) => heatingEnergyType.id.toString() === value) as HeatingEnergyType;
+        const heatingEnergyType = heatingEnergyTypes.find(
+          (heatingEnergyType) => heatingEnergyType.id.toString() === value
+        ) as HeatingEnergyType;
         setValue(heatingEnergyType);
       }}
     >

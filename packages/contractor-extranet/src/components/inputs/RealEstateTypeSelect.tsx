@@ -1,10 +1,6 @@
 import { getRealEstateTypes } from "@/queries/realEstateTypes";
 import { RealEstateType } from "@/types/RealEstateType";
-import {
-  MenuItem,
-  Skeleton,
-  TextField,
-} from "@mui/material";
+import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 
@@ -41,13 +37,13 @@ const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({ value, setValue }) => {
       select
       value={value?.id?.toString() ?? ""}
       required
-      onChange={
-        (event) => {
-          const value = event.target.value.toString();
-          const realEstateType = realEstateTypes.find((realEstateType) => realEstateType.id.toString() === value) as RealEstateType;
-          setValue(realEstateType);
-        }
-      }
+      onChange={(event) => {
+        const value = event.target.value.toString();
+        const realEstateType = realEstateTypes.find(
+          (realEstateType) => realEstateType.id.toString() === value
+        ) as RealEstateType;
+        setValue(realEstateType);
+      }}
     >
       {realEstateTypes.map((realEstateType) => (
         <MenuItem

@@ -1,4 +1,4 @@
-import RealEstate from "./realEstates";
+import RealEstate from "./RealEstate";
 
 interface RealEstateListResponse {
   data: RealEstate[];

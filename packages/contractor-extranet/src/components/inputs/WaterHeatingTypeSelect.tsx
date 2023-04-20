@@ -47,7 +47,9 @@ const WaterHeatingTypeSelect: FC<WaterHeatingTypeSelectProps> = ({
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const waterHeatingType = waterHeatingTypes.find((waterHeatingType) => waterHeatingType.id.toString() === value) as WaterHeatingType;
+        const waterHeatingType = waterHeatingTypes.find(
+          (waterHeatingType) => waterHeatingType.id.toString() === value
+        ) as WaterHeatingType;
         setValue(waterHeatingType);
       }}
     >

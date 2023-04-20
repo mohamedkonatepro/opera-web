@@ -10,7 +10,11 @@ interface HeatingTypeSelectProps {
   required?: boolean;
 }
 
-const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({ value, setValue, required }) => {
+const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({
+  value,
+  setValue,
+  required,
+}) => {
   const {
     isLoading,
     error,
@@ -40,7 +44,9 @@ const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({ value, setValue, requir
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const heatingType = heatingTypes.find((heatingType) => heatingType.id.toString() === value) as HeatingType;
+        const heatingType = heatingTypes.find(
+          (heatingType) => heatingType.id.toString() === value
+        ) as HeatingType;
         setValue(heatingType);
       }}
     >

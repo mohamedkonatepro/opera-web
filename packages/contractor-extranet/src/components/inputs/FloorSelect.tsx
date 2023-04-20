@@ -39,7 +39,9 @@ const FloorSelect: FC<FloorSelectProps> = ({ value, setValue }) => {
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const floor = floors.find((floor) => floor.id.toString() === value) as Floor;
+        const floor = floors.find(
+          (floor) => floor.id.toString() === value
+        ) as Floor;
         setValue(floor);
       }}
     >

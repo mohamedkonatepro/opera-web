@@ -1,8 +1,7 @@
-import Contractor from "./contractor";
-import Owner from "./owner";
-import RealEstateType from "./realEstateType";
-import Tenant from "./tenant";
-
+import Contractor from "./Contractor";
+import Owner from "./Owner";
+import RealEstateType from "./RealEstateType";
+import Tenant from "./Tenant";
 
 interface RealEstate {
   id: number;
@@ -33,6 +32,6 @@ interface RealEstate {
   contractor: Contractor;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 export default RealEstate;

@@ -30,7 +30,7 @@ const steps: StepDefinition[] = [
     description:
       "Une fois votre sélection terminée, passez à l’étape suivante.",
     form: () => <div>RDV</div>,
-  }
+  },
 ];
 
 const CreateOrderStepper = () => {

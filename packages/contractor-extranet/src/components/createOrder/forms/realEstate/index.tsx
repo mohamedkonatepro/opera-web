@@ -15,8 +15,11 @@ import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 
-
-const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit, stepStates }) => {
+const RealEstateForm: FC<RealEstateFormProps> = ({
+  formId,
+  onSubmit,
+  stepStates,
+}) => {
   // Address
   const [address, setAddress] = useState("");
   const [additionalAddress, setAdditionalAddress] = useState("");
@@ -43,9 +46,11 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit, stepStates 
   const [annexes, setAnnexes] = useState<any[]>([]);
 
   // Energy
-  const [heatingEnergyType, setHeatingEnergyType] = useState<HeatingEnergyType>();
+  const [heatingEnergyType, setHeatingEnergyType] =
+    useState<HeatingEnergyType>();
   const [heatingType, setHeatingType] = useState<HeatingType>();
-  const [waterHeatingEnergyType, setWaterHeatingEnergyType] = useState<WaterHeatingEnergyType>();
+  const [waterHeatingEnergyType, setWaterHeatingEnergyType] =
+    useState<WaterHeatingEnergyType>();
   const [waterHeatingType, setWaterHeatingType] = useState<WaterHeatingType>();
 
   // Meter Location
@@ -93,11 +98,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit, stepStates 
   };
 
   const heatingTypeRequired = useMemo(() => {
-    return stepStates.services.services.some((service: any) => service.code === "DIAG-DPE" && !service.enabled);
-  }, [stepStates])
+    return stepStates.services.services.some(
+      (service: any) => service.code === "DIAG-DPE" && !service.enabled
+    );
+  }, [stepStates]);
 
   return (
-    <Stack spacing={5} component='form' onSubmit={handleOnSubmit} id={formId}>
+    <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <Address
         address={address}
         additionalAddress={additionalAddress}
@@ -136,10 +143,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit, stepStates 
         setLeaseReference={setLeaseReference}
         setBuildingYear={setBuildingYear}
       />
-      <Annexes
-        annexes={annexes}
-        setAnnexes={setAnnexes}
-      />
+      <Annexes annexes={annexes} setAnnexes={setAnnexes} />
       <Energy
         heatingEnergyType={heatingEnergyType}
         heatingType={heatingType}

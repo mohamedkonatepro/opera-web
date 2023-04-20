@@ -7,13 +7,13 @@ import { FC } from "react";
 interface BuildingAnnexTypeSelectProps {
   value?: BuildingAnnexType;
   setValue: (value: BuildingAnnexType) => void;
-  id?: string
+  id?: string;
 }
 
 const BuildingAnnexTypeSelect: FC<BuildingAnnexTypeSelectProps> = ({
   value,
   setValue,
-  id = 'building-annex-type'
+  id = "building-annex-type",
 }) => {
   const {
     isLoading,
@@ -47,7 +47,9 @@ const BuildingAnnexTypeSelect: FC<BuildingAnnexTypeSelectProps> = ({
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();
-        const buildingAnnexType = buildingAnnexTypes.find((buildingAnnexType) => buildingAnnexType.id.toString() === value) as BuildingAnnexType;
+        const buildingAnnexType = buildingAnnexTypes.find(
+          (buildingAnnexType) => buildingAnnexType.id.toString() === value
+        ) as BuildingAnnexType;
         setValue(buildingAnnexType);
       }}
     >

@@ -3,3 +3,5 @@ export interface RealEstateType {
   name: string;
   code: string;
 }
+
+export default RealEstateType;

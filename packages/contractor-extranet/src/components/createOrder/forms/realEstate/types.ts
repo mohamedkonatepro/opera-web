@@ -70,11 +70,13 @@ export interface EnergyFormProps {
   setHeatingType: (heatingType: HeatingType) => void;
   setWaterHeatingType: (waterHeatingType: WaterHeatingType) => void;
   setHeatingEnergyType: (heatingEnergyType: HeatingEnergyType) => void;
-  setWaterHeatingEnergyType: (waterHeatingEnergyType: WaterHeatingEnergyType) => void;
+  setWaterHeatingEnergyType: (
+    waterHeatingEnergyType: WaterHeatingEnergyType
+  ) => void;
   required: {
     heatingType: boolean;
     waterHeatingType: boolean;
-  }
+  };
 }
 
 export interface AnnexesFormProps {

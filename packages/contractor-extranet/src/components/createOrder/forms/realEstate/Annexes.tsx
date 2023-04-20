@@ -16,7 +16,6 @@ import { AnnexesFormProps } from "./types";
 import { BuildingAnnexType } from "@/types/BuildingAnnexType";
 
 const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
-
   const addAnnex = () => {
     setAnnexes([
       ...annexes,
@@ -24,7 +23,7 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
         id: nanoid(),
         type: undefined,
         unitReference: "",
-        location: ""
+        location: "",
       },
     ]);
   };
@@ -104,6 +103,7 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
         color="border.bold"
         typography="subtitle2"
         onClick={addAnnex}
+        type="button"
       >
         <Box mr={1} component="span">
           +
