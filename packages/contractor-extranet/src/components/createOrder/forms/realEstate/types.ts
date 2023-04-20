@@ -71,6 +71,10 @@ export interface EnergyFormProps {
   setWaterHeatingType: (waterHeatingType: WaterHeatingType) => void;
   setHeatingEnergyType: (heatingEnergyType: HeatingEnergyType) => void;
   setWaterHeatingEnergyType: (waterHeatingEnergyType: WaterHeatingEnergyType) => void;
+  required: {
+    heatingType: boolean;
+    waterHeatingType: boolean;
+  }
 }
 
 export interface AnnexesFormProps {
@@ -81,4 +85,5 @@ export interface AnnexesFormProps {
 export interface RealEstateFormProps {
   formId: string;
   onSubmit: (values: any) => void;
+  stepStates: any;
 }

@@ -7,11 +7,13 @@ import { FC } from "react";
 interface WaterHeatingTypeSelectProps {
   value?: WaterHeatingType;
   setValue: (value: WaterHeatingType) => void;
+  required?: boolean;
 }
 
 const WaterHeatingTypeSelect: FC<WaterHeatingTypeSelectProps> = ({
   value,
   setValue,
+  required,
 }) => {
   const {
     isLoading,
@@ -39,6 +41,7 @@ const WaterHeatingTypeSelect: FC<WaterHeatingTypeSelectProps> = ({
       id="water-heating-type"
       label="Type de compteur"
       color="secondary"
+      required={required}
       select
       fullWidth
       value={value?.id?.toString() ?? ""}

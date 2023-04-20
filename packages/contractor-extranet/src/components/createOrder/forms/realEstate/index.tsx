@@ -5,7 +5,7 @@ import Annexes from "./Annexes";
 import Energy from "./Energy";
 import MeterLocation from "./MeterLocation";
 import Unit from "./Unit";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { RealEstateFormProps } from "./types";
 import { RealEstateType } from "@/types/RealEstateType";
 import { Floor } from "@/types/Floor";
@@ -16,7 +16,7 @@ import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 
 
-const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit }) => {
+const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit, stepStates }) => {
   // Address
   const [address, setAddress] = useState("");
   const [additionalAddress, setAdditionalAddress] = useState("");
@@ -92,6 +92,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit }) => {
     });
   };
 
+  const heatingTypeRequired = useMemo(() => {
+    return stepStates.services.services.some((service: any) => service.code === "DIAG-DPE" && !service.enabled);
+  }, [stepStates])
+
   return (
     <Stack spacing={5} component='form' onSubmit={handleOnSubmit} id={formId}>
       <Address
@@ -145,6 +149,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit }) => {
         setHeatingType={setHeatingType}
         setWaterHeatingEnergyType={setWaterHeatingEnergyType}
         setWaterHeatingType={setWaterHeatingType}
+        required={{
+          heatingType: heatingTypeRequired,
+          waterHeatingType: heatingTypeRequired,
+        }}
       />
       <MeterLocation
         locationHotWater={locationHotWater}

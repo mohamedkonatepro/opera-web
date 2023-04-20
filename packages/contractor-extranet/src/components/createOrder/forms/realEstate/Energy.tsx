@@ -15,6 +15,7 @@ const Energy: FC<EnergyFormProps> = ({
   setHeatingType,
   setWaterHeatingEnergyType,
   setWaterHeatingType,
+  required
 }) => {
   return (
     <Stack spacing={2}>
@@ -25,7 +26,7 @@ const Energy: FC<EnergyFormProps> = ({
           value={heatingEnergyType}
           setValue={setHeatingEnergyType}
         />
-        <HeatingTypeSelect value={heatingType} setValue={setHeatingType} />
+        <HeatingTypeSelect value={heatingType} setValue={setHeatingType} required={required.heatingType} />
       </Stack>
       <Typography variant="subtitle2">Eau chaude sanitaire</Typography>
       <Stack spacing={2} direction="row">
@@ -36,6 +37,7 @@ const Energy: FC<EnergyFormProps> = ({
         <WaterHeatingTypeSelect
           value={waterHeatingType}
           setValue={setWaterHeatingType}
+          required={required.waterHeatingType}
         />
       </Stack>
     </Stack>

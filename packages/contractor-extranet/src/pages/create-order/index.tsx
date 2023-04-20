@@ -34,7 +34,7 @@ const steps: StepDefinition[] = [
 ];
 
 const CreateOrderStepper = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   const currentStep = steps[activeStep];
 
@@ -78,6 +78,7 @@ const CreateOrderStepper = () => {
         handleBack={handleBack}
         handleReset={handleReset}
         width={536}
+        stepStates={stepStates}
       />
     </Box>
   );

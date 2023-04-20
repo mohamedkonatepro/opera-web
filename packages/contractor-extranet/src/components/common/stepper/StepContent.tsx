@@ -11,6 +11,7 @@ const StepContent: FC<StepContentProps> = ({
   handleBack,
   handleReset,
   width,
+  stepStates
 }) => {
   const StepForm = step.form;
   return (
@@ -25,7 +26,7 @@ const StepContent: FC<StepContentProps> = ({
 
       <Box mr={4} mt={4} mb={5} display="flex" justifyContent="center">
         <Box width={width}>
-          <StepForm formId={`${step.id}-form`} onSubmit={handleNext} />
+          <StepForm formId={`${step.id}-form`} onSubmit={handleNext} stepStates={stepStates} />
         </Box>
       </Box>
 

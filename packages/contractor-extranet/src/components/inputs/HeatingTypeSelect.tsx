@@ -7,9 +7,10 @@ import { FC } from "react";
 interface HeatingTypeSelectProps {
   value?: HeatingType;
   setValue: (value: HeatingType) => void;
+  required?: boolean;
 }
 
-const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({ value, setValue }) => {
+const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({ value, setValue, required }) => {
   const {
     isLoading,
     error,
@@ -33,6 +34,7 @@ const HeatingTypeSelect: FC<HeatingTypeSelectProps> = ({ value, setValue }) => {
       id="heating-type"
       label="Type de compteur"
       color="secondary"
+      required={required}
       select
       fullWidth
       value={value?.id?.toString() ?? ""}
