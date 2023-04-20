@@ -6,6 +6,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import OutlinedButton from './common/buttons/OutlinedButton';
+import AddIcon from '@mui/icons-material/Add';
 
 interface RealEstateTableProps {
   realEstates: RealEstate[];
@@ -43,7 +45,8 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({realEst
                   <TableCell>{surface}</TableCell>
                   <TableCell>{owner?.firstname} {owner?.lastname}</TableCell>
                   <TableCell>{tenantName.join(' ')}</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell><OutlinedButton selected padding="small" href={`/create-order?realEstateId=${realEstate.id}`}>Créer <AddIcon sx={{ marginLeft: "5px",
+                   }}/></OutlinedButton></TableCell>
                 </TableRow>
               );
             })}

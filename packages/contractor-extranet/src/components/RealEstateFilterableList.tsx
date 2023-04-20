@@ -85,12 +85,11 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   return (
     <Box
       sx={{
-        paddingLeft: "32px",
         display: "flex"
       }}
     >
       <Stack spacing={3}>
-        <Stack spacing={1}>
+        <Stack spacing={1} sx={{ paddingLeft: "32px" }}>
           <Typography variant="body2" color="secondary.main">
             Nouvelle commande
           </Typography>

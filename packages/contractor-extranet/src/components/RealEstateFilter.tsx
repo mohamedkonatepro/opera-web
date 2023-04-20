@@ -30,7 +30,7 @@ const RealEstateFilter: React.FunctionComponent<RealEstateFilterProps> = ({
   queryEnabled,
 }) => {
   return (
-        <Stack direction='row'>
+        <Stack direction='row' sx={{ paddingLeft: "32px" }}>
           <AutocompleteAddress isLoading={isLoading} realEstatesData={realEstatesData} onAddressChange={onAddressChange} onInputChange={onAddressInputChange} />
           <AutocompleteBuildingReference isLoading={isLoading} realEstatesData={realEstatesData} onInputChange={onInputBuildingReferenceChange} />
           <AutocompleteUnitReference isLoading={isLoading} realEstatesData={realEstatesData} onInputChange={onInputUnitReferenceChange} />
