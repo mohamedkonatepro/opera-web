@@ -5,19 +5,16 @@ import SideBar from '../components/common/SideBar';
 
 export default function Home() {
   return (
-    <>
-      <SideBar />
-      <Stack
-        direction="column"
-        divider={<Divider orientation="horizontal" flexItem />}
-        spacing={3}
-        sx={{
-          display: "flex"
-        }}
-      >
-        <NewOrder />
-        <RealEstateFilterableList />
-      </Stack>
-    </>
+    <Stack
+      direction="column"
+      divider={<Divider orientation="horizontal" flexItem />}
+      spacing={3}
+      sx={{
+        display: "flex"
+      }}
+    >
+      <NewOrder />
+      <RealEstateFilterableList />
+    </Stack>
   )
 }

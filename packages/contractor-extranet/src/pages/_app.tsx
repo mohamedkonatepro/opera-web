@@ -21,6 +21,7 @@ import { Settings } from "luxon";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
+import SideBar from "@/components/common/SideBar";
 
 Settings.defaultLocale = "fr";
 Settings.defaultZone = "Europe/Paris";
@@ -76,6 +77,7 @@ export default function MyApp(props: MyAppProps) {
               {/* <Box minWidth={288} height={1} bgcolor="#F4F4F4" /> */}
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
+                  <SideBar />
                   <Component {...pageProps} />
                 </Hydrate>
                 <ReactQueryDevtools initialIsOpen={false} />
