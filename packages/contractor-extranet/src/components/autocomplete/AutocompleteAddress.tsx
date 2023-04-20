@@ -1,7 +1,7 @@
-import { TextField, InputAdornment, Autocomplete } from '@mui/material';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { TextField, InputAdornment, Autocomplete } from "@mui/material";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import realEstateRemoveDuplicates from "@/utils/realEstateRemoveDuplicates";
-import RealEstate from '@/types/realEstates';
+import RealEstate from "@/types/RealEstate";
 
 interface AutocompleteAddressProps {
   realEstatesData: RealEstate[];
@@ -10,17 +10,19 @@ interface AutocompleteAddressProps {
   onInputChange: (event: any, value: string) => void;
 }
 
-const AutocompleteAddress: React.FunctionComponent<AutocompleteAddressProps> = ({ realEstatesData, isLoading, onAddressChange, onInputChange }) => {
+const AutocompleteAddress: React.FunctionComponent<
+  AutocompleteAddressProps
+> = ({ realEstatesData, isLoading, onAddressChange, onInputChange }) => {
   return (
     <Autocomplete
-      options={realEstateRemoveDuplicates(realEstatesData, 'address')}
+      options={realEstateRemoveDuplicates(realEstatesData, "address")}
       loading={isLoading}
       getOptionLabel={(option) => {
-        if (typeof option === 'string') {
+        if (typeof option === "string") {
           return option;
         }
         return `${option.address} ${option.postalCode} ${option.city}`;
-      } }
+      }}
       onChange={onAddressChange}
       renderInput={(params) => (
         <TextField
@@ -36,11 +38,13 @@ const AutocompleteAddress: React.FunctionComponent<AutocompleteAddressProps> = (
               <InputAdornment position="start">
                 <SearchOutlinedIcon />
               </InputAdornment>
-            )
-          }} />
+            ),
+          }}
+        />
       )}
       freeSolo
-      onInputChange={onInputChange} />
+      onInputChange={onInputChange}
+    />
   );
 };
 

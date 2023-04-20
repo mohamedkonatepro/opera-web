@@ -7,7 +7,6 @@ const formatFamily = (family: any): Family => {
   const formattedServices = services?.data?.map(formatService) ?? [];
 
   return { id, name, code, services: formattedServices };
-}
+};
 
 export default formatFamily;
-

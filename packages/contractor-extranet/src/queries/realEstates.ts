@@ -1,21 +1,15 @@
 import axios from "axios";
 
 interface Filters {
-  address: string
-  buildingReference: string
-  unitReference: string
-  page: string
-  pageSize: string
+  address: string;
+  buildingReference: string;
+  unitReference: string;
+  page: string;
+  pageSize: string;
 }
 
 const buildQueryString = (filters: Filters): string => {
-  const {
-    address,
-    buildingReference,
-    unitReference,
-    page,
-    pageSize,
-  } = filters;
+  const { address, buildingReference, unitReference, page, pageSize } = filters;
   const queryParams = new URLSearchParams({
     address,
     buildingReference,

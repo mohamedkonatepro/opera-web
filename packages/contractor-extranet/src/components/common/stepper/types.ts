@@ -6,6 +6,7 @@ export interface StepDefinition {
   form: React.FC<{
     formId: string;
     onSubmit: (formState: any) => void;
+    stepStates: any;
   }>;
 }
 
@@ -23,6 +24,7 @@ export interface StepContentProps {
   currentStepNumber: number;
   step: StepDefinition;
   width?: number;
+  stepStates: any;
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;

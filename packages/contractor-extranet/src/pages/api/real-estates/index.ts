@@ -1,20 +1,22 @@
 import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
-import RealEstateListResponse from "@/types/realEstateListResponse";
+import RealEstateListResponse from "@/types/RealEstateListResponse";
 import { NextApiRequest, NextApiResponse } from "next";
 import { formatRealEstateData } from "@/utils/dataFormattingUtils";
 
 interface Filters {
-  address?: string | string[]
-  buildingReference?: string | string[]
-  unitReference?: string | string[]
-  page?: string | string[]
-  pageSize?: string | string[]
+  address?: string | string[];
+  buildingReference?: string | string[];
+  unitReference?: string | string[];
+  page?: string | string[];
+  pageSize?: string | string[];
 }
 
-export const getRealEstates = async (filters: Filters): Promise<RealEstateListResponse> => {
-  const { address, buildingReference, unitReference, page, pageSize } = filters
+export const getRealEstates = async (
+  filters: Filters
+): Promise<RealEstateListResponse> => {
+  const { address, buildingReference, unitReference, page, pageSize } = filters;
   let url = `/real-estates?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`;
   if (address) {
     url += `&filters[address][$containsi]=${address}`;
@@ -28,8 +30,7 @@ export const getRealEstates = async (filters: Filters): Promise<RealEstateListRe
 
   const { data } = await apiAxiosInstance.get(url);
 
-  
-  data.data = data.data.map(formatRealEstateData)
+  data.data = data.data.map(formatRealEstateData);
 
   return data;
 };
