@@ -1,11 +1,12 @@
 import { getWaterHeatingEnergyTypes } from "@/queries/waterHeatingEnergyTypes";
+import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 
 interface WaterHeatingEnergyTypeSelectProps {
-  value: string;
-  setValue: (value: string) => void;
+  value?: WaterHeatingEnergyType;
+  setValue: (value: WaterHeatingEnergyType) => void;
 }
 
 const WaterHeatingEnergyTypeSelect: FC<WaterHeatingEnergyTypeSelectProps> = ({
@@ -40,8 +41,12 @@ const WaterHeatingEnergyTypeSelect: FC<WaterHeatingEnergyTypeSelectProps> = ({
       color="secondary"
       select
       fullWidth
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
+      value={value?.id?.toString() ?? ""}
+      onChange={(event) => {
+        const value = event.target.value.toString();
+        const waterHeatingEnergyType = waterHeatingEnergyTypes.find((waterHeatingEnergyType) => waterHeatingEnergyType.id.toString() === value) as WaterHeatingEnergyType;
+        setValue(waterHeatingEnergyType);
+      }}
     >
       {waterHeatingEnergyTypes.map((waterHeatingEnergyType) => (
         <MenuItem

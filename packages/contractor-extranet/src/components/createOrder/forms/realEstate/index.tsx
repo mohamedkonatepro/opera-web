@@ -5,9 +5,18 @@ import Annexes from "./Annexes";
 import Energy from "./Energy";
 import MeterLocation from "./MeterLocation";
 import Unit from "./Unit";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { RealEstateFormProps } from "./types";
+import { RealEstateType } from "@/types/RealEstateType";
+import { Floor } from "@/types/Floor";
+import { Purpose } from "@/types/Purpose";
+import { HeatingType } from "@/types/HeatingType";
+import { HeatingEnergyType } from "@/types/HeatingEnergyType";
+import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
+import { WaterHeatingType } from "@/types/WaterHeatingType";
 
-const RealEstateForm = () => {
+
+const RealEstateForm: FC<RealEstateFormProps> = ({ formId, onSubmit }) => {
   // Address
   const [address, setAddress] = useState("");
   const [additionalAddress, setAdditionalAddress] = useState("");
@@ -15,9 +24,9 @@ const RealEstateForm = () => {
   const [city, setCity] = useState("");
 
   // Real Estate
-  const [realEstateType, setRealEstateType] = useState("");
-  const [floor, setFloor] = useState("");
-  const [purpose, setPurpose] = useState("");
+  const [realEstateType, setRealEstateType] = useState<RealEstateType>();
+  const [floor, setFloor] = useState<Floor>();
+  const [purpose, setPurpose] = useState<Purpose>();
   const [surface, setSurface] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [digicode, setDigicode] = useState("");
@@ -30,11 +39,14 @@ const RealEstateForm = () => {
   const [leaseReference, setLeaseReference] = useState("");
   const [buildingYear, setBuildingYear] = useState("");
 
+  // Annexes
+  const [annexes, setAnnexes] = useState<any[]>([]);
+
   // Energy
-  const [heatingEnergyType, setHeatingEnergyType] = useState("");
-  const [heatingType, setHeatingType] = useState("");
-  const [waterHeatingEnergyType, setWaterHeatingEnergyType] = useState("");
-  const [waterHeatingType, setWaterHeatingType] = useState("");
+  const [heatingEnergyType, setHeatingEnergyType] = useState<HeatingEnergyType>();
+  const [heatingType, setHeatingType] = useState<HeatingType>();
+  const [waterHeatingEnergyType, setWaterHeatingEnergyType] = useState<WaterHeatingEnergyType>();
+  const [waterHeatingType, setWaterHeatingType] = useState<WaterHeatingType>();
 
   // Meter Location
   const [locationHotWater, setLocationHotWater] = useState("");
@@ -46,13 +58,42 @@ const RealEstateForm = () => {
     setElectricalReferenceMeasureLocation,
   ] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
+
+    onSubmit({
+      address,
+      additionalAddress,
+      postalCode,
+      city,
+      realEstateType,
+      floor,
+      purpose,
+      surface,
+      roomNumber,
+      digicode,
+      observation,
+      buildingReference,
+      unitReference,
+      mandateReference,
+      leaseReference,
+      buildingYear,
+      annexes,
+      heatingEnergyType,
+      heatingType,
+      waterHeatingEnergyType,
+      waterHeatingType,
+      locationHotWater,
+      locationElectricMeter,
+      locationColdWater,
+      locationGasMeter,
+      electricalReferenceMeasureLocation,
+    });
   };
 
   return (
-    <Stack spacing={5}>
+    <Stack spacing={5} component='form' onSubmit={handleOnSubmit} id={formId}>
       <Address
         address={address}
         additionalAddress={additionalAddress}
@@ -91,7 +132,10 @@ const RealEstateForm = () => {
         setLeaseReference={setLeaseReference}
         setBuildingYear={setBuildingYear}
       />
-      <Annexes />
+      <Annexes
+        annexes={annexes}
+        setAnnexes={setAnnexes}
+      />
       <Energy
         heatingEnergyType={heatingEnergyType}
         heatingType={heatingType}

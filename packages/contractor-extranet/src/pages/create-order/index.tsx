@@ -23,6 +23,14 @@ const steps: StepDefinition[] = [
       "Une fois votre sélection terminée, passez à l’étape suivante.",
     form: RealEstateForm,
   },
+  {
+    id: "rdv",
+    label: "Rendez-vous",
+    title: "Rendez-vous",
+    description:
+      "Une fois votre sélection terminée, passez à l’étape suivante.",
+    form: () => <div>RDV</div>,
+  }
 ];
 
 const CreateOrderStepper = () => {

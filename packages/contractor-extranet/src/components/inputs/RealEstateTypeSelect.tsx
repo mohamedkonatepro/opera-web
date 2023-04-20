@@ -1,17 +1,16 @@
 import { getRealEstateTypes } from "@/queries/realEstateTypes";
+import { RealEstateType } from "@/types/RealEstateType";
 import {
   MenuItem,
-  SelectProps,
   Skeleton,
   TextField,
-  TextFieldProps,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 
 interface RealEstateTypeProps {
-  value: string;
-  setValue: (value: string) => void;
+  value?: RealEstateType;
+  setValue: (value: RealEstateType) => void;
 }
 
 const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({ value, setValue }) => {
@@ -40,9 +39,15 @@ const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({ value, setValue }) => {
       color="secondary"
       fullWidth
       select
-      value={value}
+      value={value?.id?.toString() ?? ""}
       required
-      onChange={(event) => setValue(event.target.value)}
+      onChange={
+        (event) => {
+          const value = event.target.value.toString();
+          const realEstateType = realEstateTypes.find((realEstateType) => realEstateType.id.toString() === value) as RealEstateType;
+          setValue(realEstateType);
+        }
+      }
     >
       {realEstateTypes.map((realEstateType) => (
         <MenuItem

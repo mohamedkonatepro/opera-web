@@ -1,11 +1,12 @@
 import { getFloors } from "@/queries/floors";
+import { Floor } from "@/types/Floor";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 
 interface FloorSelectProps {
-  value: string;
-  setValue: (value: string) => void;
+  value?: Floor;
+  setValue: (value: Floor) => void;
 }
 
 const FloorSelect: FC<FloorSelectProps> = ({ value, setValue }) => {
@@ -35,8 +36,12 @@ const FloorSelect: FC<FloorSelectProps> = ({ value, setValue }) => {
       required
       select
       fullWidth
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
+      value={value?.id?.toString() ?? ""}
+      onChange={(event) => {
+        const value = event.target.value.toString();
+        const floor = floors.find((floor) => floor.id.toString() === value) as Floor;
+        setValue(floor);
+      }}
     >
       {floors.map((floor) => (
         <MenuItem key={floor.id} value={floor.id} color="secondary">

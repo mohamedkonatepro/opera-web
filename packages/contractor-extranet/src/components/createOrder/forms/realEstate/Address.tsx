@@ -39,7 +39,7 @@ const Address: FC<AddressFormProps> = ({
           label="Code Postal"
           color="secondary"
           required
-          inputProps={{ minLength: 5, maxLength: 5, pattern: "^d{5}$" }}
+          inputProps={{ minLength: 5, maxLength: 5, pattern: "^\\d{5}$" }}
           fullWidth
           value={postalCode}
           onChange={(event) => setPostalCode(event.target.value)}

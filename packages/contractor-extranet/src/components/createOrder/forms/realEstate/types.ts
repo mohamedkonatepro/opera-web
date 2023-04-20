@@ -1,3 +1,11 @@
+import { Floor } from "@/types/Floor";
+import { HeatingEnergyType } from "@/types/HeatingEnergyType";
+import { HeatingType } from "@/types/HeatingType";
+import { Purpose } from "@/types/Purpose";
+import { RealEstateType } from "@/types/RealEstateType";
+import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
+import { WaterHeatingType } from "@/types/WaterHeatingType";
+
 export interface AddressFormProps {
   address: string;
   city: string;
@@ -9,17 +17,17 @@ export interface AddressFormProps {
   setAdditionalAddress: (additionalAddress: string) => void;
 }
 
-export interface RealEstateFormProps {
-  realEstateType: string;
-  purpose?: string;
-  floor: string;
+export interface RealEstateInformationFormProps {
+  realEstateType?: RealEstateType;
+  purpose?: Purpose;
+  floor?: Floor;
   surface: string;
   roomNumber: string;
   digicode?: string;
   observation?: string;
-  setRealEstateType: (realEstateType: string) => void;
-  setPurpose: (purpose: string) => void;
-  setFloor: (floor: string) => void;
+  setRealEstateType: (realEstateType: RealEstateType) => void;
+  setPurpose: (purpose: Purpose) => void;
+  setFloor: (floor: Floor) => void;
   setSurface: (surface: string) => void;
   setRoomNumber: (roomNumber: string) => void;
   setDigicode: (digicode: string) => void;
@@ -55,12 +63,22 @@ export interface MeterLocationFormProps {
 }
 
 export interface EnergyFormProps {
-  heatingType: string;
-  waterHeatingType: string;
-  heatingEnergyType: string;
-  waterHeatingEnergyType: string;
-  setHeatingType: (heatingType: string) => void;
-  setWaterHeatingType: (waterHeatingType: string) => void;
-  setHeatingEnergyType: (heatingEnergyType: string) => void;
-  setWaterHeatingEnergyType: (waterHeatingEnergyType: string) => void;
+  heatingType?: HeatingType;
+  waterHeatingType?: WaterHeatingType;
+  heatingEnergyType?: HeatingEnergyType;
+  waterHeatingEnergyType?: WaterHeatingEnergyType;
+  setHeatingType: (heatingType: HeatingType) => void;
+  setWaterHeatingType: (waterHeatingType: WaterHeatingType) => void;
+  setHeatingEnergyType: (heatingEnergyType: HeatingEnergyType) => void;
+  setWaterHeatingEnergyType: (waterHeatingEnergyType: WaterHeatingEnergyType) => void;
+}
+
+export interface AnnexesFormProps {
+  annexes: any[];
+  setAnnexes: (annexes: any[]) => void;
+}
+
+export interface RealEstateFormProps {
+  formId: string;
+  onSubmit: (values: any) => void;
 }

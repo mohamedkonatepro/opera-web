@@ -3,9 +3,9 @@ import PurposeSelect from "@/components/inputs/PurposeSelect";
 import RealEstateTypeSelect from "@/components/inputs/RealEstateTypeSelect";
 import { Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react";
-import { RealEstateFormProps } from "./types";
+import { RealEstateInformationFormProps } from "./types";
 
-const RealEstate: FC<RealEstateFormProps> = ({
+const RealEstate: FC<RealEstateInformationFormProps> = ({
   realEstateType,
   floor,
   purpose,
@@ -30,7 +30,7 @@ const RealEstate: FC<RealEstateFormProps> = ({
           setValue={setRealEstateType}
         />
         <FloorSelect value={floor} setValue={setFloor} />
-        <PurposeSelect value={purpose ?? ""} setValue={setPurpose} />
+        <PurposeSelect value={purpose} setValue={setPurpose} />
         <TextField
           id="surface"
           label="Surface"
@@ -39,7 +39,7 @@ const RealEstate: FC<RealEstateFormProps> = ({
           fullWidth
           inputProps={{
             inputMode: "numeric",
-            pattern: "^(?:0|[1-9]d*)(?:.d+)?$",
+            pattern: "^(?:0|[1-9]\\d*)(?:.\\d+)?$",
           }}
           value={surface}
           onChange={(event) => setSurface(event.target.value)}
@@ -51,7 +51,7 @@ const RealEstate: FC<RealEstateFormProps> = ({
           label="Nombre de pièces"
           color="secondary"
           required
-          inputProps={{ inputMode: "numeric", pattern: "^d+$" }}
+          inputProps={{ inputMode: "numeric", pattern: "^\\d+$" }}
           fullWidth
           value={roomNumber}
           onChange={(event) => setRoomNumber(event.target.value)}

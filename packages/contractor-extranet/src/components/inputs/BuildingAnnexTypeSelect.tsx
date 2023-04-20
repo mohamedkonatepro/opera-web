@@ -1,8 +1,20 @@
 import { getBuildingAnnexTypes } from "@/queries/buildingAnnexTypes";
+import { BuildingAnnexType } from "@/types/BuildingAnnexType";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { FC } from "react";
 
-const BuildingAnnexTypeSelect = () => {
+interface BuildingAnnexTypeSelectProps {
+  value?: BuildingAnnexType;
+  setValue: (value: BuildingAnnexType) => void;
+  id?: string
+}
+
+const BuildingAnnexTypeSelect: FC<BuildingAnnexTypeSelectProps> = ({
+  value,
+  setValue,
+  id = 'building-annex-type'
+}) => {
   const {
     isLoading,
     error,
@@ -26,12 +38,18 @@ const BuildingAnnexTypeSelect = () => {
 
   return (
     <TextField
-      id="buildingAnnexType"
+      id={id}
       label="Type"
       color="secondary"
       required
       select
       fullWidth
+      value={value?.id?.toString() ?? ""}
+      onChange={(event) => {
+        const value = event.target.value.toString();
+        const buildingAnnexType = buildingAnnexTypes.find((buildingAnnexType) => buildingAnnexType.id.toString() === value) as BuildingAnnexType;
+        setValue(buildingAnnexType);
+      }}
     >
       {buildingAnnexTypes.map((buildingAnnexType) => (
         <MenuItem

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 import DeleteIconOutlined from "@mui/icons-material/DeleteOutlined";
 import {
@@ -10,17 +11,20 @@ import {
   Typography,
 } from "@mui/material";
 import { nanoid } from "nanoid";
-import { useState } from "react";
 import BuildingAnnexTypeSelect from "@/components/inputs/BuildingAnnexTypeSelect";
+import { AnnexesFormProps } from "./types";
+import { BuildingAnnexType } from "@/types/BuildingAnnexType";
 
-const Annexes = () => {
-  const [annexes, setAnnexes] = useState<any[]>([]);
+const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
 
   const addAnnex = () => {
     setAnnexes([
       ...annexes,
       {
         id: nanoid(),
+        type: undefined,
+        unitReference: "",
+        location: ""
       },
     ]);
   };
@@ -37,14 +41,30 @@ const Annexes = () => {
       {annexes.map((annex, index) => {
         return (
           <Stack key={annex.id} spacing={2} direction="row">
-            <BuildingAnnexTypeSelect />
+            <BuildingAnnexTypeSelect
+              id={`building-annex-type-${index}`}
+              value={annex.type}
+              setValue={(value: BuildingAnnexType) => {
+                const newAnnexes = [...annexes];
+                newAnnexes[index].type = value;
+                setAnnexes(newAnnexes);
+              }}
+            />
             <TextField
+              id={`building-annex-unit-reference-${index}`}
               label="Numéro de lot"
               color="secondary"
               required
               fullWidth
+              value={annex.unitReference}
+              onChange={(event) => {
+                const newAnnexes = [...annexes];
+                newAnnexes[index].unitReference = event.target.value;
+                setAnnexes(newAnnexes);
+              }}
             />
             <TextField
+              id={`building-annex-location-${index}`}
               label="Localisation"
               color="secondary"
               fullWidth
@@ -54,6 +74,12 @@ const Annexes = () => {
                     <HelpIcon />
                   </InputAdornment>
                 ),
+              }}
+              value={annex.location}
+              onChange={(event) => {
+                const newAnnexes = [...annexes];
+                newAnnexes[index].location = event.target.value;
+                setAnnexes(newAnnexes);
               }}
             />
             <Box display="flex" alignItems="center" justifyContent="center">
