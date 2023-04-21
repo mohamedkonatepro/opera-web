@@ -336,6 +336,7 @@ const components: Components = {
   },
   MuiTextField: {
     defaultProps: {
+      autoComplete: "off",
       SelectProps: {
         MenuProps: {
           PaperProps: {

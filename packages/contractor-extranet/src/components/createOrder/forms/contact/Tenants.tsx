@@ -1,12 +1,15 @@
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { LeavingTenantsFormProps } from "./types";
+import { TenantsFormProps } from "./types";
 import { FC } from "react";
 import { nanoid } from "nanoid";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
-const LeavingTenants: FC<LeavingTenantsFormProps> = ({
+const Tenants: FC<TenantsFormProps> = ({
   tenants,
   setTenants,
+  title,
+  prefixId = "",
+  errors = [],
 }) => {
   const addTenant = () => {
     setTenants([
@@ -29,11 +32,11 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
   };
 
   return (
-    <Stack spacing={3} alignItems="start">
-      <Typography variant="subtitle1">Locataire Sortant</Typography>
+    <Stack spacing={3} alignItems="start" width={1}>
+      <Typography variant="subtitle1">{title}</Typography>
       {tenants.map((tenant, index) => {
         return (
-          <Stack spacing={2} key={tenant.id}>
+          <Stack spacing={2} key={tenant.id} width={1}>
             <Stack
               direction="row"
               alignItems="center"
@@ -42,17 +45,24 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
               <Typography variant="subtitle2">
                 Colocataire {index + 1}
               </Typography>
-              <Button
-                color="error"
-                endIcon={<DeleteOutlinedIcon />}
+              <Link
+                component="button"
+                underline="none"
                 onClick={removeTenant(index)}
+                type="button"
+                display="flex"
               >
-                Supprimer
-              </Button>
+                <Box mr={1} component="span">
+                  <DeleteOutlinedIcon fontSize="small" color="error" />
+                </Box>
+                <Typography variant="subtitle2" color="error">
+                  Supprimer
+                </Typography>
+              </Link>
             </Stack>
             <Stack direction="row" spacing={2}>
               <TextField
-                id={`leaving-tenant-firstname-${index}`}
+                id={`${prefixId}-firstname-${index}`}
                 label="Prénom"
                 color="secondary"
                 fullWidth
@@ -62,9 +72,11 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
                   newTenants[index].firstname = event.target.value;
                   setTenants(newTenants);
                 }}
+                error={!!errors[index]?.firstname}
+                helperText={errors[index]?.firstname}
               />
               <TextField
-                id={`leaving-tenant-lastname-${index}`}
+                id={`${prefixId}-lastname-${index}`}
                 label="Nom"
                 color="secondary"
                 fullWidth
@@ -74,10 +86,12 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
                   newTenants[index].lastname = event.target.value;
                   setTenants(newTenants);
                 }}
+                error={!!errors[index]?.lastname}
+                helperText={errors[index]?.lastname}
               />
             </Stack>
             <TextField
-              id={`leaving-tenant-socialreason-${index}`}
+              id={`${prefixId}-socialreason-${index}`}
               label="Raison sociale"
               color="secondary"
               fullWidth
@@ -87,22 +101,26 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
                 newTenants[index].socialReason = event.target.value;
                 setTenants(newTenants);
               }}
+              error={!!errors[index]?.socialReason}
+              helperText={errors[index]?.socialReason}
             />
             <Stack direction="row" spacing={2}>
               <TextField
-                id={`leaving-tenant-email-${index}`}
+                id={`${prefixId}-email-${index}`}
                 label="Adresse mail"
                 color="secondary"
                 fullWidth
                 value={tenant.email}
                 onChange={(event) => {
                   const newTenants = [...tenants];
-                  newTenants[index].socialReason = event.target.value;
+                  newTenants[index].email = event.target.value;
                   setTenants(newTenants);
                 }}
+                error={!!errors[index]?.email}
+                helperText={errors[index]?.email}
               />
               <TextField
-                id={`leaving-tenant-phonenumber-${index}`}
+                id={`${prefixId}-phonenumber-${index}`}
                 label="Numéro de téléphone"
                 color="secondary"
                 fullWidth
@@ -112,6 +130,8 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
                   newTenants[index].phoneNumber = event.target.value;
                   setTenants(newTenants);
                 }}
+                error={!!errors[index]?.phoneNumber}
+                helperText={errors[index]?.phoneNumber}
               />
             </Stack>
           </Stack>
@@ -134,4 +154,4 @@ const LeavingTenants: FC<LeavingTenantsFormProps> = ({
   );
 };
 
-export default LeavingTenants;
+export default Tenants;

@@ -12,7 +12,7 @@ const Contractor: FC<ContractorFormProps> = ({
 }) => {
   return (
     <Stack spacing={2}>
-      <Typography variant="subtitle1">Donneur d'ordre</Typography>
+      <Typography variant="subtitle1">Donneur d&apos;ordre</Typography>
       <Stack spacing={2}>
         <Stack direction="row" spacing={2}>
           <TextField
@@ -20,6 +20,7 @@ const Contractor: FC<ContractorFormProps> = ({
             label="Prénom du gestionnaire"
             color="secondary"
             fullWidth
+            required
             value={firstname}
             onChange={(event) => {
               setFirstname(event.target.value);
@@ -30,6 +31,7 @@ const Contractor: FC<ContractorFormProps> = ({
             label="Nom du gestionnaire"
             color="secondary"
             fullWidth
+            required
             value={lastname}
             onChange={(event) => {
               setLastname(event.target.value);
@@ -41,6 +43,7 @@ const Contractor: FC<ContractorFormProps> = ({
           label="Adresse email"
           color="secondary"
           fullWidth
+          required
           value={email}
           onChange={(event) => {
             setEmail(event.target.value);

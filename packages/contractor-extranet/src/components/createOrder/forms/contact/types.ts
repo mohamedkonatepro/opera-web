@@ -4,14 +4,20 @@ export interface ContactFormProps {
   contextValues: any;
 }
 
-export interface EnteringTenantsFormProps {
+export interface TenantsFormProps {
   tenants: any[];
   setTenants: (tenants: any[]) => void;
-}
-
-export interface LeavingTenantsFormProps {
-  tenants: any[];
-  setTenants: (tenants: any[]) => void;
+  prefixId?: string;
+  title: string;
+  errors?: [
+    {
+      lastname?: string;
+      firstname?: string;
+      socialReason?: string;
+      email?: string;
+      phoneNumber?: string;
+    }
+  ];
 }
 
 export interface RealEstateOwnerFormProps {
@@ -23,6 +29,13 @@ export interface RealEstateOwnerFormProps {
   setLastname: (lastname: string) => void;
   setFiscalInvariant: (fiscalInvariant: string) => void;
   setSocialReason: (socialReason: string) => void;
+  showFiscalInvariant: boolean;
+  errors?: {
+    firstname?: string;
+    lastname?: string;
+    fiscalInvariant?: string;
+    socialReason?: string;
+  };
 }
 
 export interface ContractorFormProps {

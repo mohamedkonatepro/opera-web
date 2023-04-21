@@ -44,21 +44,22 @@ const steps: StepDefinition[] = [
 
 const getContextValuesForStep = (activeStep: number, stepStates: any) => {
   switch (activeStep) {
-    case 1:{
+    case 1: {
+      return {
+        services: stepStates.services.services,
+        family: stepStates.services.family,
+      };
+    }
+    case 2: {
       return {
         services: stepStates.services.services,
       };
     }
-    case 2:{
-      return {
-        services: stepStates.services.services,
-      }
-    }
-    default:{
+    default: {
       return {};
     }
   }
-}
+};
 
 const CreateOrderStepper = () => {
   const [activeStep, setActiveStep] = useState(0);

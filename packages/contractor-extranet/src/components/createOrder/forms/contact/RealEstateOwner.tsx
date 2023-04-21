@@ -12,6 +12,8 @@ const RealEstateOwner: FC<RealEstateOwnerFormProps> = ({
   setFiscalInvariant,
   socialReason,
   setSocialReason,
+  showFiscalInvariant,
+  errors = {},
 }) => {
   return (
     <Stack spacing={2}>
@@ -27,6 +29,8 @@ const RealEstateOwner: FC<RealEstateOwnerFormProps> = ({
             onChange={(event) => {
               setFirstname(event.target.value);
             }}
+            error={!!errors.firstname}
+            helperText={errors.firstname}
           />
           <TextField
             id="real-estate-owner-lastname"
@@ -37,26 +41,32 @@ const RealEstateOwner: FC<RealEstateOwnerFormProps> = ({
             onChange={(event) => {
               setLastname(event.target.value);
             }}
+            error={!!errors.lastname}
+            helperText={errors.lastname}
           />
         </Stack>
         <Stack direction="row" spacing={2}>
-          <TextField
-            id="real-estate-owner-fiscal-invariant"
-            label="Invariant fiscal"
-            color="secondary"
-            fullWidth
-            value={fiscalInvariant}
-            onChange={(event) => {
-              setFiscalInvariant(event.target.value);
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <HelpIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+          {showFiscalInvariant && (
+            <TextField
+              id="real-estate-owner-fiscal-invariant"
+              label="Invariant fiscal"
+              color="secondary"
+              fullWidth
+              value={fiscalInvariant}
+              onChange={(event) => {
+                setFiscalInvariant(event.target.value);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <HelpIcon />
+                  </InputAdornment>
+                ),
+              }}
+              error={!!errors.fiscalInvariant}
+              helperText={errors.fiscalInvariant}
+            />
+          )}
           <TextField
             id="real-estate-owner-social-reason"
             label="Raison sociale"
@@ -66,6 +76,8 @@ const RealEstateOwner: FC<RealEstateOwnerFormProps> = ({
             onChange={(event) => {
               setSocialReason(event.target.value);
             }}
+            error={!!errors.socialReason}
+            helperText={errors.socialReason}
           />
         </Stack>
       </Stack>
