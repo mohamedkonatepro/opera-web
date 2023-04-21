@@ -2,7 +2,7 @@ name: "Build image and push to registry for Contractor Extranet"
 
 on:
   workflow_run:
-    workflows: ["validate-ce"]
+    workflows: ["Validate Contractor Extranet"]
     types:
       - completed
     branches:

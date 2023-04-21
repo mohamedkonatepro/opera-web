@@ -18,7 +18,7 @@ import { WaterHeatingType } from "@/types/WaterHeatingType";
 const RealEstateForm: FC<RealEstateFormProps> = ({
   formId,
   onSubmit,
-  stepStates,
+  contextValues,
 }) => {
   // Address
   const [address, setAddress] = useState("");
@@ -98,10 +98,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
   };
 
   const heatingTypeRequired = useMemo(() => {
-    return stepStates.services.services.some(
+    return contextValues.services.some(
       (service: any) => service.code === "DIAG-DPE" && !service.enabled
     );
-  }, [stepStates]);
+  }, [contextValues]);
 
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>

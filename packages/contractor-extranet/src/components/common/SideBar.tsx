@@ -1,5 +1,6 @@
 import React from "react";
 import { Drawer, Toolbar, useTheme } from "@mui/material";
+import Image from "next/image";
 
 const drawerWidth = "288px";
 const SideBar = () => {
@@ -15,7 +16,7 @@ const SideBar = () => {
       sx={{ minWidth: drawerWidth }}
     >
       <Toolbar sx={{ width: drawerWidth }}>
-        <img src="/logo.png" alt="logo" height="28px" width="52px" />
+        <Image src="/logo.png" alt="logo" height={28} width={52} />
       </Toolbar>
     </Drawer>
   );

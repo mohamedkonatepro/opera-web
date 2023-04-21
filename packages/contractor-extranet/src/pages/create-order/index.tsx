@@ -1,10 +1,11 @@
 import { Box, Divider } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import StepsSummary from "@/components/common/stepper/StepsSummary";
 import StepContent from "@/components/common/stepper/StepContent";
 import SelectServices from "@/components/createOrder/forms/selectServices";
 import { StepDefinition } from "@/components/common/stepper/types";
 import RealEstateForm from "@/components/createOrder/forms/realEstate";
+import ContactForm from "@/components/createOrder/forms/contact";
 
 const steps: StepDefinition[] = [
   {
@@ -16,11 +17,19 @@ const steps: StepDefinition[] = [
     form: SelectServices,
   },
   {
+    id: "contacts",
+    label: "Informations de contact",
+    title: "Informations de contact",
+    description:
+      "Une fois votre sélection terminée, passez à l’étape suivante.",
+    form: ContactForm,
+  },
+  {
     id: "realEstate",
     label: "Informations du bien",
     title: "Informations du bien",
     description:
-      "Une fois votre sélection terminée, passez à l’étape suivante.",
+      "Une fois votre sélection terminée, passez à l’ étape suivante.",
     form: RealEstateForm,
   },
   {
@@ -32,6 +41,25 @@ const steps: StepDefinition[] = [
     form: () => <div>RDV</div>,
   },
 ];
+
+const getContextValuesForStep = (activeStep: number, stepStates: any) => {
+  switch (activeStep) {
+    case 1: {
+      return {
+        services: stepStates.services.services,
+        family: stepStates.services.family,
+      };
+    }
+    case 2: {
+      return {
+        services: stepStates.services.services,
+      };
+    }
+    default: {
+      return {};
+    }
+  }
+};
 
 const CreateOrderStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -67,6 +95,10 @@ const CreateOrderStepper = () => {
     setActiveStep(0);
   };
 
+  const contextValues = useMemo(() => {
+    return getContextValuesForStep(activeStep, stepStates);
+  }, [activeStep, stepStates]);
+
   return (
     <Box display="flex" height={1} width={1}>
       <StepsSummary steps={steps} currentStepNumber={activeStep + 1} />
@@ -78,7 +110,7 @@ const CreateOrderStepper = () => {
         handleBack={handleBack}
         handleReset={handleReset}
         width={536}
-        stepStates={stepStates}
+        contextValues={contextValues}
       />
     </Box>
   );
