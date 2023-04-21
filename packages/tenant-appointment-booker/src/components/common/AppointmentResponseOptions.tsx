@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import SuccessDialog from "./dialogs/SuccessDialog";
 import TenantRequestProps from "@/types/tenantResquestProps";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as operaOrderClient from "@/queries/operaTenantRequest";
 
 interface AppointmentResponseOptionsProps {
@@ -52,6 +52,8 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
   tenantRequest,
   appointmentBookingId,
 }) => {
+  const queryClient = useQueryClient();
+
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   const handleOpenConfirmDialog = () => {
@@ -62,8 +64,9 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
     }
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = async () => {
     setConfirmDialogOpen((prevState) => !prevState);
+    await queryClient.invalidateQueries(["appointmentBooking", appointmentBookingId]);
   };
 
   const { accepted, denied } = getButtonLabels(tenantRequest);
