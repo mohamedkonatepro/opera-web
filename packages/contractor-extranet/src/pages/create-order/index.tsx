@@ -6,6 +6,7 @@ import SelectServices from "@/components/createOrder/forms/selectServices";
 import { StepDefinition } from "@/components/common/stepper/types";
 import RealEstateForm from "@/components/createOrder/forms/realEstate";
 import ContactForm from "@/components/createOrder/forms/contact";
+import AppointmentForm from "@/components/createOrder/forms/appointment";
 
 const steps: StepDefinition[] = [
   {
@@ -33,12 +34,12 @@ const steps: StepDefinition[] = [
     form: RealEstateForm,
   },
   {
-    id: "rdv",
+    id: "appointment",
     label: "Rendez-vous",
     title: "Rendez-vous",
     description:
       "Une fois votre sélection terminée, passez à l’étape suivante.",
-    form: () => <div>RDV</div>,
+    form: AppointmentForm,
   },
 ];
 
