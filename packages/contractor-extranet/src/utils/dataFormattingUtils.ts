@@ -35,3 +35,7 @@ export const formatRealEstateTypeData = (realEstateType: any) => {
 export const formatTenantData = (tenant: any) => {
   return tenant ? { id: tenant.id, ...tenant.attributes } : null;
 };
+
+export const formatMovingZoneData = (movingZone: any) => {
+  return movingZone ? { id: movingZone.id, ...movingZone.attributes } : null;
+};
