@@ -13,20 +13,21 @@ interface DesiredDatePickerProps {
   onChange: (newValue: DateTime | undefined) => void;
 }
 
+const shouldDisableDate = (date: DateTime, zone: string, keyType: string) => {
+  const firstAvailableDate = getFirstAvailableDate(zone);
+  if (date.weekday === 7) return true;
+  const dateString = date.toISODate();
+  if (holidays.isHoliday(dateString)) return true;
+  if (keyType === 'contractor' && date < firstAvailableDate && !date.hasSame(firstAvailableDate, 'day')) {
+    return true;
+  }
+  return false;
+};
+
 const DesiredDatePicker: FC<DesiredDatePickerProps> = ({ zone, keyType, onChange }) => {
   const theme = useTheme();
   const handleOnChange = (value: DateTime | undefined) => {
     onChange(value);
-  };
-  const shouldDisableDate = (date: DateTime, zone: string, keyType: string) => {
-    const firstAvailableDate = getFirstAvailableDate(zone);
-    if (date.weekday === 7) return true;
-    const dateString = date.toISODate();
-    if (holidays.isHoliday(dateString)) return true;
-    if (keyType === 'contractor' && date < firstAvailableDate && !date.hasSame(firstAvailableDate, 'day')) {
-      return true;
-    }
-    return false;
   };
 
   return (

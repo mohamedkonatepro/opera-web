@@ -56,6 +56,11 @@ const getContextValuesForStep = (activeStep: number, stepStates: any) => {
         services: stepStates.services.services,
       };
     }
+    case 3: {
+      return {
+        realEstate: stepStates.realEstate,
+      };
+    }
     default: {
       return {};
     }
