@@ -5,8 +5,8 @@ import { getMovingZone } from "@/queries/movingZone";
 import { MovingZone } from "@/types/MovingZone";
 import { useQuery } from "@tanstack/react-query";
 import KeysRadioGroup from "./KeysRadioGroup";
-import DesiredDatePicker from "./DesiredDatePicker";
 import { KeyEnumWithStrIndex } from "@/constants";
+import DateAndSlots from "./DateAndSlots";
 
 export interface AppointmentProps {
   formId: string;
@@ -20,7 +20,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   contextValues,
 }) => {
   const theme = useTheme();
-  const [date, setDate] = useState<DateTime | undefined>(DateTime.now());
+  const [date, setDate] = useState<DateTime | undefined>();
   const [movingZones, setMovingZones] = useState<MovingZone>();
   const [key, setKey] = useState("tenant");
   const [futherInformations, setFutherInformations] = useState("");
@@ -64,10 +64,11 @@ const AppointmentForm: FC<AppointmentProps> = ({
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <KeysRadioGroup onChange={handleChangeKeysRadio} />
-      <DesiredDatePicker
+      <DateAndSlots
         zone={zone}
-        keyType={key}
-        onChange={handleChangeDate}
+        key={key}
+        handleChangeDate={handleChangeDate}
+        date={date}
       />
       <Stack spacing={1}>
         <Typography

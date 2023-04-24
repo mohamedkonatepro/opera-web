@@ -40,7 +40,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   formId,
   onSubmit,
   initialValues,
-  setSubmitButtonDisabled
+  setSubmitButtonDisabled,
 }) => {
   const theme = useTheme();
 
