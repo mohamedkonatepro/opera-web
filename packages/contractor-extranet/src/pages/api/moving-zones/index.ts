@@ -5,8 +5,12 @@ import { MovingZone } from "@/types/MovingZone";
 import { formatMovingZoneData } from "@/utils/dataFormattingUtils";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const getMovingZoneByPostalCode = async (postalCode: any): Promise<MovingZone> => {
-  const { data } = await apiAxiosInstance.get(`/moving-zones/by-postal-code/${postalCode}`);
+export const getMovingZoneByPostalCode = async (
+  postalCode: any
+): Promise<MovingZone> => {
+  const { data } = await apiAxiosInstance.get(
+    `/moving-zones/by-postal-code/${postalCode}`
+  );
 
   return data;
 };
@@ -15,7 +19,7 @@ const movingZone = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     try {
-      const { postalCode } = req.query
+      const { postalCode } = req.query;
       const movingZone = await getMovingZoneByPostalCode(postalCode);
       return res.status(200).json(movingZone);
     } catch (error: any) {

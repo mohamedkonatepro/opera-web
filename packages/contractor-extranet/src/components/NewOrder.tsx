@@ -1,8 +1,10 @@
 import { Paper, Box, Stack, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import ContainedButton from "./common/buttons/ContainedButton";
+import { useRouter } from "next/router";
 
 const NewOrder: React.FunctionComponent = () => {
+  const router = useRouter()
   return (
     <Paper
       elevation={3}
@@ -37,7 +39,7 @@ const NewOrder: React.FunctionComponent = () => {
             type="submit"
             color="secondary"
             padding="large"
-            href="/create-order"
+            href={`/create-order?contractorId=${router.query.contractorId}`}
             sx={{ width: "167px" }}
           >
             Nouvelle commande

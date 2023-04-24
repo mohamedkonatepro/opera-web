@@ -1,3 +1,5 @@
+import formatServiceOption from "@/apiUtils/formatData/formatServiceOption";
+
 export const formatRealEstateData = (realEstate: any) => {
   const { id, attributes } = realEstate;
   const { contractor, owner, real_estate_type, tenants } = attributes;
@@ -19,7 +21,17 @@ export const formatRealEstateData = (realEstate: any) => {
 };
 
 export const formatContractorData = (contractor: any) => {
-  return contractor ? { id: contractor.id, ...contractor.attributes } : null;
+  return contractor
+    ? {
+        id: contractor.id,
+        ...contractor.attributes,
+        serviceOptions:
+          contractor.attributes.service_options?.data?.map(
+            formatServiceOption
+          ) ?? [],
+        service_options: undefined,
+      }
+    : null;
 };
 
 export const formatOwnerData = (owner: any) => {

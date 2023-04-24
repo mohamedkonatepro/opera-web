@@ -22,6 +22,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import SideBar from "@/components/common/SideBar";
+import { useRouter } from "next/router";
+import { ContractorContextProvider } from "@/context/contractor";
 
 Settings.defaultLocale = "fr";
 Settings.defaultZone = "Europe/Paris";
@@ -74,11 +76,12 @@ export default function MyApp(props: MyAppProps) {
               fixed
               disableGutters
             >
-              {/* <Box minWidth={288} height={1} bgcolor="#F4F4F4" /> */}
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
-                  <SideBar />
-                  <Component {...pageProps} />
+                  <ContractorContextProvider>
+                    <SideBar />
+                    <Component {...pageProps} />
+                  </ContractorContextProvider>
                 </Hydrate>
                 <ReactQueryDevtools initialIsOpen={false} />
               </QueryClientProvider>

@@ -1,4 +1,12 @@
-import { Radio, RadioGroup, FormControl, FormControlLabel, Typography, useTheme, Stack} from "@mui/material";
+import {
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+  Typography,
+  useTheme,
+  Stack,
+} from "@mui/material";
 import { FC } from "react";
 
 export interface KeysRadioGroupProps {
@@ -20,11 +28,32 @@ const KeysRadioGroup: FC<KeysRadioGroupProps> = ({ onChange }) => {
         >
           Gestion des clés
         </Typography>
-        <RadioGroup aria-label="keys-group" name="keys-group" defaultValue="tenant" onChange={handleOnChange}>
-          <FormControlLabel value="tenant" control={<Radio color="secondary" />} label="Clés avec locataire" />
-          <FormControlLabel value="contractor" control={<Radio color="secondary" />} label="Clés chez le donneur d’ordre" />
-          <FormControlLabel value="operator" control={<Radio color="secondary" />} label="Clés avec l’opérateur, récupérées lors de l’EDL sortant réalisé avant l’entrant" />
-          <FormControlLabel value="keeper" control={<Radio color="secondary" />} label="Clés avec le gardien" />
+        <RadioGroup
+          aria-label="keys-group"
+          name="keys-group"
+          defaultValue="tenant"
+          onChange={handleOnChange}
+        >
+          <FormControlLabel
+            value="tenant"
+            control={<Radio color="secondary" />}
+            label="Clés avec locataire"
+          />
+          <FormControlLabel
+            value="contractor"
+            control={<Radio color="secondary" />}
+            label="Clés chez le donneur d’ordre"
+          />
+          <FormControlLabel
+            value="operator"
+            control={<Radio color="secondary" />}
+            label="Clés avec l’opérateur, récupérées lors de l’EDL sortant réalisé avant l’entrant"
+          />
+          <FormControlLabel
+            value="keeper"
+            control={<Radio color="secondary" />}
+            label="Clés avec le gardien"
+          />
         </RadioGroup>
       </FormControl>
     </Stack>
