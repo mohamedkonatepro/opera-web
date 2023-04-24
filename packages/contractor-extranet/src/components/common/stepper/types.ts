@@ -7,6 +7,8 @@ export interface StepDefinition {
     formId: string;
     onSubmit: (formState: any) => void;
     contextValues: any;
+    initialValues: any;
+    setSubmitButtonDisabled: (disabled: boolean) => void;
   }>;
 }
 
@@ -25,6 +27,7 @@ export interface StepContentProps {
   step: StepDefinition;
   width?: number;
   contextValues: any;
+  initialValues: any;
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;
@@ -34,4 +37,5 @@ export interface StepFooterProps {
   formId: string;
   handleBack: () => void;
   handleReset: () => void;
+  submitButtonDisabled: boolean;
 }

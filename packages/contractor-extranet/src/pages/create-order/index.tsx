@@ -1,5 +1,5 @@
 import { Box, Divider } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import StepsSummary from "@/components/common/stepper/StepsSummary";
 import StepContent from "@/components/common/stepper/StepContent";
 import SelectServices from "@/components/createOrder/forms/selectServices";
@@ -7,6 +7,7 @@ import { StepDefinition } from "@/components/common/stepper/types";
 import RealEstateForm from "@/components/createOrder/forms/realEstate";
 import ContactForm from "@/components/createOrder/forms/contact";
 import AppointmentForm from "@/components/createOrder/forms/appointment";
+import { ContractorContext } from "@/context/contractor";
 
 const steps: StepDefinition[] = [
   {
@@ -69,12 +70,20 @@ const getContextValuesForStep = (activeStep: number, stepStates: any) => {
 
 const CreateOrderStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const contractorContext = useContext(ContractorContext);
 
   const currentStep = steps[activeStep];
 
   const [stepStates, setStepStates] = useState(
     steps.reduce((acc, step) => {
-      acc[step.id] = {};
+      if (step.id === "services") {
+        acc[step.id] = {
+          options: contractorContext.contractor?.serviceOptions ?? [],
+        };
+        return acc;
+      } else {
+        acc[step.id] = {};
+      }
       return acc;
     }, {} as Record<string, any>)
   );
@@ -117,6 +126,7 @@ const CreateOrderStepper = () => {
         handleReset={handleReset}
         width={536}
         contextValues={contextValues}
+        initialValues={stepStates[currentStep.id]}
       />
     </Box>
   );

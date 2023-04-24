@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import StepFooter from "./StepFooter";
 import StepHeader from "./StepHeader";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { StepContentProps } from "./types";
 
 const StepContent: FC<StepContentProps> = ({
@@ -12,8 +12,12 @@ const StepContent: FC<StepContentProps> = ({
   handleReset,
   width,
   contextValues,
+  initialValues,
 }) => {
   const StepForm = step.form;
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+
   return (
     <Box display="flex" flexDirection="column" width={1}>
       <Box mt={4} mb={4} mr={4} display="flex" justifyContent="center">
@@ -30,6 +34,8 @@ const StepContent: FC<StepContentProps> = ({
             formId={`${step.id}-form`}
             onSubmit={handleNext}
             contextValues={contextValues}
+            initialValues={initialValues}
+            setSubmitButtonDisabled={setSubmitButtonDisabled}
           />
         </Box>
       </Box>
@@ -40,6 +46,7 @@ const StepContent: FC<StepContentProps> = ({
             formId={`${step.id}-form`}
             handleBack={handleBack}
             handleReset={handleReset}
+            submitButtonDisabled={submitButtonDisabled}
           />
         </Box>
       </Box>

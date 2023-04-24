@@ -11,17 +11,36 @@ import {
   Stack,
   useTheme,
 } from "@mui/material";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import SelectServiceType from "./SelectServiceType";
 import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import { SelectServicesFormProps } from "./types";
 import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
 
+const getProposedOptions = (
+  families: Family[],
+  selectedServices: number[],
+  selectedFamily: number | null
+) => {
+  if (!selectedFamily) return [];
+  const family = families.find((family) => family.id === selectedFamily);
+  if (!family) return [];
+  const services = family.services.filter((service) =>
+    selectedServices.includes(service.id)
+  );
+
+  return services.reduce((acc, service) => {
+    return [...acc, ...service.options];
+  }, [] as ServiceOption[]);
+};
+
 const SelectServicesForm: FC<SelectServicesFormProps> = ({
   families,
   formId,
   onSubmit,
+  initialValues,
+  setSubmitButtonDisabled
 }) => {
   const theme = useTheme();
 
@@ -53,18 +72,28 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     }
   };
 
-  const proposedOptions = useMemo(() => {
-    const options: ServiceOption[] = [];
-    const family = families.find((family) => family.id === selectedFamily);
-    if (!family) return [];
-    const services = family.services.filter((service) =>
-      selectedServices.includes(service.id)
-    );
+  const proposedOptions = useMemo(
+    () => getProposedOptions(families, selectedServices, selectedFamily),
+    [selectedFamily, selectedServices, families]
+  );
 
-    return services.reduce((acc, service) => {
-      return [...acc, ...service.options];
-    }, options);
-  }, [selectedFamily, selectedServices, families]);
+  useEffect(() => {
+    const initialOptionsIds =
+      initialValues?.options?.map((option) => option.id) ?? [];
+    setSelectedOptions(
+      proposedOptions
+        .filter((option) => initialOptionsIds.includes(option.id))
+        .map((option) => option.id)
+    );
+  }, [proposedOptions]);
+
+  useEffect(() => {
+    if (selectedServices.length === 0) {
+      setSubmitButtonDisabled(true);
+    } else {
+      setSubmitButtonDisabled(false);
+    }
+  }, [selectedServices, setSubmitButtonDisabled]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

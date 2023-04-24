@@ -21,14 +21,10 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const theme = useTheme();
   const [date, setDate] = useState<DateTime | undefined>(DateTime.now());
   const [movingZones, setMovingZones] = useState<MovingZone>();
-  const [key, setKey] = useState('');
+  const [key, setKey] = useState("");
 
-  const { isLoading } =
-  useQuery<MovingZone>({
-    queryKey: [
-      "getRealEstates",
-      contextValues.realEstate.postalCode,
-    ],
+  const { isLoading } = useQuery<MovingZone>({
+    queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
     queryFn: ({ queryKey }) =>
       getMovingZone({ postalCode: queryKey[1] as string }),
     enabled: true,
@@ -44,8 +40,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
       </Typography>
     );
   }
-  
-  const zone = movingZones ? movingZones.code : ''
+
+  const zone = movingZones ? movingZones.code : "";
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,15 +51,19 @@ const AppointmentForm: FC<AppointmentProps> = ({
   };
 
   const handleChangeKeysRadio = (value: string): void => {
-    setKey(value)
-  }
+    setKey(value);
+  };
   const handleChangeDate = (value: DateTime | undefined): void => {
-    setDate(value)
-  }
+    setDate(value);
+  };
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
-      <KeysRadioGroup onChange={handleChangeKeysRadio}/>
-      <DesiredDatePicker zone={zone} keyType={key} onChange={handleChangeDate}/>
+      <KeysRadioGroup onChange={handleChangeKeysRadio} />
+      <DesiredDatePicker
+        zone={zone}
+        keyType={key}
+        onChange={handleChangeDate}
+      />
     </Stack>
   );
 };
