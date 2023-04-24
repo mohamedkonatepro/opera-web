@@ -8,8 +8,27 @@ import { useState } from "react";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AppointmentTooLateDialog from "./AppointmentTooLateDialog";
 import ContactDialog from "./ContactDialog";
-import { ContactFormSubmitValuesWithType } from "./form/types";
+import { ContactFormSubmitValuesWithType, ContactReason } from "./form/types";
 import { ContactProps } from "./types";
+
+const getTextSuccess = (orderType: string, contactReason?: ContactReason) => {
+  if (orderType === 'E') return ''
+  switch (contactReason) {
+    case ContactReason.CANCEL_APPOINTMENT:
+      return "Votre message a été transmis à l’agence. Vous serez contacté au plus vite pour confirmer l’annulation nouveau rendez-vous.";
+    default:
+      return "Votre message a été transmis à l’agence. Vous serez contacté au plus vite pour confirmer votre nouveau rendez-vous.";
+  }
+};
+
+const getTitleSuccess = (type?: string) => {
+  switch (type) {
+    case "E":
+      return "Votre demande a été prise en compte !";
+    default:
+      return "Votre message a été envoyé !";
+  }
+};
 
 const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
   const queryClient = useQueryClient();
@@ -37,8 +56,12 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     setContactDialogOpen(false);
   };
 
-  const handleOnCloseSuccessDialog = () => {
+  const handleOnCloseSuccessDialog = async () => {
     setSuccessDialogOpen(false);
+    await queryClient.invalidateQueries([
+      "appointmentBookings",
+      appointmentBooking.id,
+    ]);
   };
 
   const handleOnCloseAppointmentTooLateDialog = () => {
@@ -50,10 +73,6 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     onSuccess: async () => {
       setContactDialogOpen(false);
       setSuccessDialogOpen(true);
-      await queryClient.invalidateQueries([
-        "appointmentBookings",
-        appointmentBooking.id,
-      ]);
     },
     onError: () => {
       setContactDialogOpen(false);
@@ -95,8 +114,8 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
       <SuccessDialog
         open={successDialogOpen}
         onClose={handleOnCloseSuccessDialog}
-        title="Votre message a été envoyé !"
-        text="Votre message a été transmis à l’agence. Vous serez contacté au plus vite pour confirmer votre nouveau rendez-vous."
+        title={getTitleSuccess(appointmentBooking.order.type)}
+        text={getTextSuccess(appointmentBooking.order.type, mutation.variables?.type)}
         maxWidth={456}
       />
       <ErrorDialog
