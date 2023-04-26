@@ -8,6 +8,9 @@ import RealEstateForm from "@/components/createOrder/forms/realEstate";
 import ContactForm from "@/components/createOrder/forms/contact";
 import AppointmentForm from "@/components/createOrder/forms/appointment";
 import { ContractorContext } from "@/context/contractor";
+import { useMutation } from "@tanstack/react-query";
+import router from "next/router";
+import { createOrder } from "@/queries/orders";
 
 const steps: StepDefinition[] = [
   {
@@ -58,9 +61,7 @@ const getContextValuesForStep = (activeStep: number, stepStates: any) => {
       };
     }
     case 3: {
-      return {
-        realEstate: stepStates.realEstate,
-      };
+      return stepStates;
     }
     default: {
       return {};
@@ -69,6 +70,12 @@ const getContextValuesForStep = (activeStep: number, stepStates: any) => {
 };
 
 const CreateOrderStepper = () => {
+  const { mutate } = useMutation({
+    mutationFn: createOrder,
+    onSuccess: ({data}) => {
+      router.push(`/summary-order/${data.id}`);
+    },
+  });
   const [activeStep, setActiveStep] = useState(0);
   const contractorContext = useContext(ContractorContext);
 
@@ -89,6 +96,9 @@ const CreateOrderStepper = () => {
   );
 
   const handleNext = (formState: any) => {
+    if (currentStep.id === "appointment") {
+      return mutate(contextValues);
+    }
     setStepStates((prevStepStates) => ({
       ...prevStepStates,
       [currentStep.id]: formState,

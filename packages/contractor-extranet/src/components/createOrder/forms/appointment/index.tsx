@@ -1,4 +1,4 @@
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Stack, TextField, Typography, useTheme } from "@mui/material";
 import { FC, useState } from "react";
 import { DateTime } from "luxon";
 import { getMovingZone } from "@/queries/movingZone";
@@ -46,8 +46,10 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-
-    onSubmit({});
+    onSubmit({
+      date,
+      key
+    })
   };
 
   const handleChangeKeysRadio = (value: string): void => {
@@ -64,6 +66,24 @@ const AppointmentForm: FC<AppointmentProps> = ({
         keyType={key}
         onChange={handleChangeDate}
       />
+      <Stack spacing={1}>
+        <Typography
+          variant="subtitle1"
+          sx={{ ...theme.typography.subtitle1, marginBottom: 1 }}
+        >
+          Informations complémentaires
+        </Typography>
+        <TextField
+          name="futherInformations"
+          label="Informations complémentaires"
+          placeholder="Informations complémentaires"
+          color="secondary"
+          sx={{
+            bgcolor: "background.paper",
+          }}
+          multiline
+        />
+      </Stack>
     </Stack>
   );
 };
