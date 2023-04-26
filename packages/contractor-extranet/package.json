@@ -1,0 +1,52 @@
+{
+  "name": "contractor-extranet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{js,ts,tsx}\""
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/inter": "^4.5.15",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.12.0",
+    "@mui/styles": "^5.12.0",
+    "@mui/system": "^5.11.13",
+    "@mui/x-date-pickers": "^6.0.1",
+    "@next/swc-linux-x64-gnu": "^13.1.6",
+    "@next/swc-linux-x64-musl": "^13.1.6",
+    "@tanstack/react-query": "^4.26.1",
+    "@tanstack/react-query-devtools": "^4.26.1",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.34",
+    "@types/react-dom": "18.0.11",
+    "axios": "^1.3.4",
+    "cors": "^2.8.5",
+    "date-holidays": "^3.19.0",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "libphonenumber-js": "^1.10.21",
+    "lodash": "^4.17.21",
+    "luxon": "^3.2.1",
+    "mui-tel-input": "^3.1.1",
+    "nanoid": "^4.0.2",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.4",
+    "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/lodash": "^4.14.194",
+    "@types/luxon": "^3.2.0",
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.4"
+  }
+}

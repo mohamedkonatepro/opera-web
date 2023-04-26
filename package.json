@@ -2,12 +2,13 @@
   "private": true,
   "name": "opera-groupe-web",
   "repository": "git@github.com:thetribeio/opera-groupe-web.git",
-  "packageManager": "yarn@3.4.1",
+  "packageManager": "yarn@3.5.0",
   "workspaces": [
     "packages/**/*"
   ],
   "scripts": {
     "w": "yarn workspace",
+    "c": "yarn workspace contractor-extranet",
     "b": "yarn workspace tenant-appointment-booker"
   },
   "dependencies": {
