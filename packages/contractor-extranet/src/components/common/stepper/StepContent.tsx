@@ -15,7 +15,10 @@ const StepContent: FC<StepContentProps> = ({
   initialValues,
 }) => {
   const StepForm = step.form;
-
+  let submitButtonLabel = undefined
+  if (step.id === "appointment") {
+    submitButtonLabel = "Continuer sans rendez-vous"
+  }
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   return (
@@ -46,6 +49,7 @@ const StepContent: FC<StepContentProps> = ({
             formId={`${step.id}-form`}
             handleBack={handleBack}
             handleReset={handleReset}
+            submitButtonLabel={submitButtonLabel}
             submitButtonDisabled={submitButtonDisabled}
           />
         </Box>

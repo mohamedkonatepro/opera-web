@@ -1,19 +1,19 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { ContactFormProps } from "./types";
 import { Stack } from "@mui/material";
 import RealEstateOwner from "./RealEstateOwner";
 import Contractor from "./Contractor";
 import Tenants from "./Tenants";
 import schema from "./validationSchema";
-import { ValidationError } from "yup";
-import { toPath, set } from "lodash";
 import validateForm from "@/utils/validateForm";
+import { ContractorContext } from "@/context/contractor";
 
 const ContactForm: FC<ContactFormProps> = ({
   formId,
   onSubmit,
   contextValues = {},
 }) => {
+  const { contractor } = useContext(ContractorContext)
   const [enteringTenants, setEnteringTenants] = useState<any[]>([]);
   const [leavingTenants, setLeavingTenants] = useState<any[]>([]);
 
@@ -50,6 +50,7 @@ const ContactForm: FC<ContactFormProps> = ({
         socialReason: realEstateOwnerSocialReason,
       },
       contractor: {
+        id: contractor.id,
         firstname: contractorFirstname,
         lastname: contractorLastname,
         email: contractorEmail,

@@ -38,4 +38,5 @@ export interface StepFooterProps {
   handleBack: () => void;
   handleReset: () => void;
   submitButtonDisabled: boolean;
+  submitButtonLabel?: string;
 }
