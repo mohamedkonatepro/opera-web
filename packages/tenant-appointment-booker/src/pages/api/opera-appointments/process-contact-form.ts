@@ -2,6 +2,7 @@ import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getAppointmentBooking } from "../appointment-bookings/[id]";
 
 const processContactForm = async (
   appointmentBookingId: string,
@@ -9,16 +10,17 @@ const processContactForm = async (
   type: string,
   newDesiredDate?: string
 ) => {
+  const appointmentBooking = await getAppointmentBooking(appointmentBookingId, true);
   if (type === "CANCEL_APPOINTMENT") {
     return apiAxiosInstance.post(`/api/opera-appointments/cancel-request`, {
       reason,
-      appointmentBookingId,
+      appointmentBookingId: appointmentBooking.id,
     });
   }
 
   return apiAxiosInstance.post(`/api/opera-appointments/update-date`, {
     reason,
-    appointmentBookingId,
+    appointmentBookingId: appointmentBooking.id,
     newDesiredDate,
   });
 };
@@ -28,8 +30,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const { reason, type, newDesiredDate, appointmentBookingId } = req.body;
+      const appointmentBooking = await getAppointmentBooking(appointmentBookingId, true);
+
       const response = await processContactForm(
-        appointmentBookingId,
+        appointmentBooking.id,
         reason,
         type,
         newDesiredDate

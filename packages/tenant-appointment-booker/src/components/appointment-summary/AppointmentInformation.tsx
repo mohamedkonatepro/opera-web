@@ -11,7 +11,7 @@ import Appointment from "@/types/appointment";
 const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
   appointmentBooking,
 }) => {
-  const { id, order } = appointmentBooking;
+  const { uuid, order } = appointmentBooking;
   const appointment = appointmentBooking.appointment as Appointment;
   const { slot } = appointment;
   const appointmentSlot = slot as Slot;
@@ -61,7 +61,7 @@ const AppointmentInformation: React.FC<AppointmentInformationProps> = ({
             <Stack
               spacing={0.5}
               component={Link}
-              href={`/?appointmentBookingId=${id}&isEdit=true`}
+              href={`/?appointmentBookingId=${uuid}&isEdit=true`}
               color="secondary.main"
               variant="body2"
               direction="row"

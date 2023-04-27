@@ -2,6 +2,7 @@ import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getAppointmentBooking } from "../appointment-bookings/[id]";
 
 const sendNoSlotsAvailableEmail = async (appointmentBookingId: string) => {
   await apiAxiosInstance.post(
@@ -14,8 +15,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "POST") {
     const { appointmentBookingId } = req.body;
+    const appointmentBooking = await getAppointmentBooking(appointmentBookingId, true);
+
     try {
-      await sendNoSlotsAvailableEmail(appointmentBookingId as string);
+      await sendNoSlotsAvailableEmail(appointmentBooking.id as string);
       return res.status(200).json({ success: true });
     } catch (error: any) {
       return handleError(error, res);

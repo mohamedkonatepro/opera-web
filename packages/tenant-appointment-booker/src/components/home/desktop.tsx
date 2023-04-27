@@ -25,7 +25,7 @@ const AppointmentBookingDesktop: React.FC<AppointmentBookingProps> = ({
           <Box width={356}>
             <SelectAppointment
               order={appointmentBooking.order}
-              appointmentBookingId={appointmentBooking.id}
+              appointmentBookingId={appointmentBooking.uuid}
               minDate={minDate}
               maxDate={maxDate}
               appointment={appointmentBooking.appointment}

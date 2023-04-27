@@ -97,7 +97,7 @@ const TenantRequest = () => {
                         handleChange={handleChange}
                         orderId={appointmentBooking.order_id}
                         tenantRequest={appointmentBooking.tenant_request}
-                        appointmentBookingId={appointmentBooking.id}
+                        appointmentBookingId={appointmentBooking.uuid}
                       />
                     </>
                   )}

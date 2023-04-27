@@ -4,11 +4,7 @@ import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 
-export const getAppointmentBooking = async (id: string) => {
-  const response = await apiAxiosInstance.get(
-    `/api/appointment-bookings/${id}`
-  );
-
+const getInformationAboutAppointmentBooking = async (response: any) => {
   const appointmentBooking = {
     id: response.data.data.id.toString(),
     ...response.data.data.attributes,
@@ -50,17 +46,36 @@ export const getAppointmentBooking = async (id: string) => {
     appointmentBooking.tenant_request = null;
   }
 
-  return appointmentBooking;
+  return appointmentBooking
+}
+
+export const getAppointmentBooking = async (uuid: string, withoutInfo: boolean = false) => {
+  const response = await apiAxiosInstance.get(
+    `/api/appointment-bookings/by-uuid/${uuid}`
+  );
+
+  if (withoutInfo) {
+    return {
+      id: response.data.data.id.toString(),
+      ...response.data.data.attributes,
+    };
+  }
+
+  return getInformationAboutAppointmentBooking(response);
 };
+
+
 
 export const updateAppointmentBooking = async (
   id: string,
   selectedSlot: Slot
 ) => {
-  await apiAxiosInstance.put(`/api/appointment-bookings/${id}`, {
+  const appointmentBooking = await getAppointmentBooking(id, true);
+  await apiAxiosInstance.put(`/api/appointment-bookings/${appointmentBooking.id}`, {
     data: selectedSlot,
   });
-  return getAppointmentBooking(id);
+
+  return getAppointmentBooking(appointmentBooking.uuid);
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
