@@ -1,7 +1,7 @@
 import AppointmentInformation from "@/components/appointment-summary/AppointmentInformation";
 import AppointmentModalities from "@/components/appointment-summary/AppointmentModalities";
 import RealEstateAndTenantInformation from "@/components/appointment-summary/RealEstateAndTenantInformation";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Paper, Stack } from "@mui/material";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPageContext } from "next";
 import Head from "next/head";
@@ -86,7 +86,6 @@ const SummaryAppointment = ({
           <AppointmentInformation appointmentBooking={appointmentBooking} />
           <RealEstateAndTenantInformation
             order={appointmentBooking.order}
-            appointmentBookingId={appointmentBookingId}
           />
           <AppointmentModalities orderType={appointmentBooking.order.type} />
           {!tenantRequest && (

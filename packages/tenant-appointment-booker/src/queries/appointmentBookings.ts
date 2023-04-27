@@ -23,3 +23,4 @@ export const updateAppointmentBooking = async ({
     selectedSlot,
   });
 };
+

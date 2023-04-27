@@ -17,7 +17,7 @@ const AppointmentBookingMobile: React.FC<AppointmentBookingProps> = ({
         <Box m={3} mt={0}>
           <SelectAppointment
             order={appointmentBooking.order}
-            appointmentBookingId={appointmentBooking.id}
+            appointmentBookingId={appointmentBooking.uuid}
             minDate={minDate}
             maxDate={maxDate}
             appointment={appointmentBooking.appointment}

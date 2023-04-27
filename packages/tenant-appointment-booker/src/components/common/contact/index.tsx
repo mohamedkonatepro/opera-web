@@ -60,7 +60,7 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
     setSuccessDialogOpen(false);
     await queryClient.invalidateQueries([
       "appointmentBookings",
-      appointmentBooking.id,
+      appointmentBooking.uuid,
     ]);
   };
 
@@ -83,7 +83,7 @@ const Contact: React.FC<ContactProps> = ({ appointmentBooking }) => {
   const handleOnSubmitContactForm = (
     values: ContactFormSubmitValuesWithType
   ) => {
-    mutation.mutate({ ...values, appointmentBookingId: appointmentBooking.id });
+    mutation.mutate({ ...values, appointmentBookingId: appointmentBooking.uuid });
   };
 
   return (

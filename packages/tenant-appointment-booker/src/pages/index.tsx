@@ -21,6 +21,7 @@ import { ChevronRight } from "@mui/icons-material";
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { appointmentBookingId, isEdit } = context.query;
+
   if (!appointmentBookingId) {
     return {
       notFound: true,
@@ -152,7 +153,7 @@ const Home = ({
             alignItems="center"
             spacing={0.5}
             component={Link}
-            href={`/appointment-summary/${appointmentBookingId}`}
+            href={`/appointment-summary/${appointmentBooking.uuid}`}
             variant="body2"
             color="text.secondary"
             sx={{ textDecorationColor: theme.palette.text.secondary }}
