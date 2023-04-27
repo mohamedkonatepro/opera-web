@@ -15,6 +15,7 @@ const TenantRequest = () => {
     data: appointmentBooking,
     isLoading,
     isError,
+    refetch
   } = useQuery(
     ["appointmentBooking", id],
     () => getAppointmentBooking(id as string),
@@ -95,6 +96,7 @@ const TenantRequest = () => {
                       <AppointmentResponseOptions
                         selectedValue={selectedValue}
                         handleChange={handleChange}
+                        refetch={refetch}
                         orderId={appointmentBooking.order_id}
                         tenantRequest={appointmentBooking.tenant_request}
                         appointmentBookingId={appointmentBooking.uuid}

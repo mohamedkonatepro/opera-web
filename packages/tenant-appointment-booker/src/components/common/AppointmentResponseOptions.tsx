@@ -17,6 +17,7 @@ interface AppointmentResponseOptionsProps {
   orderId: string;
   tenantRequest: TenantRequestProps;
   appointmentBookingId: string;
+  refetch: () => void;
 }
 
 const getButtonLabels = (tenantRequest: TenantRequestProps) => {
@@ -51,12 +52,14 @@ const AppointmentResponseOptions: React.FC<AppointmentResponseOptionsProps> = ({
   orderId,
   tenantRequest,
   appointmentBookingId,
+  refetch,
 }) => {
   const queryClient = useQueryClient();
 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   const handleOpenConfirmDialog = () => {
+    refetch()
     if (selectedValue === "denied") {
       mutationCancelTenantRequest.mutate({ appointmentBookingId, orderId });
     } else if (selectedValue === "accepted") {
