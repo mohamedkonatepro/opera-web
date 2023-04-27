@@ -10,17 +10,16 @@ const processContactForm = async (
   type: string,
   newDesiredDate?: string
 ) => {
-  const appointmentBooking = await getAppointmentBooking(appointmentBookingId, true);
   if (type === "CANCEL_APPOINTMENT") {
     return apiAxiosInstance.post(`/api/opera-appointments/cancel-request`, {
       reason,
-      appointmentBookingId: appointmentBooking.id,
+      appointmentBookingId,
     });
   }
 
   return apiAxiosInstance.post(`/api/opera-appointments/update-date`, {
     reason,
-    appointmentBookingId: appointmentBooking.id,
+    appointmentBookingId,
     newDesiredDate,
   });
 };

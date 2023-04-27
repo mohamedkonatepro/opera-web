@@ -8,13 +8,8 @@ on:
     branches:
       - main
       - develop
-    paths:
-      - packages/contractor-extranet/**
 
   workflow_dispatch:
-    paths:
-      - packages/contractor-extranet/**
-
 jobs:
   build-push-image:
     runs-on: ubuntu-latest

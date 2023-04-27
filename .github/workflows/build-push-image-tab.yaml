@@ -2,18 +2,14 @@ name: "Build image and push to registry for Tenant Appointment Booker"
 
 on:
   workflow_run:
-    workflows: ["validate-tab"]
+    workflows: ["Validate Tenant Appointment Booker"]
     types:
       - completed
     branches:
       - main
       - develop
-    paths:
-      - packages/tenant-appointment-booker/**
 
   workflow_dispatch:
-    paths:
-      - packages/tenant-appointment-booker/**
 
 jobs:
   build-push-image:
