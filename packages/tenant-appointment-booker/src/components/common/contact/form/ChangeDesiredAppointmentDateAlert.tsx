@@ -74,7 +74,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
         }
       }
       case "E": {
-        if (newDesiredDate && newDesiredDate > desiredDateByContractor) {
+        if (newDesiredDate && newDesiredDate < desiredDateByContractor) {
           return (
             <Alert severity="warning">
               <CommonEDLAppointmentDateText
@@ -93,11 +93,7 @@ const ChangeDesiredAppointmentDateAlert: React.FC<
             </Alert>
           );
         }
-        if (
-          newDesiredDate &&
-          (newDesiredDate > desiredDateByContractor ||
-            newDesiredDate < desiredDateByContractor)
-        ) {
+        if (newDesiredDate && newDesiredDate > desiredDateByContractor) {
           return (
             <Alert severity="warning">
               <CommonEDLAppointmentDateText
