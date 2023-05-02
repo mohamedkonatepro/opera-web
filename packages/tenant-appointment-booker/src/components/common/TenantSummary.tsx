@@ -20,7 +20,6 @@ const formId = "modify-tenant-form";
 interface TenantSummaryProps {
   locataire: Tenant;
   orderId: string;
-  appointmentBookingId: string;
   displayEditButton?: boolean;
   tenantRequest?: TenantRequestProps;
 }
@@ -30,7 +29,6 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
     locataire,
     orderId,
     displayEditButton = false,
-    appointmentBookingId,
     tenantRequest,
   } = props;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -64,7 +62,6 @@ const TenantSummary: React.FunctionComponent<TenantSummaryProps> = (props) => {
 
       await queryClient.invalidateQueries([
         "appointmentBookings",
-        appointmentBookingId,
       ]);
     },
     onError: () => {

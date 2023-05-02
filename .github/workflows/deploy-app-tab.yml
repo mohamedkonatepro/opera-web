@@ -1,8 +1,6 @@
 name: Deploy App Tenant Appointment Booker
 on:
   workflow_dispatch:
-    paths:
-      - packages/tenant-appointment-booker/**
 
 jobs:
   deploy-app:

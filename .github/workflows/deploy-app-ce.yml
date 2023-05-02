@@ -1,8 +1,6 @@
 name: Deploy App Contractor Extranet
 on:
   workflow_dispatch:
-    paths:
-      - packages/contractor-extranet/**
 
 jobs:
   deploy-app:

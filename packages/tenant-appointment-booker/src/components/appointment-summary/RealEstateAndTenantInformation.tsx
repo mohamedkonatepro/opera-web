@@ -5,12 +5,11 @@ import TenantSummary from "../common/TenantSummary";
 
 interface RealEstateAndTenantInformationProps {
   order: Order;
-  appointmentBookingId: string;
 }
 
 const RealEstateAndTenantInformation: React.FC<
   RealEstateAndTenantInformationProps
-> = ({ order, appointmentBookingId }) => {
+> = ({ order }) => {
   const { locataires, bien } = order;
   const locataire = locataires[0];
   return (
@@ -19,7 +18,6 @@ const RealEstateAndTenantInformation: React.FC<
       <TenantSummary
         locataire={locataire}
         orderId={order.orderId}
-        appointmentBookingId={appointmentBookingId}
       />
     </Stack>
   );

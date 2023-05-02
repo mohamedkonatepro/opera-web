@@ -16,7 +16,6 @@ const AppointmentInformation: React.FunctionComponent<
     <Stack spacing={3} divider={<Divider orientation="horizontal" flexItem />}>
       <Information
         order={appointmentBooking.order}
-        appointmentBookingId={appointmentBooking.id}
         tenantRequest={tenantRequest}
       />
       {!tenantRequest && <Contact appointmentBooking={appointmentBooking} />}

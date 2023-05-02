@@ -11,13 +11,11 @@ import InformationsSummary from "@/components/common/InformationsSummary";
 
 interface InformationProps {
   order: Order;
-  appointmentBookingId: string;
   tenantRequest?: TenantRequestProps;
 }
 
 const Information: React.FunctionComponent<InformationProps> = ({
   order,
-  appointmentBookingId,
   tenantRequest,
 }) => {
   const {
@@ -66,7 +64,6 @@ const Information: React.FunctionComponent<InformationProps> = ({
           locataire={locataire}
           orderId={order.orderId}
           displayEditButton
-          appointmentBookingId={appointmentBookingId}
           tenantRequest={tenantRequest}
         />
       </Stack>
