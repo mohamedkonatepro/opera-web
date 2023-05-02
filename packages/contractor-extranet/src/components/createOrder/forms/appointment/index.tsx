@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import KeysRadioGroup from "./KeysRadioGroup";
 import { KeyEnumWithStrIndex } from "@/constants";
 import DateAndSlots from "./DateAndSlots";
+import Slot from "@/types/Slot";
 
 export interface AppointmentProps {
   formId: string;
@@ -24,6 +25,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const [movingZones, setMovingZones] = useState<MovingZone>();
   const [key, setKey] = useState("tenant");
   const [futherInformations, setFutherInformations] = useState("");
+  const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<DateTime | undefined>();
+  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
 
   const { isLoading } = useQuery<MovingZone>({
     queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
@@ -51,7 +54,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
     onSubmit({
       date,
       key: KeyEnumWithStrIndex[key.toUpperCase()],
-      futherInformations
+      futherInformations,
+      selectedAppointmentDate,
+      selectedSlot
     })
   };
 
@@ -60,7 +65,18 @@ const AppointmentForm: FC<AppointmentProps> = ({
   };
   const handleChangeDate = (value: DateTime | undefined): void => {
     setDate(value);
+    setSelectedAppointmentDate(value);
+    setSelectedSlot(undefined)
   };
+
+  const handleSelectAppointmentDate = (value: DateTime): void => {
+    setSelectedAppointmentDate(value);
+  };
+
+  const handleSelectSlot = (value: Slot): void => {
+    setSelectedSlot(value);
+  };
+
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <KeysRadioGroup onChange={handleChangeKeysRadio} />
@@ -69,6 +85,10 @@ const AppointmentForm: FC<AppointmentProps> = ({
         key={key}
         handleChangeDate={handleChangeDate}
         date={date}
+        handleSelectAppointmentDate={handleSelectAppointmentDate}
+        selectedAppointmentDate={selectedAppointmentDate}
+        handleSelectSlot={handleSelectSlot}
+        selectedSlot={selectedSlot}
       />
       <Stack spacing={1}>
         <Typography

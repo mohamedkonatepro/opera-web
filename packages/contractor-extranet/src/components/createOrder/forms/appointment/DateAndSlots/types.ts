@@ -1,4 +1,5 @@
 import { MovingZone } from "@/types/MovingZone";
+import Slot from "@/types/Slot";
 import { DateTime } from "luxon";
 
 export interface DateAndSlotsProps {
@@ -6,4 +7,8 @@ export interface DateAndSlotsProps {
   handleChangeDate: (date?: DateTime) => void;
   key: string;
   date?: DateTime;
+  selectedAppointmentDate?: DateTime;
+  handleSelectAppointmentDate: (date: DateTime) => void;
+  selectedSlot?: Slot;
+  handleSelectSlot: (slot: Slot) => void;
 }

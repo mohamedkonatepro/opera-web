@@ -1,4 +1,4 @@
-import Slot from "@/types/slot";
+import Slot from "@/types/Slot";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Skeleton } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -7,7 +7,6 @@ import { getOperaSlots } from "@/queries/operaSlots";
 import OutlinedButton from "@/components/common/buttons/OutlinedButton";
 
 interface SelectSlotProps {
-  orderId: string;
   selectedDate: DateTime;
   selectedSlot?: Slot;
   disabled?: boolean;
@@ -16,13 +15,12 @@ interface SelectSlotProps {
 
 const SelectSlot: React.FC<SelectSlotProps> = ({
   selectedDate,
-  orderId,
   selectedSlot,
   onSelectSlot,
   disabled,
 }) => {
   const { isFetching, isLoading, isSuccess, data } = useQuery<Slot[]>({
-    queryKey: ["operaSlots", orderId, selectedDate],
+    queryKey: ["operaSlots", selectedDate],
     queryFn: ({ queryKey }) =>
       getOperaSlots(queryKey[1] as string, queryKey[2] as DateTime),
   });
@@ -34,8 +32,8 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   if (isFetching || isLoading) {
     return (
       <Grid container spacing={1}>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <Grid key={index} sm={6}>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Grid key={index} sm={2.4}>
             <Skeleton variant="rectangular" width="100%">
               <Button fullWidth>...</Button>
             </Skeleton>
@@ -50,7 +48,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   return (
     <Grid container spacing={1}>
       {operaSlots.map((slot) => (
-        <Grid sm={4} key={slot.id}>
+        <Grid sm={2.4} key={slot.id}>
           <OutlinedButton
             disabled={disabled}
             selected={selectedSlot?.id === slot.id}

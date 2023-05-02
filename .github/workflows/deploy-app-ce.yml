@@ -20,8 +20,8 @@ jobs:
       - name: Deploy to cluster
         uses: wahyd4/kubectl-helm-action@master
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONFIG_DATA: ${{ env.BRANCH_NAME == "main" && secrets.KUBE_CONFIG_PROD || secrets.KUBE_CONFIG } }}
         with:
           args: |
             helm repo add opera-groupe https://opera-groupe.github.io/opera-groupe-helm/charts
-            helm upgrade -i contractor-extranet opera-groupe/frontend-contractor-extranet --set image.tag=${{ env.DOCKER_METADATA_OUTPUT_VERSION }} --namespace=contractor-extranet
+            helm upgrade -i contractor-extranet opera-groupe/frontend-contractor-extranet --reuse-values --set image.tag=${{ env.DOCKER_METADATA_OUTPUT_VERSION }} --namespace=contractor-extranet

@@ -1,21 +1,13 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import { DateTime } from "luxon";
-import SelectSlot from "./SelectSlot";
-import Slot from "@/types/slot";
+import Slot from "@/types/Slot";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import useDaysPagination from "./hooks/useDaysPagination";
-import NoSlotsBetweenDates from "./NoSlotsAvailable";
 
 interface SelectAppointmentDayCalendarProps {
-  orderId: string;
   desiredDateByContractor: DateTime;
   selectedDate: DateTime;
-  selectedSlot?: Slot;
-  minDate: DateTime;
-  maxDate: DateTime;
   disabled?: boolean;
-  hasSlotsBetweenDates?: boolean;
-  onSelectSlot: (slot: Slot) => void;
   onSelectDate: (date: DateTime) => void;
 }
 
@@ -23,22 +15,14 @@ const SelectAppointmentDayCalendar: React.FC<
   SelectAppointmentDayCalendarProps
 > = (props) => {
   const {
-    orderId,
-    minDate,
-    maxDate,
     selectedDate,
-    selectedSlot,
     desiredDateByContractor,
     disabled = false,
-    hasSlotsBetweenDates = true,
     onSelectDate,
-    onSelectSlot,
   } = props;
 
   const { items, onClickNext, onClickPrevious } = useDaysPagination(
     desiredDateByContractor,
-    minDate,
-    maxDate,
     selectedDate,
     disabled
   );
@@ -52,7 +36,7 @@ const SelectAppointmentDayCalendar: React.FC<
   return (
     <Stack spacing={1.5}>
       <Typography
-        variant="body2"
+        variant="subtitle2"
         textTransform="capitalize"
         color="text.primary"
       >
@@ -124,28 +108,6 @@ const SelectAppointmentDayCalendar: React.FC<
           }
         })}
       </Stack>
-      {hasSlotsBetweenDates && (
-        <>
-          <Typography
-            variant="body1"
-            sx={{
-              ":first-letter": {
-                textTransform: "uppercase",
-              },
-            }}
-          >
-            {selectedDate.toFormat("EEEE, d LLLL yyyy")}
-          </Typography>
-          <SelectSlot
-            selectedDate={selectedDate}
-            selectedSlot={selectedSlot}
-            orderId={orderId}
-            onSelectSlot={onSelectSlot}
-            disabled={disabled}
-          />
-        </>
-      )}
-      {!hasSlotsBetweenDates && <NoSlotsBetweenDates />}
     </Stack>
   );
 };
