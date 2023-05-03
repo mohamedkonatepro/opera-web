@@ -5,12 +5,17 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
 import { getOperaSlots } from "@/queries/operaSlots";
 import OutlinedButton from "@/components/common/buttons/OutlinedButton";
+import { useContext } from "react";
+import { ContractorContext } from "@/context/contractor";
+import { Service } from "@/types/Service";
+import { ServiceOption } from "@/types/ServiceOption";
 
 interface SelectSlotProps {
   selectedDate: DateTime;
   selectedSlot?: Slot;
   disabled?: boolean;
   onSelectSlot: (slot: Slot) => void;
+  contextValues: any;
 }
 
 const SelectSlot: React.FC<SelectSlotProps> = ({
@@ -18,11 +23,20 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   selectedSlot,
   onSelectSlot,
   disabled,
+  contextValues
 }) => {
+  console.log(contextValues)
+  const contractorContext = useContext(ContractorContext)
+
   const { isFetching, isLoading, isSuccess, data } = useQuery<Slot[]>({
     queryKey: ["operaSlots", selectedDate],
     queryFn: ({ queryKey }) =>
-      getOperaSlots(queryKey[1] as string, queryKey[2] as DateTime),
+      getOperaSlots({
+        date: queryKey[1] as DateTime,
+        contractor: contractorContext.contractor,
+        realEstate: contextValues.realEstate,
+        servicesAndOptions: contextValues.services
+      }),
   });
 
   const handleOnClickSlot = (slot: Slot) => {

@@ -1,29 +1,25 @@
 import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
-import Slot from "@/types/slot";
+import Slot from "@/types/Slot";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const getOperaSlotsForDate = async (
-  orderId: string,
-  date: string
-): Promise<Slot[]> => {
+export const getOperaSlotsForDate = async (query: any): Promise<Slot[]> => {
+  const searchParams = new URLSearchParams(query);
+  console.log(searchParams.toString());
   const response = await apiAxiosInstance.get(
-    `/api/opera-slots/${orderId}/${date}`
+    `/opera-slots/without-order?${searchParams.toString()}`
   );
-  const slots = response.data;
-  return slots;
+  // const slots = response.data;
+  return [];
 };
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
-    const { orderId, date } = req.query;
     try {
-      const slots = await getOperaSlotsForDate(
-        orderId as string,
-        date as string
-      );
+      const slots = await getOperaSlotsForDate(req.query);
+      console.log(req.query)
       return res.status(200).json(slots);
     } catch (error: any) {
       return handleError(error, res);

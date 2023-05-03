@@ -12,6 +12,7 @@ interface SelectAppointmentProps {
   selectedSlot?: Slot;
   onSelectSlot: (slot: Slot) => void;
   disabled?: boolean;
+  contextValues: any;
 }
 
 const SelectAppointment: FC<SelectAppointmentProps> = ({
@@ -20,6 +21,7 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
   selectedDate,
   selectedSlot,
   onSelectSlot,
+  contextValues,
   disabled = false
 }) => {
   return (
@@ -35,6 +37,7 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
         selectedSlot={selectedSlot}
         onSelectSlot={onSelectSlot}
         disabled={disabled}
+        contextValues={contextValues}
       />
     </Stack>
   );

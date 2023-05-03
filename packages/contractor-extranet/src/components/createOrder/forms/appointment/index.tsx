@@ -89,6 +89,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
         selectedAppointmentDate={selectedAppointmentDate}
         handleSelectSlot={handleSelectSlot}
         selectedSlot={selectedSlot}
+        contextValues={contextValues}
       />
       <Stack spacing={1}>
         <Typography

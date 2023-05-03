@@ -11,4 +11,5 @@ export interface DateAndSlotsProps {
   handleSelectAppointmentDate: (date: DateTime) => void;
   selectedSlot?: Slot;
   handleSelectSlot: (slot: Slot) => void;
+  contextValues: any
 }
