@@ -51,6 +51,7 @@ const ContactForm: FC<ContactFormProps> = ({
       },
       contractor: {
         id: contractor.id,
+        customerReference: contractor.customerReference,
         firstname: contractorFirstname,
         lastname: contractorLastname,
         email: contractorEmail,
