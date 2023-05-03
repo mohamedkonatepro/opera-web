@@ -4,8 +4,8 @@ import { datesAreSame, isItemDisabled } from "../utils";
 
 const useDaysPagination = (
   initialDate: DateTime,
-  selectedDate: DateTime,
-  disabled: boolean
+  selectedDate?: DateTime,
+  disabled?: boolean
 ) => {
   const [referenceDay, setReferenceDay] = useState(initialDate.startOf("week"));
 
@@ -46,7 +46,6 @@ const useDaysPagination = (
         page: undefined,
         type: "next",
         selected: false,
-        // disabled: disabled || maxDate <= referenceDay.endOf("week"),
       },
     ],
     onClickNext,

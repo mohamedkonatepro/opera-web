@@ -31,7 +31,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
     queryKey: ["operaSlots", selectedDate],
     queryFn: ({ queryKey }) =>
       getOperaSlots({
-        date: queryKey[1] as DateTime,
+        date: selectedDate,
         contractor: contractorContext.contractor,
         realEstate: contextValues.realEstate,
         servicesAndOptions: contextValues.services,

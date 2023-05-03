@@ -9,8 +9,7 @@ export const getOperaSlotsForDate = async (query: any): Promise<Slot[]> => {
   const response = await apiAxiosInstance.get(
     `/opera-slots/without-order?${searchParams.toString()}`
   );
-  const slots = response.data;
-  return slots;
+  return response.data;
 };
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {

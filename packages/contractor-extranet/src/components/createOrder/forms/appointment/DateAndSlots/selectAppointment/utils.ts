@@ -9,12 +9,12 @@ export const isItemDisabled = (currentDate: DateTime) => {
   const isHoliday = holidays.some(
     (h) => DateTime.fromJSDate(h.start).toISODate() === currentDate.toISODate()
   );
-  if (isHoliday) return true;
 
-  return false;
+  return isHoliday;
 };
 
-export const datesAreSame = (date1: DateTime, date2: DateTime) => {
+export const datesAreSame = (date1?: DateTime, date2?: DateTime) => {
+  if (!date1 || !date2) return false;
   return (
     date1.hasSame(date2, "day") &&
     date1.hasSame(date2, "month") &&

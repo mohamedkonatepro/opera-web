@@ -6,7 +6,7 @@ import useDaysPagination from "./hooks/useDaysPagination";
 
 interface SelectAppointmentDayCalendarProps {
   desiredDateByContractor: DateTime;
-  selectedDate: DateTime;
+  selectedDate?: DateTime;
   disabled?: boolean;
   onSelectDate: (date: DateTime) => void;
 }

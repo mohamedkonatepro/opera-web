@@ -6,9 +6,9 @@ import SelectSlot from "./SelectSlot";
 import Slot from "@/types/Slot";
 
 interface SelectAppointmentProps {
-  desiredDateByContractor: DateTime;
+  desiredDateByContractor?: DateTime;
   onSelectDate: (date: DateTime) => void;
-  selectedDate: DateTime;
+  selectedDate?: DateTime;
   selectedSlot?: Slot;
   onSelectSlot: (slot: Slot) => void;
   disabled?: boolean;
@@ -24,6 +24,9 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
   contextValues,
   disabled = false,
 }) => {
+
+  if (!desiredDateByContractor) return null;
+
   return (
     <Stack component={Paper} spacing={3} p={3} variant="outlined">
       <SelectAppointmentDayCalendar
@@ -32,13 +35,15 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
         onSelectDate={onSelectDate}
         disabled={disabled}
       />
-      <SelectSlot
-        selectedDate={selectedDate}
-        selectedSlot={selectedSlot}
-        onSelectSlot={onSelectSlot}
-        disabled={disabled}
-        contextValues={contextValues}
-      />
+      {selectedDate && (
+        <SelectSlot
+          selectedDate={selectedDate}
+          selectedSlot={selectedSlot}
+          onSelectSlot={onSelectSlot}
+          disabled={disabled}
+          contextValues={contextValues}
+        />
+      )}
     </Stack>
   );
 };

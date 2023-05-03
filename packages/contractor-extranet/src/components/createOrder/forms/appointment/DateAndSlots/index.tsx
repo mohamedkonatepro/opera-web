@@ -42,9 +42,9 @@ const DateAndSlots: FC<DateAndSlotsProps> = ({
       </Stack>
       {showSlots && (
         <SelectAppointment
-          desiredDateByContractor={date as DateTime}
+          desiredDateByContractor={date}
           onSelectDate={handleSelectAppointmentDate}
-          selectedDate={selectedAppointmentDate as DateTime}
+          selectedDate={selectedAppointmentDate}
           selectedSlot={selectedSlot}
           onSelectSlot={handleSelectSlot}
           contextValues={contextValues}
