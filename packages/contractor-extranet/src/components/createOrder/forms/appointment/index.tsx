@@ -22,7 +22,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const theme = useTheme();
   const [date, setDate] = useState<DateTime | undefined>(DateTime.now());
   const [movingZones, setMovingZones] = useState<MovingZone>();
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("tenant");
   const [futherInformations, setFutherInformations] = useState("");
 
   const { isLoading } = useQuery<MovingZone>({
