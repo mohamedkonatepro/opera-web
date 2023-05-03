@@ -25,7 +25,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const [movingZones, setMovingZones] = useState<MovingZone>();
   const [key, setKey] = useState("tenant");
   const [futherInformations, setFutherInformations] = useState("");
-  const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<DateTime | undefined>();
+  const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<
+    DateTime | undefined
+  >();
   const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
 
   const { isLoading } = useQuery<MovingZone>({
@@ -56,8 +58,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
       key: KeyEnumWithStrIndex[key.toUpperCase()],
       futherInformations,
       selectedAppointmentDate,
-      selectedSlot
-    })
+      selectedSlot,
+    });
   };
 
   const handleChangeKeysRadio = (value: string): void => {
@@ -66,7 +68,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const handleChangeDate = (value: DateTime | undefined): void => {
     setDate(value);
     setSelectedAppointmentDate(value);
-    setSelectedSlot(undefined)
+    setSelectedSlot(undefined);
   };
 
   const handleSelectAppointmentDate = (value: DateTime): void => {

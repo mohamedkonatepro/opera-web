@@ -16,9 +16,8 @@ const DateAndSlots: FC<DateAndSlotsProps> = ({
   selectedAppointmentDate,
   selectedSlot,
   handleSelectSlot,
-  contextValues
+  contextValues,
 }) => {
-
   const [showSlots, setShowSlots] = useState(false);
 
   return (

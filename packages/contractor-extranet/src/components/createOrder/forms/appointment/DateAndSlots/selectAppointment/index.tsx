@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import SelectAppointmentDayCalendar from "./SelectAppointmentDayCalendar";
 import { FC } from "react";
 import { DateTime } from "luxon";
@@ -22,10 +22,10 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
   selectedSlot,
   onSelectSlot,
   contextValues,
-  disabled = false
+  disabled = false,
 }) => {
   return (
-    <Stack spacing={3}>
+    <Stack component={Paper} spacing={3} p={3} variant="outlined">
       <SelectAppointmentDayCalendar
         desiredDateByContractor={desiredDateByContractor}
         selectedDate={selectedDate}

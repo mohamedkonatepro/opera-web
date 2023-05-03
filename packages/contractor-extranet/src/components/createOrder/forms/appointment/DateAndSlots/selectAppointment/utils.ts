@@ -3,12 +3,12 @@ import { DateTime } from "luxon";
 
 const hd = new Holidays("FR", "fr");
 
-export const isItemDisabled = (
-  currentDate: DateTime,
-) => {
+export const isItemDisabled = (currentDate: DateTime) => {
   if (currentDate.weekday === 7) return true;
   const holidays = hd.getHolidays(currentDate.year);
-  const isHoliday = holidays.some((h) => DateTime.fromJSDate(h.start).toISODate() === currentDate.toISODate());
+  const isHoliday = holidays.some(
+    (h) => DateTime.fromJSDate(h.start).toISODate() === currentDate.toISODate()
+  );
   if (isHoliday) return true;
 
   return false;

@@ -15,10 +15,23 @@ export const getOperaSlots = async (params: OperaSlotQueryParams) => {
     date: params.date.toISODate(),
     contractorId: params.contractor.id,
     realEstateTypeId: params.realEstate.realEstateType.id,
-    serviceIds: params.servicesAndOptions.services.map((service: Service) => service.id).join(","),
-    optionIds: params.servicesAndOptions.options.map((option: ServiceOption) => option.id).join(","),
+    serviceIds: params.servicesAndOptions.services
+      .map((service: Service) => service.id)
+      .join(","),
+    optionIds: params.servicesAndOptions.options
+      .map((option: ServiceOption) => option.id)
+      .join(","),
     roomNumber: params.realEstate.roomNumber,
     postalCode: params.realEstate.postalCode,
+    buildingAnnexCellar: params.realEstate.annexes.filter(
+      (buildingAnnex: any) => buildingAnnex.type.code === "cellar"
+    )[0]?.unitReference,
+    buildingAnnexParking: params.realEstate.annexes.filter(
+      (buildingAnnex: any) => buildingAnnex.type.code === "parking"
+    )[0]?.unitReference,
+    buildingAnnexGarage: params.realEstate.annexes.filter(
+      (buildingAnnex: any) => buildingAnnex.type.code === "garage"
+    )[0]?.unitReference,
   });
   try {
     const response = await axios.get(

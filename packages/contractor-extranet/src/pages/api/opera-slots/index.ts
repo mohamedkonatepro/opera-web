@@ -6,12 +6,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export const getOperaSlotsForDate = async (query: any): Promise<Slot[]> => {
   const searchParams = new URLSearchParams(query);
-  console.log(searchParams.toString());
   const response = await apiAxiosInstance.get(
     `/opera-slots/without-order?${searchParams.toString()}`
   );
-  // const slots = response.data;
-  return [];
+  const slots = response.data;
+  return slots;
 };
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -19,7 +18,6 @@ const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const slots = await getOperaSlotsForDate(req.query);
-      console.log(req.query)
       return res.status(200).json(slots);
     } catch (error: any) {
       return handleError(error, res);

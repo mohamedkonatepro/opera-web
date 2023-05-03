@@ -1,6 +1,6 @@
 import Slot from "@/types/Slot";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Skeleton } from "@mui/material";
+import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
 import { getOperaSlots } from "@/queries/operaSlots";
@@ -23,10 +23,9 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   selectedSlot,
   onSelectSlot,
   disabled,
-  contextValues
+  contextValues,
 }) => {
-  console.log(contextValues)
-  const contractorContext = useContext(ContractorContext)
+  const contractorContext = useContext(ContractorContext);
 
   const { isFetching, isLoading, isSuccess, data } = useQuery<Slot[]>({
     queryKey: ["operaSlots", selectedDate],
@@ -35,7 +34,7 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
         date: queryKey[1] as DateTime,
         contractor: contractorContext.contractor,
         realEstate: contextValues.realEstate,
-        servicesAndOptions: contextValues.services
+        servicesAndOptions: contextValues.services,
       }),
   });
 
@@ -43,8 +42,10 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
     onSelectSlot(slot);
   };
 
-  if (isFetching || isLoading) {
-    return (
+  const operaSlots = isSuccess ? data : [];
+
+  const component =
+    isFetching || isLoading ? (
       <Grid container spacing={1}>
         {Array.from({ length: 5 }).map((_, index) => (
           <Grid key={index} sm={2.4}>
@@ -54,29 +55,39 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
           </Grid>
         ))}
       </Grid>
+    ) : (
+      <Grid container spacing={1}>
+        {operaSlots.map((slot) => (
+          <Grid sm={2.4} key={slot.id}>
+            <OutlinedButton
+              disabled={disabled}
+              selected={selectedSlot?.id === slot.id}
+              padding="small"
+              onClick={() => {
+                handleOnClickSlot(slot);
+              }}
+              fullWidth
+            >
+              {slot.startTimeSlotOfAppointment}
+            </OutlinedButton>
+          </Grid>
+        ))}
+      </Grid>
     );
-  }
-
-  const operaSlots = isSuccess ? data : [];
-
   return (
-    <Grid container spacing={1}>
-      {operaSlots.map((slot) => (
-        <Grid sm={2.4} key={slot.id}>
-          <OutlinedButton
-            disabled={disabled}
-            selected={selectedSlot?.id === slot.id}
-            padding="small"
-            onClick={() => {
-              handleOnClickSlot(slot);
-            }}
-            fullWidth
-          >
-            {slot.startTimeSlotOfAppointment}
-          </OutlinedButton>
-        </Grid>
-      ))}
-    </Grid>
+    <Stack spacing={1.5}>
+      <Typography
+        variant="subtitle2"
+        sx={{
+          ":first-letter": {
+            textTransform: "uppercase",
+          },
+        }}
+      >
+        {selectedDate.toFormat("EEEE, d LLLL yyyy")}
+      </Typography>
+      {component}
+    </Stack>
   );
 };
 
