@@ -1,10 +1,14 @@
-interface KeyEnum {
-  [key: string]: number;
+enum KeyEnum {
+  TENANT = '0',
+  CONTRACTOR = '1',
+  OPERATOR = '2',
+  KEEPER = '3',
 }
 
-export const keyEnum: KeyEnum = {
-  TENANT: 0,
-  CONTRACTOR: 1,
-  OPERATOR: 2,
-  KEEPER: 3
+type EnumWithStrIndex = {
+  [key: string]: string;
 }
+
+export const KeyEnumWithStrIndex: EnumWithStrIndex = {
+  ...KeyEnum,
+};

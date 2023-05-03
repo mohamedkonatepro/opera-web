@@ -6,7 +6,7 @@ import { MovingZone } from "@/types/MovingZone";
 import { useQuery } from "@tanstack/react-query";
 import KeysRadioGroup from "./KeysRadioGroup";
 import DesiredDatePicker from "./DesiredDatePicker";
-import { keyEnum } from "@/constants";
+import { KeyEnumWithStrIndex } from "@/constants";
 
 export interface AppointmentProps {
   formId: string;
@@ -50,7 +50,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
     e.stopPropagation();
     onSubmit({
       date,
-      key: keyEnum[key.toUpperCase()],
+      key: KeyEnumWithStrIndex[key.toUpperCase()],
       futherInformations
     })
   };
