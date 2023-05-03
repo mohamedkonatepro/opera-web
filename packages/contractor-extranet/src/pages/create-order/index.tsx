@@ -102,7 +102,6 @@ const CreateOrderStepper = () => {
     }));
 
     if (currentStep.id === "appointment") {
-      console.log(contextValues)
       return mutate(contextValues);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
