@@ -6,6 +6,7 @@ import { MovingZone } from "@/types/MovingZone";
 import { useQuery } from "@tanstack/react-query";
 import KeysRadioGroup from "./KeysRadioGroup";
 import DesiredDatePicker from "./DesiredDatePicker";
+import { KeyEnumWithStrIndex } from "@/constants";
 
 export interface AppointmentProps {
   formId: string;
@@ -22,6 +23,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const [date, setDate] = useState<DateTime | undefined>(DateTime.now());
   const [movingZones, setMovingZones] = useState<MovingZone>();
   const [key, setKey] = useState("");
+  const [futherInformations, setFutherInformations] = useState("");
 
   const { isLoading } = useQuery<MovingZone>({
     queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
@@ -48,7 +50,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
     e.stopPropagation();
     onSubmit({
       date,
-      key
+      key: KeyEnumWithStrIndex[key.toUpperCase()],
+      futherInformations
     })
   };
 
@@ -82,6 +85,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
             bgcolor: "background.paper",
           }}
           multiline
+          onChange={(event) => {
+            setFutherInformations(event.target.value);
+          }}
         />
       </Stack>
     </Stack>
