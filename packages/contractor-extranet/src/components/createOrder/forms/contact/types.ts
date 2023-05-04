@@ -2,6 +2,7 @@ export interface ContactFormProps {
   formId: string;
   onSubmit: (values: any) => void;
   contextValues: any;
+  initialValues?: any;
 }
 
 export interface TenantsFormProps {

@@ -1,7 +1,10 @@
 import { ContractorContextType } from "@/context/contractor";
 import { steps } from "./constants";
 
-export const getContextValuesForStep = (activeStep: number, stepStates: any) => {
+export const getContextValuesForStep = (
+  activeStep: number,
+  stepStates: any
+) => {
   switch (activeStep) {
     case 2: {
       return {
@@ -43,9 +46,11 @@ export const getCancelButtonLabel = (activeStep: number) => {
       return undefined;
     }
   }
-}
+};
 
-export const getInitialValues = (contractor: ContractorContextType["contractor"]) => {
+export const getInitialValues = (
+  contractor: ContractorContextType["contractor"]
+) => {
   return steps.reduce((acc, step) => {
     if (step.id === "services") {
       acc[step.id] = {
@@ -56,5 +61,5 @@ export const getInitialValues = (contractor: ContractorContextType["contractor"]
       acc[step.id] = {};
     }
     return acc;
-  }, {} as Record<string, any>)
-}
+  }, {} as Record<string, any>);
+};

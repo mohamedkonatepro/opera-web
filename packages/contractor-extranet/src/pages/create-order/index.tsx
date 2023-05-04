@@ -1,9 +1,7 @@
 import CreateOrderStepper from "@/components/createOrder";
 
 const CreateOrderStepperPage = () => {
-  return (
-    <CreateOrderStepper />
-  )
+  return <CreateOrderStepper />;
 };
 
 export default CreateOrderStepperPage;

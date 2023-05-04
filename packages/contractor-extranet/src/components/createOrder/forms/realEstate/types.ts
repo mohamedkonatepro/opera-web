@@ -88,4 +88,5 @@ export interface RealEstateFormProps {
   formId: string;
   onSubmit: (values: any) => void;
   contextValues: any;
+  initialValues?: any;
 }

@@ -12,23 +12,38 @@ const ContactForm: FC<ContactFormProps> = ({
   formId,
   onSubmit,
   contextValues = {},
+  initialValues = {},
 }) => {
   const { contractor } = useContext(ContractorContext);
-  const [enteringTenants, setEnteringTenants] = useState<any[]>([]);
-  const [leavingTenants, setLeavingTenants] = useState<any[]>([]);
+  const [enteringTenants, setEnteringTenants] = useState<any[]>(
+    initialValues?.enteringTenants ?? []
+  );
+  const [leavingTenants, setLeavingTenants] = useState<any[]>(
+    initialValues?.leavingTenants ?? []
+  );
 
   // RealEstateOwner
-  const [realEstateOwnerFirstname, setRealEstateOwnerFirstname] = useState("");
-  const [realEstateOwnerLastname, setRealEstateOwnerLastname] = useState("");
+  const [realEstateOwnerFirstname, setRealEstateOwnerFirstname] = useState(
+    initialValues?.realEstateOwner?.firstname ?? ""
+  );
+  const [realEstateOwnerLastname, setRealEstateOwnerLastname] = useState(
+    initialValues?.realEstateOwner?.lastname ?? ""
+  );
   const [realEstateOwnerFiscalInvariant, setRealEstateOwnerFiscalInvariant] =
-    useState("");
+    useState(initialValues?.realEstateOwner?.fiscalInvariant ?? "");
   const [realEstateOwnerSocialReason, setRealEstateOwnerSocialReason] =
-    useState("");
+    useState(initialValues?.realEstateOwner?.socialReason ?? "");
 
   // Contractor
-  const [contractorFirstname, setContractorFirstname] = useState("");
-  const [contractorLastname, setContractorLastname] = useState("");
-  const [contractorEmail, setContractorEmail] = useState("");
+  const [contractorFirstname, setContractorFirstname] = useState(
+    initialValues?.contractor?.firstname ?? ""
+  );
+  const [contractorLastname, setContractorLastname] = useState(
+    initialValues?.contractor?.lastname ?? ""
+  );
+  const [contractorEmail, setContractorEmail] = useState(
+    initialValues?.contractor?.email ?? ""
+  );
 
   const [errors, setErrors] = useState<any>({});
 

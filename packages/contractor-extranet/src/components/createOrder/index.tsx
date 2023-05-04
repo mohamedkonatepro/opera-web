@@ -4,7 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useContext, useMemo, useState } from "react";
 import { steps } from "./constants";
-import { getCancelButtonLabel, getContextValuesForStep, getInitialValues, getSubmitButtonLabel } from "./utils";
+import {
+  getCancelButtonLabel,
+  getContextValuesForStep,
+  getInitialValues,
+  getSubmitButtonLabel,
+} from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
@@ -22,9 +27,12 @@ const CreateOrderStepper = () => {
 
   const currentStep = steps[activeStep - 1];
 
-  const [stepStates, setStepStates] = useState(getInitialValues(contractorContext.contractor));
+  const [stepStates, setStepStates] = useState(
+    getInitialValues(contractorContext.contractor)
+  );
 
   const handleNext = (formState: any) => {
+    console.log(formState, currentStep.id);
     setStepStates((prevStepStates) => ({
       ...prevStepStates,
       [currentStep.id]: formState,
@@ -68,6 +76,6 @@ const CreateOrderStepper = () => {
       />
     </Box>
   );
-}
+};
 
-export default CreateOrderStepper
+export default CreateOrderStepper;

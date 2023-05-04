@@ -13,22 +13,32 @@ export interface AppointmentProps {
   formId: string;
   onSubmit: (formState: any) => void;
   contextValues: any;
+  initialValues?: any;
 }
 
 const AppointmentForm: FC<AppointmentProps> = ({
   formId,
   onSubmit,
   contextValues,
+  initialValues = {},
 }) => {
   const theme = useTheme();
-  const [date, setDate] = useState<DateTime | undefined>();
-  const [movingZones, setMovingZones] = useState<MovingZone>();
-  const [key, setKey] = useState("tenant");
-  const [futherInformations, setFutherInformations] = useState("");
+  const [date, setDate] = useState<DateTime | undefined>(
+    initialValues?.date ?? undefined
+  );
+  const [movingZones, setMovingZones] = useState<MovingZone>(
+    initialValues?.movingZones ?? undefined
+  );
+  const [key, setKey] = useState(initialValues?.key ?? "tenant");
+  const [futherInformations, setFutherInformations] = useState(
+    initialValues?.futherInformations ?? ""
+  );
   const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<
     DateTime | undefined
-  >();
-  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
+  >(initialValues?.selectedAppointmentDate ?? undefined);
+  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>(
+    initialValues?.selectedSlot ?? undefined
+  );
 
   const { isLoading } = useQuery<MovingZone>({
     queryKey: ["getRealEstates", contextValues.realEstate.postalCode],

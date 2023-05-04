@@ -15,7 +15,10 @@ const StepFooter: FC<StepFooterProps> = ({
 }) => {
   return (
     <Stack direction="row" justifyContent="space-between">
-      <CancelButton onClick={currentStepNumber === 1 ? handleReset : handleBack} sx={{ minWidth: "130px" }}>
+      <CancelButton
+        onClick={currentStepNumber === 1 ? handleReset : handleBack}
+        sx={{ minWidth: "130px" }}
+      >
         {cancelButtonLabel}
       </CancelButton>
       <ValidateButton

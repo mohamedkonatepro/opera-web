@@ -9,7 +9,7 @@ export interface SelectServicesProps {
   initialValues?: {
     options?: ServiceOption[];
     family?: Family;
-    services?: Service[]
+    services?: Service[];
   };
 }
 
