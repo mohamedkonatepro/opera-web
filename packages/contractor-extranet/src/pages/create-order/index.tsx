@@ -72,7 +72,7 @@ const getContextValuesForStep = (activeStep: number, stepStates: any) => {
 const CreateOrderStepper = () => {
   const { mutate } = useMutation({
     mutationFn: createOrder,
-    onSuccess: ({data}) => {
+    onSuccess: ({ data }) => {
       router.push(`/summary-order/${data.id}`);
     },
   });
@@ -102,7 +102,7 @@ const CreateOrderStepper = () => {
     }));
 
     if (currentStep.id === "appointment") {
-      contextValues.appointment = formState
+      contextValues.appointment = formState;
       return mutate(contextValues);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

@@ -4,7 +4,7 @@ import ContainedButton from "./common/buttons/ContainedButton";
 import { useRouter } from "next/router";
 
 const NewOrder: React.FunctionComponent = () => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Paper
       elevation={3}

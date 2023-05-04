@@ -33,41 +33,39 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
   keyType,
   onChange,
 }) => {
-  const theme = useTheme();
   const handleOnChange = (value: DateTime | undefined) => {
     onChange(value);
   };
 
   return (
-    <Stack spacing={1}>
-      <Typography
-        variant="subtitle1"
-        sx={{ ...theme.typography.subtitle1, marginBottom: 1 }}
-      >
-        Date souhaitée
-      </Typography>
-
-      <DatePicker
-        label="Date de RDV souhaitée"
-        format="EEEE, d MMMM yyyy"
-        disablePast
-        shouldDisableDate={(date: DateTime) =>
-          shouldDisableDate(date, zone, keyType)
-        }
-        onChange={(newValue) => {
-          handleOnChange(newValue as DateTime);
-        }}
-        slotProps={{
-          openPickerIcon: {
-            fontSize: "small",
-          },
-          textField: {
-            name: "newDesiredDate",
-            color: "secondary",
-          },
-          day: {
-            sx: {
-              "&.Mui-selected": {
+    <DatePicker
+      label="Date de RDV souhaitée"
+      format="EEEE, d MMMM yyyy"
+      disablePast
+      shouldDisableDate={(date: DateTime) =>
+        shouldDisableDate(date, zone, keyType)
+      }
+      onChange={(newValue) => {
+        handleOnChange(newValue as DateTime);
+      }}
+      slotProps={{
+        openPickerIcon: {
+          fontSize: "small",
+        },
+        textField: {
+          name: "newDesiredDate",
+          color: "secondary",
+          fullWidth: true,
+        },
+        day: {
+          sx: {
+            "&.Mui-selected": {
+              backgroundColor: "secondary.main",
+              color: "secondary.contrastText",
+              "&:hover": {
+                backgroundColor: "secondary.main",
+              },
+              "&:focus": {
                 backgroundColor: "secondary.main",
                 color: "secondary.contrastText",
                 "&:hover": {
@@ -79,9 +77,9 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
               },
             },
           },
-        }}
-      />
-    </Stack>
+        },
+      }}
+    />
   );
 };
 
