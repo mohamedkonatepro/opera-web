@@ -31,12 +31,15 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
 
   const { isLoading } = useQuery<MovingZone>({
-    queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
+    queryKey: ["getRealEstates", contextValues.realEstate?.postalCode],
     queryFn: ({ queryKey }) =>
       getMovingZone({ postalCode: queryKey[1] as string }),
     enabled: true,
     onSuccess: (data) => {
       setMovingZones(data);
+    },
+    onError(err: any) {
+      setMovingZones(err)
     },
   });
 
@@ -84,7 +87,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
       <KeysRadioGroup onChange={handleChangeKeysRadio} />
       <DateAndSlots
         zone={zone}
-        key={key}
+        keyType={key}
         handleChangeDate={handleChangeDate}
         date={date}
         handleSelectAppointmentDate={handleSelectAppointmentDate}
