@@ -13,7 +13,7 @@ const ContactForm: FC<ContactFormProps> = ({
   onSubmit,
   contextValues = {},
 }) => {
-  const { contractor } = useContext(ContractorContext)
+  const { contractor } = useContext(ContractorContext);
   const [enteringTenants, setEnteringTenants] = useState<any[]>([]);
   const [leavingTenants, setLeavingTenants] = useState<any[]>([]);
 
@@ -51,6 +51,7 @@ const ContactForm: FC<ContactFormProps> = ({
       },
       contractor: {
         id: contractor.id,
+        customerReference: contractor.customerReference,
         firstname: contractorFirstname,
         lastname: contractorLastname,
         email: contractorEmail,

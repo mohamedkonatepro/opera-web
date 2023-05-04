@@ -31,11 +31,7 @@ const ContractorContextProvider: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  if (!contractorId) return (
-    <>
-      {children}
-    </>
-  )
+  if (!contractorId) return <>{children}</>;
 
   if (isLoading) return <div>Chargement...</div>;
   if (!contractor) return <div>Erreur</div>;

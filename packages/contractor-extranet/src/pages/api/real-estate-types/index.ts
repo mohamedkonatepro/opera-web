@@ -20,9 +20,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const formatRealEstateType = (realEstateType: any): RealEstateType => {
   const { id, attributes } = realEstateType;
-  const { name, code } = attributes;
+  const { name, code, og_code } = attributes;
 
-  return { id, name, code };
+  return { id, name, code, og_code };
 };
 
 export default handler;

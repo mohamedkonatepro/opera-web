@@ -15,9 +15,9 @@ const StepContent: FC<StepContentProps> = ({
   initialValues,
 }) => {
   const StepForm = step.form;
-  let submitButtonLabel = undefined
+  let submitButtonLabel = undefined;
   if (step.id === "appointment") {
-    submitButtonLabel = "Continuer sans rendez-vous"
+    submitButtonLabel = "Continuer sans rendez-vous";
   }
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
