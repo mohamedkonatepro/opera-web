@@ -2,6 +2,16 @@ import { Family } from "@/types/Family";
 import { Service } from "@/types/Service";
 import { ServiceOption } from "@/types/ServiceOption";
 
+export enum ServiceType {
+  LIVING = "LIVING",
+  TERTIARY = "TERTIARY",
+}
+
+export interface SelectServiceProps {
+  selectedServiceType: ServiceType;
+  setSelectedServiceType: (serviceType: ServiceType) => void;
+}
+
 export interface SelectServicesProps {
   formId: string;
   onSubmit: (formState: any) => void;
@@ -10,6 +20,7 @@ export interface SelectServicesProps {
     options?: ServiceOption[];
     family?: Family;
     services?: Service[];
+    serviceType?: ServiceType;
   };
 }
 
