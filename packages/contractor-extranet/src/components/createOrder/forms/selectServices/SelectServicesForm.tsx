@@ -44,11 +44,11 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
 }) => {
   const theme = useTheme();
 
-  const [selectedFamily, setSelectedFamily] = useState<number | null>(null);
+  const [selectedFamily, setSelectedFamily] = useState<number | null>(initialValues?.family?.id ?? null);
 
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+  const [selectedServices, setSelectedServices] = useState<number[]>(initialValues?.services?.map((service) => service.id) ?? []);
 
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<number[]>(initialValues?.options?.map((option) => option.id) ?? []);
 
   const handleOnChangeAccordion = (family: number) => () => {
     setSelectedFamily(family);

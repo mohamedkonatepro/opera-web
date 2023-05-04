@@ -31,6 +31,8 @@ export interface StepContentProps {
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;
+  submitButtonLabel?: string;
+  cancelButtonLabel?: string;
 }
 
 export interface StepFooterProps {
@@ -39,4 +41,6 @@ export interface StepFooterProps {
   handleReset: () => void;
   submitButtonDisabled: boolean;
   submitButtonLabel?: string;
+  cancelButtonLabel?: string;
+  currentStepNumber: number;
 }
