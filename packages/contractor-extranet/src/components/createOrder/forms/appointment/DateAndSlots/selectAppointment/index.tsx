@@ -24,7 +24,6 @@ const SelectAppointment: FC<SelectAppointmentProps> = ({
   contextValues,
   disabled = false,
 }) => {
-
   if (!desiredDateByContractor) return null;
 
   return (

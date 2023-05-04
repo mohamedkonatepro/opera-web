@@ -1,4 +1,5 @@
 import { Family } from "@/types/Family";
+import { Service } from "@/types/Service";
 import { ServiceOption } from "@/types/ServiceOption";
 
 export interface SelectServicesProps {
@@ -7,6 +8,8 @@ export interface SelectServicesProps {
   setSubmitButtonDisabled: (disabled: boolean) => void;
   initialValues?: {
     options?: ServiceOption[];
+    family?: Family;
+    services?: Service[];
   };
 }
 

@@ -13,12 +13,11 @@ const StepContent: FC<StepContentProps> = ({
   width,
   contextValues,
   initialValues,
+  submitButtonLabel = "Étape suivante",
+  cancelButtonLabel = "Étape précédente",
 }) => {
   const StepForm = step.form;
-  let submitButtonLabel = undefined;
-  if (step.id === "appointment") {
-    submitButtonLabel = "Continuer sans rendez-vous";
-  }
+
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   return (
@@ -51,6 +50,8 @@ const StepContent: FC<StepContentProps> = ({
             handleReset={handleReset}
             submitButtonLabel={submitButtonLabel}
             submitButtonDisabled={submitButtonDisabled}
+            cancelButtonLabel={cancelButtonLabel}
+            currentStepNumber={currentStepNumber}
           />
         </Box>
       </Box>
