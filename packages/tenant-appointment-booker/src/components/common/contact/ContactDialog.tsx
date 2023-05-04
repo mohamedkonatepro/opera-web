@@ -27,8 +27,8 @@ const ContactDialog: React.FC<ContactDialogProps> = ({
 
   const canChangeDate =
     orderIsEDL(appointmentBooking.order.type) &&
-    !appointmentBooking.appointment;
-  const canCancelAppointment = !appointmentBooking.appointment;
+    !appointmentBooking.appointment && !appointmentBooking.tenant_request;
+  const canCancelAppointment = !appointmentBooking.appointment && !appointmentBooking.tenant_request;
 
   return (
     <HelpDialog
