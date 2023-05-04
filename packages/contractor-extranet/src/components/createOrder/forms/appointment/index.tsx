@@ -38,6 +38,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
     onSuccess: (data) => {
       setMovingZones(data);
     },
+    onError(err: any) {
+      setMovingZones(err)
+    },
   });
 
   if (isLoading) {
@@ -84,7 +87,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
       <KeysRadioGroup onChange={handleChangeKeysRadio} />
       <DateAndSlots
         zone={zone}
-        key={key}
+        keyType={key}
         handleChangeDate={handleChangeDate}
         date={date}
         handleSelectAppointmentDate={handleSelectAppointmentDate}

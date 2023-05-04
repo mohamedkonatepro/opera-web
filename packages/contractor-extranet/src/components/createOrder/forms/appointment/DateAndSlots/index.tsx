@@ -10,7 +10,7 @@ import { DateTime } from "luxon";
 const DateAndSlots: FC<DateAndSlotsProps> = ({
   zone,
   handleChangeDate,
-  key,
+  keyType,
   date,
   handleSelectAppointmentDate,
   selectedAppointmentDate,
@@ -26,7 +26,7 @@ const DateAndSlots: FC<DateAndSlotsProps> = ({
       <Stack spacing={2} direction="row">
         <DesiredDatePicker
           zone={zone}
-          keyType={key}
+          keyType={keyType}
           onChange={handleChangeDate}
         />
         <ContainedButton
