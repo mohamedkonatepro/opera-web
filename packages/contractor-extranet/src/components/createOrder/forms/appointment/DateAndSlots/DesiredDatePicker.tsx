@@ -1,7 +1,6 @@
-import { DateTime, Duration } from "luxon";
-import { FC, useState } from "react";
+import { DateTime } from "luxon";
+import { FC } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
-import { Stack, Typography, useTheme } from "@mui/material";
 import { getFirstAvailableDate } from "@/utils/dateHelpers";
 import Holidays from "date-holidays";
 
@@ -13,16 +12,11 @@ interface DesiredDatePickerProps {
   onChange: (newValue: DateTime | undefined) => void;
 }
 
-const shouldDisableDate = (date: DateTime) => {
+const shouldDisableDate = (date: DateTime): boolean => {
+  const isSunday = date.weekday === 7;
+  const isHoliday = holidays.isHoliday(date.toISODate());
 
-  if (date.weekday === 7) {
-    return true;
-  }
-  if (holidays.isHoliday(date.toISODate())) {
-    return true;
-  }
-
-  return false;
+  return isSunday || !!isHoliday;
 };
  
 

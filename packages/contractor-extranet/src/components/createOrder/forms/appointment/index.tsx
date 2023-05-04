@@ -31,7 +31,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
 
   const { isLoading } = useQuery<MovingZone>({
-    queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
+    queryKey: ["getRealEstates", contextValues.realEstate?.postalCode],
     queryFn: ({ queryKey }) =>
       getMovingZone({ postalCode: queryKey[1] as string }),
     enabled: true,
