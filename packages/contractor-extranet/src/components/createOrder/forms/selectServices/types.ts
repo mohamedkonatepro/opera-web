@@ -1,6 +1,12 @@
 import { Family } from "@/types/Family";
 import { Service } from "@/types/Service";
 import { ServiceOption } from "@/types/ServiceOption";
+import { ServiceType } from "@/types/ServiceType";
+
+export interface SelectServiceProps {
+  selectedServiceType: ServiceType;
+  setSelectedServiceType: (serviceType: ServiceType) => void;
+}
 
 export interface SelectServicesProps {
   formId: string;
@@ -10,6 +16,7 @@ export interface SelectServicesProps {
     options?: ServiceOption[];
     family?: Family;
     services?: Service[];
+    serviceType?: ServiceType;
   };
 }
 

@@ -8,7 +8,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   if (req.method === "GET") {
     try {
-      const response = await apiAxiosInstance.get(`/purposes`);
+      const queryParams = req.url?.split("?")[1];
+      const response = await apiAxiosInstance.get(`/purposes?${queryParams}`);
       return res.status(200).json(response.data.data.map(formatPurpose));
     } catch (error: any) {
       return handleError(error, res);
@@ -18,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).json({ error: "Method not allowed" });
 };
 
-const formatPurpose = (purpose: any): Purpose => {
+export const formatPurpose = (purpose: any): Purpose => {
   const { id, attributes } = purpose;
   const { name, code } = attributes;
 

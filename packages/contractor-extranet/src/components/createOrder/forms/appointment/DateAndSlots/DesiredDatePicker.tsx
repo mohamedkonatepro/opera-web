@@ -18,7 +18,6 @@ const shouldDisableDate = (date: DateTime): boolean => {
 
   return isSunday || !!isHoliday;
 };
- 
 
 const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
   zone,
@@ -35,9 +34,7 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
       format="EEEE, d MMMM yyyy"
       minDate={getFirstAvailableDate(zone, keyType)}
       disablePast
-      shouldDisableDate={(date: DateTime) =>
-        shouldDisableDate(date)
-      }
+      shouldDisableDate={(date: DateTime) => shouldDisableDate(date)}
       onChange={(newValue) => {
         handleOnChange(newValue as DateTime);
       }}

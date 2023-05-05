@@ -4,6 +4,7 @@ import RealEstateTypeSelect from "@/components/inputs/RealEstateTypeSelect";
 import { Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react";
 import { RealEstateInformationFormProps } from "./types";
+import RealEstateType from "@/types/RealEstateType";
 
 const RealEstate: FC<RealEstateInformationFormProps> = ({
   realEstateType,
@@ -20,6 +21,8 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
   setRoomNumber,
   setDigicode,
   setObservation,
+  serviceType,
+  disabled,
 }) => {
   return (
     <Stack spacing={2}>
@@ -28,9 +31,15 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
         <RealEstateTypeSelect
           value={realEstateType}
           setValue={setRealEstateType}
+          serviceType={serviceType}
         />
         <FloorSelect value={floor} setValue={setFloor} />
-        <PurposeSelect value={purpose} setValue={setPurpose} />
+        <PurposeSelect
+          value={purpose}
+          setValue={setPurpose}
+          serviceType={serviceType}
+          disabled={disabled?.purpose}
+        />
         <TextField
           id="surface"
           label="Surface"
