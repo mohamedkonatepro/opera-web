@@ -1,9 +1,12 @@
 import { DateTime, Info, Duration } from "luxon";
+import Holidays from "date-holidays";
 
+const holidays = new Holidays("FR");
 export const getFirstAvailableDate = (zone: string, type: string) => {
 
   if (type === "contractor") {
     let now = DateTime.local().setZone("Europe/Paris");
+    now = now.plus({ days: 1 });
     if (now.hour >= 18) {
       now = now.plus({ days: 1 });
     }
@@ -30,16 +33,23 @@ export const getFirstAvailableDate = (zone: string, type: string) => {
     });
   
     if (futureDays.length > 0) {
-      const futureDay = futureDays[0];
-      return DateTime.fromObject({ weekday: futureDay }).plus({ days: 1 });
+      for (const futureDay of futureDays) {
+        if (!DateTime.fromObject({ weekday: futureDay })) {
+          return DateTime.fromObject({ weekday: futureDay }).plus({ days: 1 });
+        }
+      };
     }
   
-    const futureDay = dayNumbers[0];
-    return DateTime.fromObject({ weekday: futureDay })
-      .plus({ weeks: 1 })
-      .plus({ days: 1 });
+    for (const futureDay of dayNumbers) {
+      const isHoliday = holidays.isHoliday(DateTime.fromObject({ weekday: futureDay }).plus({ weeks: 1 }).toISODate())
+      if (!isHoliday) {
+        console.log(futureDay)
+        return DateTime.fromObject({ weekday: futureDay })
+        .plus({ weeks: 1 })
+        .plus({ days: 1 });
+      }  
+    }
   }
-
   return DateTime.now().plus(Duration.fromObject({ days: 1 }));
 
 };
