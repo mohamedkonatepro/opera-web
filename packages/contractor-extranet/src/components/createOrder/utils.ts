@@ -26,28 +26,6 @@ export const getContextValuesForStep = (
   }
 };
 
-export const getSubmitButtonLabel = (activeStep: number) => {
-  switch (activeStep) {
-    case 4: {
-      return "Continuer sans rendez-vous";
-    }
-    default: {
-      return undefined;
-    }
-  }
-};
-
-export const getCancelButtonLabel = (activeStep: number) => {
-  switch (activeStep) {
-    case 1: {
-      return "Annuler";
-    }
-    default: {
-      return undefined;
-    }
-  }
-};
-
 export const getInitialValues = (
   contractor: ContractorContextType["contractor"]
 ) => {

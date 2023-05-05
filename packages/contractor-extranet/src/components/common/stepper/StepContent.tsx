@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import StepFooter from "./StepFooter";
 import StepHeader from "./StepHeader";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { StepContentProps } from "./types";
 
 const StepContent: FC<StepContentProps> = ({
@@ -13,10 +13,13 @@ const StepContent: FC<StepContentProps> = ({
   width,
   contextValues,
   initialValues,
-  submitButtonLabel = "Étape suivante",
-  cancelButtonLabel = "Étape précédente",
+  isButtonAppointmentVisible,
+  setIsButtonAppointmentVisible,
+  submitWithAppointment,
+  setSubmitWithAppointment
 }) => {
   const StepForm = step.form;
+  const StepFooterCurrent = step.footer;
 
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
@@ -38,20 +41,22 @@ const StepContent: FC<StepContentProps> = ({
             contextValues={contextValues}
             initialValues={initialValues}
             setSubmitButtonDisabled={setSubmitButtonDisabled}
+            setIsButtonAppointmentVisible={setIsButtonAppointmentVisible}
+            submitWithAppointment={submitWithAppointment}
           />
         </Box>
       </Box>
 
       <Box mr={4} display="flex" justifyContent="center" mb={6}>
         <Box width={width}>
-          <StepFooter
+          <StepFooterCurrent
             formId={`${step.id}-form`}
             handleBack={handleBack}
             handleReset={handleReset}
-            submitButtonLabel={submitButtonLabel}
             submitButtonDisabled={submitButtonDisabled}
-            cancelButtonLabel={cancelButtonLabel}
             currentStepNumber={currentStepNumber}
+            isButtonAppointmentVisible={isButtonAppointmentVisible}
+            setSubmitWithAppointment={setSubmitWithAppointment}
           />
         </Box>
       </Box>

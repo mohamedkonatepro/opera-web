@@ -1,3 +1,5 @@
+import StepFooter from "../common/stepper/StepFooter";
+import StepFooterAppointment from "../common/stepper/StepFooterAppointment";
 import { StepDefinition } from "../common/stepper/types";
 import AppointmentForm from "./forms/appointment";
 import ContactForm from "./forms/contact";
@@ -12,6 +14,7 @@ export const steps: StepDefinition[] = [
     description:
       "Une fois votre sélection terminée, passez à l'étape suivante.",
     form: SelectServices,
+    footer: StepFooter,
   },
   {
     id: "contacts",
@@ -20,6 +23,7 @@ export const steps: StepDefinition[] = [
     description:
       "Une fois votre sélection terminée, passez à l’étape suivante.",
     form: ContactForm,
+    footer: StepFooter,
   },
   {
     id: "realEstate",
@@ -28,6 +32,7 @@ export const steps: StepDefinition[] = [
     description:
       "Une fois votre sélection terminée, passez à l’ étape suivante.",
     form: RealEstateForm,
+    footer: StepFooter,
   },
   {
     id: "appointment",
@@ -36,5 +41,6 @@ export const steps: StepDefinition[] = [
     description:
       "Une fois votre sélection terminée, passez à l’étape suivante.",
     form: AppointmentForm,
+    footer: StepFooterAppointment,
   },
 ];

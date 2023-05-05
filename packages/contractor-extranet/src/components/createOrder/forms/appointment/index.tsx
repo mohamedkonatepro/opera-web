@@ -1,5 +1,5 @@
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { getMovingZone } from "@/queries/movingZone";
 import { MovingZone } from "@/types/MovingZone";
@@ -14,6 +14,8 @@ export interface AppointmentProps {
   onSubmit: (formState: any) => void;
   contextValues: any;
   initialValues?: any;
+  setIsButtonAppointmentVisible: (disabled: boolean) => void;
+  submitWithAppointment: boolean;
 }
 
 const AppointmentForm: FC<AppointmentProps> = ({
@@ -21,6 +23,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
   onSubmit,
   contextValues,
   initialValues = {},
+  setIsButtonAppointmentVisible,
+  submitWithAppointment,
 }) => {
   const theme = useTheme();
   const [date, setDate] = useState<DateTime | undefined>(
@@ -53,6 +57,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
     },
   });
 
+  useEffect(() => {
+    setIsButtonAppointmentVisible(selectedSlot !== undefined);
+  }, [selectedSlot, setIsButtonAppointmentVisible]);
   if (isLoading) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>
@@ -66,13 +73,18 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    onSubmit({
+
+    const createOrder = {
       date,
       key: KeyEnumWithStrIndex[key.toUpperCase()],
       futherInformations,
-      selectedAppointmentDate,
-      selectedSlot,
-    });
+      ...(submitWithAppointment && {
+        selectedAppointmentDate,
+        selectedSlot,
+      }),
+    };
+
+    onSubmit(createOrder);
   };
 
   const handleChangeKeysRadio = (value: string): void => {
