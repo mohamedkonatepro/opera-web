@@ -6,7 +6,7 @@ import Energy from "./Energy";
 import MeterLocation from "./MeterLocation";
 import Unit from "./Unit";
 import { FC, useMemo, useState } from "react";
-import { RealEstateFormProps } from "./types";
+import { RealEstateFormDisabled, RealEstateFormProps } from "./types";
 import { RealEstateType } from "@/types/RealEstateType";
 import { Floor } from "@/types/Floor";
 import { Purpose } from "@/types/Purpose";
@@ -30,11 +30,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
   const [city, setCity] = useState(initialValues?.city ?? "");
 
   // Real Estate
-  const [realEstateType, setRealEstateType] = useState<RealEstateType>(
-    initialValues?.realEstateType ?? undefined
+  const [realEstateType, setRealEstateType] = useState<
+    RealEstateType | undefined
+  >(initialValues?.realEstateType ?? undefined);
+  const [floor, setFloor] = useState<Floor | undefined>(
+    initialValues?.floor ?? undefined
   );
-  const [floor, setFloor] = useState<Floor>(initialValues?.floor ?? undefined);
-  const [purpose, setPurpose] = useState<Purpose>(
+  const [purpose, setPurpose] = useState<Purpose | undefined>(
     initialValues?.purpose ?? undefined
   );
   const [surface, setSurface] = useState(initialValues?.surface ?? "");
@@ -97,6 +99,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     setElectricalReferenceMeasureLocation,
   ] = useState(initialValues?.electricalReferenceMeasureLocation ?? "");
 
+  const [disabled, setDisabled] = useState<RealEstateFormDisabled>({});
+
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -137,6 +141,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     );
   }, [contextValues]);
 
+  const handleOnSelectRealEstateType = (value: RealEstateType) => {
+    setRealEstateType(value);
+    setPurpose(value.purpose);
+    if (value.purpose)
+      setDisabled((prevDisabled) => ({
+        ...prevDisabled,
+        realEstate: { ...prevDisabled, purpose: true },
+      }));
+  };
+
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <Address
@@ -157,13 +171,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         surface={surface}
         digicode={digicode}
         observation={observation}
-        setRealEstateType={setRealEstateType}
+        setRealEstateType={handleOnSelectRealEstateType}
         setFloor={setFloor}
         setPurpose={setPurpose}
         setSurface={setSurface}
         setRoomNumber={setRoomNumber}
         setDigicode={setDigicode}
         setObservation={setObservation}
+        serviceType={contextValues.serviceType}
+        disabled={disabled.realEstate}
       />
       <Unit
         buildingReference={buildingReference}

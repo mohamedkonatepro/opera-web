@@ -3,6 +3,7 @@ import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { HeatingType } from "@/types/HeatingType";
 import { Purpose } from "@/types/Purpose";
 import { RealEstateType } from "@/types/RealEstateType";
+import { ServiceType } from "@/types/ServiceType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 
@@ -26,12 +27,14 @@ export interface RealEstateInformationFormProps {
   digicode?: string;
   observation?: string;
   setRealEstateType: (realEstateType: RealEstateType) => void;
-  setPurpose: (purpose: Purpose) => void;
+  setPurpose: (purpose?: Purpose) => void;
   setFloor: (floor: Floor) => void;
   setSurface: (surface: string) => void;
   setRoomNumber: (roomNumber: string) => void;
   setDigicode: (digicode: string) => void;
   setObservation: (observation: string) => void;
+  serviceType: ServiceType;
+  disabled: RealEstateFormDisabled["realEstate"];
 }
 
 export interface UnitFormProps {
@@ -89,4 +92,10 @@ export interface RealEstateFormProps {
   onSubmit: (values: any) => void;
   contextValues: any;
   initialValues?: any;
+}
+
+export interface RealEstateFormDisabled {
+  realEstate?: {
+    purpose?: boolean;
+  };
 }

@@ -1,11 +1,7 @@
 import { Family } from "@/types/Family";
 import { Service } from "@/types/Service";
 import { ServiceOption } from "@/types/ServiceOption";
-
-export enum ServiceType {
-  LIVING = "LIVING",
-  TERTIARY = "TERTIARY",
-}
+import { ServiceType } from "@/types/ServiceType";
 
 export interface SelectServiceProps {
   selectedServiceType: ServiceType;

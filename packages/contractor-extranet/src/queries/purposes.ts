@@ -1,8 +1,42 @@
 import { Purpose } from "@/types/Purpose";
+import { ServiceType } from "@/types/ServiceType";
 import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
+import qs from "qs";
 
-export const getPurposes: QueryFunction<Purpose[]> = async () => {
-  const response = await axios.get(`/api/purposes`);
+interface PurposeQueryParams {
+  serviceType?: string;
+}
+
+const getFilters = (serviceType?: string) => {
+  const filters: any = {};
+  switch (serviceType) {
+    case ServiceType.LIVING: {
+      filters.code = {
+        $contains: "residential",
+      };
+      break;
+    }
+    case ServiceType.TERTIARY: {
+      filters.code = {
+        $notIn: ["common_parts"],
+        $notContains: "residential",
+      };
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+  return filters;
+};
+
+export const getPurposes = async ({
+  serviceType,
+}: PurposeQueryParams): Promise<Purpose[]> => {
+  const query = qs.stringify({
+    filters: getFilters(serviceType),
+  });
+  const response = await axios.get(`/api/purposes?${query}`);
   return response.data;
 };

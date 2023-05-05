@@ -15,6 +15,7 @@ export const getContextValuesForStep = (
     case 3: {
       return {
         services: stepStates.services.services,
+        serviceType: stepStates.services.serviceType,
       };
     }
     case 4: {

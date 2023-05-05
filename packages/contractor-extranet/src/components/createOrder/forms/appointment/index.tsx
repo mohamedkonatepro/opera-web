@@ -53,7 +53,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
       setMovingZones(data);
     },
     onError(err: any) {
-      setMovingZones(err)
+      setMovingZones(err);
     },
   });
 

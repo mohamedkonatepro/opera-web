@@ -6,9 +6,10 @@ import {
   RadioGroup,
   useTheme,
 } from "@mui/material";
-import { SelectServiceProps, ServiceType } from "./types";
+import { SelectServiceProps } from "./types";
 import { FC } from "react";
 import { SERVICE_TYPE_KEY_TO_LABEL } from "./constants";
+import { ServiceType } from "@/types/ServiceType";
 
 const SelectServiceType: FC<SelectServiceProps> = ({
   selectedServiceType,
@@ -29,7 +30,9 @@ const SelectServiceType: FC<SelectServiceProps> = ({
         name="real-estate-type-group"
         value={selectedServiceType}
         onChange={(e) => {
-          setSelectedServiceType(ServiceType[e.target.value as keyof typeof ServiceType]);
+          setSelectedServiceType(
+            ServiceType[e.target.value as keyof typeof ServiceType]
+          );
         }}
       >
         {Object.keys(ServiceType).map((key) => (

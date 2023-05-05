@@ -17,7 +17,7 @@ import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import { SelectServicesFormProps } from "./types";
 import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
-import { ServiceType } from "./types";
+import { ServiceType } from "@/types/ServiceType";
 
 const getProposedOptions = (
   families: Family[],
@@ -45,7 +45,9 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
 }) => {
   const theme = useTheme();
 
-  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(initialValues?.serviceType ?? ServiceType.LIVING)
+  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(
+    initialValues?.serviceType ?? ServiceType.LIVING
+  );
 
   const [selectedFamily, setSelectedFamily] = useState<number | null>(
     initialValues?.family?.id ?? null
@@ -94,7 +96,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
         .filter((option) => initialOptionsIds.includes(option.id))
         .map((option) => option.id)
     );
-  }, [proposedOptions]);
+  }, [proposedOptions, initialValues?.options]);
 
   useEffect(() => {
     if (selectedServices.length === 0) {
@@ -122,12 +124,15 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       family,
       services,
       options,
-      serviceType: selectedServiceType
+      serviceType: selectedServiceType,
     });
   };
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
-      <SelectServiceType selectedServiceType={selectedServiceType} setSelectedServiceType={setSelectedServiceType} />
+      <SelectServiceType
+        selectedServiceType={selectedServiceType}
+        setSelectedServiceType={setSelectedServiceType}
+      />
       <FormControl>
         <FormLabel
           id="services-options-label"
