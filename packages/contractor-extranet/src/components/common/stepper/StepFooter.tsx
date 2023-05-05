@@ -10,8 +10,6 @@ const StepFooter: FC<StepFooterProps> = ({
   handleReset,
   handleBack,
   submitButtonDisabled,
-  submitButtonLabel = "Étape suivante",
-  cancelButtonLabel = "Étape précédente",
 }) => {
   return (
     <Stack direction="row" justifyContent="space-between">
@@ -19,14 +17,14 @@ const StepFooter: FC<StepFooterProps> = ({
         onClick={currentStepNumber === 1 ? handleReset : handleBack}
         sx={{ minWidth: "130px" }}
       >
-        {cancelButtonLabel}
+        {currentStepNumber === 1 ? 'Annuler' : 'Étape précédente'}
       </CancelButton>
       <ValidateButton
         sx={{ minWidth: "130px" }}
         disabled={submitButtonDisabled}
         form={formId}
       >
-        {submitButtonLabel}
+        Étape suivante
       </ValidateButton>
     </Stack>
   );

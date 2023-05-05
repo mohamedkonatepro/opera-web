@@ -1,14 +1,12 @@
-import { ContractorContext, ContractorContextType } from "@/context/contractor";
+import { ContractorContext } from "@/context/contractor";
 import { createOrder } from "@/queries/orders";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { steps } from "./constants";
 import {
-  getCancelButtonLabel,
   getContextValuesForStep,
   getInitialValues,
-  getSubmitButtonLabel,
 } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
@@ -19,12 +17,13 @@ const CreateOrderStepper = () => {
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
-      router.push(`/summary-order/${data.id}`);
+      router.push(`/summary-order/${data.orderId}`);
     },
   });
   const [activeStep, setActiveStep] = useState(1);
   const contractorContext = useContext(ContractorContext);
-
+  const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] = useState(false);
+  const [submitWithAppointment, setSubmitWithAppointment] = useState(false);
   const currentStep = steps[activeStep - 1];
 
   const [stepStates, setStepStates] = useState(
@@ -32,7 +31,6 @@ const CreateOrderStepper = () => {
   );
 
   const handleNext = (formState: any) => {
-    console.log(formState, currentStep.id);
     setStepStates((prevStepStates) => ({
       ...prevStepStates,
       [currentStep.id]: formState,
@@ -58,6 +56,12 @@ const CreateOrderStepper = () => {
     return getContextValuesForStep(activeStep, stepStates);
   }, [activeStep, stepStates]);
 
+  useEffect(() => {
+    if (currentStep.id !== "appointment") {
+      setIsButtonAppointmentVisible(false)
+    }
+  }, [currentStep]);
+
   return (
     <Box display="flex" height={1} width={1}>
       <StepsSummary steps={steps} currentStepNumber={activeStep} />
@@ -71,8 +75,10 @@ const CreateOrderStepper = () => {
         width={536}
         contextValues={contextValues}
         initialValues={stepStates[currentStep.id]}
-        submitButtonLabel={getSubmitButtonLabel(activeStep)}
-        cancelButtonLabel={getCancelButtonLabel(activeStep)}
+        isButtonAppointmentVisible={isButtonAppointmentVisible}
+        setIsButtonAppointmentVisible={setIsButtonAppointmentVisible}
+        submitWithAppointment={submitWithAppointment}
+        setSubmitWithAppointment={setSubmitWithAppointment}
       />
     </Box>
   );
