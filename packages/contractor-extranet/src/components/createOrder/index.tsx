@@ -48,8 +48,7 @@ const CreateOrderStepper = () => {
   };
 
   const handleReset = () => {
-    setStepStates(getInitialValues(contractorContext.contractor));
-    setActiveStep(1);
+    router.push("/")
   };
 
   const contextValues = useMemo(() => {
