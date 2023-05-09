@@ -36,15 +36,19 @@ export const getFirstAvailableDate = (zone: string, type: string) => {
         if (!DateTime.fromObject({ weekday: futureDay })) {
           return DateTime.fromObject({ weekday: futureDay }).plus({ days: 1 });
         }
-      };
+      }
     }
 
     for (const futureDay of dayNumbers) {
-      const isHoliday = holidays.isHoliday(DateTime.fromObject({ weekday: futureDay }).plus({ weeks: 1 }).toISODate())
+      const isHoliday = holidays.isHoliday(
+        DateTime.fromObject({ weekday: futureDay })
+          .plus({ weeks: 1 })
+          .toISODate()
+      );
       if (!isHoliday) {
         return DateTime.fromObject({ weekday: futureDay })
-        .plus({ weeks: 1 })
-        .plus({ days: 1 });
+          .plus({ weeks: 1 })
+          .plus({ days: 1 });
       }
     }
   }

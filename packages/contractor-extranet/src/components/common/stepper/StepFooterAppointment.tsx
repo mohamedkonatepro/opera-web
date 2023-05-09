@@ -13,10 +13,7 @@ const StepFooterAppointment: FC<StepFooterAppointmentProps> = ({
 }) => {
   return (
     <Stack direction="row" justifyContent="space-between">
-      <CancelButton
-        onClick={handleBack}
-        sx={{ minWidth: "130px" }}
-      >
+      <CancelButton onClick={handleBack} sx={{ minWidth: "130px" }}>
         Étape précédente
       </CancelButton>
       <Stack direction="row">
@@ -26,7 +23,7 @@ const StepFooterAppointment: FC<StepFooterAppointmentProps> = ({
           padding="large"
           selected
           onClick={() => setSubmitWithAppointment(false)}
-          >
+        >
           Continuer sans rendez-vous
         </OutlinedButton>
         {isButtonAppointmentVisible && (

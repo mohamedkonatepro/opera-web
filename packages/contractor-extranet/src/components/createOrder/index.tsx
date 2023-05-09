@@ -4,10 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { steps } from "./constants";
-import {
-  getContextValuesForStep,
-  getInitialValues,
-} from "./utils";
+import { getContextValuesForStep, getInitialValues } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
@@ -22,7 +19,8 @@ const CreateOrderStepper = () => {
   });
   const [activeStep, setActiveStep] = useState(1);
   const contractorContext = useContext(ContractorContext);
-  const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] = useState(false);
+  const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] =
+    useState(false);
   const [submitWithAppointment, setSubmitWithAppointment] = useState(false);
   const currentStep = steps[activeStep - 1];
 
@@ -48,7 +46,7 @@ const CreateOrderStepper = () => {
   };
 
   const handleReset = () => {
-    router.push("/")
+    router.push("/");
   };
 
   const contextValues = useMemo(() => {
@@ -57,7 +55,7 @@ const CreateOrderStepper = () => {
 
   useEffect(() => {
     if (currentStep.id !== "appointment") {
-      setIsButtonAppointmentVisible(false)
+      setIsButtonAppointmentVisible(false);
     }
   }, [currentStep]);
 

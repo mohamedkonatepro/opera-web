@@ -7,6 +7,8 @@ import Tenants from "./Tenants";
 import schema from "./validationSchema";
 import validateForm from "@/utils/validateForm";
 import { ContractorContext } from "@/context/contractor";
+import { nanoid } from "nanoid";
+import { getDefaultTenant } from "./utils";
 
 const ContactForm: FC<ContactFormProps> = ({
   formId,
@@ -14,12 +16,28 @@ const ContactForm: FC<ContactFormProps> = ({
   contextValues = {},
   initialValues = {},
 }) => {
+  const services =
+    contextValues?.services?.map((service: any) => service.code) ?? [];
+
+  const showLeavingTenants = !services.some((service: any) =>
+    ["EDL-E", "EDL-CAT"].includes(service)
+  );
+  const showEnteringTenants = services.some((service: any) =>
+    ["EDL-E", "EDL-ES", "EDL-CAT"].includes(service)
+  );
+
+  const isDiag = contextValues?.family?.code === "DIAG";
+
   const { contractor } = useContext(ContractorContext);
   const [enteringTenants, setEnteringTenants] = useState<any[]>(
-    initialValues?.enteringTenants ?? []
+    showEnteringTenants
+      ? initialValues?.enteringTenants ?? [getDefaultTenant()]
+      : []
   );
   const [leavingTenants, setLeavingTenants] = useState<any[]>(
-    initialValues?.leavingTenants ?? []
+    showLeavingTenants && !isDiag
+      ? initialValues?.leavingTenants ?? [getDefaultTenant()]
+      : []
   );
 
   // RealEstateOwner
@@ -47,10 +65,6 @@ const ContactForm: FC<ContactFormProps> = ({
 
   const [errors, setErrors] = useState<any>({});
 
-  const services =
-    contextValues?.services?.map((service: any) => service.code) ?? [];
-  const familyCode = contextValues?.family?.code ?? "";
-
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -73,7 +87,11 @@ const ContactForm: FC<ContactFormProps> = ({
       },
     };
 
-    const errors = await validateForm(schema, values, { familyCode });
+    const errors = await validateForm(schema, values, {
+      isDiag,
+      showEnteringTenants,
+      showLeavingTenants,
+    });
 
     if (!errors) {
       setErrors({});
@@ -82,15 +100,6 @@ const ContactForm: FC<ContactFormProps> = ({
       setErrors(errors);
     }
   };
-
-  const showLeavingTenants = !services.some((service: any) =>
-    ["EDL-E", "EDL-CAT"].includes(service)
-  );
-  const showEnteringTenants = services.some((service: any) =>
-    ["EDL-E", "EDL-ES", "EDL-CAT"].includes(service)
-  );
-
-  const showFiscalInvariant = familyCode === "DIAG";
 
   return (
     <Stack spacing={5} component="form" id={formId} onSubmit={handleOnSubmit}>
@@ -101,6 +110,7 @@ const ContactForm: FC<ContactFormProps> = ({
           title="Locataire Entrant"
           prefixId="entering-tenant"
           errors={errors.enteringTenants}
+          canDelete={showEnteringTenants && enteringTenants.length > 1}
         />
       )}
       {showLeavingTenants && (
@@ -110,6 +120,9 @@ const ContactForm: FC<ContactFormProps> = ({
           title="Locataire Sortant"
           prefixId="leaving-tenant"
           errors={errors.leavingTenants}
+          canDelete={
+            (showLeavingTenants && leavingTenants.length > 1) || isDiag
+          }
         />
       )}
       <RealEstateOwner
@@ -121,7 +134,7 @@ const ContactForm: FC<ContactFormProps> = ({
         setFiscalInvariant={setRealEstateOwnerFiscalInvariant}
         socialReason={realEstateOwnerSocialReason}
         setSocialReason={setRealEstateOwnerSocialReason}
-        showFiscalInvariant={showFiscalInvariant}
+        showFiscalInvariant={isDiag}
         errors={errors.realEstateOwner}
       />
       <Contractor

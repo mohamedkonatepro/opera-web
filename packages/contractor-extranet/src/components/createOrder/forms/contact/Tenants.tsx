@@ -10,6 +10,7 @@ const Tenants: FC<TenantsFormProps> = ({
   title,
   prefixId = "",
   errors = [],
+  canDelete,
 }) => {
   const addTenant = () => {
     setTenants([
@@ -45,20 +46,22 @@ const Tenants: FC<TenantsFormProps> = ({
               <Typography variant="subtitle2">
                 Colocataire {index + 1}
               </Typography>
-              <Link
-                component="button"
-                underline="none"
-                onClick={removeTenant(index)}
-                type="button"
-                display="flex"
-              >
-                <Box mr={1} component="span">
-                  <DeleteOutlinedIcon fontSize="small" color="error" />
-                </Box>
-                <Typography variant="subtitle2" color="error">
-                  Supprimer
-                </Typography>
-              </Link>
+              {canDelete && (
+                <Link
+                  component="button"
+                  underline="none"
+                  onClick={removeTenant(index)}
+                  type="button"
+                  display="flex"
+                >
+                  <Box mr={1} component="span">
+                    <DeleteOutlinedIcon fontSize="small" color="error" />
+                  </Box>
+                  <Typography variant="subtitle2" color="error">
+                    Supprimer
+                  </Typography>
+                </Link>
+              )}
             </Stack>
             <Stack direction="row" spacing={2}>
               <TextField

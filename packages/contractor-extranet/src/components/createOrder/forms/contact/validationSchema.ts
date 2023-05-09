@@ -34,14 +34,12 @@ const tenantSchema = object({
   ),
 });
 
-const isDiag = (familyCode?: string) => familyCode === "DIAG";
-
 const realEstateOwnerSchema = object({
   lastname: string().test(
     "lastname",
     "Le nom est obligatoire",
     function (value) {
-      if (!isDiag(this?.options?.context?.familyCode)) return true;
+      if (!this?.options?.context?.isDiag) return true;
       return !!value || !!this.parent.socialReason;
     }
   ),
@@ -49,7 +47,7 @@ const realEstateOwnerSchema = object({
     "firstname",
     "Le prénom est obligatoire",
     function (value) {
-      if (!isDiag(this?.options?.context?.familyCode)) return true;
+      if (this?.options?.context?.isDiag) return true;
       return !!value || !!this.parent.socialReason;
     }
   ),
@@ -57,7 +55,7 @@ const realEstateOwnerSchema = object({
     "socialReason",
     "Le couple prénom/nom ou la raison sociale est obligatoire",
     function (value) {
-      if (!isDiag(this?.options?.context?.familyCode)) return true;
+      if (this?.options?.context?.isDiag) return true;
       return !!value || !!this.parent.lastname || !!this.parent.firstname;
     }
   ),
