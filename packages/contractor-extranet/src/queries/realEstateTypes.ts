@@ -4,7 +4,7 @@ import axios from "axios";
 import qs from "qs";
 
 export interface RealEstateTypesParams {
-  populate?: string
+  populate?: string;
   serviceType?: string;
 }
 
@@ -36,7 +36,9 @@ export const getRealEstateTypes = async ({
 }: RealEstateTypesParams): Promise<RealEstateType[]> => {
   const query = qs.stringify({
     filters: getFilters(serviceType),
-    populate: populate?.split(',').reduce((acc, cur) => ({ ...acc, [cur]: true }), {}),
+    populate: populate
+      ?.split(",")
+      .reduce((acc, cur) => ({ ...acc, [cur]: true }), {}),
   });
   const response = await axios.get(`/api/real-estate-types?${query}`);
   return response.data;

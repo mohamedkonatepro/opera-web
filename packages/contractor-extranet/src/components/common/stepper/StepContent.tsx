@@ -16,7 +16,7 @@ const StepContent: FC<StepContentProps> = ({
   isButtonAppointmentVisible,
   setIsButtonAppointmentVisible,
   submitWithAppointment,
-  setSubmitWithAppointment
+  setSubmitWithAppointment,
 }) => {
   const StepForm = step.form;
   const StepFooterCurrent = step.footer;

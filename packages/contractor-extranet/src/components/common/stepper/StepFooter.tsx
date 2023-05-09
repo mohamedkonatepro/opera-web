@@ -17,7 +17,7 @@ const StepFooter: FC<StepFooterProps> = ({
         onClick={currentStepNumber === 1 ? handleReset : handleBack}
         sx={{ minWidth: "130px" }}
       >
-        {currentStepNumber === 1 ? 'Annuler' : 'Étape précédente'}
+        {currentStepNumber === 1 ? "Annuler" : "Étape précédente"}
       </CancelButton>
       <ValidateButton
         sx={{ minWidth: "130px" }}
