@@ -11,12 +11,14 @@ interface Filters {
   unitReference?: string | string[];
   page?: string | string[];
   pageSize?: string | string[];
+  firstnameTenant?: string | string[];
+  lastnameTenant?: string | string[];
 }
 
 export const getRealEstates = async (
   filters: Filters
 ): Promise<RealEstateListResponse> => {
-  const { address, buildingReference, unitReference, page, pageSize } = filters;
+  const { address, buildingReference, unitReference, page, pageSize, firstnameTenant, lastnameTenant } = filters;
   let url = `/real-estates?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`;
   if (address) {
     url += `&filters[address][$containsi]=${address}`;
@@ -26,6 +28,12 @@ export const getRealEstates = async (
   }
   if (unitReference) {
     url += `&filters[unitReference][$containsi]=${unitReference}`;
+  }
+  if (firstnameTenant) {
+    url += `&filters[tenants][firstname][$containsi]=${firstnameTenant}`;
+  }
+  if (lastnameTenant) {
+    url += `&filters[tenants][lastname][$containsi]=${lastnameTenant}`;
   }
 
   const { data } = await apiAxiosInstance.get(url);
