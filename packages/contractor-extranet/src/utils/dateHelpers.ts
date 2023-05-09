@@ -18,7 +18,7 @@ export const getFirstAvailableDate = (zone: string, type: string) => {
     } else if (zone === "LYO") {
       days = ["lundi", "mercredi", "vendredi"];
     } else {
-      return now.plus({ days: 2 });
+      return now.plus({ days: 1 });
     }
 
     const dayNumbers = days.map((day) => (weekdays.indexOf(day) + 1) % 7);
@@ -33,7 +33,7 @@ export const getFirstAvailableDate = (zone: string, type: string) => {
 
     if (futureDays.length > 0) {
       for (const futureDay of futureDays) {
-        if (!DateTime.fromObject({ weekday: futureDay })) {
+        if (DateTime.fromObject({ weekday: futureDay })) {
           return DateTime.fromObject({ weekday: futureDay }).plus({ days: 1 });
         }
       }

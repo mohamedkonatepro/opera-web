@@ -7,6 +7,8 @@ import RealEstateTable from "./RealEstateTable";
 import CustomPagination from "./common/CustomPagination";
 import RealEstate from "@/types/RealEstate";
 import RealEstateFilter from "./RealEstateFilter";
+import { getTenants } from "@/queries/tenants";
+import Tenant from "@/types/Tenant";
 
 interface Pagination {
   page: number;
@@ -20,14 +22,20 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   const [filterEnabled, setFilterEnabled] = useState(false);
   const [buildingRefSearchQuery, setBuildingRefSearchQuery] = useState("");
   const [unitRefSearchQuery, setUnitRefSearchQuery] = useState("");
+  const [tenantSearchQuery, setTenantSearchQuery] = useState("");
   const [selectedAddress, setSelectedAddress] = useState<{
     address: string;
     postalCode: string;
     city: string;
   } | null>(null);
+  const [selectedTenant, setSelectedTenant] = useState<{
+    firstname: string;
+    lastname: string;
+  } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(100);
   const [realEstates, setRealEstates] = useState<RealEstate[]>([]);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
   const [pagination, setPagination] = useState<Pagination>();
 
   const handleAddressInputChange = (event: any, value: string) => {
@@ -42,6 +50,16 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   const handleInputUnitReferenceChange = (event: any, value: string) => {
     setUnitRefSearchQuery(value);
     setQueryEnabled(value.length >= 1);
+  };
+
+  const handleInputTenantChange = async (event: any, value: string) => {
+    setTenantSearchQuery(value);
+    if (value.length >= 2) {
+      refetchTenantData();
+      setQueryEnabled(true);
+    } else {
+      setQueryEnabled(false)
+    }
   };
 
   useEffect(() => {
@@ -64,6 +82,8 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
         unitRefSearchQuery,
         currentPage,
         pageSize,
+        selectedTenant?.firstname ?? "",
+        selectedTenant?.lastname ?? "",
       ],
       queryFn: ({ queryKey }) =>
         getRealEstates({
@@ -72,11 +92,27 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
           unitReference: queryKey[3] as string,
           page: queryKey[4] as string,
           pageSize: queryKey[5] as string,
+          firstnameTenant: queryKey[6] as string,
+          lastnameTenant: queryKey[7] as string,
         }),
       enabled: queryEnabled,
       onSuccess: (data) => {
         setRealEstates(data?.data ?? []);
         setPagination(data?.meta?.pagination);
+      },
+    });
+
+    const { isLoading: isTenantDataLoading, refetch: refetchTenantData } =
+    useQuery<Tenant[]>({
+      queryKey: ["getTenants"],
+      queryFn: () =>
+        getTenants({
+          firstname: tenantSearchQuery,
+          lastname: tenantSearchQuery
+        }),
+      enabled: queryEnabled,
+      onSuccess: (data) => {
+        setTenants(data)
       },
     });
 
@@ -86,6 +122,15 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
       setSelectedAddress({ address, postalCode, city });
     } else {
       setSelectedAddress(null);
+    }
+  };
+
+  const handleTenantAutocompleteChange = (event: any, option: any) => {
+    if (option) {
+      const { firstname, lastname } = option;
+      setSelectedTenant({ firstname, lastname });
+    } else {
+      setSelectedTenant(null);
     }
   };
 
@@ -125,11 +170,15 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
         <Stack spacing={4}>
           <RealEstateFilter
             isLoading={isRealEstateDataLoading}
+            isTenantDataLoading={isTenantDataLoading}
             realEstatesData={realEstates}
+            tenantsData={tenants}
             onAddressChange={handleAddressAutocompleteChange}
+            onTenantChange={handleTenantAutocompleteChange}
             onAddressInputChange={handleAddressInputChange}
             onInputBuildingReferenceChange={handleInputBuildingReferenceChange}
             onInputUnitReferenceChange={handleInputUnitReferenceChange}
+            onInputTenantChange={handleInputTenantChange}
             onFilterButtonClick={handleClickFilter}
             queryEnabled={queryEnabled}
           />
