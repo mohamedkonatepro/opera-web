@@ -22,7 +22,7 @@ AutocompleteTenantProps
         if (typeof option === "string") {
           return option;
         }
-        return `${option.firstname} ${option.lastname}`;
+        return `${option.firstname ?? ""} ${option.lastname ?? ""}`;
       }}
       onChange={onTenantChange}
       renderInput={(params) => (
