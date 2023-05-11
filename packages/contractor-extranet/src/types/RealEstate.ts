@@ -1,5 +1,6 @@
 import Contractor from "./Contractor";
 import Owner from "./Owner";
+import { Purpose } from "./Purpose";
 import RealEstateType from "./RealEstateType";
 import Tenant from "./Tenant";
 
@@ -28,6 +29,7 @@ interface RealEstate {
   locationColdWater: string | null;
   real_estate_type: RealEstateType;
   owner: Owner;
+  purpose: Purpose;
   tenants: Tenant[];
   contractor: Contractor;
   createdAt: string;

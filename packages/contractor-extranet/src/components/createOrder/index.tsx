@@ -8,9 +8,14 @@ import { getContextValuesForStep, getInitialValues } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
+import { RealEstateContext } from "@/context/realEstate";
+import { useQuery } from '@tanstack/react-query';
+import { getRealEstate } from "@/queries/realEstates";
 
 const CreateOrderStepper = () => {
+  const [realEstate, setRealEstate] = useState<any>({})
   const router = useRouter();
+  const { realEstateId } = router.query;
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
@@ -18,14 +23,30 @@ const CreateOrderStepper = () => {
     },
   });
   const [activeStep, setActiveStep] = useState(1);
-  const contractorContext = useContext(ContractorContext);
+  const { contractor } = useContext(ContractorContext);
+
+  useQuery({
+    queryKey: ["getRealEstate"],
+    enabled: !!realEstateId,
+    queryFn: () => getRealEstate(realEstateId as string),
+    onSuccess: (data) => {
+      setRealEstate(data)
+    },
+  });
+
   const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] =
     useState(false);
   const [submitWithAppointment, setSubmitWithAppointment] = useState(false);
   const currentStep = steps[activeStep - 1];
 
+  useEffect(() => {
+    setStepStates(
+      getInitialValues(contractor, realEstate)
+    );
+  }, [contractor, realEstate]);
+
   const [stepStates, setStepStates] = useState(
-    getInitialValues(contractorContext.contractor)
+    getInitialValues(contractor, realEstate)
   );
 
   const handleNext = (formState: any) => {

@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import OutlinedButton from "./common/buttons/OutlinedButton";
 import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from "next/router";
 
 interface RealEstateTableProps {
   realEstates: RealEstate[];
@@ -16,6 +17,9 @@ interface RealEstateTableProps {
 const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
   realEstates,
 }) => {
+  const router = useRouter();
+  const { contractorId } = router.query;
+
   return (
     <Box>
       <TableContainer>
@@ -89,6 +93,10 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
               const tenantName = tenants.map(
                 (tenant) => `${tenant.firstname ?? ""} ${tenant.lastname ?? ""}`
               );
+
+              const createOrderURL = contractorId
+              ? `/create-order?realEstateId=${realEstate.id}&contractorId=${contractorId}`
+              : `/create-order?realEstateId=${realEstate.id}`;
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>
@@ -107,7 +115,7 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                     <OutlinedButton
                       selected
                       padding="small"
-                      href={`/create-order?realEstateId=${realEstate.id}`}
+                      href={createOrderURL}
                     >
                       Créer <AddIcon sx={{ marginLeft: "5px" }} />
                     </OutlinedButton>
