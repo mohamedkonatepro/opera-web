@@ -6,6 +6,7 @@ export interface ContactFormProps {
     enteringTenants?: TenantFormValues[];
     leavingTenants?: TenantFormValues[];
     realEstateOwner?: {
+      id?: string;
       lastname?: string;
       firstname?: string;
       fiscalInvariant?: string;

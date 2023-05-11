@@ -72,6 +72,7 @@ const ContactForm: FC<ContactFormProps> = ({
       enteringTenants: showEnteringTenants ? enteringTenants : [],
       leavingTenants: showLeavingTenants ? leavingTenants : [],
       realEstateOwner: {
+        id: initialValues?.realEstateOwner?.id ?? "",
         firstname: realEstateOwnerFirstname,
         lastname: realEstateOwnerLastname,
         fiscalInvariant: realEstateOwnerFiscalInvariant,
