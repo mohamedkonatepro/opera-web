@@ -9,7 +9,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const { id } = req.query
     try {
-      const response = await apiAxiosInstance.get(`/real-estates/${id}?populate=*`);
+      const populateParams = {
+        'populate[0]': 'buildingAnnexes.buildingAnnexType',
+        'populate[1]': 'real_estate_type',
+        'populate[2]': 'contractor',
+        'populate[3]': 'floor',
+        'populate[4]': 'purpose',
+        'populate[5]': 'tenants',
+        'populate[6]': 'owner',
+        'populate[7]': 'moving_zone',
+        'populate[8]': 'heating_energy_type',
+        'populate[9]': 'heating_type',
+        'populate[10]': 'water_heating_type',
+        'populate[11]': 'water_heating_energy_type',
+      };
+      
+      const params = new URLSearchParams(populateParams);
+      const response = await apiAxiosInstance.get(`/real-estates/${id}?${params.toString()}`);
       return res.status(200).json(formatRealEstateData(response.data.data));
     } catch (error: any) {
       return handleError(error, res);
