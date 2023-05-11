@@ -14,6 +14,7 @@ import { HeatingType } from "@/types/HeatingType";
 import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
+import realEstates from '../../../../pages/api/real-estates/index';
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
   formId,
@@ -21,6 +22,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
   contextValues,
   initialValues = {},
 }) => {
+  const [realEstateId, setRealEstateId] = useState(initialValues?.id ?? "");
   // Address
   const [address, setAddress] = useState(initialValues?.address ?? "");
   const [additionalAddress, setAdditionalAddress] = useState(
@@ -106,6 +108,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     event.stopPropagation();
 
     onSubmit({
+      id: realEstateId,
       address,
       additionalAddress,
       postalCode,

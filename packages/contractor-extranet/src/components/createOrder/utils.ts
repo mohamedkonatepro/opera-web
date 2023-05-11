@@ -44,6 +44,7 @@ export const getInitialValues = (
         enteringTenants: getInitialTenant(realEstate?.tenants),
         leavingTenants: getInitialTenant(realEstate?.tenants),
         realEstateOwner: {
+          id: realEstate?.owner?.id,
           firstname: realEstate?.owner?.firstname,
           lastname: realEstate?.owner?.lastname,
           fiscalInvariant: realEstate?.owner?.fiscalInvariant,
@@ -57,6 +58,7 @@ export const getInitialValues = (
       return acc;
     } if (step.id === "realEstate") {
       acc[step.id] = {
+        id: realEstate?.id,
         address: realEstate?.address,
         additionalAddress: realEstate?.additionalAddress,
         postalCode: realEstate?.postalCode,
