@@ -39,6 +39,7 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   const [pagination, setPagination] = useState<Pagination>();
 
   const handleAddressInputChange = (event: any, value: string) => {
+    setSelectedAddress({ address: value, postalCode: value, city: value });
     setQueryEnabled(value.length >= 5);
   };
 

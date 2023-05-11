@@ -21,7 +21,7 @@ export const getRealEstates = async (
   const { address, buildingReference, unitReference, page, pageSize, firstnameTenant, lastnameTenant } = filters;
   let url = `/real-estates?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`;
   if (address) {
-    url += `&filters[address][$containsi]=${address}`;
+    url += `&filters[$or][0][address][$containsi]=${address}&filters[$or][1][postalCode][$containsi]=${address}&filters[$or][2][city][$containsi]=${address}`;
   }
   if (buildingReference) {
     url += `&filters[buildingReference][$containsi]=${buildingReference}`;
