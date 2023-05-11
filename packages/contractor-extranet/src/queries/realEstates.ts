@@ -33,3 +33,12 @@ export const getRealEstates = async (filters: Filters) => {
     throw error;
   }
 };
+
+export const getRealEstate = async (id: string) => {
+  try {
+    const { data } = await axios.get(`api/real-estates/${id}`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

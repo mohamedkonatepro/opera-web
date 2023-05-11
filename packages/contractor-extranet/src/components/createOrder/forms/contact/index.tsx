@@ -7,7 +7,6 @@ import Tenants from "./Tenants";
 import schema from "./validationSchema";
 import validateForm from "@/utils/validateForm";
 import { ContractorContext } from "@/context/contractor";
-import { nanoid } from "nanoid";
 import { getDefaultTenant } from "./utils";
 
 const ContactForm: FC<ContactFormProps> = ({
@@ -70,8 +69,8 @@ const ContactForm: FC<ContactFormProps> = ({
     event.stopPropagation();
 
     const values = {
-      enteringTenants,
-      leavingTenants,
+      enteringTenants: showEnteringTenants ? enteringTenants : [],
+      leavingTenants: showLeavingTenants ? leavingTenants : [],
       realEstateOwner: {
         firstname: realEstateOwnerFirstname,
         lastname: realEstateOwnerLastname,

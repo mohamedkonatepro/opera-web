@@ -2,14 +2,14 @@ import formatServiceOption from "@/apiUtils/formatData/formatServiceOption";
 
 export const formatRealEstateData = (realEstate: any) => {
   const { id, attributes } = realEstate;
-  const { contractor, owner, real_estate_type, tenants } = attributes;
+  const { contractor, owner, real_estate_type, tenants, buildingAnnexes } = attributes;
   const formattedContractor = formatContractorData(contractor.data);
   const formattedOwner = formatOwnerData(owner.data);
   const formattedRealEstateType = formatRealEstateTypeData(
     real_estate_type.data
   );
   const formattedTenants = tenants.data.map(formatTenantData);
-
+  const formattedBuildingAnnexes = buildingAnnexes.data.map(formatBuildingAnnexesData);
   return {
     id,
     ...attributes,
@@ -17,6 +17,7 @@ export const formatRealEstateData = (realEstate: any) => {
     owner: formattedOwner,
     real_estate_type: formattedRealEstateType,
     tenants: formattedTenants,
+    buildingAnnexes: formattedBuildingAnnexes,
   };
 };
 
@@ -50,4 +51,23 @@ export const formatTenantData = (tenant: any) => {
 
 export const formatMovingZoneData = (movingZone: any) => {
   return movingZone ? { id: movingZone.id, ...movingZone.attributes } : null;
+};
+
+export const formatBuildingAnnexesData = (annex: any) => {
+  const { id, attributes } = annex;
+  const { buildingAnnexType } = attributes;
+
+  const formattedBuildingAnnexType = buildingAnnexType
+    ? formatBuildingAnnexTypeData(buildingAnnexType.data)
+    : undefined;
+
+  return {
+    id,
+    ...attributes,
+    type: formattedBuildingAnnexType,
+  };
+};
+
+export const formatBuildingAnnexTypeData = (annexType: any) => {
+  return annexType ? { id: annexType.id, ...annexType.attributes } : null;
 };
