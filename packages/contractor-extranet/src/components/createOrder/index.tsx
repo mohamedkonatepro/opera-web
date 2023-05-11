@@ -8,7 +8,6 @@ import { getContextValuesForStep, getInitialValues } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
-import { RealEstateContext } from "@/context/realEstate";
 import { useQuery } from '@tanstack/react-query';
 import { getRealEstate } from "@/queries/realEstates";
 

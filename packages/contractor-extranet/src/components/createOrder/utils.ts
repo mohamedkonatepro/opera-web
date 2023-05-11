@@ -1,8 +1,6 @@
 import { ContractorContextType } from "@/context/contractor";
 import { steps } from "./constants";
-import { RealEstateContextType } from "@/context/realEstate";
 import { getInitialTenant } from "./forms/contact/utils";
-import RealEstate from "@/types/RealEstate";
 
 export const getContextValuesForStep = (
   activeStep: number,
