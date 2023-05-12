@@ -54,6 +54,7 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   };
 
   const handleInputTenantChange = async (event: any, value: string) => {
+    setSelectedTenant({ firstname: value, lastname: value })
     setTenantSearchQuery(value);
     if (value.length >= 2) {
       refetchTenantData();
