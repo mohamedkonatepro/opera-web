@@ -78,7 +78,7 @@ export default function MyApp(props: MyAppProps) {
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                   <ContractorContextProvider>
-                    <SideBar />
+                    {/* <SideBar /> */}
                     <Component {...pageProps} />
                   </ContractorContextProvider>
                 </Hydrate>
