@@ -29,11 +29,8 @@ export const getRealEstates = async (
   if (unitReference) {
     url += `&filters[unitReference][$containsi]=${unitReference}`;
   }
-  if (firstnameTenant) {
-    url += `&filters[tenants][firstname][$containsi]=${firstnameTenant}`;
-  }
-  if (lastnameTenant) {
-    url += `&filters[tenants][lastname][$containsi]=${lastnameTenant}`;
+  if (firstnameTenant || lastnameTenant) {
+    url += `&filters[$or][0][tenants][firstname][$containsi]=${firstnameTenant}&filters[$or][1][tenants][lastname][$containsi]=${lastnameTenant}`;
   }
 
   const { data } = await apiAxiosInstance.get(url);
