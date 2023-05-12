@@ -2,6 +2,7 @@ import { TextField, InputAdornment, Autocomplete } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import realEstateRemoveDuplicates from "@/utils/realEstateRemoveDuplicates";
 import RealEstate from "@/types/RealEstate";
+import capitalizeWords from "@/utils/capitalizeWords";
 
 interface AutocompleteAddressProps {
   realEstatesData: RealEstate[];
@@ -21,7 +22,7 @@ const AutocompleteAddress: React.FunctionComponent<
         if (typeof option === "string") {
           return option;
         }
-        return `${option.address} ${option.postalCode} ${option.city}`;
+        return capitalizeWords(`${option.address} ${option.postalCode} ${option.city}`);
       }}
       onChange={onAddressChange}
       renderInput={(params) => (

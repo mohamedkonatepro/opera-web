@@ -1,6 +1,6 @@
 import { ContractorContextType } from "@/context/contractor";
 import { steps } from "./constants";
-import { getInitialTenant } from "./forms/contact/utils";
+import capitalizeWords from "@/utils/capitalizeWords";
 
 export const getContextValuesForStep = (
   activeStep: number,
@@ -41,35 +41,33 @@ export const getInitialValues = (
     } 
     if (step.id === "contacts") {
       acc[step.id] = {
-        enteringTenants: getInitialTenant(realEstate?.tenants),
-        leavingTenants: getInitialTenant(realEstate?.tenants),
         realEstateOwner: {
           id: realEstate?.owner?.id,
-          firstname: realEstate?.owner?.firstname,
-          lastname: realEstate?.owner?.lastname,
-          fiscalInvariant: realEstate?.owner?.fiscalInvariant,
-          socialReason: realEstate?.owner?.companyName,
+          firstname: capitalizeWords(realEstate?.owner?.firstname),
+          lastname: capitalizeWords(realEstate?.owner?.lastname),
+          fiscalInvariant: capitalizeWords(realEstate?.owner?.fiscalInvariant),
+          socialReason: capitalizeWords(realEstate?.owner?.companyName),
         },
         contractor: {
           id: realEstate?.contractor?.id,
-          customerReference: realEstate?.contractor?.customerReference,
+          customerReference: capitalizeWords(realEstate?.contractor?.customerReference),
         },
       };
       return acc;
     } if (step.id === "realEstate") {
       acc[step.id] = {
         id: realEstate?.id,
-        address: realEstate?.address,
-        additionalAddress: realEstate?.additionalAddress,
+        address: capitalizeWords(realEstate?.address),
+        additionalAddress: capitalizeWords(realEstate?.additionalAddress),
         postalCode: realEstate?.postalCode,
-        city: realEstate?.city,
+        city: capitalizeWords(realEstate?.city),
         realEstateType: realEstate?.real_estate_type,
         floor: realEstate?.floor?.data,
         purpose: realEstate?.purpose?.data,
         surface: realEstate?.surface,
         roomNumber: realEstate?.roomNumber,
         digicode: realEstate?.digicode,
-        observation: realEstate?.observation,
+        observation: capitalizeWords(realEstate?.observation),
         buildingReference: realEstate?.buildingReference,
         unitReference: realEstate?.unitReference,
         mandateReference: realEstate?.mandateReference,
@@ -80,10 +78,10 @@ export const getInitialValues = (
         heatingType: realEstate?.heating_type?.data,
         waterHeatingEnergyType: realEstate?.water_heating_energy_type?.data,
         waterHeatingType: realEstate?.water_heating_type?.data,
-        locationHotWater: realEstate?.locationHotWater,
-        locationElectricMeter: realEstate?.locationElectricMeter,
-        locationColdWater: realEstate?.locationColdWater,
-        locationGasMeter: realEstate?.locationGasMeter,
+        locationHotWater: capitalizeWords(realEstate?.locationHotWater),
+        locationElectricMeter: capitalizeWords(realEstate?.locationElectricMeter),
+        locationColdWater: capitalizeWords(realEstate?.locationColdWater),
+        locationGasMeter: capitalizeWords(realEstate?.locationGasMeter),
         electricalReferenceMeasureLocation: realEstate?.electricalReferenceMeasureLocation,
       }
     } else {

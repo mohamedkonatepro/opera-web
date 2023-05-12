@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import OutlinedButton from "./common/buttons/OutlinedButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from "next/router";
+import capitalizeWords from "@/utils/capitalizeWords";
 
 interface RealEstateTableProps {
   realEstates: RealEstate[];
@@ -100,17 +101,17 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>
-                    {address} {postalCode} {city}
+                    {capitalizeWords(`${address} ${postalCode} ${city}`)}
                   </TableCell>
-                  <TableCell>{real_estate_type?.name}</TableCell>
+                  <TableCell>{capitalizeWords(real_estate_type?.name)}</TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
                   <TableCell>{staircaseNumber}</TableCell>
                   <TableCell>{surface}</TableCell>
                   <TableCell>
-                    {owner?.firstname} {owner?.lastname}
+                    {capitalizeWords(`${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`)}
                   </TableCell>
-                  <TableCell>{tenantName.join(" ")}</TableCell>
+                  <TableCell>{capitalizeWords(tenantName.join(" "))}</TableCell>
                   <TableCell>
                     <OutlinedButton
                       selected

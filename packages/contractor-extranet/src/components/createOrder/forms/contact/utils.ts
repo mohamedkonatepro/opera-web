@@ -9,18 +9,3 @@ export const getDefaultTenant = (): TenantFormValues => ({
   email: "",
   phoneNumber: "",
 });
-
-export const getInitialTenant = (tenants: Tenant[]): any[] => {
-  if (!tenants || tenants?.length === 0) {
-    return []
-  }
-
-  return tenants.map((tenant) => ({
-    id: tenant.id,
-    firstname: tenant.firstname ?? "",
-    lastname: tenant.lastname ?? "",
-    socialReason: tenant.companyName ?? "",
-    email: tenant.email ?? "",
-    phoneNumber: tenant.mobileNumber ?? "",
-  }))
-};
