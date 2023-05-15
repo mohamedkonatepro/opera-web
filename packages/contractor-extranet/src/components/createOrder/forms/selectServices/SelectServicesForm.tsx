@@ -23,7 +23,7 @@ import { ServiceType } from "@/types/ServiceType";
 
 const getProposedOptions = (
   families: Family[],
-  selectedServices: number,
+  selectedServices: number[],
   selectedFamily: number | null
 ) => {
   if (!selectedFamily) return [];
