@@ -15,6 +15,7 @@ import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 import realEstates from '../../../../pages/api/real-estates/index';
+import { nanoid } from "nanoid";
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
   formId,
@@ -66,7 +67,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
   );
 
   // Annexes
-  const [annexes, setAnnexes] = useState<any[]>(initialValues?.annexes ?? []);
+  const [annexes, setAnnexes] = useState<any[]>(initialValues?.annexes ?? [{
+    id: nanoid(),
+    type: undefined,
+    unitReference: "",
+    location: "",
+  }]);
 
   // Energy
   const [heatingEnergyType, setHeatingEnergyType] = useState<HeatingEnergyType>(

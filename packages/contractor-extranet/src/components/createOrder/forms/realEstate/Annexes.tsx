@@ -49,38 +49,37 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
                 setAnnexes(newAnnexes);
               }}
             />
-            <TextField
-              id={`building-annex-unit-reference-${index}`}
-              label="Numéro de lot"
-              color="secondary"
-              required
-              fullWidth
-              value={annex.unitReference}
-              onChange={(event) => {
-                const newAnnexes = [...annexes];
-                newAnnexes[index].unitReference = event.target.value;
-                setAnnexes(newAnnexes);
-              }}
-            />
-            <TextField
-              id={`building-annex-location-${index}`}
-              label="Localisation"
-              color="secondary"
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <HelpIcon />
-                  </InputAdornment>
-                ),
-              }}
-              value={annex.location}
-              onChange={(event) => {
-                const newAnnexes = [...annexes];
-                newAnnexes[index].location = event.target.value;
-                setAnnexes(newAnnexes);
-              }}
-            />
+            {annex.type !== undefined && (
+              <><TextField
+                id={`building-annex-unit-reference-${index}`}
+                label="Numéro de lot"
+                color="secondary"
+                required
+                fullWidth
+                value={annex.unitReference}
+                onChange={(event) => {
+                  const newAnnexes = [...annexes];
+                  newAnnexes[index].unitReference = event.target.value;
+                  setAnnexes(newAnnexes);
+                } } /><TextField
+                  id={`building-annex-location-${index}`}
+                  label="Localisation"
+                  color="secondary"
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <HelpIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  value={annex.location}
+                  onChange={(event) => {
+                    const newAnnexes = [...annexes];
+                    newAnnexes[index].location = event.target.value;
+                    setAnnexes(newAnnexes);
+                  } } /></>
+            )}
             <Box display="flex" alignItems="center" justifyContent="center">
               <IconButton
                 color="error"
