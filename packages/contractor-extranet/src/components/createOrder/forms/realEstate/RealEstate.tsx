@@ -42,7 +42,7 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
         />
         <TextField
           id="surface"
-          label="Surface"
+          label="Surface (m²)"
           color="secondary"
           required
           fullWidth
@@ -60,7 +60,7 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
           label="Nombre de pièces"
           color="secondary"
           required
-          inputProps={{ inputMode: "numeric", pattern: "^\\d+$" }}
+          inputProps={{ inputMode: "numeric", pattern: "^[1-9]\\d*$" }}
           fullWidth
           value={roomNumber}
           onChange={(event) => setRoomNumber(event.target.value)}
