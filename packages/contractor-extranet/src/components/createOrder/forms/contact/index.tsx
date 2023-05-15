@@ -100,7 +100,7 @@ const ContactForm: FC<ContactFormProps> = ({
       setErrors(errors);
     }
   };
-
+  const titleTenant = isDiag ? "Locataire en place" : "Locataire Sortant"
   return (
     <Stack spacing={5} component="form" id={formId} onSubmit={handleOnSubmit}>
       {showEnteringTenants && (
@@ -117,7 +117,7 @@ const ContactForm: FC<ContactFormProps> = ({
         <Tenants
           tenants={leavingTenants}
           setTenants={setLeavingTenants}
-          title="Locataire Sortant"
+          title={titleTenant}
           prefixId="leaving-tenant"
           errors={errors.leavingTenants}
           canDelete={

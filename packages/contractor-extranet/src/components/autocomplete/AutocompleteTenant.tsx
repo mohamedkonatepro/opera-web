@@ -3,6 +3,7 @@ import realEstateRemoveDuplicates from "@/utils/realEstateRemoveDuplicates";
 import RealEstate from "@/types/RealEstate";
 import Tenant from "@/types/Tenant";
 import tenantRemoveDuplicates from "@/utils/tenantRemoveDuplicates";
+import capitalizeWords from "@/utils/capitalizeWords";
 
 interface AutocompleteTenantProps {
   tenantsData: Tenant[];
@@ -22,7 +23,7 @@ AutocompleteTenantProps
         if (typeof option === "string") {
           return option;
         }
-        return `${option.firstname ?? ""} ${option.lastname ?? ""}`;
+        return capitalizeWords(`${option.firstname ?? ""} ${option.lastname ?? ""}`);
       }}
       onChange={onTenantChange}
       renderInput={(params) => (
