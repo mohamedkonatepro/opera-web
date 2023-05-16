@@ -1,4 +1,4 @@
-import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
+import { apiAxiosInstance, setAccessToken } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import { formatRealEstateData } from "@/utils/dataFormattingUtils";
@@ -6,6 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
+  setAccessToken(req);
   if (req.method === "GET") {
     const { id } = req.query
     try {
@@ -23,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         'populate[10]': 'water_heating_type',
         'populate[11]': 'water_heating_energy_type',
       };
-      
+
       const params = new URLSearchParams(populateParams);
       const response = await apiAxiosInstance.get(`/real-estates/${id}?${params.toString()}`);
       return res.status(200).json(formatRealEstateData(response.data.data));

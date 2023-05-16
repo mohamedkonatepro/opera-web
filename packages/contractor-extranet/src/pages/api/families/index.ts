@@ -1,4 +1,4 @@
-import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
+import { apiAxiosInstance, setAccessToken } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import formatFamily from "@/apiUtils/formatData/formatFamily";
 import handleError from "@/apiUtils/handleError";
@@ -6,6 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
+  setAccessToken(req);
   if (req.method === "GET") {
     try {
       const response = await apiAxiosInstance.get(
