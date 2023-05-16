@@ -18,9 +18,7 @@ const CreateOrderStepper = () => {
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
-      if (window) {
-        window.location.href = `${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`;
-      }
+      router.push(`${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`);
     },
   });
   const [activeStep, setActiveStep] = useState(1);
