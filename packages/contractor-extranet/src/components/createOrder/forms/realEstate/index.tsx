@@ -67,12 +67,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
   );
 
   // Annexes
-  const [annexes, setAnnexes] = useState<any[]>(initialValues?.annexes ?? [{
-    id: nanoid(),
-    type: undefined,
-    unitReference: "",
-    location: "",
-  }]);
+  const [annexes, setAnnexes] = useState<any[]>(
+    initialValues?.annexes?.length === 0
+      ? [
+          {
+            id: nanoid(),
+            type: undefined,
+            unitReference: "",
+            location: "",
+          },
+        ]
+      : initialValues?.annexes
+  );
 
   // Energy
   const [heatingEnergyType, setHeatingEnergyType] = useState<HeatingEnergyType>(
