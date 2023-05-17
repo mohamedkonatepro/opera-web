@@ -16,7 +16,7 @@ const getInformationAboutAppointmentBooking = async (response: any) => {
 
   appointmentBooking.order = orderResponse.data;
 
-  if (!appointmentBooking.appointment_id) {
+  if (!!appointmentBooking.appointment_id) {
     try {
       const appointmentResponse = await apiAxiosInstance.get(
         `/api/opera-appointments/${appointmentBooking.appointment_id}`
