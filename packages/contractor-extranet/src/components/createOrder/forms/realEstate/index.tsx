@@ -68,7 +68,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 
   // Annexes
   const [annexes, setAnnexes] = useState<any[]>(
-    initialValues?.annexes?.length === 0
+    initialValues?.annexes?.length === 0 || !initialValues?.annexes
       ? [
           {
             id: nanoid(),
