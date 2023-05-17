@@ -5,6 +5,10 @@ import { useRouter } from "next/router";
 
 const NewOrder: React.FunctionComponent = () => {
   const router = useRouter();
+  const { contractorId } = router.query;
+  const createOrderURL = contractorId
+    ? `/create-order?contractorId=${contractorId}`
+    : "/create-order";
   return (
     <Paper
       elevation={3}
@@ -39,7 +43,7 @@ const NewOrder: React.FunctionComponent = () => {
             type="submit"
             color="secondary"
             padding="large"
-            href={`/create-order?contractorId=${router.query.contractorId}`}
+            href={createOrderURL}
             sx={{ width: "167px" }}
           >
             Nouvelle commande

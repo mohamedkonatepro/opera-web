@@ -2,13 +2,38 @@ export interface ContactFormProps {
   formId: string;
   onSubmit: (values: any) => void;
   contextValues: any;
+  initialValues?: {
+    enteringTenants?: TenantFormValues[];
+    leavingTenants?: TenantFormValues[];
+    realEstateOwner?: {
+      id?: string;
+      lastname?: string;
+      firstname?: string;
+      fiscalInvariant?: string;
+      socialReason?: string;
+    };
+    contractor?: {
+      lastname?: string;
+      firstname?: string;
+      email?: string;
+    };
+  };
 }
 
+export interface TenantFormValues {
+  lastname?: string;
+  firstname?: string;
+  email?: string;
+  phoneNumber?: string;
+  id?: string;
+  socialReason?: string;
+}
 export interface TenantsFormProps {
-  tenants: any[];
-  setTenants: (tenants: any[]) => void;
+  tenants: TenantFormValues[];
+  setTenants: (tenants: TenantFormValues[]) => void;
   prefixId?: string;
   title: string;
+  canDelete?: boolean;
   errors?: [
     {
       lastname?: string;

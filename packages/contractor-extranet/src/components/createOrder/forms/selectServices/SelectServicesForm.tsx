@@ -8,6 +8,8 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Radio,
+  RadioGroup,
   Stack,
   useTheme,
 } from "@mui/material";
@@ -17,6 +19,7 @@ import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import { SelectServicesFormProps } from "./types";
 import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
+import { ServiceType } from "@/types/ServiceType";
 
 const getProposedOptions = (
   families: Family[],
@@ -44,18 +47,34 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
 }) => {
   const theme = useTheme();
 
-  const [selectedFamily, setSelectedFamily] = useState<number | null>(null);
+  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(
+    initialValues?.serviceType ?? ServiceType.LIVING
+  );
 
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+  const [selectedFamily, setSelectedFamily] = useState<number | null>(
+    initialValues?.family?.id ?? null
+  );
 
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const [selectedServices, setSelectedServices] = useState<number[]>(
+    initialValues?.services?.map((service) => service.id) ?? []
+  );
+
+  const [selectedOptions, setSelectedOptions] = useState<number[]>(
+    initialValues?.options?.map((option) => option.id) ?? []
+  );
 
   const handleOnChangeAccordion = (family: number) => () => {
     setSelectedFamily(family);
     setSelectedServices([]);
   };
 
-  const handleOnChangeService = (service: number) => () => {
+  const handleOnChangeService = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const serviceId = parseInt(event.target.value)
+    setSelectedServices([serviceId]);
+    setSelectedOptions([]);
+  };
+
+  const handleOnChangeServiceDiag = (service: number) => () => {
     if (selectedServices.includes(service)) {
       setSelectedServices(selectedServices.filter((s) => s !== service));
     } else {
@@ -85,7 +104,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
         .filter((option) => initialOptionsIds.includes(option.id))
         .map((option) => option.id)
     );
-  }, [proposedOptions]);
+  }, [proposedOptions, initialValues?.options]);
 
   useEffect(() => {
     if (selectedServices.length === 0) {
@@ -113,11 +132,15 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       family,
       services,
       options,
+      serviceType: selectedServiceType,
     });
   };
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
-      <SelectServiceType />
+      <SelectServiceType
+        selectedServiceType={selectedServiceType}
+        setSelectedServiceType={setSelectedServiceType}
+      />
       <FormControl>
         <FormLabel
           id="services-options-label"
@@ -128,6 +151,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
         </FormLabel>
         <Stack spacing={1}>
           {families.map((family) => {
+            const isDiag = family?.code === "DIAG";
             const isExpanded = selectedFamily === family.id;
             return (
               <Accordion
@@ -161,26 +185,51 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                 <AccordionDetails>
                   {isExpanded && (
                     <Stack spacing={2} divider={<Divider flexItem />}>
-                      <FormGroup>
-                        {family.services.map((service) => (
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                color="secondary"
-                                size="small"
-                                checked={selectedServices.includes(service.id)}
-                                onChange={handleOnChangeService(service.id)}
-                                value={service.id}
-                                name={service.code}
-                              />
-                            }
-                            label={service.name}
-                            disableTypography
-                            sx={{ ...theme.typography.body2 }}
-                            key={service.id}
-                          />
-                        ))}
-                      </FormGroup>
+                      {isDiag ? (
+                        <FormGroup>
+                          {family.services.map((service) => (
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="secondary"
+                                  size="small"
+                                  checked={selectedServices.includes(service.id)}
+                                  onChange={handleOnChangeServiceDiag(service.id)}
+                                  value={service.id}
+                                  name={service.code}
+                                />
+                              }
+                              label={service.name}
+                              disableTypography
+                              sx={{ ...theme.typography.body2 }}
+                              key={service.id}
+                            />
+                          ))}
+                        </FormGroup>
+                      ) : (
+                        <RadioGroup
+                          aria-label="services-group"
+                          name="services-group"
+                          onChange={handleOnChangeService}
+                        >
+                          {family.services.map((service) => (
+                            <FormControlLabel
+                              control={
+                                <Radio
+                                  color="secondary"
+                                  size="small"
+                                  name={service.code}
+                                />
+                              }
+                              value={service.id}
+                              label={service.name}
+                              disableTypography
+                              sx={{ ...theme.typography.body2 }}
+                              key={service.id}
+                            />
+                          ))}
+                        </RadioGroup>
+                      )}
                       {proposedOptions.length > 0 && (
                         <FormControl focused={false}>
                           <FormLabel

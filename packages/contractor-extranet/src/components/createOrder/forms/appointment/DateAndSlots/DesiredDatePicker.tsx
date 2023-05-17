@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
-import { Stack, Typography, useTheme } from "@mui/material";
 import { getFirstAvailableDate } from "@/utils/dateHelpers";
 import Holidays from "date-holidays";
 
@@ -13,19 +12,11 @@ interface DesiredDatePickerProps {
   onChange: (newValue: DateTime | undefined) => void;
 }
 
-const shouldDisableDate = (date: DateTime, zone: string, keyType: string) => {
-  const firstAvailableDate = getFirstAvailableDate(zone);
-  if (date.weekday === 7) return true;
-  const dateString = date.toISODate();
-  if (holidays.isHoliday(dateString)) return true;
-  if (
-    keyType === "contractor" &&
-    date < firstAvailableDate &&
-    !date.hasSame(firstAvailableDate, "day")
-  ) {
-    return true;
-  }
-  return false;
+const shouldDisableDate = (date: DateTime): boolean => {
+  const isSunday = date.weekday === 7;
+  const isHoliday = holidays.isHoliday(date.toISODate());
+
+  return isSunday || !!isHoliday;
 };
 
 const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
@@ -41,10 +32,9 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
     <DatePicker
       label="Date de RDV souhaitée"
       format="EEEE, d MMMM yyyy"
+      minDate={getFirstAvailableDate(zone, keyType)}
       disablePast
-      shouldDisableDate={(date: DateTime) =>
-        shouldDisableDate(date, zone, keyType)
-      }
+      shouldDisableDate={(date: DateTime) => shouldDisableDate(date)}
       onChange={(newValue) => {
         handleOnChange(newValue as DateTime);
       }}

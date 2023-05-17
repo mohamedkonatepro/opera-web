@@ -7,43 +7,72 @@ import Tenants from "./Tenants";
 import schema from "./validationSchema";
 import validateForm from "@/utils/validateForm";
 import { ContractorContext } from "@/context/contractor";
+import { getDefaultTenant } from "./utils";
 
 const ContactForm: FC<ContactFormProps> = ({
   formId,
   onSubmit,
   contextValues = {},
+  initialValues = {},
 }) => {
-  const { contractor } = useContext(ContractorContext);
-  const [enteringTenants, setEnteringTenants] = useState<any[]>([]);
-  const [leavingTenants, setLeavingTenants] = useState<any[]>([]);
-
-  // RealEstateOwner
-  const [realEstateOwnerFirstname, setRealEstateOwnerFirstname] = useState("");
-  const [realEstateOwnerLastname, setRealEstateOwnerLastname] = useState("");
-  const [realEstateOwnerFiscalInvariant, setRealEstateOwnerFiscalInvariant] =
-    useState("");
-  const [realEstateOwnerSocialReason, setRealEstateOwnerSocialReason] =
-    useState("");
-
-  // Contractor
-  const [contractorFirstname, setContractorFirstname] = useState("");
-  const [contractorLastname, setContractorLastname] = useState("");
-  const [contractorEmail, setContractorEmail] = useState("");
-
-  const [errors, setErrors] = useState<any>({});
-
   const services =
     contextValues?.services?.map((service: any) => service.code) ?? [];
-  const familyCode = contextValues?.family?.code ?? "";
+
+  const showLeavingTenants = !services.some((service: any) =>
+    ["EDL-E", "EDL-CAT"].includes(service)
+  );
+  const showEnteringTenants = services.some((service: any) =>
+    ["EDL-E", "EDL-ES", "EDL-CAT"].includes(service)
+  );
+
+  const isDiag = contextValues?.family?.code === "DIAG";
+
+  const { contractor } = useContext(ContractorContext);
+  const [enteringTenants, setEnteringTenants] = useState<any[]>(
+    showEnteringTenants
+      ? initialValues?.enteringTenants ?? [getDefaultTenant()]
+      : []
+  );
+  const [leavingTenants, setLeavingTenants] = useState<any[]>(
+    showLeavingTenants && !isDiag
+      ? initialValues?.leavingTenants ?? [getDefaultTenant()]
+      : []
+  );
+
+  // RealEstateOwner
+  const [realEstateOwnerFirstname, setRealEstateOwnerFirstname] = useState(
+    initialValues?.realEstateOwner?.firstname ?? ""
+  );
+  const [realEstateOwnerLastname, setRealEstateOwnerLastname] = useState(
+    initialValues?.realEstateOwner?.lastname ?? ""
+  );
+  const [realEstateOwnerFiscalInvariant, setRealEstateOwnerFiscalInvariant] =
+    useState(initialValues?.realEstateOwner?.fiscalInvariant ?? "");
+  const [realEstateOwnerSocialReason, setRealEstateOwnerSocialReason] =
+    useState(initialValues?.realEstateOwner?.socialReason ?? "");
+
+  // Contractor
+  const [contractorFirstname, setContractorFirstname] = useState(
+    initialValues?.contractor?.firstname ?? ""
+  );
+  const [contractorLastname, setContractorLastname] = useState(
+    initialValues?.contractor?.lastname ?? ""
+  );
+  const [contractorEmail, setContractorEmail] = useState(
+    initialValues?.contractor?.email ?? ""
+  );
+
+  const [errors, setErrors] = useState<any>({});
 
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
     const values = {
-      enteringTenants,
-      leavingTenants,
+      enteringTenants: showEnteringTenants ? enteringTenants : [],
+      leavingTenants: showLeavingTenants ? leavingTenants : [],
       realEstateOwner: {
+        id: initialValues?.realEstateOwner?.id ?? "",
         firstname: realEstateOwnerFirstname,
         lastname: realEstateOwnerLastname,
         fiscalInvariant: realEstateOwnerFiscalInvariant,
@@ -58,7 +87,11 @@ const ContactForm: FC<ContactFormProps> = ({
       },
     };
 
-    const errors = await validateForm(schema, values, { familyCode });
+    const errors = await validateForm(schema, values, {
+      isDiag,
+      showEnteringTenants,
+      showLeavingTenants,
+    });
 
     if (!errors) {
       setErrors({});
@@ -67,16 +100,7 @@ const ContactForm: FC<ContactFormProps> = ({
       setErrors(errors);
     }
   };
-
-  const showLeavingTenants = !services.some((service: any) =>
-    ["EDL-E", "EDL-CAT"].includes(service)
-  );
-  const showEnteringTenants = services.some((service: any) =>
-    ["EDL-E", "EDL-ES", "EDL-CAT"].includes(service)
-  );
-
-  const showFiscalInvariant = familyCode === "DIAG";
-
+  const titleTenant = isDiag ? "Locataire en place" : "Locataire Sortant"
   return (
     <Stack spacing={5} component="form" id={formId} onSubmit={handleOnSubmit}>
       {showEnteringTenants && (
@@ -86,15 +110,19 @@ const ContactForm: FC<ContactFormProps> = ({
           title="Locataire Entrant"
           prefixId="entering-tenant"
           errors={errors.enteringTenants}
+          canDelete={showEnteringTenants && enteringTenants.length > 1}
         />
       )}
       {showLeavingTenants && (
         <Tenants
           tenants={leavingTenants}
           setTenants={setLeavingTenants}
-          title="Locataire Sortant"
+          title={titleTenant}
           prefixId="leaving-tenant"
           errors={errors.leavingTenants}
+          canDelete={
+            (showLeavingTenants && leavingTenants.length > 1) || isDiag
+          }
         />
       )}
       <RealEstateOwner
@@ -106,7 +134,7 @@ const ContactForm: FC<ContactFormProps> = ({
         setFiscalInvariant={setRealEstateOwnerFiscalInvariant}
         socialReason={realEstateOwnerSocialReason}
         setSocialReason={setRealEstateOwnerSocialReason}
-        showFiscalInvariant={showFiscalInvariant}
+        showFiscalInvariant={isDiag}
         errors={errors.realEstateOwner}
       />
       <Contractor

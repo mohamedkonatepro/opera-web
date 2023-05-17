@@ -1,5 +1,6 @@
 import { getRealEstateTypes } from "@/queries/realEstateTypes";
 import { RealEstateType } from "@/types/RealEstateType";
+import { ServiceType } from "@/types/ServiceType";
 import { MenuItem, Skeleton, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
@@ -7,14 +8,23 @@ import { FC } from "react";
 interface RealEstateTypeProps {
   value?: RealEstateType;
   setValue: (value: RealEstateType) => void;
+  serviceType: ServiceType;
 }
 
-const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({ value, setValue }) => {
+const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({
+  value,
+  setValue,
+  serviceType,
+}) => {
   const {
     isLoading,
     error,
     data: realEstateTypes,
-  } = useQuery({ queryKey: ["realEstateTypes"], queryFn: getRealEstateTypes });
+  } = useQuery({
+    queryKey: ["realEstateTypes", serviceType, "purpose"],
+    queryFn: ({ queryKey: [, serviceType, populate] }) =>
+      getRealEstateTypes({ serviceType, populate }),
+  });
 
   if (isLoading) {
     return (

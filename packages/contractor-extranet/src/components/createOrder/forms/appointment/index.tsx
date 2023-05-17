@@ -1,5 +1,5 @@
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { getMovingZone } from "@/queries/movingZone";
 import { MovingZone } from "@/types/MovingZone";
@@ -13,33 +13,53 @@ export interface AppointmentProps {
   formId: string;
   onSubmit: (formState: any) => void;
   contextValues: any;
+  initialValues?: any;
+  setIsButtonAppointmentVisible: (disabled: boolean) => void;
+  submitWithAppointment: boolean;
 }
 
 const AppointmentForm: FC<AppointmentProps> = ({
   formId,
   onSubmit,
   contextValues,
+  initialValues = {},
+  setIsButtonAppointmentVisible,
+  submitWithAppointment,
 }) => {
   const theme = useTheme();
-  const [date, setDate] = useState<DateTime | undefined>();
-  const [movingZones, setMovingZones] = useState<MovingZone>();
-  const [key, setKey] = useState("tenant");
-  const [futherInformations, setFutherInformations] = useState("");
+  const [date, setDate] = useState<DateTime | undefined>(
+    initialValues?.date ?? undefined
+  );
+  const [movingZones, setMovingZones] = useState<MovingZone>(
+    initialValues?.movingZones ?? undefined
+  );
+  const [key, setKey] = useState(initialValues?.key ?? "tenant");
+  const [futherInformations, setFutherInformations] = useState(
+    initialValues?.futherInformations ?? ""
+  );
   const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<
     DateTime | undefined
-  >();
-  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>();
+  >(initialValues?.selectedAppointmentDate ?? undefined);
+  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>(
+    initialValues?.selectedSlot ?? undefined
+  );
 
   const { isLoading } = useQuery<MovingZone>({
-    queryKey: ["getRealEstates", contextValues.realEstate.postalCode],
+    queryKey: ["getRealEstates", contextValues.realEstate?.postalCode],
     queryFn: ({ queryKey }) =>
       getMovingZone({ postalCode: queryKey[1] as string }),
     enabled: true,
     onSuccess: (data) => {
       setMovingZones(data);
     },
+    onError(err: any) {
+      setMovingZones(err);
+    },
   });
 
+  useEffect(() => {
+    setIsButtonAppointmentVisible(selectedSlot !== undefined);
+  }, [selectedSlot, setIsButtonAppointmentVisible]);
   if (isLoading) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>
@@ -53,13 +73,18 @@ const AppointmentForm: FC<AppointmentProps> = ({
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    onSubmit({
+
+    const createOrder = {
       date,
       key: KeyEnumWithStrIndex[key.toUpperCase()],
       futherInformations,
-      selectedAppointmentDate,
-      selectedSlot,
-    });
+      ...(submitWithAppointment && {
+        selectedAppointmentDate,
+        selectedSlot,
+      }),
+    };
+
+    onSubmit(createOrder);
   };
 
   const handleChangeKeysRadio = (value: string): void => {
@@ -84,7 +109,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
       <KeysRadioGroup onChange={handleChangeKeysRadio} />
       <DateAndSlots
         zone={zone}
-        key={key}
+        keyType={key}
         handleChangeDate={handleChangeDate}
         date={date}
         handleSelectAppointmentDate={handleSelectAppointmentDate}

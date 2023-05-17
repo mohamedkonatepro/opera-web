@@ -41,9 +41,10 @@ const BuildingAnnexTypeSelect: FC<BuildingAnnexTypeSelectProps> = ({
       id={id}
       label="Type"
       color="secondary"
-      required
+      required={value !== undefined}
       select
       fullWidth
+      sx={{ minWidth: "150px"}}
       value={value?.id?.toString() ?? ""}
       onChange={(event) => {
         const value = event.target.value.toString();

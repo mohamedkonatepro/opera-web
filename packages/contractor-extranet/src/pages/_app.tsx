@@ -22,7 +22,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import SideBar from "@/components/common/SideBar";
-import { useRouter } from "next/router";
 import { ContractorContextProvider } from "@/context/contractor";
 
 Settings.defaultLocale = "fr";
@@ -79,7 +78,7 @@ export default function MyApp(props: MyAppProps) {
               <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                   <ContractorContextProvider>
-                    <SideBar />
+                    {/* <SideBar /> */}
                     <Component {...pageProps} />
                   </ContractorContextProvider>
                 </Hydrate>

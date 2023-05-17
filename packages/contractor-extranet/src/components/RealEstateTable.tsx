@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import OutlinedButton from "./common/buttons/OutlinedButton";
 import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from "next/router";
+import capitalizeWords from "@/utils/capitalizeWords";
 
 interface RealEstateTableProps {
   realEstates: RealEstate[];
@@ -16,6 +18,9 @@ interface RealEstateTableProps {
 const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
   realEstates,
 }) => {
+  const router = useRouter();
+  const { contractorId } = router.query;
+
   return (
     <Box>
       <TableContainer>
@@ -89,25 +94,29 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
               const tenantName = tenants.map(
                 (tenant) => `${tenant.firstname ?? ""} ${tenant.lastname ?? ""}`
               );
+
+              const createOrderURL = contractorId
+              ? `/create-order?realEstateId=${realEstate.id}&contractorId=${contractorId}`
+              : `/create-order?realEstateId=${realEstate.id}`;
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>
-                    {address} {postalCode} {city}
+                    {capitalizeWords(`${address} ${postalCode} ${city}`)}
                   </TableCell>
-                  <TableCell>{real_estate_type?.name}</TableCell>
+                  <TableCell>{capitalizeWords(real_estate_type?.name)}</TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
                   <TableCell>{staircaseNumber}</TableCell>
                   <TableCell>{surface}</TableCell>
                   <TableCell>
-                    {owner?.firstname} {owner?.lastname}
+                    {capitalizeWords(`${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`)}
                   </TableCell>
-                  <TableCell>{tenantName.join(" ")}</TableCell>
+                  <TableCell>{capitalizeWords(tenantName.join(" "))}</TableCell>
                   <TableCell>
                     <OutlinedButton
                       selected
                       padding="small"
-                      href={`/create-order?realEstateId=${realEstate.id}`}
+                      href={createOrderURL}
                     >
                       Créer <AddIcon sx={{ marginLeft: "5px" }} />
                     </OutlinedButton>

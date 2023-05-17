@@ -7,12 +7,12 @@ type ContractorContextValues = {
   contractor: any;
 };
 
-type ContractContextType = {
+export type ContractorContextType = {
   contractor: any;
   setContractor: (contractor: any) => void;
 };
 
-const ContractorContext = createContext<ContractContextType>({
+const ContractorContext = createContext<ContractorContextType>({
   contractor: null,
   setContractor: () => {},
 });

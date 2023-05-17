@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 export interface DateAndSlotsProps {
   zone: string;
   handleChangeDate: (date?: DateTime) => void;
-  key: string;
+  keyType: string;
   date?: DateTime;
   selectedAppointmentDate?: DateTime;
   handleSelectAppointmentDate: (date: DateTime) => void;
