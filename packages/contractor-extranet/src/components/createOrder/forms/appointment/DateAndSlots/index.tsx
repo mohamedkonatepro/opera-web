@@ -28,6 +28,7 @@ const DateAndSlots: FC<DateAndSlotsProps> = ({
           zone={zone}
           keyType={keyType}
           onChange={handleChangeDate}
+          date={date}
         />
         <ContainedButton
           startIcon={<SearchIcon />}

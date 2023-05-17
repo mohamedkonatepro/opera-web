@@ -89,6 +89,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
 
   const handleChangeKeysRadio = (value: string): void => {
     setKey(value);
+    handleChangeDate(undefined)
   };
   const handleChangeDate = (value: DateTime | undefined): void => {
     setDate(value);
@@ -134,6 +135,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
             bgcolor: "background.paper",
           }}
           multiline
+          value={futherInformations}
           onChange={(event) => {
             setFutherInformations(event.target.value);
           }}

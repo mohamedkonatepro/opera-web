@@ -10,6 +10,7 @@ interface DesiredDatePickerProps {
   zone: string;
   keyType: string;
   onChange: (newValue: DateTime | undefined) => void;
+  date?: DateTime;
 }
 
 const shouldDisableDate = (date: DateTime): boolean => {
@@ -23,6 +24,7 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
   zone,
   keyType,
   onChange,
+  date,
 }) => {
   const handleOnChange = (value: DateTime | undefined) => {
     onChange(value);
@@ -34,6 +36,7 @@ const DesiredDatePicker: FC<DesiredDatePickerProps> = ({
       format="EEEE, d MMMM yyyy"
       minDate={getFirstAvailableDate(zone, keyType)}
       disablePast
+      value={date || null}
       shouldDisableDate={(date: DateTime) => shouldDisableDate(date)}
       onChange={(newValue) => {
         handleOnChange(newValue as DateTime);

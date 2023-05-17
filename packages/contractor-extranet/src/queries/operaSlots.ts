@@ -23,14 +23,14 @@ export const getOperaSlots = async (params: OperaSlotQueryParams) => {
       .join(","),
     roomNumber: params.realEstate.roomNumber,
     postalCode: params.realEstate.postalCode,
-    buildingAnnexCellar: params.realEstate.annexes.filter(
-      (buildingAnnex: any) => buildingAnnex.type.code === "cellar"
+    buildingAnnexCellar: params.realEstate.annexes?.filter(
+      (buildingAnnex: any) => buildingAnnex?.type?.code === "cellar"
     )[0]?.unitReference,
     buildingAnnexParking: params.realEstate.annexes.filter(
-      (buildingAnnex: any) => buildingAnnex.type.code === "parking"
+      (buildingAnnex: any) => buildingAnnex?.type?.code === "parking"
     )[0]?.unitReference,
     buildingAnnexGarage: params.realEstate.annexes.filter(
-      (buildingAnnex: any) => buildingAnnex.type.code === "garage"
+      (buildingAnnex: any) => buildingAnnex?.type?.code === "garage"
     )[0]?.unitReference,
   });
   try {
