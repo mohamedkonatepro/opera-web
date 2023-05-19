@@ -1,6 +1,5 @@
 import { getMyUser } from "@/queries/users";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { FC, PropsWithChildren, createContext, useState } from "react";
 
 type UserContextValues = {
@@ -21,13 +20,14 @@ const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
   const { isLoading } = useQuery({
     queryKey: ["me"],
+    queryFn: getMyUser,
     onSuccess: (data) => {
       setUser(data);
     },
   });
 
   if (isLoading) return <div>Chargement...</div>;
-  if (!user) return <div>Erreur</div>;
+  if (!user) return <div>Non connecté</div>;
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

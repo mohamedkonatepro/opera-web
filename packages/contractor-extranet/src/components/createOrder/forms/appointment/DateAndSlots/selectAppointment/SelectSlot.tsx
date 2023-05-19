@@ -6,9 +6,7 @@ import { DateTime } from "luxon";
 import { getOperaSlots } from "@/queries/operaSlots";
 import OutlinedButton from "@/components/common/buttons/OutlinedButton";
 import { useContext } from "react";
-import { ContractorContext } from "@/context/contractor";
-import { Service } from "@/types/Service";
-import { ServiceOption } from "@/types/ServiceOption";
+import { UserContext } from "@/context/user";
 
 interface SelectSlotProps {
   selectedDate: DateTime;
@@ -25,14 +23,14 @@ const SelectSlot: React.FC<SelectSlotProps> = ({
   disabled,
   contextValues,
 }) => {
-  const contractorContext = useContext(ContractorContext);
+  const userContext = useContext(UserContext);
 
   const { isFetching, isLoading, isSuccess, data } = useQuery<Slot[]>({
     queryKey: ["operaSlots", selectedDate],
     queryFn: ({ queryKey }) =>
       getOperaSlots({
         date: selectedDate,
-        contractor: contractorContext.contractor,
+        contractor: userContext.user.contractor,
         realEstate: contextValues.realEstate,
         servicesAndOptions: contextValues.services,
       }),

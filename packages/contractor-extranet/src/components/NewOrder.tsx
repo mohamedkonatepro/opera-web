@@ -4,11 +4,7 @@ import ContainedButton from "./common/buttons/ContainedButton";
 import { useRouter } from "next/router";
 
 const NewOrder: React.FunctionComponent = () => {
-  const router = useRouter();
-  const { contractorId } = router.query;
-  const createOrderURL = contractorId
-    ? `/create-order?contractorId=${contractorId}`
-    : "/create-order";
+  const createOrderURL = "/create-order";
   return (
     <Paper
       elevation={3}

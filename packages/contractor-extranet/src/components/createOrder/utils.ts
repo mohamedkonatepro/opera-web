@@ -1,4 +1,3 @@
-import { ContractorContextType } from "@/context/contractor";
 import { steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
 
@@ -29,7 +28,7 @@ export const getContextValuesForStep = (
 };
 
 export const getInitialValues = (
-  contractor: ContractorContextType["contractor"],
+  contractor: any,
   realEstate: any
 ) => {
   return steps.reduce((acc, step) => {
@@ -38,7 +37,7 @@ export const getInitialValues = (
         options: contractor?.serviceOptions ?? [],
       };
       return acc;
-    } 
+    }
     if (step.id === "contacts") {
       acc[step.id] = {
         realEstateOwner: {
