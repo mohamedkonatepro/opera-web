@@ -54,7 +54,8 @@ export const getInitialValues = (
         },
       };
       return acc;
-    } if (step.id === "realEstate") {
+    } 
+    if (step.id === "realEstate") {
       acc[step.id] = {
         id: realEstate?.id,
         address: capitalizeWords(realEstate?.address),
@@ -84,7 +85,14 @@ export const getInitialValues = (
         locationGasMeter: capitalizeWords(realEstate?.locationGasMeter),
         electricalReferenceMeasureLocation: realEstate?.electricalReferenceMeasureLocation,
       }
-    } else {
+    }
+    if (step.id === "appointment") {
+      acc[step.id] = {
+        futherInformations: `${realEstate?.observation ?? ''}${realEstate?.observation ? '\n' : ''}${contractor?.observationEdl ?? contractor?.observationDiag ?? ''}`,
+      }
+    }
+    
+    else {
       acc[step.id] = {};
     }
     return acc;

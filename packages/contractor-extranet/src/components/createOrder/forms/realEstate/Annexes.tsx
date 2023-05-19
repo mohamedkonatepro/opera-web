@@ -37,7 +37,7 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
   return (
     <Stack spacing={2} alignItems="start">
       <Typography variant="subtitle1">Annexe</Typography>
-      {annexes.map((annex, index) => {
+      {annexes?.map((annex, index) => {
         return (
           <Stack key={annex.id} spacing={2} direction="row">
             <BuildingAnnexTypeSelect

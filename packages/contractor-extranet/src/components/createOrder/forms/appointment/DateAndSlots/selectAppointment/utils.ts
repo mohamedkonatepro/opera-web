@@ -4,7 +4,11 @@ import { DateTime } from "luxon";
 const hd = new Holidays("FR", "fr");
 
 export const isItemDisabled = (currentDate: DateTime) => {
-  if (currentDate.weekday === 7) return true;
+  const today = DateTime.now().startOf('day');
+
+  if (currentDate <= today || currentDate.weekday === 7) {
+    return true;
+  }
   const holidays = hd.getHolidays(currentDate.year);
   const isHoliday = holidays.some(
     (h) => DateTime.fromJSDate(h.start).toISODate() === currentDate.toISODate()
