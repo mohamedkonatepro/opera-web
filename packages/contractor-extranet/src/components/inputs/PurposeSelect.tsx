@@ -23,8 +23,8 @@ const PurposeSelect: FC<PurposeSelectProps> = ({
     error,
     data: purposes,
   } = useQuery({
-    queryKey: ["purposes", serviceType],
-    queryFn: ({ queryKey: [, serviceType] }) => getPurposes({ serviceType }),
+    queryKey: ["purposes", serviceType.code],
+    queryFn: () => getPurposes({ serviceType: serviceType.code }),
   });
 
   if (isLoading) {

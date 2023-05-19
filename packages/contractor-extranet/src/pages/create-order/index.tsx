@@ -36,10 +36,9 @@ const CreateOrderStepperPage = () => {
     return <div>Erreur</div>;
   }
 
-  return <CreateOrderStepper
-    realEstate={realEstate}
-    serviceTypes={serviceTypes}
-  />;
+  return (
+    <CreateOrderStepper realEstate={realEstate} serviceTypes={serviceTypes} />
+  );
 };
 
 export default CreateOrderStepperPage;

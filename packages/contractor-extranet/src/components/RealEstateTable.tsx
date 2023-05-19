@@ -100,13 +100,17 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                   <TableCell>
                     {capitalizeWords(`${address} ${postalCode} ${city}`)}
                   </TableCell>
-                  <TableCell>{capitalizeWords(real_estate_type?.name)}</TableCell>
+                  <TableCell>
+                    {capitalizeWords(real_estate_type?.name)}
+                  </TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
                   <TableCell>{staircaseNumber}</TableCell>
                   <TableCell>{surface}</TableCell>
                   <TableCell>
-                    {capitalizeWords(`${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`)}
+                    {capitalizeWords(
+                      `${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`
+                    )}
                   </TableCell>
                   <TableCell>{capitalizeWords(tenantName.join(" "))}</TableCell>
                   <TableCell>

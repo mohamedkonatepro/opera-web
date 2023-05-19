@@ -18,7 +18,6 @@ const SelectServices: FC<SelectServicesProps> = (props) => {
     queryFn: () => getFamilies(),
   });
 
-
   if (isLoadingFamilies) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>
@@ -33,12 +32,7 @@ const SelectServices: FC<SelectServicesProps> = (props) => {
     );
   }
 
-  return (
-    <SelectServicesForm
-      families={families}
-      {...props}
-    />
-  );
+  return <SelectServicesForm families={families} {...props} />;
 };
 
 export default SelectServices;

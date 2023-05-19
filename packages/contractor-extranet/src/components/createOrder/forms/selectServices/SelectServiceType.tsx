@@ -13,7 +13,7 @@ import { ServiceType } from "@/types/ServiceType";
 const SelectServiceType: FC<SelectServiceProps> = ({
   selectedServiceType,
   setSelectedServiceType,
-  serviceTypes
+  serviceTypes,
 }) => {
   const theme = useTheme();
 
@@ -31,7 +31,9 @@ const SelectServiceType: FC<SelectServiceProps> = ({
         name="real-estate-type-group"
         value={selectedServiceType.code}
         onChange={(e) => {
-          const serviceType = serviceTypes.find((serviceType) => serviceType.code === e.target.value);
+          const serviceType = serviceTypes.find(
+            (serviceType) => serviceType.code === e.target.value
+          );
           setSelectedServiceType(serviceType as ServiceType);
         }}
       >

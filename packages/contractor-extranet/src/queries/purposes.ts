@@ -11,13 +11,13 @@ interface PurposeQueryParams {
 const getFilters = (serviceType?: string) => {
   const filters: any = {};
   switch (serviceType) {
-    case ServiceType.LIVING: {
+    case "living": {
       filters.code = {
         $contains: "residential",
       };
       break;
     }
-    case ServiceType.TERTIARY: {
+    case "tertiary": {
       filters.code = {
         $notIn: ["common_parts"],
         $notContains: "residential",

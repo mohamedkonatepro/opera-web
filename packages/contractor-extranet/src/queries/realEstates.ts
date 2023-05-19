@@ -11,7 +11,15 @@ interface Filters {
 }
 
 const buildQueryString = (filters: Filters): string => {
-  const { address, buildingReference, unitReference, page, pageSize, firstnameTenant, lastnameTenant } = filters;
+  const {
+    address,
+    buildingReference,
+    unitReference,
+    page,
+    pageSize,
+    firstnameTenant,
+    lastnameTenant,
+  } = filters;
   const queryParams = new URLSearchParams({
     address,
     buildingReference,

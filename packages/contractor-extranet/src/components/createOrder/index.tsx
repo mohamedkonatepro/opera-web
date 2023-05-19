@@ -10,18 +10,22 @@ import StepContent from "../common/stepper/StepContent";
 import { UserContext } from "@/context/user";
 import { ServiceType } from "@/types/ServiceType";
 
-const CreateOrderStepper: React.FC<{realEstate: any, serviceTypes: ServiceType[]}> = ({ realEstate, serviceTypes }) => {
+const CreateOrderStepper: React.FC<{
+  realEstate: any;
+  serviceTypes: ServiceType[];
+}> = ({ realEstate, serviceTypes }) => {
   const userContext = useContext(UserContext);
 
   const router = useRouter();
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
-      router.push(`${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`);
+      router.push(
+        `${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`
+      );
     },
   });
   const [activeStep, setActiveStep] = useState(1);
-
 
   const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] =
     useState(false);
@@ -30,7 +34,9 @@ const CreateOrderStepper: React.FC<{realEstate: any, serviceTypes: ServiceType[]
 
   useEffect(() => {
     setStepStates(
-      getInitialValues(userContext.user.contractor, realEstate, { serviceTypes })
+      getInitialValues(userContext.user.contractor, realEstate, {
+        serviceTypes,
+      })
     );
   }, [userContext.user.contractor, realEstate]);
 

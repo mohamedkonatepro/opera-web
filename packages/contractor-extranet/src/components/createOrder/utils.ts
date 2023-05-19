@@ -13,7 +13,7 @@ export const getContextValuesForStep = (
     case 1: {
       return {
         serviceTypes: otherValues.serviceTypes,
-      }
+      };
     }
     case 2: {
       return {
@@ -52,7 +52,11 @@ export const getInitialValues = (
     if (step.id === "services") {
       acc[step.id] = {
         options: contractor?.serviceOptions ?? [],
-        serviceType: realEstate ? getRealEstateDefaultServiceType(realEstate) : otherValues.serviceTypes.find((serviceType: ServiceType) => serviceType.code === "living"),
+        serviceType: realEstate
+          ? getRealEstateDefaultServiceType(realEstate)
+          : otherValues.serviceTypes.find(
+              (serviceType: ServiceType) => serviceType.code === "living"
+            ),
       };
       return acc;
     }
@@ -67,7 +71,9 @@ export const getInitialValues = (
         },
         contractor: {
           id: realEstate?.contractor?.id,
-          customerReference: capitalizeWords(realEstate?.contractor?.customerReference),
+          customerReference: capitalizeWords(
+            realEstate?.contractor?.customerReference
+          ),
         },
       };
       return acc;
@@ -97,19 +103,22 @@ export const getInitialValues = (
         waterHeatingEnergyType: realEstate?.water_heating_energy_type?.data,
         waterHeatingType: realEstate?.water_heating_type?.data,
         locationHotWater: capitalizeWords(realEstate?.locationHotWater),
-        locationElectricMeter: capitalizeWords(realEstate?.locationElectricMeter),
+        locationElectricMeter: capitalizeWords(
+          realEstate?.locationElectricMeter
+        ),
         locationColdWater: capitalizeWords(realEstate?.locationColdWater),
         locationGasMeter: capitalizeWords(realEstate?.locationGasMeter),
-        electricalReferenceMeasureLocation: realEstate?.electricalReferenceMeasureLocation,
-      }
+        electricalReferenceMeasureLocation:
+          realEstate?.electricalReferenceMeasureLocation,
+      };
     }
     if (step.id === "appointment") {
       acc[step.id] = {
-        futherInformations: `${realEstate?.observation ?? ''}${realEstate?.observation ? '\n' : ''}${contractor?.observationEdl ?? contractor?.observationDiag ?? ''}`,
-      }
-    }
-
-    else {
+        futherInformations: `${realEstate?.observation ?? ""}${
+          realEstate?.observation ? "\n" : ""
+        }${contractor?.observationEdl ?? contractor?.observationDiag ?? ""}`,
+      };
+    } else {
       acc[step.id] = {};
     }
     return acc;

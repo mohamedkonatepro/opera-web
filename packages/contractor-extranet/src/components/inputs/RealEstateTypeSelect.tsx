@@ -21,9 +21,9 @@ const RealEstateTypeSelect: FC<RealEstateTypeProps> = ({
     error,
     data: realEstateTypes,
   } = useQuery({
-    queryKey: ["realEstateTypes", serviceType, "purpose"],
-    queryFn: ({ queryKey: [, serviceType, populate] }) =>
-      getRealEstateTypes({ serviceType, populate }),
+    queryKey: ["realEstateTypes", serviceType.code, "purpose"],
+    queryFn: ({ queryKey: [, , populate] }) =>
+      getRealEstateTypes({ serviceType: serviceType.code, populate }),
   });
 
   if (isLoading) {

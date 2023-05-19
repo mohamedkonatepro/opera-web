@@ -11,13 +11,13 @@ export interface RealEstateTypesParams {
 const getFilters = (serviceType?: string) => {
   const filters: any = {};
   switch (serviceType) {
-    case ServiceType.LIVING: {
+    case "living": {
       filters.code = {
         $notIn: ["common_part", "tertiary_local"],
       };
       break;
     }
-    case ServiceType.TERTIARY: {
+    case "tertiary": {
       filters.code = {
         $in: ["tertiary_local"],
       };

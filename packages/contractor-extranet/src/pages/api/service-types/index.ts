@@ -9,9 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   setAccessToken(req);
   if (req.method === "GET") {
     try {
-      const response = await apiAxiosInstance.get(
-        `/service-types`
-      );
+      const response = await apiAxiosInstance.get(`/service-types`);
       return res.status(200).json(response.data.data.map(formatServiceType));
     } catch (error: any) {
       return handleError(error, res);

@@ -20,16 +20,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         username: data.username,
         contractor: {
           ...data.contractor,
-          serviceOptions: data.contractor.service_options.map((serviceOption: any) => ({
-            ...serviceOption,
-            itemReference: serviceOption.item_reference,
-          })),
-        }
-      }
+          serviceOptions: data.contractor.service_options.map(
+            (serviceOption: any) => ({
+              ...serviceOption,
+              itemReference: serviceOption.item_reference,
+            })
+          ),
+        },
+      };
 
-      return res
-        .status(200)
-        .json(formattedUser);
+      return res.status(200).json(formattedUser);
     } catch (error: any) {
       return handleError(error, res);
     }

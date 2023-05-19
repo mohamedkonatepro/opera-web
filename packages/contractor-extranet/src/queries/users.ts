@@ -6,4 +6,4 @@ export const getMyUser = async () => {
   } catch (error) {
     throw error;
   }
-}
+};

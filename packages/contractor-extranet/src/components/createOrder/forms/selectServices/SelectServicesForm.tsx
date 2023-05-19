@@ -20,6 +20,7 @@ import { SelectServicesFormProps } from "./types";
 import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
 import { ServiceType } from "@/types/ServiceType";
+import { Service } from "@/types/Service";
 
 const getProposedOptions = (
   families: Family[],
@@ -38,6 +39,15 @@ const getProposedOptions = (
   }, [] as ServiceOption[]);
 };
 
+const serviceHasServiceType = (
+  service: Service,
+  selectedServiceType: ServiceType
+) => {
+  return service.serviceTypes.some((serviceType) => {
+    return serviceType.id === selectedServiceType.id;
+  });
+};
+
 const SelectServicesForm: FC<SelectServicesFormProps> = ({
   families,
   formId,
@@ -48,7 +58,9 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
 }) => {
   const theme = useTheme();
 
-  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(initialValues.serviceType);
+  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(
+    initialValues.serviceType
+  );
 
   const [selectedFamily, setSelectedFamily] = useState<number | null>(
     initialValues?.family?.id ?? null
@@ -62,13 +74,21 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     initialValues?.options?.map((option) => option.id) ?? []
   );
 
+  const handleOnChangeServiceType = (serviceType: ServiceType): void => {
+    setSelectedServiceType(serviceType);
+    setSelectedFamily(null);
+    setSelectedServices([]);
+  };
+
   const handleOnChangeAccordion = (family: number) => () => {
     setSelectedFamily(family);
     setSelectedServices([]);
   };
 
-  const handleOnChangeService = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const serviceId = parseInt(event.target.value)
+  const handleOnChangeService = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const serviceId = parseInt(event.target.value);
     setSelectedServices([serviceId]);
     setSelectedOptions([]);
   };
@@ -134,11 +154,22 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       serviceType: selectedServiceType,
     });
   };
+
+  const familiesToShow = useMemo(() => {
+    return families.filter((family) => {
+      return (
+        family.services.filter((service) => {
+          return serviceHasServiceType(service, selectedServiceType);
+        }).length > 0
+      );
+    });
+  }, [families, selectedServiceType]);
+
   return (
     <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
       <SelectServiceType
         selectedServiceType={selectedServiceType}
-        setSelectedServiceType={setSelectedServiceType}
+        setSelectedServiceType={handleOnChangeServiceType}
         serviceTypes={contextValues.serviceTypes}
       />
       <FormControl>
@@ -150,7 +181,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
           Sélectionner le(s) service(s) et ajouter des options
         </FormLabel>
         <Stack spacing={1}>
-          {families.map((family) => {
+          {familiesToShow.map((family) => {
             const isDiag = family?.code === "DIAG";
             const isExpanded = selectedFamily === family.id;
             return (
@@ -187,24 +218,35 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                     <Stack spacing={2} divider={<Divider flexItem />}>
                       {isDiag ? (
                         <FormGroup>
-                          {family.services.map((service) => (
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  color="secondary"
-                                  size="small"
-                                  checked={selectedServices.includes(service.id)}
-                                  onChange={handleOnChangeServiceDiag(service.id)}
-                                  value={service.id}
-                                  name={service.code}
-                                />
-                              }
-                              label={service.name}
-                              disableTypography
-                              sx={{ ...theme.typography.body2 }}
-                              key={service.id}
-                            />
-                          ))}
+                          {family.services
+                            .filter((service) =>
+                              serviceHasServiceType(
+                                service,
+                                selectedServiceType
+                              )
+                            )
+                            .map((service) => (
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    color="secondary"
+                                    size="small"
+                                    checked={selectedServices.includes(
+                                      service.id
+                                    )}
+                                    onChange={handleOnChangeServiceDiag(
+                                      service.id
+                                    )}
+                                    value={service.id}
+                                    name={service.code}
+                                  />
+                                }
+                                label={service.name}
+                                disableTypography
+                                sx={{ ...theme.typography.body2 }}
+                                key={service.id}
+                              />
+                            ))}
                         </FormGroup>
                       ) : (
                         <RadioGroup
@@ -212,22 +254,29 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                           name="services-group"
                           onChange={handleOnChangeService}
                         >
-                          {family.services.map((service) => (
-                            <FormControlLabel
-                              control={
-                                <Radio
-                                  color="secondary"
-                                  size="small"
-                                  name={service.code}
-                                />
-                              }
-                              value={service.id}
-                              label={service.name}
-                              disableTypography
-                              sx={{ ...theme.typography.body2 }}
-                              key={service.id}
-                            />
-                          ))}
+                          {family.services
+                            .filter((service) =>
+                              serviceHasServiceType(
+                                service,
+                                selectedServiceType
+                              )
+                            )
+                            .map((service) => (
+                              <FormControlLabel
+                                control={
+                                  <Radio
+                                    color="secondary"
+                                    size="small"
+                                    name={service.code}
+                                  />
+                                }
+                                value={service.id}
+                                label={service.name}
+                                disableTypography
+                                sx={{ ...theme.typography.body2 }}
+                                key={service.id}
+                              />
+                            ))}
                         </RadioGroup>
                       )}
                       {proposedOptions.length > 0 && (

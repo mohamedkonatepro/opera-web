@@ -8,9 +8,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
   setAccessToken(req);
   if (req.method === "GET") {
-    const { firstname, lastname } = req.query
+    const { firstname, lastname } = req.query;
     try {
-      let url = '/tenants?populate=*&filters[realEstate][id][$null]=false&pagination[pageSize]=100&pagination[page]=1'
+      let url =
+        "/tenants?populate=*&filters[realEstate][id][$null]=false&pagination[pageSize]=100&pagination[page]=1";
       if (firstname) {
         url += `&filters[$or][0][firstname][$containsi]=${firstname}`;
       }
