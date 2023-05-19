@@ -8,6 +8,7 @@ interface Owner {
   fiscalInvariant?: string;
   createdAt: string;
   updatedAt: string;
+  companyName?: string;
 }
 
 export default Owner;

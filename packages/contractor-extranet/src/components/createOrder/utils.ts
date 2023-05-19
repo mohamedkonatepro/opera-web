@@ -1,11 +1,20 @@
+import RealEstate from "@/types/RealEstate";
 import { steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
+import Contractor from "@/types/Contractor";
+import { ServiceType } from "@/types/ServiceType";
 
 export const getContextValuesForStep = (
   activeStep: number,
-  stepStates: any
+  stepStates: any,
+  otherValues: any
 ) => {
   switch (activeStep) {
+    case 1: {
+      return {
+        serviceTypes: otherValues.serviceTypes,
+      }
+    }
     case 2: {
       return {
         services: stepStates.services.services,
@@ -27,14 +36,23 @@ export const getContextValuesForStep = (
   }
 };
 
+const getRealEstateDefaultServiceType = (realEstate: RealEstate) => {
+  if (realEstate.real_estate_type.code === "tertiary_local") return "tertiary";
+  if (realEstate.real_estate_type.code === "common_part") return "common_parts";
+
+  return "living";
+};
+
 export const getInitialValues = (
-  contractor: any,
-  realEstate: any
+  contractor: Contractor,
+  realEstate?: any,
+  otherValues?: any
 ) => {
   return steps.reduce((acc, step) => {
     if (step.id === "services") {
       acc[step.id] = {
         options: contractor?.serviceOptions ?? [],
+        serviceType: realEstate ? getRealEstateDefaultServiceType(realEstate) : otherValues.serviceTypes.find((serviceType: ServiceType) => serviceType.code === "living"),
       };
       return acc;
     }
@@ -53,7 +71,7 @@ export const getInitialValues = (
         },
       };
       return acc;
-    } 
+    }
     if (step.id === "realEstate") {
       acc[step.id] = {
         id: realEstate?.id,
@@ -90,7 +108,7 @@ export const getInitialValues = (
         futherInformations: `${realEstate?.observation ?? ''}${realEstate?.observation ? '\n' : ''}${contractor?.observationEdl ?? contractor?.observationDiag ?? ''}`,
       }
     }
-    
+
     else {
       acc[step.id] = {};
     }

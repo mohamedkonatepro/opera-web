@@ -43,13 +43,12 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   formId,
   onSubmit,
   initialValues,
+  contextValues,
   setSubmitButtonDisabled,
 }) => {
   const theme = useTheme();
 
-  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(
-    initialValues?.serviceType ?? ServiceType.LIVING
-  );
+  const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(initialValues.serviceType);
 
   const [selectedFamily, setSelectedFamily] = useState<number | null>(
     initialValues?.family?.id ?? null
@@ -140,6 +139,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       <SelectServiceType
         selectedServiceType={selectedServiceType}
         setSelectedServiceType={setSelectedServiceType}
+        serviceTypes={contextValues.serviceTypes}
       />
       <FormControl>
         <FormLabel
