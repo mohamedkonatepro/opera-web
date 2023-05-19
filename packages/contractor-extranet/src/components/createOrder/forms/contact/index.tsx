@@ -6,8 +6,8 @@ import Contractor from "./Contractor";
 import Tenants from "./Tenants";
 import schema from "./validationSchema";
 import validateForm from "@/utils/validateForm";
-import { ContractorContext } from "@/context/contractor";
 import { getDefaultTenant } from "./utils";
+const contractor = {}
 
 const ContactForm: FC<ContactFormProps> = ({
   formId,
@@ -27,7 +27,6 @@ const ContactForm: FC<ContactFormProps> = ({
 
   const isDiag = contextValues?.family?.code === "DIAG";
 
-  const { contractor } = useContext(ContractorContext);
   const [enteringTenants, setEnteringTenants] = useState<any[]>(
     showEnteringTenants
       ? initialValues?.enteringTenants ?? [getDefaultTenant()]
