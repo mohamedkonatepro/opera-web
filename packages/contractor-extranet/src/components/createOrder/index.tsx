@@ -1,21 +1,20 @@
 import { createOrder } from "@/queries/orders";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { steps } from "./constants";
 import { getContextValuesForStep, getInitialValues } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
-import { UserContext } from "@/context/user";
 import { ServiceType } from "@/types/ServiceType";
+import Contractor from "@/types/Contractor";
 
 const CreateOrderStepper: React.FC<{
   realEstate: any;
   serviceTypes: ServiceType[];
-}> = ({ realEstate, serviceTypes }) => {
-  const userContext = useContext(UserContext);
-
+  contractor: Contractor;
+}> = ({ realEstate, serviceTypes, contractor }) => {
   const router = useRouter();
 
   const { mutate } = useMutation({
@@ -31,23 +30,30 @@ const CreateOrderStepper: React.FC<{
   const [submitWithAppointment, setSubmitWithAppointment] = useState(false);
   const currentStep = steps[activeStep - 1];
 
+  const [stepStates, setStepStates] = useState(
+    getInitialValues(contractor, realEstate, { serviceTypes })
+  );
+
   useEffect(() => {
     setStepStates(
-      getInitialValues(userContext.user.contractor, realEstate, {
+      getInitialValues(contractor, realEstate, {
         serviceTypes,
       })
     );
-  }, [userContext.user.contractor, realEstate, serviceTypes]);
+  }, [contractor, realEstate, serviceTypes]);
 
-  const [stepStates, setStepStates] = useState(
-    getInitialValues(userContext.user.contractor, realEstate, { serviceTypes })
-  );
 
   const handleNext = (formState: any) => {
-    setStepStates((prevStepStates) => ({
-      ...prevStepStates,
-      [currentStep.id]: formState,
-    }));
+    setStepStates((prevStepStates) => {
+      const newStepStates = { ...prevStepStates };
+      newStepStates[currentStep.id] = formState;
+
+      if (currentStep.id === "services" && !!formState.surface) {
+        newStepStates.realEstate.surface = formState.surface;
+      }
+
+      return newStepStates;
+    });
 
     if (currentStep.id === "appointment") {
       contextValues.appointment = formState;

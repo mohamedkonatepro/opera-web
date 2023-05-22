@@ -1,10 +1,14 @@
 import CreateOrderStepper from "@/components/createOrder";
+import { UserContext } from "@/context/user";
 import { getRealEstate } from "@/queries/realEstates";
 import { getServiceTypes } from "@/queries/serviceTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 const CreateOrderStepperPage = () => {
+  const userContext = useContext(UserContext);
+
   const router = useRouter();
 
   const { realEstateId } = router.query;
@@ -37,7 +41,11 @@ const CreateOrderStepperPage = () => {
   }
 
   return (
-    <CreateOrderStepper realEstate={realEstate} serviceTypes={serviceTypes} />
+    <CreateOrderStepper
+      contractor={userContext.user.contractor}
+      realEstate={realEstate}
+      serviceTypes={serviceTypes}
+    />
   );
 };
 

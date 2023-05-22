@@ -97,5 +97,6 @@ export interface RealEstateFormProps {
 export interface RealEstateFormDisabled {
   realEstate?: {
     purpose?: boolean;
+    surface?: boolean;
   };
 }

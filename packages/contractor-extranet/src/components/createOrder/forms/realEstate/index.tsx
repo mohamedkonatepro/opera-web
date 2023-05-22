@@ -14,7 +14,6 @@ import { HeatingType } from "@/types/HeatingType";
 import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
-import realEstates from "../../../../pages/api/real-estates/index";
 import { nanoid } from "nanoid";
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -113,7 +112,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     setElectricalReferenceMeasureLocation,
   ] = useState(initialValues?.electricalReferenceMeasureLocation ?? "");
 
-  const [disabled, setDisabled] = useState<RealEstateFormDisabled>({});
+  const [disabled, setDisabled] = useState<RealEstateFormDisabled>(
+    contextValues?.disabled ?? {}
+  );
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

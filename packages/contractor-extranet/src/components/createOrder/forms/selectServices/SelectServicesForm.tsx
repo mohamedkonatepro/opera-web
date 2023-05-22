@@ -87,7 +87,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     setSelectedServiceType(serviceType);
     setSelectedFamily(null);
     setSelectedServices([]);
-    setSurface(initialValues?.surface?.toString() ?? "")
+    setSurface(initialValues?.surface?.toString() ?? "");
   };
 
   const handleOnChangeAccordion = (family: number) => () => {
@@ -158,7 +158,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     );
 
     if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
-      window.alert('Devis non implémentée')
+      window.alert("Devis non implémentée");
       return;
     }
 
@@ -167,7 +167,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       services,
       options,
       serviceType: selectedServiceType,
-      surface
+      surface,
     });
   };
 

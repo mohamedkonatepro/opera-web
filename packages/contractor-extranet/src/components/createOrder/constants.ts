@@ -45,4 +45,4 @@ export const steps: StepDefinition[] = [
   },
 ];
 
-export const MIN_SURFACE_FOR_ESTIMATE = 250
+export const MIN_SURFACE_FOR_ESTIMATE = 250;

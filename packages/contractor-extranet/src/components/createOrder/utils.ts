@@ -26,6 +26,11 @@ export const getContextValuesForStep = (
       return {
         services: stepStates.services.services,
         serviceType: stepStates.services.serviceType,
+        disabled: {
+          realEstate: {
+            surface: !!stepStates.services.surface,
+          },
+        },
       };
     }
     case 4: {

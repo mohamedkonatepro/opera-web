@@ -10,6 +10,7 @@ interface PurposeSelectProps {
   setValue: (value: Purpose) => void;
   disabled?: boolean;
   serviceType: ServiceType;
+  required?: boolean;
 }
 
 const PurposeSelect: FC<PurposeSelectProps> = ({
@@ -17,6 +18,7 @@ const PurposeSelect: FC<PurposeSelectProps> = ({
   setValue,
   disabled,
   serviceType,
+  required,
 }) => {
   const {
     isLoading,
@@ -48,6 +50,7 @@ const PurposeSelect: FC<PurposeSelectProps> = ({
       fullWidth
       value={value?.id?.toString() ?? ""}
       disabled={disabled}
+      required={required}
       onChange={(event) => {
         const value = event.target.value.toString();
         const purpose = purposes.find(
