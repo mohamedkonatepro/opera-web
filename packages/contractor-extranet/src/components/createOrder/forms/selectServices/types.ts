@@ -21,6 +21,7 @@ export interface SelectServicesProps {
     family?: Family;
     services?: Service[];
     serviceType: ServiceType;
+    surface?: number;
   };
 }
 

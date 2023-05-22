@@ -44,3 +44,5 @@ export const steps: StepDefinition[] = [
     footer: StepFooterAppointment,
   },
 ];
+
+export const MIN_SURFACE_FOR_ESTIMATE = 250

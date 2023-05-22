@@ -48,7 +48,7 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
           fullWidth
           inputProps={{
             inputMode: "numeric",
-            pattern: "^(?:0|[1-9]\\d*)(?:.\\d+)?$",
+            pattern: "^\\d*\\.?\\d*$",
           }}
           value={surface}
           onChange={(event) => setSurface(event.target.value)}

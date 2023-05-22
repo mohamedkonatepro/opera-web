@@ -8,9 +8,13 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   Radio,
   RadioGroup,
   Stack,
+  TextField,
   useTheme,
 } from "@mui/material";
 import React, { FC, useEffect, useMemo, useState } from "react";
@@ -21,6 +25,7 @@ import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
 import { ServiceType } from "@/types/ServiceType";
 import { Service } from "@/types/Service";
+import { MIN_SURFACE_FOR_ESTIMATE } from "../../constants";
 
 const getProposedOptions = (
   families: Family[],
@@ -74,10 +79,15 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     initialValues?.options?.map((option) => option.id) ?? []
   );
 
+  const [surface, setSurface] = useState<string>(
+    initialValues?.surface?.toString() ?? ""
+  );
+
   const handleOnChangeServiceType = (serviceType: ServiceType): void => {
     setSelectedServiceType(serviceType);
     setSelectedFamily(null);
     setSelectedServices([]);
+    setSurface(initialValues?.surface?.toString() ?? "")
   };
 
   const handleOnChangeAccordion = (family: number) => () => {
@@ -147,11 +157,17 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       selectedOptions.includes(option.id)
     );
 
+    if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
+      window.alert('Devis non implémentée')
+      return;
+    }
+
     onSubmit({
       family,
       services,
       options,
       serviceType: selectedServiceType,
+      surface
     });
   };
 
@@ -172,6 +188,36 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
         setSelectedServiceType={handleOnChangeServiceType}
         serviceTypes={contextValues.serviceTypes}
       />
+      {selectedServiceType.code === "tertiary" && (
+        <FormControl>
+          <FormLabel
+            id="surface-label"
+            sx={{ ...theme.typography.subtitle1, marginBottom: 2 }}
+            focused={false}
+          >
+            Surface du bien
+          </FormLabel>
+          <OutlinedInput
+            id="surface"
+            name="surface"
+            size="small"
+            color="secondary"
+            value={surface}
+            endAdornment={<InputAdornment position="end">m²</InputAdornment>}
+            onChange={(e) => {
+              let value = e.target.value;
+              if (/^\d*\.?\d*$/.test(value)) {
+                setSurface(value);
+              }
+            }}
+            inputProps={{
+              inputMode: "numeric",
+              pattern: "^\\d*\\.?\\d*$",
+            }}
+            sx={{ maxWidth: 122 }}
+          />
+        </FormControl>
+      )}
       <FormControl>
         <FormLabel
           id="services-options-label"

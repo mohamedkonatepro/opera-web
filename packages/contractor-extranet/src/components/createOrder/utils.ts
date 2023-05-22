@@ -58,6 +58,7 @@ export const getInitialValues = (
           : otherValues.serviceTypes.find(
               (serviceType: ServiceType) => serviceType.code === "living"
             ),
+        surface: realEstate?.surface,
       };
       return acc;
     } else if (step.id === "contacts") {
