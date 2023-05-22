@@ -19,7 +19,6 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
   realEstates,
 }) => {
   const router = useRouter();
-  const { contractorId } = router.query;
 
   return (
     <Box>
@@ -95,9 +94,7 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                 (tenant) => `${tenant.firstname ?? ""} ${tenant.lastname ?? ""}`
               );
 
-              const createOrderURL = contractorId
-              ? `/create-order?realEstateId=${realEstate.id}&contractorId=${contractorId}`
-              : `/create-order?realEstateId=${realEstate.id}`;
+              const createOrderURL = `/create-order?realEstateId=${realEstate.id}`;
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>

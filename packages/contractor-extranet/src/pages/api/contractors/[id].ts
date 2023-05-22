@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
-import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
+import { apiAxiosInstance, setAccessToken } from "@/apiUtils/axiosInstance";
 import { formatContractorData } from "@/utils/dataFormattingUtils";
 
 export const getContractor = async (id: string) => {
@@ -13,6 +13,7 @@ export const getContractor = async (id: string) => {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
+  setAccessToken(req);
   try {
     if (req.method === "GET") {
       const jsonData = await getContractor(req.query.id as string);

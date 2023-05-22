@@ -1,4 +1,3 @@
-import { ContractorContext } from "@/context/contractor";
 import { createOrder } from "@/queries/orders";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -10,8 +9,10 @@ import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
 import { useQuery } from '@tanstack/react-query';
 import { getRealEstate } from "@/queries/realEstates";
+import { UserContext } from "@/context/user";
 
 const CreateOrderStepper = () => {
+  const userContext = useContext(UserContext);
   const [realEstate, setRealEstate] = useState<any>({})
   const router = useRouter();
   const { realEstateId } = router.query;
@@ -22,7 +23,6 @@ const CreateOrderStepper = () => {
     },
   });
   const [activeStep, setActiveStep] = useState(1);
-  const { contractor } = useContext(ContractorContext);
 
   useQuery({
     queryKey: ["getRealEstate"],
@@ -40,12 +40,12 @@ const CreateOrderStepper = () => {
 
   useEffect(() => {
     setStepStates(
-      getInitialValues(contractor, realEstate)
+      getInitialValues(userContext.user.contractor, realEstate)
     );
-  }, [contractor, realEstate]);
+  }, [userContext.user.contractor, realEstate]);
 
   const [stepStates, setStepStates] = useState(
-    getInitialValues(contractor, realEstate)
+    getInitialValues(userContext.user.contractor, realEstate)
   );
 
   const handleNext = (formState: any) => {
