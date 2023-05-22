@@ -26,6 +26,12 @@ import { Family } from "@/types/Family";
 import { ServiceType } from "@/types/ServiceType";
 import { Service } from "@/types/Service";
 import { MIN_SURFACE_FOR_ESTIMATE } from "../../constants";
+import HelpDialog from "@/components/common/dialogs/HelpDialog";
+import CancelButton from "@/components/common/buttons/CancelButton";
+import ContainedButton from "@/components/common/buttons/ContainedButton";
+import { useRouter } from "next/router";
+import InfoDialog from "@/components/common/dialogs/InfoDialog";
+import { getTextForEstimateDialog } from "./utils";
 
 const getProposedOptions = (
   families: Family[],
@@ -61,6 +67,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   contextValues,
   setSubmitButtonDisabled,
 }) => {
+  const router = useRouter();
   const theme = useTheme();
 
   const [selectedServiceType, setSelectedServiceType] = useState<ServiceType>(
@@ -82,6 +89,8 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   const [surface, setSurface] = useState<string>(
     initialValues?.surface?.toString() ?? ""
   );
+
+  const [needEstimateDialogOpen, setNeedEstimateDialogOpen] = useState(false);
 
   const handleOnChangeServiceType = (serviceType: ServiceType): void => {
     setSelectedServiceType(serviceType);
@@ -157,8 +166,8 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       selectedOptions.includes(option.id)
     );
 
-    if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
-      window.alert("Devis non implémentée");
+    if ((selectedServiceType.code === "tertiary" && parseInt(surface) >= MIN_SURFACE_FOR_ESTIMATE) || selectedServiceType.code === "common_parts") {
+      setNeedEstimateDialogOpen(true);
       return;
     }
 
@@ -182,20 +191,50 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   }, [families, selectedServiceType]);
 
   return (
-    <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
-      <SelectServiceType
-        selectedServiceType={selectedServiceType}
-        setSelectedServiceType={handleOnChangeServiceType}
-        serviceTypes={contextValues.serviceTypes}
-      />
-      {selectedServiceType.code === "tertiary" && (
+    <>
+      <Stack spacing={5} component="form" onSubmit={handleOnSubmit} id={formId}>
+        <SelectServiceType
+          selectedServiceType={selectedServiceType}
+          setSelectedServiceType={handleOnChangeServiceType}
+          serviceTypes={contextValues.serviceTypes}
+        />
+        {selectedServiceType.code === "tertiary" && (
+          <FormControl>
+            <FormLabel
+              id="surface-label"
+              sx={{ ...theme.typography.subtitle1, marginBottom: 2 }}
+              focused={false}
+            >
+              Surface du bien
+            </FormLabel>
+            <OutlinedInput
+              id="surface"
+              name="surface"
+              size="small"
+              color="secondary"
+              value={surface}
+              endAdornment={<InputAdornment position="end">m²</InputAdornment>}
+              onChange={(e) => {
+                let value = e.target.value;
+                if (/^\d*\.?\d*$/.test(value)) {
+                  setSurface(value);
+                }
+              }}
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "^\\d*\\.?\\d*$",
+              }}
+              sx={{ maxWidth: 122 }}
+            />
+          </FormControl>
+        )}
         <FormControl>
           <FormLabel
-            id="surface-label"
+            id="services-options-label"
             sx={{ ...theme.typography.subtitle1, marginBottom: 2 }}
             focused={false}
           >
-            Surface du bien
+            Sélectionner le(s) service(s) et ajouter des options
           </FormLabel>
           <OutlinedInput
             id="surface"
@@ -218,7 +257,6 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
             sx={{ maxWidth: 122 }}
           />
         </FormControl>
-      )}
       <FormControl>
         <FormLabel
           id="services-options-label"
@@ -258,117 +296,159 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                     )
                   }
                 >
-                  {family.name}
-                </AccordionSummary>
-                <AccordionDetails>
-                  {isExpanded && (
-                    <Stack spacing={2} divider={<Divider flexItem />}>
-                      {isDiag ? (
-                        <FormGroup>
-                          {family.services
-                            .filter((service) =>
-                              serviceHasServiceType(
-                                service,
-                                selectedServiceType
-                              )
-                            )
-                            .map((service) => (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    color="secondary"
-                                    size="small"
-                                    checked={selectedServices.includes(
-                                      service.id
-                                    )}
-                                    onChange={handleOnChangeServiceDiag(
-                                      service.id
-                                    )}
-                                    value={service.id}
-                                    name={service.code}
-                                  />
-                                }
-                                label={service.name}
-                                disableTypography
-                                sx={{ ...theme.typography.body2 }}
-                                key={service.id}
-                              />
-                            ))}
-                        </FormGroup>
+                  <AccordionSummary
+                    sx={{
+                      ...theme.typography.subtitle2,
+                      borderBottom: "1px solid",
+                      borderColor: "border.default",
+                      flexDirection: "row-reverse",
+                      "& .MuiAccordionSummary-expandIconWrapper": {
+                        marginRight: theme.spacing(1.5),
+                      },
+                    }}
+                    expandIcon={
+                      isExpanded ? (
+                        <RadioButtonChecked color="secondary" />
                       ) : (
-                        <RadioGroup
-                          aria-label="services-group"
-                          name="services-group"
-                          onChange={handleOnChangeService}
-                        >
-                          {family.services
-                            .filter((service) =>
-                              serviceHasServiceType(
-                                service,
-                                selectedServiceType
-                              )
-                            )
-                            .map((service) => (
-                              <FormControlLabel
-                                control={
-                                  <Radio
-                                    color="secondary"
-                                    size="small"
-                                    name={service.code}
-                                  />
-                                }
-                                value={service.id}
-                                label={service.name}
-                                disableTypography
-                                sx={{ ...theme.typography.body2 }}
-                                key={service.id}
-                              />
-                            ))}
-                        </RadioGroup>
-                      )}
-                      {proposedOptions.length > 0 && (
-                        <FormControl focused={false}>
-                          <FormLabel
-                            sx={{
-                              ...theme.typography.subtitle2,
-                              marginBottom: 1.5,
-                            }}
-                          >
-                            Ajouter des options
-                          </FormLabel>
+                        <RadioButtonUnchecked color="disabled" />
+                      )
+                    }
+                  >
+                    {family.name}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {isExpanded && (
+                      <Stack spacing={2} divider={<Divider flexItem />}>
+                        {isDiag ? (
                           <FormGroup>
-                            {proposedOptions.map((option: any) => (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    color="secondary"
-                                    size="small"
-                                    checked={selectedOptions.includes(
-                                      option.id
-                                    )}
-                                    onChange={handleOnChangeOption(option.id)}
-                                    value={option.id}
-                                    name={option.code}
-                                  />
-                                }
-                                label={option.name}
-                                disableTypography
-                                sx={{ ...theme.typography.body2 }}
-                                key={option.id}
-                              />
-                            ))}
+                            {family.services
+                              .filter((service) =>
+                                serviceHasServiceType(
+                                  service,
+                                  selectedServiceType
+                                )
+                              )
+                              .map((service) => (
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      color="secondary"
+                                      size="small"
+                                      checked={selectedServices.includes(
+                                        service.id
+                                      )}
+                                      onChange={handleOnChangeServiceDiag(
+                                        service.id
+                                      )}
+                                      value={service.id}
+                                      name={service.code}
+                                    />
+                                  }
+                                  label={service.name}
+                                  disableTypography
+                                  sx={{ ...theme.typography.body2 }}
+                                  key={service.id}
+                                />
+                              ))}
                           </FormGroup>
-                        </FormControl>
-                      )}
-                    </Stack>
-                  )}
-                </AccordionDetails>
-              </Accordion>
-            );
-          })}
-        </Stack>
-      </FormControl>
-    </Stack>
+                        ) : (
+                          <RadioGroup
+                            aria-label="services-group"
+                            name="services-group"
+                            onChange={handleOnChangeService}
+                          >
+                            {family.services
+                              .filter((service) =>
+                                serviceHasServiceType(
+                                  service,
+                                  selectedServiceType
+                                )
+                              )
+                              .map((service) => (
+                                <FormControlLabel
+                                  control={
+                                    <Radio
+                                      color="secondary"
+                                      size="small"
+                                      name={service.code}
+                                    />
+                                  }
+                                  value={service.id}
+                                  label={service.name}
+                                  disableTypography
+                                  sx={{ ...theme.typography.body2 }}
+                                  key={service.id}
+                                />
+                              ))}
+                          </RadioGroup>
+                        )}
+                        {proposedOptions.length > 0 && (
+                          <FormControl focused={false}>
+                            <FormLabel
+                              sx={{
+                                ...theme.typography.subtitle2,
+                                marginBottom: 1.5,
+                              }}
+                            >
+                              Ajouter des options
+                            </FormLabel>
+                            <FormGroup>
+                              {proposedOptions.map((option: any) => (
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      color="secondary"
+                                      size="small"
+                                      checked={selectedOptions.includes(
+                                        option.id
+                                      )}
+                                      onChange={handleOnChangeOption(option.id)}
+                                      value={option.id}
+                                      name={option.code}
+                                    />
+                                  }
+                                  label={option.name}
+                                  disableTypography
+                                  sx={{ ...theme.typography.body2 }}
+                                  key={option.id}
+                                />
+                              ))}
+                            </FormGroup>
+                          </FormControl>
+                        )}
+                      </Stack>
+                    )}
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Stack>
+        </FormControl>
+      </Stack>
+      <InfoDialog
+        open={needEstimateDialogOpen}
+        title="Une demande de devis est nécessaire"
+        text={getTextForEstimateDialog(selectedServiceType)}
+        onClose={() => setNeedEstimateDialogOpen(false)}
+        maxWidth={584}
+        actions={
+          <>
+            <CancelButton onClick={() => setNeedEstimateDialogOpen(false)}>
+              Annuler
+            </CancelButton>
+            <ContainedButton
+              color="secondary"
+              padding="large"
+              onClick={() => {
+                router.push("/create-estimate");
+              }}
+            >
+              Faire une demande de devis
+            </ContainedButton>
+          </>
+        }
+      />
+    </>
   );
 };
 
