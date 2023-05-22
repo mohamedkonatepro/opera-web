@@ -156,7 +156,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     );
 
     if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
-      window.alert('Devis non implémentée')
+      window.alert("Devis non implémentée");
       return;
     }
 
@@ -165,7 +165,7 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       services,
       options,
       serviceType: selectedServiceType,
-      surface
+      surface,
     });
   };
 
