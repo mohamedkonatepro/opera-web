@@ -23,6 +23,7 @@ import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
 import { ServiceType } from "@/types/ServiceType";
 import { Service } from "@/types/Service";
+import { MIN_SURFACE_FOR_ESTIMATE } from "../../constants";
 
 const getProposedOptions = (
   families: Family[],
@@ -79,8 +80,6 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   const [surface, setSurface] = useState<string>(
     initialValues?.surface?.toString() ?? ""
   );
-
-  const [needEstimateDialogOpen, setNeedEstimateDialogOpen] = useState(false);
 
   const handleOnChangeServiceType = (serviceType: ServiceType): void => {
     setSelectedServiceType(serviceType);
@@ -156,12 +155,17 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
       selectedOptions.includes(option.id)
     );
 
+    if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
+      window.alert('Devis non implémentée')
+      return;
+    }
+
     onSubmit({
       family,
       services,
       options,
       serviceType: selectedServiceType,
-      surface,
+      surface
     });
   };
 
@@ -212,35 +216,6 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
           />
         </FormControl>
       )}
-      <FormControl>
-        <FormLabel
-          id="services-options-label"
-          sx={{ ...theme.typography.subtitle1, marginBottom: 2 }}
-          focused={false}
-        >
-          Sélectionner le(s) service(s) et ajouter des options
-        </FormLabel>
-        <OutlinedInput
-          id="surface"
-          name="surface"
-          size="small"
-          color="secondary"
-          value={surface}
-          endAdornment={<InputAdornment position="end">m²</InputAdornment>}
-          onChange={(e) => {
-            let value = e.target.value;
-            const valueAsNumber = Number(value);
-
-            if (!isNaN(valueAsNumber) && valueAsNumber > 0) {
-              setSurface(value);
-            }
-          }}
-          inputProps={{
-            inputMode: "numeric",
-          }}
-          sx={{ maxWidth: 122 }}
-        />
-      </FormControl>
       <FormControl>
         <FormLabel
           id="services-options-label"
