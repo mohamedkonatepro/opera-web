@@ -49,7 +49,7 @@ const RealEstateOwner: FC<RealEstateOwnerFormProps> = ({
           {showFiscalInvariant && (
             <TextField
               id="real-estate-owner-fiscal-invariant"
-              label="Invariant fiscal"
+              label="Identifiant cadastral du local"
               color="secondary"
               fullWidth
               value={fiscalInvariant}

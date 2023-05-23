@@ -1,12 +1,20 @@
-import { ContractorContextType } from "@/context/contractor";
+import RealEstate from "@/types/RealEstate";
 import { steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
+import Contractor from "@/types/Contractor";
+import { ServiceType } from "@/types/ServiceType";
 
 export const getContextValuesForStep = (
   activeStep: number,
-  stepStates: any
+  stepStates: any,
+  otherValues: any
 ) => {
   switch (activeStep) {
+    case 1: {
+      return {
+        serviceTypes: otherValues.serviceTypes,
+      };
+    }
     case 2: {
       return {
         services: stepStates.services.services,
@@ -28,17 +36,30 @@ export const getContextValuesForStep = (
   }
 };
 
+const getRealEstateDefaultServiceType = (realEstate: RealEstate) => {
+  if (realEstate.real_estate_type.code === "tertiary_local") return "tertiary";
+  if (realEstate.real_estate_type.code === "common_part") return "common_parts";
+
+  return "living";
+};
+
 export const getInitialValues = (
-  contractor: ContractorContextType["contractor"],
-  realEstate: any
+  contractor: Contractor,
+  realEstate?: any,
+  otherValues?: any
 ) => {
   return steps.reduce((acc, step) => {
     if (step.id === "services") {
       acc[step.id] = {
         options: contractor?.serviceOptions ?? [],
+        serviceType: realEstate
+          ? getRealEstateDefaultServiceType(realEstate)
+          : otherValues.serviceTypes.find(
+              (serviceType: ServiceType) => serviceType.code === "living"
+            ),
       };
       return acc;
-    } 
+    }
     if (step.id === "contacts") {
       acc[step.id] = {
         realEstateOwner: {
@@ -50,11 +71,13 @@ export const getInitialValues = (
         },
         contractor: {
           id: realEstate?.contractor?.id,
-          customerReference: capitalizeWords(realEstate?.contractor?.customerReference),
+          customerReference: capitalizeWords(
+            realEstate?.contractor?.customerReference
+          ),
         },
       };
       return acc;
-    } 
+    }
     if (step.id === "realEstate") {
       acc[step.id] = {
         id: realEstate?.id,
@@ -80,19 +103,22 @@ export const getInitialValues = (
         waterHeatingEnergyType: realEstate?.water_heating_energy_type?.data,
         waterHeatingType: realEstate?.water_heating_type?.data,
         locationHotWater: capitalizeWords(realEstate?.locationHotWater),
-        locationElectricMeter: capitalizeWords(realEstate?.locationElectricMeter),
+        locationElectricMeter: capitalizeWords(
+          realEstate?.locationElectricMeter
+        ),
         locationColdWater: capitalizeWords(realEstate?.locationColdWater),
         locationGasMeter: capitalizeWords(realEstate?.locationGasMeter),
-        electricalReferenceMeasureLocation: realEstate?.electricalReferenceMeasureLocation,
-      }
+        electricalReferenceMeasureLocation:
+          realEstate?.electricalReferenceMeasureLocation,
+      };
     }
     if (step.id === "appointment") {
       acc[step.id] = {
-        futherInformations: `${realEstate?.observation ?? ''}${realEstate?.observation ? '\n' : ''}${contractor?.observationEdl ?? contractor?.observationDiag ?? ''}`,
-      }
-    }
-    
-    else {
+        futherInformations: `${realEstate?.observation ?? ""}${
+          realEstate?.observation ? "\n" : ""
+        }${contractor?.observationEdl ?? contractor?.observationDiag ?? ""}`,
+      };
+    } else {
       acc[step.id] = {};
     }
     return acc;

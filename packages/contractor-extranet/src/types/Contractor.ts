@@ -1,3 +1,5 @@
+import { ServiceOption } from "./ServiceOption";
+
 interface Contractor {
   id: number;
   customerReference: string;
@@ -22,6 +24,7 @@ interface Contractor {
   active: boolean;
   createdAt: string;
   updatedAt: string;
+  serviceOptions?: ServiceOption[];
 }
 
 export default Contractor;

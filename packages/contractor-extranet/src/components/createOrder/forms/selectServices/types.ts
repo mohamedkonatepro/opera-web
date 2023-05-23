@@ -6,17 +6,21 @@ import { ServiceType } from "@/types/ServiceType";
 export interface SelectServiceProps {
   selectedServiceType: ServiceType;
   setSelectedServiceType: (serviceType: ServiceType) => void;
+  serviceTypes: ServiceType[];
 }
 
 export interface SelectServicesProps {
   formId: string;
+  contextValues: {
+    serviceTypes: ServiceType[];
+  };
   onSubmit: (formState: any) => void;
   setSubmitButtonDisabled: (disabled: boolean) => void;
-  initialValues?: {
+  initialValues: {
     options?: ServiceOption[];
     family?: Family;
     services?: Service[];
-    serviceType?: ServiceType;
+    serviceType: ServiceType;
   };
 }
 

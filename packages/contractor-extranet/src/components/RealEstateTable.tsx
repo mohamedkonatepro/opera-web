@@ -19,7 +19,6 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
   realEstates,
 }) => {
   const router = useRouter();
-  const { contractorId } = router.query;
 
   return (
     <Box>
@@ -95,21 +94,23 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                 (tenant) => `${tenant.firstname ?? ""} ${tenant.lastname ?? ""}`
               );
 
-              const createOrderURL = contractorId
-              ? `/create-order?realEstateId=${realEstate.id}&contractorId=${contractorId}`
-              : `/create-order?realEstateId=${realEstate.id}`;
+              const createOrderURL = `/create-order?realEstateId=${realEstate.id}`;
               return (
                 <TableRow key={realEstate.id}>
                   <TableCell>
                     {capitalizeWords(`${address} ${postalCode} ${city}`)}
                   </TableCell>
-                  <TableCell>{capitalizeWords(real_estate_type?.name)}</TableCell>
+                  <TableCell>
+                    {capitalizeWords(real_estate_type?.name)}
+                  </TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
                   <TableCell>{staircaseNumber}</TableCell>
                   <TableCell>{surface}</TableCell>
                   <TableCell>
-                    {capitalizeWords(`${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`)}
+                    {capitalizeWords(
+                      `${owner?.firstname ?? ""} ${owner?.lastname ?? ""}`
+                    )}
                   </TableCell>
                   <TableCell>{capitalizeWords(tenantName.join(" "))}</TableCell>
                   <TableCell>

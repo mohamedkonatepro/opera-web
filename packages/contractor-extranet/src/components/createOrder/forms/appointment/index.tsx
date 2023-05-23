@@ -89,7 +89,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
 
   const handleChangeKeysRadio = (value: string): void => {
     setKey(value);
-    handleChangeDate(undefined)
+    handleChangeDate(undefined);
   };
   const handleChangeDate = (value: DateTime | undefined): void => {
     setDate(value);

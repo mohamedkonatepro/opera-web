@@ -50,18 +50,21 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
               }}
             />
             {annex.type !== undefined && (
-              <><TextField
-                id={`building-annex-unit-reference-${index}`}
-                label="Numéro de lot"
-                color="secondary"
-                required
-                fullWidth
-                value={annex.unitReference}
-                onChange={(event) => {
-                  const newAnnexes = [...annexes];
-                  newAnnexes[index].unitReference = event.target.value;
-                  setAnnexes(newAnnexes);
-                } } /><TextField
+              <>
+                <TextField
+                  id={`building-annex-unit-reference-${index}`}
+                  label="Numéro de lot"
+                  color="secondary"
+                  required
+                  fullWidth
+                  value={annex.unitReference}
+                  onChange={(event) => {
+                    const newAnnexes = [...annexes];
+                    newAnnexes[index].unitReference = event.target.value;
+                    setAnnexes(newAnnexes);
+                  }}
+                />
+                <TextField
                   id={`building-annex-location-${index}`}
                   label="Localisation"
                   color="secondary"
@@ -78,7 +81,9 @@ const Annexes: FC<AnnexesFormProps> = ({ annexes, setAnnexes }) => {
                     const newAnnexes = [...annexes];
                     newAnnexes[index].location = event.target.value;
                     setAnnexes(newAnnexes);
-                  } } /></>
+                  }}
+                />
+              </>
             )}
             <Box display="flex" alignItems="center" justifyContent="center">
               <IconButton

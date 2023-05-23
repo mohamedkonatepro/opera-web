@@ -1,4 +1,4 @@
-import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
+import { apiAxiosInstance, setAccessToken } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import { MovingZone } from "@/types/MovingZone";
@@ -17,6 +17,7 @@ export const getMovingZoneByPostalCode = async (
 
 const movingZone = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
+  setAccessToken(req);
   if (req.method === "GET") {
     try {
       const { postalCode } = req.query;

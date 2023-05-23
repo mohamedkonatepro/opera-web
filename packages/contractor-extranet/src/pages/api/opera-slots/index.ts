@@ -1,4 +1,4 @@
-import { apiAxiosInstance } from "@/apiUtils/axiosInstance";
+import { apiAxiosInstance, setAccessToken } from "@/apiUtils/axiosInstance";
 import corsMiddleware, { cors } from "@/apiUtils/corsMiddleware";
 import handleError from "@/apiUtils/handleError";
 import Slot from "@/types/Slot";
@@ -14,6 +14,7 @@ export const getOperaSlotsForDate = async (query: any): Promise<Slot[]> => {
 
 const operaSlots = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res, cors);
+  setAccessToken(req);
   if (req.method === "GET") {
     try {
       const slots = await getOperaSlotsForDate(req.query);

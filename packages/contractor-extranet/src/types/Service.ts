@@ -1,4 +1,5 @@
 import { ServiceOption } from "./ServiceOption";
+import { ServiceType } from "./ServiceType";
 
 export interface Service {
   id: number;
@@ -6,4 +7,5 @@ export interface Service {
   code: string;
   item_reference: string;
   options: ServiceOption[];
+  serviceTypes: ServiceType[];
 }
