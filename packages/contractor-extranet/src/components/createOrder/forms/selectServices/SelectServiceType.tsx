@@ -8,14 +8,15 @@ import {
 } from "@mui/material";
 import { SelectServiceProps } from "./types";
 import { FC } from "react";
-import { SERVICE_TYPE_KEY_TO_LABEL } from "./constants";
 import { ServiceType } from "@/types/ServiceType";
 
 const SelectServiceType: FC<SelectServiceProps> = ({
   selectedServiceType,
   setSelectedServiceType,
+  serviceTypes,
 }) => {
   const theme = useTheme();
+
   return (
     <FormControl>
       <FormLabel
@@ -28,21 +29,22 @@ const SelectServiceType: FC<SelectServiceProps> = ({
       <RadioGroup
         aria-labelledby="real-estate-type-group-label"
         name="real-estate-type-group"
-        value={selectedServiceType}
+        value={selectedServiceType.code}
         onChange={(e) => {
-          setSelectedServiceType(
-            ServiceType[e.target.value as keyof typeof ServiceType]
+          const serviceType = serviceTypes.find(
+            (serviceType) => serviceType.code === e.target.value
           );
+          setSelectedServiceType(serviceType as ServiceType);
         }}
       >
-        {Object.keys(ServiceType).map((key) => (
+        {serviceTypes.map((serviceType) => (
           <FormControlLabel
-            value={key}
+            value={serviceType.code}
             control={<Radio color="secondary" />}
-            label={SERVICE_TYPE_KEY_TO_LABEL[key]}
+            label={serviceType.name}
             disableTypography
             sx={{ ...theme.typography.subtitle2 }}
-            key={key}
+            key={serviceType.id}
           />
         ))}
       </RadioGroup>

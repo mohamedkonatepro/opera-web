@@ -22,7 +22,9 @@ const AutocompleteAddress: React.FunctionComponent<
         if (typeof option === "string") {
           return option;
         }
-        return capitalizeWords(`${option.address} ${option.postalCode} ${option.city}`);
+        return capitalizeWords(
+          `${option.address} ${option.postalCode} ${option.city}`
+        );
       }}
       onChange={onAddressChange}
       renderInput={(params) => (

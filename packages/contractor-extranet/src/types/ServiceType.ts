@@ -1,4 +1,7 @@
-export enum ServiceType {
-  LIVING = "LIVING",
-  TERTIARY = "TERTIARY",
+import { Service } from "./Service";
+
+export interface ServiceType {
+  id: string;
+  name: string;
+  code: string;
 }

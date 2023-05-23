@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const response = await apiAxiosInstance.get(
-        `/families?populate=services.service_options`
+        `/families?populate=services.service_options,services.serviceTypes`
       );
       return res.status(200).json(response.data.data.map(formatFamily));
     } catch (error: any) {

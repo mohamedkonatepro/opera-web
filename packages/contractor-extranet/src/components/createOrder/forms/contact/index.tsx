@@ -100,7 +100,7 @@ const ContactForm: FC<ContactFormProps> = ({
       setErrors(errors);
     }
   };
-  const titleTenant = isDiag ? "Locataire en place" : "Locataire Sortant"
+  const titleTenant = isDiag ? "Locataire en place" : "Locataire Sortant";
   return (
     <Stack spacing={5} component="form" id={formId} onSubmit={handleOnSubmit}>
       {showEnteringTenants && (

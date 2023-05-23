@@ -4,20 +4,21 @@ import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import SelectServicesForm from "./SelectServicesForm";
 import { SelectServicesProps } from "./types";
+import { getServiceTypes } from "@/queries/serviceTypes";
 
 const SelectServices: FC<SelectServicesProps> = (props) => {
   const theme = useTheme();
 
   const {
-    isLoading,
-    isSuccess,
+    isLoading: isLoadingFamilies,
+    isSuccess: isSuccessFamilies,
     data: families,
   } = useQuery({
     queryKey: ["families"],
     queryFn: () => getFamilies(),
   });
 
-  if (isLoading) {
+  if (isLoadingFamilies) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>
         Chargement...
@@ -25,7 +26,7 @@ const SelectServices: FC<SelectServicesProps> = (props) => {
     );
   }
 
-  if (!isSuccess || !families) {
+  if (!isSuccessFamilies || !families) {
     return (
       <Typography sx={{ ...theme.typography.subtitle1 }}>Erreur</Typography>
     );

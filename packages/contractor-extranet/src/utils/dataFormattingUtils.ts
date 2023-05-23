@@ -2,14 +2,17 @@ import formatServiceOption from "@/apiUtils/formatData/formatServiceOption";
 
 export const formatRealEstateData = (realEstate: any) => {
   const { id, attributes } = realEstate;
-  const { contractor, owner, real_estate_type, tenants, buildingAnnexes } = attributes;
+  const { contractor, owner, real_estate_type, tenants, buildingAnnexes } =
+    attributes;
   const formattedContractor = formatContractorData(contractor.data);
   const formattedOwner = formatOwnerData(owner.data);
   const formattedRealEstateType = formatRealEstateTypeData(
     real_estate_type.data
   );
   const formattedTenants = tenants.data.map(formatTenantData);
-  const formattedBuildingAnnexes = buildingAnnexes.data.map(formatBuildingAnnexesData);
+  const formattedBuildingAnnexes = buildingAnnexes.data.map(
+    formatBuildingAnnexesData
+  );
   return {
     id,
     ...attributes,

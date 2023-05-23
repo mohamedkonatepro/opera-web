@@ -8,8 +8,10 @@ interface Filters {
 
 export const getTenants = async (filters: Filters): Promise<Tenant[]> => {
   try {
-    const { firstname, lastname } = filters
-    const { data } = await axios.get(`api/tenants?firstname=${firstname}&lastname=${lastname}`);
+    const { firstname, lastname } = filters;
+    const { data } = await axios.get(
+      `api/tenants?firstname=${firstname}&lastname=${lastname}`
+    );
     return data;
   } catch (error) {
     throw error;

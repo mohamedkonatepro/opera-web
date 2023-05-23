@@ -54,13 +54,13 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
   };
 
   const handleInputTenantChange = async (event: any, value: string) => {
-    setSelectedTenant({ firstname: value, lastname: value })
+    setSelectedTenant({ firstname: value, lastname: value });
     setTenantSearchQuery(value);
     if (value.length >= 2) {
       refetchTenantData();
       setQueryEnabled(true);
     } else {
-      setQueryEnabled(false)
+      setQueryEnabled(false);
     }
   };
 
@@ -104,17 +104,17 @@ const RealEstateFilterableList: React.FunctionComponent = () => {
       },
     });
 
-    const { isLoading: isTenantDataLoading, refetch: refetchTenantData } =
+  const { isLoading: isTenantDataLoading, refetch: refetchTenantData } =
     useQuery<Tenant[]>({
       queryKey: ["getTenants"],
       queryFn: () =>
         getTenants({
           firstname: tenantSearchQuery,
-          lastname: tenantSearchQuery
+          lastname: tenantSearchQuery,
         }),
       enabled: queryEnabled,
       onSuccess: (data) => {
-        setTenants(data)
+        setTenants(data);
       },
     });
 

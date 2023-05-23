@@ -12,18 +12,23 @@ interface AutocompleteTenantProps {
   onTenantChange: (event: any, option: any) => void;
 }
 
-const AutocompleteTenant: React.FunctionComponent<
-AutocompleteTenantProps
-> = ({ tenantsData, isLoading, onInputChange, onTenantChange }) => {
+const AutocompleteTenant: React.FunctionComponent<AutocompleteTenantProps> = ({
+  tenantsData,
+  isLoading,
+  onInputChange,
+  onTenantChange,
+}) => {
   return (
     <Autocomplete
-      options={tenantRemoveDuplicates(tenantsData, 'firstname')}
+      options={tenantRemoveDuplicates(tenantsData, "firstname")}
       loading={isLoading}
       getOptionLabel={(option) => {
         if (typeof option === "string") {
           return option;
         }
-        return capitalizeWords(`${option.firstname ?? ""} ${option.lastname ?? ""}`);
+        return capitalizeWords(
+          `${option.firstname ?? ""} ${option.lastname ?? ""}`
+        );
       }}
       onChange={onTenantChange}
       renderInput={(params) => (

@@ -1,37 +1,31 @@
 import { createOrder } from "@/queries/orders";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { steps } from "./constants";
 import { getContextValuesForStep, getInitialValues } from "./utils";
 import { Box, Divider } from "@mui/material";
 import StepsSummary from "../common/stepper/StepsSummary";
 import StepContent from "../common/stepper/StepContent";
-import { useQuery } from '@tanstack/react-query';
-import { getRealEstate } from "@/queries/realEstates";
 import { UserContext } from "@/context/user";
+import { ServiceType } from "@/types/ServiceType";
 
-const CreateOrderStepper = () => {
+const CreateOrderStepper: React.FC<{
+  realEstate: any;
+  serviceTypes: ServiceType[];
+}> = ({ realEstate, serviceTypes }) => {
   const userContext = useContext(UserContext);
-  const [realEstate, setRealEstate] = useState<any>({})
+
   const router = useRouter();
-  const { realEstateId } = router.query;
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
-      router.push(`${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`);
+      router.push(
+        `${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`
+      );
     },
   });
   const [activeStep, setActiveStep] = useState(1);
-
-  useQuery({
-    queryKey: ["getRealEstate"],
-    enabled: !!realEstateId,
-    queryFn: () => getRealEstate(realEstateId as string),
-    onSuccess: (data) => {
-      setRealEstate(data)
-    },
-  });
 
   const [isButtonAppointmentVisible, setIsButtonAppointmentVisible] =
     useState(false);
@@ -40,12 +34,14 @@ const CreateOrderStepper = () => {
 
   useEffect(() => {
     setStepStates(
-      getInitialValues(userContext.user.contractor, realEstate)
+      getInitialValues(userContext.user.contractor, realEstate, {
+        serviceTypes,
+      })
     );
   }, [userContext.user.contractor, realEstate]);
 
   const [stepStates, setStepStates] = useState(
-    getInitialValues(userContext.user.contractor, realEstate)
+    getInitialValues(userContext.user.contractor, realEstate, { serviceTypes })
   );
 
   const handleNext = (formState: any) => {
@@ -70,7 +66,7 @@ const CreateOrderStepper = () => {
   };
 
   const contextValues = useMemo(() => {
-    return getContextValuesForStep(activeStep, stepStates);
+    return getContextValuesForStep(activeStep, stepStates, { serviceTypes });
   }, [activeStep, stepStates]);
 
   useEffect(() => {

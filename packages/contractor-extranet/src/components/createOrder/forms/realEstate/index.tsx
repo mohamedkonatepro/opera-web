@@ -14,7 +14,7 @@ import { HeatingType } from "@/types/HeatingType";
 import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
-import realEstates from '../../../../pages/api/real-estates/index';
+import realEstates from "../../../../pages/api/real-estates/index";
 import { nanoid } from "nanoid";
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
