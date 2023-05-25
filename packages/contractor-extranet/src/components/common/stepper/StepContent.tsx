@@ -3,6 +3,7 @@ import StepFooter from "./StepFooter";
 import StepHeader from "./StepHeader";
 import { FC, useEffect, useState } from "react";
 import { StepContentProps } from "./types";
+import { rest } from "lodash";
 
 const StepContent: FC<StepContentProps> = ({
   step,
@@ -17,6 +18,7 @@ const StepContent: FC<StepContentProps> = ({
   setIsButtonAppointmentVisible,
   submitWithAppointment,
   setSubmitWithAppointment,
+  ...rest
 }) => {
   const StepForm = step.form;
   const StepFooterCurrent = step.footer;
@@ -43,6 +45,7 @@ const StepContent: FC<StepContentProps> = ({
             setSubmitButtonDisabled={setSubmitButtonDisabled}
             setIsButtonAppointmentVisible={setIsButtonAppointmentVisible}
             submitWithAppointment={submitWithAppointment}
+            {...rest}
           />
         </Box>
       </Box>
