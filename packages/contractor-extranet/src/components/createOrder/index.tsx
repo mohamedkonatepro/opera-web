@@ -20,9 +20,7 @@ const CreateOrderStepper: React.FC<{
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
-      router.push(
-        `${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${data.orderId}`
-      );
+      router.push(`/order/${data.orderId}`);
     },
   });
   const [activeStep, setActiveStep] = useState(1);
