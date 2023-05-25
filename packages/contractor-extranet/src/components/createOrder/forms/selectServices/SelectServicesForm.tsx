@@ -206,13 +206,14 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
             endAdornment={<InputAdornment position="end">m²</InputAdornment>}
             onChange={(e) => {
               let value = e.target.value;
-              if (/^\d*\.?\d*$/.test(value)) {
+              const valueAsNumber = Number(value);
+
+              if (!isNaN(valueAsNumber) && valueAsNumber > 0) {
                 setSurface(value);
               }
             }}
             inputProps={{
               inputMode: "numeric",
-              pattern: "^\\d*\\.?\\d*$",
             }}
             sx={{ maxWidth: 122 }}
           />

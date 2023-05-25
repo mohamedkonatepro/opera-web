@@ -49,10 +49,16 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
           fullWidth
           inputProps={{
             inputMode: "numeric",
-            pattern: "^\\d*\\.?\\d*$",
           }}
           value={surface}
-          onChange={(event) => setSurface(event.target.value)}
+          onChange={(event) => {
+            let value = event.target.value;
+            const valueAsNumber = Number(value);
+
+            if (!isNaN(valueAsNumber) && valueAsNumber > 0) {
+              setSurface(value);
+            }
+          }}
           disabled={disabled?.surface}
         />
       </Stack>
