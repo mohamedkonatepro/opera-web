@@ -36,7 +36,7 @@ const CreateOrderStepper: React.FC<{
         serviceTypes,
       })
     );
-  }, [userContext.user.contractor, realEstate]);
+  }, [userContext.user.contractor, realEstate, serviceTypes]);
 
   const [stepStates, setStepStates] = useState(
     getInitialValues(userContext.user.contractor, realEstate, { serviceTypes })
