@@ -15,7 +15,14 @@ interface DesiredDatePickerProps {
 
 const shouldDisableDate = (date: DateTime): boolean => {
   const isSunday = date.weekday === 7;
+  const allHolidays = holidays.getHolidays();
+  const pentecostMonday = allHolidays.find(holiday => holiday.rule === "easter 50");
+
   const isHoliday = holidays.isHoliday(date.toISODate());
+
+  if (pentecostMonday && pentecostMonday?.start.toDateString() === new Date(date.toISODate()).toDateString()) {
+    return false
+  }
 
   return isSunday || !!isHoliday;
 };
