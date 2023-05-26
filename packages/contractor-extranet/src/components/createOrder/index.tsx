@@ -27,7 +27,6 @@ const CreateOrderStepper: React.FC<{
   contractor: Contractor;
 }> = ({ realEstate, serviceTypes, contractor }) => {
   const router = useRouter();
-
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
@@ -47,11 +46,11 @@ const CreateOrderStepper: React.FC<{
 
   useEffect(() => {
     setStepStates(
-      getInitialValues(contractor, realEstate, {
+      getInitialValues(userContext.user.contractor, realEstate, {
         serviceTypes,
       })
     );
-  }, [contractor, realEstate, serviceTypes]);
+  }, [userContext.user.contractor, realEstate, serviceTypes]);
 
   const [needEstimateDialogOpen, setNeedEstimateDialogOpen] = useState(false);
 
