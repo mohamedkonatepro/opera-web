@@ -59,8 +59,7 @@ export const getInitialValues = (
             ),
       };
       return acc;
-    }
-    if (step.id === "contacts") {
+    } else if (step.id === "contacts") {
       acc[step.id] = {
         realEstateOwner: {
           id: realEstate?.owner?.id,
@@ -77,8 +76,7 @@ export const getInitialValues = (
         },
       };
       return acc;
-    }
-    if (step.id === "realEstate") {
+    } else if (step.id === "realEstate") {
       acc[step.id] = {
         id: realEstate?.id,
         address: capitalizeWords(realEstate?.address),
@@ -111,8 +109,7 @@ export const getInitialValues = (
         electricalReferenceMeasureLocation:
           realEstate?.electricalReferenceMeasureLocation,
       };
-    }
-    if (step.id === "appointment") {
+    } else if (step.id === "appointment") {
       acc[step.id] = {
         futherInformations: `${realEstate?.observation ?? ""}${
           realEstate?.observation ? "\n" : ""
