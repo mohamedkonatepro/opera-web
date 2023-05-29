@@ -4,17 +4,25 @@ import formatServiceType from "./formatServiceType";
 
 const formatService = (service: any): Service => {
   const { id, attributes } = service;
-  const { name, code, item_reference, service_options, serviceTypes } =
-    attributes;
+  const {
+    name,
+    code,
+    item_reference,
+    service_options,
+    serviceTypes,
+    position,
+  } = attributes;
   const formattedServiceOptions =
     service_options?.data?.map(formatServiceOption) ?? [];
 
   const formattedServiceTypes =
     serviceTypes?.data?.map(formatServiceType) ?? [];
+
   return {
     id,
     name,
     code,
+    position,
     item_reference,
     options: formattedServiceOptions,
     serviceTypes: formattedServiceTypes,
