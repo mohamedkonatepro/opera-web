@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { SelectServiceProps } from "./types";
-import { FC } from "react";
+import React, { FC } from "react";
 import { ServiceType } from "@/types/ServiceType";
 
 const SelectServiceType: FC<SelectServiceProps> = ({
@@ -37,15 +37,17 @@ const SelectServiceType: FC<SelectServiceProps> = ({
           setSelectedServiceType(serviceType as ServiceType);
         }}
       >
-        {serviceTypes.map((serviceType) => (
-          <FormControlLabel
-            value={serviceType.code}
-            control={<Radio color="secondary" />}
-            label={serviceType.name}
-            disableTypography
-            sx={{ ...theme.typography.subtitle2 }}
-            key={serviceType.id}
-          />
+        {serviceTypes
+          .filter((serviceType) => serviceType.code === 'living') // To be deleted for create estimate
+          .map((serviceType) => (
+            <FormControlLabel
+              value={serviceType.code}
+              control={<Radio color="secondary" />}
+              label={serviceType.name}
+              disableTypography
+              sx={{ ...theme.typography.subtitle2 }}
+              key={serviceType.id}
+            />
         ))}
       </RadioGroup>
     </FormControl>
