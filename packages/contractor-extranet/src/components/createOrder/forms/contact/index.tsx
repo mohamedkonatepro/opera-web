@@ -28,15 +28,23 @@ const ContactForm: FC<ContactFormProps> = ({
 
   const isDiag = contextValues?.family?.code === "DIAG";
 
+  const completeLeavingTenantFields = services.some((service: any) =>
+    ["EDL-S", "EDL-ES", "EDL-PVS", "EDL-CS"].includes(service)
+  );
+
+  const completeEnteringTenantFields = services.some((service: any) =>
+    ["EDL-CAT"].includes(service)
+  );
+
   const [enteringTenants, setEnteringTenants] = useState<any[]>(
-    showEnteringTenants
+    completeEnteringTenantFields
       ? initialValues?.enteringTenants ?? [getDefaultTenant()]
-      : []
+      : [getDefaultTenant()]
   );
   const [leavingTenants, setLeavingTenants] = useState<any[]>(
-    showLeavingTenants && !isDiag
+    completeLeavingTenantFields || isDiag
       ? initialValues?.leavingTenants ?? [getDefaultTenant()]
-      : []
+      : [getDefaultTenant()]
   );
 
   // RealEstateOwner

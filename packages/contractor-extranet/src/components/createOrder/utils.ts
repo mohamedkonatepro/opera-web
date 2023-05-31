@@ -3,6 +3,7 @@ import { steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
 import Contractor from "@/types/Contractor";
 import { ServiceType } from "@/types/ServiceType";
+import { transformIncomingTenants } from "./forms/contact/utils";
 
 export const getContextValuesForStep = (
   activeStep: number,
@@ -61,6 +62,8 @@ export const getInitialValues = (
       return acc;
     } else if (step.id === "contacts") {
       acc[step.id] = {
+        enteringTenants: transformIncomingTenants(realEstate?.tenants),
+        leavingTenants: transformIncomingTenants(realEstate?.tenants),
         realEstateOwner: {
           id: realEstate?.owner?.id,
           firstname: capitalizeWords(realEstate?.owner?.firstname),

@@ -9,3 +9,12 @@ export const getDefaultTenant = (): TenantFormValues => ({
   email: "",
   phoneNumber: "",
 });
+
+export const transformIncomingTenants = (tenants: Tenant[]): TenantFormValues[] => {
+  return tenants
+    .filter((tenant) => tenant.tenant_type.code === "incoming")
+    .map((tenant) => {
+      const { mobileNumber, id, ...rest } = tenant;
+      return { phoneNumber: mobileNumber, id: id.toString(), ...rest };
+    });
+};

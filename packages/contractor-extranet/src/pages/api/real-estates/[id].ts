@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         "populate[2]": "contractor",
         "populate[3]": "floor",
         "populate[4]": "purpose",
-        "populate[5]": "tenants",
+        "populate[5]": "tenants.tenant_type",
         "populate[6]": "owner",
         "populate[7]": "moving_zone",
         "populate[8]": "heating_energy_type",
