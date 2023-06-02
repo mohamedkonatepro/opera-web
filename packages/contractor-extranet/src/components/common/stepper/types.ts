@@ -9,8 +9,8 @@ export interface StepDefinition {
     contextValues: any;
     initialValues: any;
     setSubmitButtonDisabled: (disabled: boolean) => void;
-    setIsButtonAppointmentVisible: (disabled: boolean) => void;
-    submitWithAppointment: boolean;
+    setIsButtonAppointmentVisible?: (disabled: boolean) => void;
+    submitWithAppointment?: boolean;
     [key: string]: any;
   }>;
   footer: React.FC<StepFooterProps & StepFooterAppointmentProps>;

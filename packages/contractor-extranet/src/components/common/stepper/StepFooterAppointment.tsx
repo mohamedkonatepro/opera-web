@@ -22,7 +22,7 @@ const StepFooterAppointment: FC<StepFooterAppointmentProps> = ({
           form={formId}
           padding="large"
           selected
-          onClick={() => setSubmitWithAppointment(false)}
+          onClick={() => setSubmitWithAppointment?.(false)}
         >
           Continuer sans rendez-vous
         </OutlinedButton>
@@ -33,7 +33,7 @@ const StepFooterAppointment: FC<StepFooterAppointmentProps> = ({
             padding="small"
             sx={{ minWidth: "130px", marginLeft: "12px" }}
             form={formId}
-            onClick={() => setSubmitWithAppointment(true)}
+            onClick={() => setSubmitWithAppointment?.(true)}
           >
             Valider le RDV
           </ContainedButton>
