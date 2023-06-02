@@ -2,7 +2,7 @@ import { FC, useContext, useState } from "react";
 import { ContactFormProps } from "./types";
 import { Stack } from "@mui/material";
 import RealEstateOwner from "./RealEstateOwner";
-import Contractor from "./Contractor";
+import Contractor from "../../../common/form/Contractor";
 import Tenants from "./Tenants";
 import schema from "./validationSchema";
 import validateForm from "@/utils/validateForm";

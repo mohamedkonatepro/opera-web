@@ -35,10 +35,10 @@ export interface StepContentProps {
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;
-  isButtonAppointmentVisible: boolean;
-  setIsButtonAppointmentVisible: (disabled: boolean) => void;
-  submitWithAppointment: boolean;
-  setSubmitWithAppointment: (disabled: boolean) => void;
+  isButtonAppointmentVisible?: boolean;
+  setIsButtonAppointmentVisible?: (disabled: boolean) => void;
+  submitWithAppointment?: boolean;
+  setSubmitWithAppointment?: (disabled: boolean) => void;
   [key: string]: any;
 }
 
@@ -53,6 +53,6 @@ export interface StepFooterProps {
 export interface StepFooterAppointmentProps {
   formId: string;
   handleBack: () => void;
-  isButtonAppointmentVisible: boolean;
-  setSubmitWithAppointment: (disabled: boolean) => void;
+  isButtonAppointmentVisible?: boolean;
+  setSubmitWithAppointment?: (disabled: boolean) => void;
 }

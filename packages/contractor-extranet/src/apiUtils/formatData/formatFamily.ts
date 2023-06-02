@@ -2,7 +2,10 @@ import { Family } from "@/types/Family";
 import formatService from "./formatService";
 import { Service } from "@/types/Service";
 
-const formatFamily = (family: any): Family => {
+const formatFamily = (family: any): Family | null => {
+  if (!family) {
+    return null
+  }
   const { id, attributes } = family;
   const { name, code, services } = attributes;
 

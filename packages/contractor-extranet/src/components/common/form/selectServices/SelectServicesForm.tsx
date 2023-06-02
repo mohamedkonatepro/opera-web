@@ -127,11 +127,11 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   useEffect(() => {
     const initialOptionsIds =
       initialValues?.options?.map((option) => option.id) ?? [];
-    setSelectedOptions(
-      proposedOptions
-        .filter((option) => initialOptionsIds.includes(option.id))
-        .map((option) => option.id)
-    );
+      setSelectedOptions(
+        proposedOptions
+          .filter((option) => initialOptionsIds.includes(option.id))
+          .map((option) => option.id)
+      );
   }, [proposedOptions, initialValues?.options]);
 
   useEffect(() => {
@@ -337,6 +337,9 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
                                     color="secondary"
                                     size="small"
                                     name={service.code}
+                                    checked={selectedServices.includes(
+                                      service.id
+                                    )}
                                   />
                                 }
                                 value={service.id}

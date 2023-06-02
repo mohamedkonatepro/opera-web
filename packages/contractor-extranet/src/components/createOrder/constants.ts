@@ -4,7 +4,7 @@ import { StepDefinition } from "../common/stepper/types";
 import AppointmentForm from "./forms/appointment";
 import ContactForm from "./forms/contact";
 import RealEstateForm from "./forms/realEstate";
-import SelectServices from "./forms/selectServices";
+import SelectServices from "../common/form/selectServices";
 
 export const steps: StepDefinition[] = [
   {

@@ -11,6 +11,9 @@ export const getDefaultTenant = (): TenantFormValues => ({
 });
 
 export const transformIncomingTenants = (tenants: Tenant[]): TenantFormValues[] => {
+  if (!tenants) {
+    return []
+  }
   return tenants
     .filter((tenant) => tenant.tenant_type.code === "incoming")
     .map((tenant) => {

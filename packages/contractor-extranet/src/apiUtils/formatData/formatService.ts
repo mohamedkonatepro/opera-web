@@ -1,6 +1,7 @@
 import { Service } from "@/types/Service";
 import formatServiceOption from "./formatServiceOption";
 import formatServiceType from "./formatServiceType";
+import formatFamily from "./formatFamily";
 
 const formatService = (service: any): Service => {
   const { id, attributes } = service;
@@ -10,6 +11,7 @@ const formatService = (service: any): Service => {
     item_reference,
     service_options,
     serviceTypes,
+    family,
     position,
   } = attributes;
   const formattedServiceOptions =
@@ -17,6 +19,8 @@ const formatService = (service: any): Service => {
 
   const formattedServiceTypes =
     serviceTypes?.data?.map(formatServiceType) ?? [];
+
+  const formattedFamily = formatFamily(family?.data);
 
   return {
     id,
@@ -26,6 +30,7 @@ const formatService = (service: any): Service => {
     item_reference,
     options: formattedServiceOptions,
     serviceTypes: formattedServiceTypes,
+    family: formattedFamily,
   };
 };
 

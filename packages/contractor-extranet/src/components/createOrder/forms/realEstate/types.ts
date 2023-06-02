@@ -7,17 +7,6 @@ import { ServiceType } from "@/types/ServiceType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 
-export interface AddressFormProps {
-  address: string;
-  city: string;
-  postalCode: string;
-  additionalAddress: string;
-  setAddress: (address: string) => void;
-  setCity: (city: string) => void;
-  setPostalCode: (postalCode: string) => void;
-  setAdditionalAddress: (additionalAddress: string) => void;
-}
-
 export interface RealEstateInformationFormProps {
   realEstateType?: RealEstateType;
   purpose?: Purpose;
@@ -35,19 +24,6 @@ export interface RealEstateInformationFormProps {
   setObservation: (observation: string) => void;
   serviceType: ServiceType;
   disabled: RealEstateFormDisabled["realEstate"];
-}
-
-export interface UnitFormProps {
-  buildingReference: string;
-  unitReference: string;
-  mandateReference: string;
-  leaseReference: string;
-  buildingYear: string;
-  setBuildingReference: (buildingReference: string) => void;
-  setUnitReference: (unitReference: string) => void;
-  setMandateReference: (mandateReference: string) => void;
-  setLeaseReference: (leaseReference: string) => void;
-  setBuildingYear: (buildingYear: string) => void;
 }
 
 export interface MeterLocationFormProps {
@@ -80,11 +56,6 @@ export interface EnergyFormProps {
     heatingType: boolean;
     waterHeatingType: boolean;
   };
-}
-
-export interface AnnexesFormProps {
-  annexes: any[];
-  setAnnexes: (annexes: any[]) => void;
 }
 
 export interface RealEstateFormProps {

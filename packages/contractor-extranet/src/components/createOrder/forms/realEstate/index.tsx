@@ -1,10 +1,8 @@
 import { Stack } from "@mui/material";
-import Address from "./Address";
 import RealEstate from "./RealEstate";
-import Annexes from "./Annexes";
+import Annexes from "../../../common/form/Annexes";
 import Energy from "./Energy";
 import MeterLocation from "./MeterLocation";
-import Unit from "./Unit";
 import { FC, useMemo, useState } from "react";
 import { RealEstateFormDisabled, RealEstateFormProps } from "./types";
 import { RealEstateType } from "@/types/RealEstateType";
@@ -15,6 +13,8 @@ import { HeatingEnergyType } from "@/types/HeatingEnergyType";
 import { WaterHeatingEnergyType } from "@/types/WaterHeatingEnergyType";
 import { WaterHeatingType } from "@/types/WaterHeatingType";
 import { nanoid } from "nanoid";
+import Address from "@/components/common/form/Address";
+import Unit from "@/components/common/form/Unit";
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
   formId,

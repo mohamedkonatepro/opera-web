@@ -62,12 +62,3 @@ export interface RealEstateOwnerFormProps {
     socialReason?: string;
   };
 }
-
-export interface ContractorFormProps {
-  firstname: string;
-  lastname: string;
-  email: string;
-  setFirstname: (firstname: string) => void;
-  setLastname: (lastname: string) => void;
-  setEmail: (email: string) => void;
-}
