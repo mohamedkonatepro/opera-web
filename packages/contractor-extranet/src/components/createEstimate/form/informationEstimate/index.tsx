@@ -1,4 +1,12 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup, Stack, Typography, useTheme } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { FC, useState } from "react";
 import { Floor } from "@/types/Floor";
 import { Purpose } from "@/types/Purpose";
@@ -58,8 +66,8 @@ const InformationEstimateForm: FC<any> = () => {
   const serviceType: ServiceType = {
     id: "1",
     name: "Habitation",
-    code: "living"
-  }
+    code: "living",
+  };
 
   const handleChangeCurrentOccupationRadio = (value: string): void => {
     setOccupation(value);
@@ -108,7 +116,9 @@ const InformationEstimateForm: FC<any> = () => {
 
       <Annexes annexes={annexes} setAnnexes={setAnnexes} />
 
-      <CurrentOccupationRadioGroup onChange={handleChangeCurrentOccupationRadio}  />
+      <CurrentOccupationRadioGroup
+        onChange={handleChangeCurrentOccupationRadio}
+      />
 
       <MaxInterventionDatePicker
         onChange={handleChangeDate}
@@ -124,7 +134,7 @@ const InformationEstimateForm: FC<any> = () => {
         email={contractorEmail}
         setEmail={setContractorEmail}
       />
-    </Stack>  
+    </Stack>
   );
 };
 

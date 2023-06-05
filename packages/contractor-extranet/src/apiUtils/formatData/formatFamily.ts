@@ -4,7 +4,7 @@ import { Service } from "@/types/Service";
 
 const formatFamily = (family: any): Family | null => {
   if (!family) {
-    return null
+    return null;
   }
   const { id, attributes } = family;
   const { name, code, services } = attributes;

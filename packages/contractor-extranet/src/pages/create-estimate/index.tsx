@@ -40,7 +40,11 @@ const CreateEstimateStepperPage = () => {
     queryFn: () => getRealEstate(realEstateId as string),
   });
 
-  if (isLoadingServices || (isLoadingRealEstate && !!realEstateId) || isLoadingServiceTypes) {
+  if (
+    isLoadingServices ||
+    (isLoadingRealEstate && !!realEstateId) ||
+    isLoadingServiceTypes
+  ) {
     return <div>Chargement...</div>;
   }
 

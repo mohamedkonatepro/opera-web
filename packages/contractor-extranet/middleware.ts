@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/order")) {
-    const id = request.nextUrl.pathname.split('/')[2];
+    const id = request.nextUrl.pathname.split("/")[2];
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_OG_EXTRANET_URL}/ordremission.asp?numcom=${id}`
     );
@@ -13,5 +13,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/order/:id',
+  matcher: ["/order/:id*"],
 };

@@ -24,23 +24,30 @@ const CreateEstimateStepper: React.FC<{
   contractor: Contractor;
 }> = ({ realEstate, servicesData, serviceTypes, contractor }) => {
   const router = useRouter();
-  const { serviceType, services, options, surface } = router.query
+  const { serviceType, services, options, surface } = router.query;
 
-  const queryParams = useMemo(() => ({
-    serviceType: typeof serviceType === 'string' ? parseInt(serviceType) : 0,
-    services: typeof services === 'string' ? services.split(",").map(service => parseInt(service)) : [],
-    options: typeof options === 'string' ? options.split(",").map(option => parseInt(option)) : [],
-    surface: typeof surface === 'string' ? parseInt(surface) : 0
-  }), [serviceType, services, options, surface]);
-  
+  const queryParams = useMemo(
+    () => ({
+      serviceType: typeof serviceType === "string" ? parseInt(serviceType) : 0,
+      services:
+        typeof services === "string"
+          ? services.split(",").map((service) => parseInt(service))
+          : [],
+      options:
+        typeof options === "string"
+          ? options.split(",").map((option) => parseInt(option))
+          : [],
+      surface: typeof surface === "string" ? parseInt(surface) : 0,
+    }),
+    [serviceType, services, options, surface]
+  );
+
   const [activeStep, setActiveStep] = useState(2);
 
   const currentStep = steps[activeStep - 1];
 
   useEffect(() => {
-    setStepStates(
-      getInitialValues(servicesData, queryParams)
-    );
+    setStepStates(getInitialValues(servicesData, queryParams));
   }, [queryParams, servicesData]);
 
   const [stepStates, setStepStates] = useState(
@@ -66,9 +73,13 @@ const CreateEstimateStepper: React.FC<{
   };
 
   const contextValues = useMemo(() => {
-    return getContextValuesForStep(activeStep, stepStates, { serviceTypes }, queryParams);
+    return getContextValuesForStep(
+      activeStep,
+      stepStates,
+      { serviceTypes },
+      queryParams
+    );
   }, [activeStep, stepStates]);
-
 
   return (
     <Box display="flex" height={1} width={1}>

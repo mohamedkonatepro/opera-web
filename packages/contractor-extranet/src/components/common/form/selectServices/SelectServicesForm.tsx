@@ -23,7 +23,6 @@ import { ServiceOption } from "@/types/ServiceOption";
 import { Family } from "@/types/Family";
 import { ServiceType } from "@/types/ServiceType";
 import { Service } from "@/types/Service";
-import { MIN_SURFACE_FOR_ESTIMATE } from "../../constants";
 
 const getProposedOptions = (
   families: Family[],
@@ -126,11 +125,11 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
   useEffect(() => {
     const initialOptionsIds =
       initialValues?.options?.map((option) => option.id) ?? [];
-      setSelectedOptions(
-        proposedOptions
-          .filter((option) => initialOptionsIds.includes(option.id))
-          .map((option) => option.id)
-      );
+    setSelectedOptions(
+      proposedOptions
+        .filter((option) => initialOptionsIds.includes(option.id))
+        .map((option) => option.id)
+    );
   }, [proposedOptions, initialValues?.options]);
 
   useEffect(() => {
@@ -154,11 +153,6 @@ const SelectServicesForm: FC<SelectServicesFormProps> = ({
     const options = proposedOptions.filter((option) =>
       selectedOptions.includes(option.id)
     );
-
-    if (parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE) {
-      window.alert("Devis non implémentée");
-      return;
-    }
 
     onSubmit({
       family,

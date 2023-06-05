@@ -19,7 +19,11 @@ const shouldDisableDate = (date: DateTime): boolean => {
   return isSunday || !!isHoliday;
 };
 
-const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({ onChange, futherInformations, setFutherInformations }) => {
+const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({
+  onChange,
+  futherInformations,
+  setFutherInformations,
+}) => {
   const theme = useTheme();
   const handleOnChange = (value: DateTime | undefined) => {
     onChange(value);
@@ -27,13 +31,10 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({ onChang
 
   return (
     <Stack spacing={2}>
-      <Typography
-        variant="subtitle1"
-        sx={{ ...theme.typography.subtitle1 }}
-      >
+      <Typography variant="subtitle1" sx={{ ...theme.typography.subtitle1 }}>
         Intervantion
       </Typography>
-      <Stack sx={{ width: "50%"}}>
+      <Stack sx={{ width: "50%" }}>
         <DatePicker
           label="Date maximale pour l’intervention"
           format="EEEE, d MMMM yyyy"
@@ -41,7 +42,7 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({ onChang
           shouldDisableDate={(date: DateTime) => shouldDisableDate(date)}
           onChange={(newValue) => {
             handleOnChange(newValue as DateTime);
-          } }
+          }}
           slotProps={{
             openPickerIcon: {
               fontSize: "small",
@@ -72,9 +73,9 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({ onChang
                 },
               },
             },
-          }} 
+          }}
         />
-      </Stack>  
+      </Stack>
       <TextField
         name="futherInformations"
         placeholder="Informations complémentaires : précisions sur l’intervention, estimation des travaux d’amiante…"

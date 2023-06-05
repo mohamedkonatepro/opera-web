@@ -9,13 +9,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   setAccessToken(req);
   if (req.method === "GET") {
     try {
-      const { ids } = req.query
-      let url = '/services?populate=*'
-      if (typeof ids === 'string' ) {
-        let i = 0
+      const { ids } = req.query;
+      let url = "/services?populate=*";
+      if (typeof ids === "string") {
+        let i = 0;
         for (const id of ids.split(",")) {
-          url += `&filters[id][$eqi][${i}]=${id}`
-          i++
+          url += `&filters[id][$eqi][${i}]=${id}`;
+          i++;
         }
       }
       const response = await apiAxiosInstance.get(url);

@@ -13,7 +13,9 @@ export interface CurrentOccupationRadioGroupProps {
   onChange: (newValue: string) => void;
 }
 
-const CurrentOccupationRadioGroup: FC<CurrentOccupationRadioGroupProps> = ({ onChange }) => {
+const CurrentOccupationRadioGroup: FC<CurrentOccupationRadioGroupProps> = ({
+  onChange,
+}) => {
   const theme = useTheme();
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -46,7 +48,7 @@ const CurrentOccupationRadioGroup: FC<CurrentOccupationRadioGroupProps> = ({ onC
           />
         </RadioGroup>
       </FormControl>
-    </Stack> 
+    </Stack>
   );
 };
 

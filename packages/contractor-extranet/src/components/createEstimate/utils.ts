@@ -33,27 +33,34 @@ export const getContextValuesForStep = (
   }
 };
 
-export const getInitialValues = (
-  servicesData?: any,
-  queryParams?: any,
-) => {
+export const getInitialValues = (servicesData?: any, queryParams?: any) => {
   return steps.reduce((acc, step) => {
     const { surface, serviceType, services, options } = queryParams || {};
-    const optionsAndServiceTypes = getUniqueOptionsAndServiceTypes(servicesData)
-    
+    const optionsAndServiceTypes =
+      getUniqueOptionsAndServiceTypes(servicesData);
+
     if (step.id === "services") {
       acc[step.id] = {
         surface,
         family: services.length ? optionsAndServiceTypes.family : undefined,
         services: services.length
-          ? servicesData.filter((service: Service) => services.includes(service.id))
+          ? servicesData.filter((service: Service) =>
+              services.includes(service.id)
+            )
           : [],
-        options: options.length > 0
-          ? optionsAndServiceTypes.options.filter((option: ServiceOption) => options.includes(option.id))
-          : [],
+        options:
+          options.length > 0
+            ? optionsAndServiceTypes.options.filter((option: ServiceOption) =>
+                options.includes(option.id)
+              )
+            : [],
         serviceType: serviceType
-            ? optionsAndServiceTypes.serviceTypes.find((type: ServiceType) => type.id === serviceType)
-            : optionsAndServiceTypes.serviceTypes.find((type: ServiceType) => type.code === "living"),
+          ? optionsAndServiceTypes.serviceTypes.find(
+              (type: ServiceType) => type.id === serviceType
+            )
+          : optionsAndServiceTypes.serviceTypes.find(
+              (type: ServiceType) => type.code === "living"
+            ),
       };
     } else {
       acc[step.id] = {};
@@ -62,17 +69,22 @@ export const getInitialValues = (
   }, {} as Record<string, any>);
 };
 
-
 export const getUniqueOptionsAndServiceTypes = (services: Service[]) => {
   const optionsSet = new Set<ServiceOption>();
   const serviceTypesSet = new Set<ServiceType>();
 
-  services.forEach(service => service.options.forEach(option => optionsSet.add(option)));
-  services.forEach(service => service.serviceTypes.forEach(serviceType => serviceTypesSet.add(serviceType)));
-  const [ family ] = services.map(service => service.family);
+  services.forEach((service) =>
+    service.options.forEach((option) => optionsSet.add(option))
+  );
+  services.forEach((service) =>
+    service.serviceTypes.forEach((serviceType) =>
+      serviceTypesSet.add(serviceType)
+    )
+  );
+  const [family] = services.map((service) => service.family);
 
   const uniqueOptions = Array.from(optionsSet);
   const uniqueServiceTypes = Array.from(serviceTypesSet);
 
   return { options: uniqueOptions, serviceTypes: uniqueServiceTypes, family };
-}
+};
