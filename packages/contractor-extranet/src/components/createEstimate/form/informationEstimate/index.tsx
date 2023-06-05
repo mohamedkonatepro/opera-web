@@ -22,30 +22,53 @@ import { DateTime } from "luxon";
 import RealEstate from "./RealEstate";
 import Annexes from "@/components/common/form/Annexes";
 import { nanoid } from "nanoid";
+import { InformationEstimateFormProps } from "./types";
+import { BuildingAnnex } from "@/types/BuildingAnnex";
 
-const InformationEstimateForm: FC<any> = () => {
-  const theme = useTheme();
+const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
+  initialValues,
+}) => {
   const [disabled, setDisabled] = useState<RealEstateFormDisabled>({});
   const [occupation, setOccupation] = useState("");
   const [date, setDate] = useState<DateTime | undefined>(undefined);
   const [futherInformations, setFutherInformations] = useState("");
 
   // Address
-  const [address, setAddress] = useState("");
-  const [additionalAddress, setAdditionalAddress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [city, setCity] = useState("");
+  const [address, setAddress] = useState(
+    initialValues?.realEstate?.address ?? ""
+  );
+  const [additionalAddress, setAdditionalAddress] = useState(
+    initialValues?.realEstate?.additionalAddress ?? ""
+  );
+  const [postalCode, setPostalCode] = useState(
+    initialValues?.realEstate?.postalCode ?? ""
+  );
+  const [city, setCity] = useState(initialValues?.realEstate?.city ?? "");
 
   // Unit
-  const [buildingReference, setBuildingReference] = useState("");
-  const [unitReference, setUnitReference] = useState("");
-  const [mandateReference, setMandateReference] = useState("");
-  const [leaseReference, setLeaseReference] = useState("");
-  const [buildingYear, setBuildingYear] = useState("");
+  const [buildingReference, setBuildingReference] = useState(
+    initialValues?.realEstate?.buildingReference ?? ""
+  );
+  const [unitReference, setUnitReference] = useState(
+    initialValues?.realEstate?.unitReference ?? ""
+  );
+  const [mandateReference, setMandateReference] = useState(
+    initialValues?.realEstate?.mandateReference ?? ""
+  );
+  const [leaseReference, setLeaseReference] = useState(
+    initialValues?.realEstate?.leaseReference ?? ""
+  );
+  const [buildingYear, setBuildingYear] = useState(
+    initialValues?.realEstate?.buildingYear ?? ""
+  );
 
   // Real Estate
-  const [purpose, setPurpose] = useState<Purpose | undefined>(undefined);
-  const [staircaseNumber, setStaircaseNumber] = useState("");
+  const [purpose, setPurpose] = useState<Purpose | undefined>(
+    initialValues?.realEstate?.purpose ?? undefined
+  );
+  const [staircaseNumber, setStaircaseNumber] = useState(
+    initialValues?.realEstate?.staircaseNumber ?? ""
+  );
   const [levelNumber, setLevelNumber] = useState("");
 
   // Contractor
@@ -54,14 +77,19 @@ const InformationEstimateForm: FC<any> = () => {
   const [contractorEmail, setContractorEmail] = useState("");
 
   // Annexes
-  const [annexes, setAnnexes] = useState<any[]>([
-    {
-      id: nanoid(),
-      type: undefined,
-      unitReference: "",
-      location: "",
-    },
-  ]);
+  const [annexes, setAnnexes] = useState<Partial<BuildingAnnex>[]>(
+    initialValues?.realEstate?.annexes?.length === 0 ||
+      !initialValues?.realEstate?.annexes
+      ? [
+          {
+            id: nanoid(),
+            type: undefined,
+            unitReference: "",
+            location: "",
+          },
+        ]
+      : initialValues?.realEstate?.annexes
+  );
 
   const serviceType: ServiceType = {
     id: "1",

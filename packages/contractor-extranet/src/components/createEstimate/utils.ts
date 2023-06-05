@@ -1,7 +1,5 @@
-import RealEstate from "@/types/RealEstate";
 import { steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
-import Contractor from "@/types/Contractor";
 import { ServiceType } from "@/types/ServiceType";
 import { Service } from "@/types/Service";
 import { ServiceOption } from "@/types/ServiceOption";
@@ -33,39 +31,88 @@ export const getContextValuesForStep = (
   }
 };
 
-export const getInitialValues = (servicesData?: any, queryParams?: any) => {
+export const getInitialValues = (
+  servicesData?: any,
+  queryParams?: any,
+  realEstate?: any
+) => {
   return steps.reduce((acc, step) => {
     const { surface, serviceType, services, options } = queryParams || {};
     const optionsAndServiceTypes =
       getUniqueOptionsAndServiceTypes(servicesData);
 
-    if (step.id === "services") {
-      acc[step.id] = {
-        surface,
-        family: services.length ? optionsAndServiceTypes.family : undefined,
-        services: services.length
-          ? servicesData.filter((service: Service) =>
-              services.includes(service.id)
-            )
-          : [],
-        options:
-          options.length > 0
-            ? optionsAndServiceTypes.options.filter((option: ServiceOption) =>
-                options.includes(option.id)
-              )
-            : [],
-        serviceType: serviceType
-          ? optionsAndServiceTypes.serviceTypes.find(
-              (type: ServiceType) => type.id === serviceType
-            )
-          : optionsAndServiceTypes.serviceTypes.find(
-              (type: ServiceType) => type.code === "living"
-            ),
-      };
-    } else {
-      acc[step.id] = {};
+    switch (step.id) {
+      case "informationEstimate": {
+        return {
+          ...acc,
+          [step.id]: {
+            realEstate: {
+              id: realEstate?.id,
+              address: capitalizeWords(realEstate?.address),
+              additionalAddress: capitalizeWords(realEstate?.additionalAddress),
+              postalCode: realEstate?.postalCode,
+              city: capitalizeWords(realEstate?.city),
+              realEstateType: realEstate?.real_estate_type,
+              floor: realEstate?.floor?.data,
+              purpose: realEstate?.purpose?.data,
+              surface: realEstate?.surface,
+              roomNumber: realEstate?.roomNumber,
+              digicode: realEstate?.digicode,
+              observation: capitalizeWords(realEstate?.observation),
+              buildingReference: realEstate?.buildingReference,
+              unitReference: realEstate?.unitReference,
+              mandateReference: realEstate?.mandateReference,
+              leaseReference: realEstate?.leaseReference,
+              buildingYear: realEstate?.buildingYear,
+              annexes: realEstate?.buildingAnnexes,
+              heatingEnergyType: realEstate?.heating_energy_type?.data,
+              heatingType: realEstate?.heating_type?.data,
+              waterHeatingEnergyType:
+                realEstate?.water_heating_energy_type?.data,
+              waterHeatingType: realEstate?.water_heating_type?.data,
+              locationHotWater: capitalizeWords(realEstate?.locationHotWater),
+              locationElectricMeter: capitalizeWords(
+                realEstate?.locationElectricMeter
+              ),
+              locationColdWater: capitalizeWords(realEstate?.locationColdWater),
+              locationGasMeter: capitalizeWords(realEstate?.locationGasMeter),
+              electricalReferenceMeasureLocation:
+                realEstate?.electricalReferenceMeasureLocation,
+            },
+          },
+        };
+      }
+      case "services": {
+        return {
+          ...acc,
+          [step.id]: {
+            surface,
+            family: services.length ? optionsAndServiceTypes.family : undefined,
+            services: services.length
+              ? servicesData.filter((service: Service) =>
+                  services.includes(service.id)
+                )
+              : [],
+            options:
+              options.length > 0
+                ? optionsAndServiceTypes.options.filter(
+                    (option: ServiceOption) => options.includes(option.id)
+                  )
+                : [],
+            serviceType: serviceType
+              ? optionsAndServiceTypes.serviceTypes.find(
+                  (type: ServiceType) => type.id === serviceType
+                )
+              : optionsAndServiceTypes.serviceTypes.find(
+                  (type: ServiceType) => type.code === "living"
+                ),
+          },
+        };
+      }
+      default: {
+        return acc;
+      }
     }
-    return acc;
   }, {} as Record<string, any>);
 };
 

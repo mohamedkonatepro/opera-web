@@ -18,7 +18,7 @@ interface QueryData {
 }
 
 const CreateEstimateStepper: React.FC<{
-  realEstate: any;
+  realEstate?: any;
   servicesData: Service[];
   serviceTypes: ServiceType[];
   contractor: Contractor;
@@ -42,17 +42,17 @@ const CreateEstimateStepper: React.FC<{
     [serviceType, services, options, surface]
   );
 
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(1);
 
   const currentStep = steps[activeStep - 1];
 
-  useEffect(() => {
-    setStepStates(getInitialValues(servicesData, queryParams));
-  }, [queryParams, servicesData]);
-
   const [stepStates, setStepStates] = useState(
-    getInitialValues(servicesData, queryParams)
+    getInitialValues(servicesData, queryParams, realEstate)
   );
+
+  useEffect(() => {
+    setStepStates(getInitialValues(servicesData, queryParams, realEstate));
+  }, [queryParams, servicesData, realEstate]);
 
   const handleNext = (formState: any) => {
     setStepStates((prevStepStates) => ({
@@ -79,7 +79,7 @@ const CreateEstimateStepper: React.FC<{
       { serviceTypes },
       queryParams
     );
-  }, [activeStep, stepStates]);
+  }, [activeStep, stepStates, serviceTypes, queryParams]);
 
   return (
     <Box display="flex" height={1} width={1}>

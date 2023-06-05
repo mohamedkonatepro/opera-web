@@ -1,3 +1,4 @@
+import { BuildingAnnex } from "./BuildingAnnex";
 import Contractor from "./Contractor";
 import Owner from "./Owner";
 import { Purpose } from "./Purpose";
@@ -32,6 +33,7 @@ interface RealEstate {
   purpose: Purpose;
   tenants: Tenant[];
   contractor: Contractor;
+  buildingAnnexes: BuildingAnnex[];
   createdAt: string;
   updatedAt: string;
 }
