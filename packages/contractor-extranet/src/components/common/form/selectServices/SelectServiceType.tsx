@@ -38,7 +38,6 @@ const SelectServiceType: FC<SelectServiceProps> = ({
         }}
       >
         {serviceTypes
-          .filter((serviceType) => serviceType.code === "living") // To be deleted for create estimate
           .map((serviceType) => (
             <FormControlLabel
               value={serviceType.code}

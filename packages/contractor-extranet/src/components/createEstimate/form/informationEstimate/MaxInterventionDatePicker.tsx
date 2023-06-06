@@ -8,8 +8,8 @@ const holidays = new Holidays("FR");
 
 interface MaxInterventionDatePickerProps {
   onChange: (newValue: DateTime | undefined) => void;
-  futherInformations: string;
-  setFutherInformations: (address: string) => void;
+  furtherInformations: string;
+  setFurtherInformations: (furtherInformations: string) => void;
 }
 
 const shouldDisableDate = (date: DateTime): boolean => {
@@ -21,8 +21,8 @@ const shouldDisableDate = (date: DateTime): boolean => {
 
 const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({
   onChange,
-  futherInformations,
-  setFutherInformations,
+  furtherInformations,
+  setFurtherInformations,
 }) => {
   const theme = useTheme();
   const handleOnChange = (value: DateTime | undefined) => {
@@ -77,16 +77,16 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({
         />
       </Stack>
       <TextField
-        name="futherInformations"
+        name="furtherInformations"
         placeholder="Informations complémentaires : précisions sur l’intervention, estimation des travaux d’amiante…"
         color="secondary"
         sx={{
           bgcolor: "background.paper",
         }}
         multiline
-        value={futherInformations}
+        value={furtherInformations}
         onChange={(event) => {
-          setFutherInformations(event.target.value);
+          setFurtherInformations(event.target.value);
         }}
       />
     </Stack>

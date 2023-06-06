@@ -65,10 +65,9 @@ const CreateOrderStepper: React.FC<{
 
       return newStepStates;
     });
-
     if (
       currentStep.id === "services" &&
-      needsEstimate(formState.selectedServiceType, formState.surface)
+      needsEstimate(formState.serviceType, formState.surface)
     ) {
       setNeedEstimateDialogOpen(true);
       return;

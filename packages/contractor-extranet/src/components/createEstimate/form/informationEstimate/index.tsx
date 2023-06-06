@@ -1,16 +1,8 @@
 import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   Stack,
-  Typography,
-  useTheme,
 } from "@mui/material";
-import { FC, useState } from "react";
-import { Floor } from "@/types/Floor";
+import { FC, FormEvent, useState } from "react";
 import { Purpose } from "@/types/Purpose";
-import RealEstateType from "@/types/RealEstateType";
 import { ServiceType } from "@/types/ServiceType";
 import { RealEstateFormDisabled } from "@/components/createOrder/forms/realEstate/types";
 import CurrentOccupationRadioGroup from "./CurrentOccupationRadioGroup";
@@ -27,11 +19,13 @@ import { BuildingAnnex } from "@/types/BuildingAnnex";
 
 const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
   initialValues,
+  onSubmit,
+  formId
 }) => {
   const [disabled, setDisabled] = useState<RealEstateFormDisabled>({});
-  const [occupation, setOccupation] = useState("");
+  const [occupation, setOccupation] = useState("busy");
   const [date, setDate] = useState<DateTime | undefined>(undefined);
-  const [futherInformations, setFutherInformations] = useState("");
+  const [furtherInformations, setFurtherInformations] = useState("");
 
   // Address
   const [address, setAddress] = useState(
@@ -105,8 +99,40 @@ const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
     setDate(value);
   };
 
+  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    onSubmit({
+      realEstate: {
+        id: initialValues?.realEstate?.id,
+        address,
+        additionalAddress,
+        postalCode,
+        city,
+        buildingReference,
+        unitReference,
+        mandateReference,
+        leaseReference,
+        buildingYear,
+        purpose,
+        staircaseNumber,
+        levelNumber,
+        annexes,
+      },
+      contractor: {
+        firstname: contractorFirstname,
+        lastname: contractorLastname,
+        email: contractorEmail,
+      },
+      occupation,
+      date,
+      furtherInformations
+    })
+  }
+
   return (
-    <Stack spacing={5} component="form">
+    <Stack spacing={5} component="form" id={formId} onSubmit={handleOnSubmit}>
       <Address
         address={address}
         additionalAddress={additionalAddress}
@@ -150,8 +176,8 @@ const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
 
       <MaxInterventionDatePicker
         onChange={handleChangeDate}
-        futherInformations={futherInformations}
-        setFutherInformations={setFutherInformations}
+        furtherInformations={furtherInformations}
+        setFurtherInformations={setFurtherInformations}
       />
 
       <Contractor

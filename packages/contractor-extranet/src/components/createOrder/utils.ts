@@ -120,7 +120,7 @@ export const getInitialValues = (
       };
     } else if (step.id === "appointment") {
       acc[step.id] = {
-        futherInformations: `${realEstate?.observation ?? ""}${
+        furtherInformations: `${realEstate?.observation ?? ""}${
           realEstate?.observation ? "\n" : ""
         }${contractor?.observationEdl ?? contractor?.observationDiag ?? ""}`,
       };
