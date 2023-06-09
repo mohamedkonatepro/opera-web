@@ -26,7 +26,7 @@ const CreateEstimateStepper: React.FC<{
   contractor: Contractor;
 }> = ({ realEstate, servicesData, serviceTypes, contractor }) => {
   const router = useRouter();
-  const { serviceType, services, options, surface } = router.query;
+  const { serviceType, services, options, surface, from } = router.query;
 
   const [estimateRequestedDialogOpen, setEstimateRequestedDialogOpen] = useState(false);
   const [estimateRequestedErrorDialogOpen, setEstimateRequestedErrorDialogOpen] = useState(false);
@@ -58,7 +58,7 @@ const CreateEstimateStepper: React.FC<{
     [serviceType, services, options, surface]
   );
 
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(from === 'order' ? 2 : 1);
 
   const currentStep = steps[activeStep - 1];
 

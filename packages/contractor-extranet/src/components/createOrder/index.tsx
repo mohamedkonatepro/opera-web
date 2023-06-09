@@ -98,6 +98,7 @@ const CreateOrderStepper: React.FC<{
         .map((serviceOption: ServiceOption) => serviceOption.id)
         .join(","),
       surface,
+      from: 'order',
     });
 
     router.push(`/create-estimate?${query}`);
