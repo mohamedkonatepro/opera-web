@@ -35,8 +35,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ env.DOCKER_METADATA_OUTPUT_TAGS }}
-          cache-to: type=registry,ref=${{ secrets.REGISTRY_SERVER }}/contractor-extranet/cache,mode=max
-          cache-from: type=registry,ref=${{ secrets.REGISTRY_SERVER }}/contractor-extranet/cache,mode=max
+          # cache-to: type=registry,ref=${{ secrets.REGISTRY_SERVER }}/contractor-extranet/cache,mode=max
+          # cache-from: type=registry,ref=${{ secrets.REGISTRY_SERVER }}/contractor-extranet/cache,mode=max
           build-args: |
             NODE_ENV=production
             APP_FOLDER=contractor-extranet

@@ -94,7 +94,7 @@ const CreateOrderStepper: React.FC<{
   const redirectToEstimate = () => {
     const { serviceType, services, options, surface } = stepStates.services;
     const query = qs.stringify({
-      realEstateId: realEstate.id,
+      realEstateId: realEstate?.id,
       serviceType: serviceType.id,
       services: services.map((service: Service) => service.id).join(","),
       options: options
