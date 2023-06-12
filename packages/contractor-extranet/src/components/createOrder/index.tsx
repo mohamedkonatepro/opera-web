@@ -30,6 +30,9 @@ const CreateOrderStepper: React.FC<{
   const { mutate } = useMutation({
     mutationFn: createOrder,
     onSuccess: ({ data }) => {
+      if (data.appointmentId) {
+        return router.push(`/appointment/${data.appointmentId}`);
+      }
       router.push(`/order/${data.orderId}`);
     },
   });
