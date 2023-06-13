@@ -47,11 +47,11 @@ const CreateEstimateStepper: React.FC<{
       serviceType: typeof serviceType === "string" ? parseInt(serviceType) : 0,
       services:
         typeof services === "string"
-          ? services.split(",").map((service) => parseInt(service))
+          ? services.split(",").map((service) => parseInt(service)).filter((service) => !!service)
           : [],
       options:
         typeof options === "string"
-          ? options.split(",").map((option) => parseInt(option))
+          ? options.split(",").map((option) => parseInt(option)).filter((option) => !!option)
           : [],
       surface: typeof surface === "string" ? parseInt(surface) : 0,
     }),
