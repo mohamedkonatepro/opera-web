@@ -38,8 +38,8 @@ export const getContextValuesForStep = (
 };
 
 const getRealEstateDefaultServiceType = (realEstate: RealEstate) => {
-  if (realEstate.real_estate_type.code === "tertiary_local") return "tertiary";
-  if (realEstate.real_estate_type.code === "common_part") return "common_parts";
+  if (realEstate?.real_estate_type?.code === "tertiary_local") return "tertiary";
+  if (realEstate?.real_estate_type?.code === "common_part") return "common_parts";
 
   return "living";
 };
