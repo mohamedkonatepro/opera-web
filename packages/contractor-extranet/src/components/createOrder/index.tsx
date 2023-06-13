@@ -96,9 +96,10 @@ const CreateOrderStepper: React.FC<{
     const query = qs.stringify({
       realEstateId: realEstate?.id,
       serviceType: serviceType.id,
-      services: services.map((service: Service) => service.id).join(","),
+      services: services.map((service: Service) => service.id).filter((service: number) => !!service).join(","),
       options: options
         .map((serviceOption: ServiceOption) => serviceOption.id)
+        .filter((option: number) => !!option)
         .join(","),
       surface,
       from: 'order',
