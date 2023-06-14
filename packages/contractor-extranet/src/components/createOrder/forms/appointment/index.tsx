@@ -35,7 +35,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   );
   const [key, setKey] = useState(initialValues?.key ?? "tenant");
   const [furtherInformations, setFurtherInformations] = useState(
-    initialValues?.furtherInformations ?? ""
+    contextValues?.furtherInformations ?? ""
   );
   const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<
     DateTime | undefined

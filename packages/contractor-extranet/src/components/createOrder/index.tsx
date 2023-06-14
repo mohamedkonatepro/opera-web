@@ -109,8 +109,8 @@ const CreateOrderStepper: React.FC<{
   };
 
   const contextValues = useMemo(() => {
-    return getContextValuesForStep(activeStep, stepStates, { serviceTypes });
-  }, [activeStep, stepStates, serviceTypes]);
+    return getContextValuesForStep(activeStep, stepStates, { serviceTypes, contractor, realEstate });
+  }, [activeStep, stepStates, serviceTypes, contractor, realEstate]);
 
   useEffect(() => {
     if (currentStep.id !== "appointment") {
