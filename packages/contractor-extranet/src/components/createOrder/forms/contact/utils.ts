@@ -10,7 +10,12 @@ export const getDefaultTenant = (): TenantFormValues => ({
   phoneNumber: "",
 });
 
-export const transformIncomingTenants = (tenants: Tenant[]): TenantFormValues[] => {
+export const transformIncomingTenants = (
+  tenants: Tenant[]
+): TenantFormValues[] => {
+  if (!tenants) {
+    return [];
+  }
   return tenants
     .filter((tenant) => tenant.tenant_type.code === "incoming")
     .map((tenant) => {

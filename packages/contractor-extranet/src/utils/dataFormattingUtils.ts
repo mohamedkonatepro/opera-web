@@ -49,7 +49,13 @@ export const formatRealEstateTypeData = (realEstateType: any) => {
 };
 
 export const formatTenantData = (tenant: any) => {
-  return tenant ? { id: tenant.id, ...tenant.attributes, tenant_type: formatTenantTypeData(tenant.attributes?.tenant_type?.data) } : null;
+  return tenant
+    ? {
+        id: tenant.id,
+        ...tenant.attributes,
+        tenant_type: formatTenantTypeData(tenant.attributes?.tenant_type?.data),
+      }
+    : null;
 };
 
 export const formatTenantTypeData = (tenantType: any) => {

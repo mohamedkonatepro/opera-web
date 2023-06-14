@@ -1,5 +1,5 @@
 import RealEstate from "@/types/RealEstate";
-import { steps } from "./constants";
+import { MIN_SURFACE_FOR_ESTIMATE, steps } from "./constants";
 import capitalizeWords from "@/utils/capitalizeWords";
 import Contractor from "@/types/Contractor";
 import { ServiceType } from "@/types/ServiceType";
@@ -27,6 +27,11 @@ export const getContextValuesForStep = (
       return {
         services: stepStates.services.services,
         serviceType: stepStates.services.serviceType,
+        disabled: {
+          realEstate: {
+            surface: !!stepStates.services.surface,
+          },
+        },
       };
     }
     case 4: {
@@ -65,6 +70,7 @@ export const getInitialValues = (
           : otherValues.serviceTypes.find(
               (serviceType: ServiceType) => serviceType.code === "living"
             ),
+        surface: realEstate?.surface,
       };
       return acc;
     } else if (step.id === "contacts") {
@@ -130,4 +136,21 @@ export const getInitialValues = (
     }
     return acc;
   }, {} as Record<string, any>);
+};
+
+export const needsEstimate = (serviceType: ServiceType, surface?: string) => {
+  return (
+    serviceType.code === "common_parts" ||
+    (serviceType.code === "tertiary" &&
+      typeof surface === "string" &&
+      parseFloat(surface) >= MIN_SURFACE_FOR_ESTIMATE)
+  );
+};
+
+export const getTextForEstimateDialog = (serviceType: ServiceType) => {
+  if (serviceType.code === "common_parts") {
+    return "Votre commande concerne des parties communes. Vous devez effectuer une demande de devis pour créer la commande.";
+  }
+
+  return "La surface de votre bien est supérieure à 250m². Vous devez effectuer une demande de devis pour créer la commande.";
 };

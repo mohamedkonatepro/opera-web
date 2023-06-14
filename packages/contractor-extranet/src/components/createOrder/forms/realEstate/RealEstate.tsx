@@ -39,6 +39,7 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
           setValue={setPurpose}
           serviceType={serviceType}
           disabled={disabled?.purpose}
+          required={realEstateType?.code === "tertiary_local"}
         />
         <TextField
           id="surface"
@@ -48,10 +49,18 @@ const RealEstate: FC<RealEstateInformationFormProps> = ({
           fullWidth
           inputProps={{
             inputMode: "numeric",
-            pattern: "^(?:0|[1-9]\\d*)(?:.\\d+)?$",
+            pattern: "^\\d*\\.?\\d*$",
           }}
           value={surface}
-          onChange={(event) => setSurface(event.target.value)}
+          onChange={(event) => {
+            let value = event.target.value;
+            const valueAsNumber = Number(value);
+
+            if (/^\d*\.?\d*$/.test(value)) {
+              setSurface(value);
+            }
+          }}
+          disabled={disabled?.surface}
         />
       </Stack>
       <Stack spacing={2} direction="row">

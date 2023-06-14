@@ -38,7 +38,6 @@ const SelectServiceType: FC<SelectServiceProps> = ({
         }}
       >
         {serviceTypes
-          .filter((serviceType) => serviceType.code === 'living') // To be deleted for create estimate
           .map((serviceType) => (
             <FormControlLabel
               value={serviceType.code}
@@ -48,7 +47,7 @@ const SelectServiceType: FC<SelectServiceProps> = ({
               sx={{ ...theme.typography.subtitle2 }}
               key={serviceType.id}
             />
-        ))}
+          ))}
       </RadioGroup>
     </FormControl>
   );

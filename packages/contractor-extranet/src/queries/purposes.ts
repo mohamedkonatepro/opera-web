@@ -1,6 +1,4 @@
 import { Purpose } from "@/types/Purpose";
-import { ServiceType } from "@/types/ServiceType";
-import { QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
 import qs from "qs";
 

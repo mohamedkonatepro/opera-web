@@ -1,5 +1,4 @@
 import { RealEstateType } from "@/types/RealEstateType";
-import { ServiceType } from "@/types/ServiceType";
 import axios from "axios";
 import qs from "qs";
 

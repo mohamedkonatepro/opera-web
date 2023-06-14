@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import SelectServicesForm from "./SelectServicesForm";
 import { SelectServicesProps } from "./types";
-import { getServiceTypes } from "@/queries/serviceTypes";
 
 const SelectServices: FC<SelectServicesProps> = (props) => {
   const theme = useTheme();

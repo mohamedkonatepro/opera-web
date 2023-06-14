@@ -14,8 +14,8 @@ export interface AppointmentProps {
   onSubmit: (formState: any) => void;
   contextValues: any;
   initialValues?: any;
-  setIsButtonAppointmentVisible: (disabled: boolean) => void;
-  submitWithAppointment: boolean;
+  setIsButtonAppointmentVisible?: (disabled: boolean) => void;
+  submitWithAppointment?: boolean;
 }
 
 const AppointmentForm: FC<AppointmentProps> = ({
@@ -58,7 +58,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
   });
 
   useEffect(() => {
-    setIsButtonAppointmentVisible(selectedSlot !== undefined);
+    setIsButtonAppointmentVisible?.(selectedSlot !== undefined);
   }, [selectedSlot, setIsButtonAppointmentVisible]);
   if (isLoading) {
     return (

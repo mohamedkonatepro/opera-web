@@ -1,3 +1,4 @@
+import { Family } from "./Family";
 import { ServiceOption } from "./ServiceOption";
 import { ServiceType } from "./ServiceType";
 
@@ -9,4 +10,5 @@ export interface Service {
   item_reference: string;
   options: ServiceOption[];
   serviceTypes: ServiceType[];
+  family: any;
 }

@@ -9,8 +9,9 @@ export interface StepDefinition {
     contextValues: any;
     initialValues: any;
     setSubmitButtonDisabled: (disabled: boolean) => void;
-    setIsButtonAppointmentVisible: (disabled: boolean) => void;
-    submitWithAppointment: boolean;
+    setIsButtonAppointmentVisible?: (disabled: boolean) => void;
+    submitWithAppointment?: boolean;
+    [key: string]: any;
   }>;
   footer: React.FC<StepFooterProps & StepFooterAppointmentProps>;
 }
@@ -34,10 +35,11 @@ export interface StepContentProps {
   handleNext: (formState: any) => void;
   handleBack: () => void;
   handleReset: () => void;
-  isButtonAppointmentVisible: boolean;
-  setIsButtonAppointmentVisible: (disabled: boolean) => void;
-  submitWithAppointment: boolean;
-  setSubmitWithAppointment: (disabled: boolean) => void;
+  isButtonAppointmentVisible?: boolean;
+  setIsButtonAppointmentVisible?: (disabled: boolean) => void;
+  submitWithAppointment?: boolean;
+  setSubmitWithAppointment?: (disabled: boolean) => void;
+  [key: string]: any;
 }
 
 export interface StepFooterProps {
@@ -51,6 +53,6 @@ export interface StepFooterProps {
 export interface StepFooterAppointmentProps {
   formId: string;
   handleBack: () => void;
-  isButtonAppointmentVisible: boolean;
-  setSubmitWithAppointment: (disabled: boolean) => void;
+  isButtonAppointmentVisible?: boolean;
+  setSubmitWithAppointment?: (disabled: boolean) => void;
 }
