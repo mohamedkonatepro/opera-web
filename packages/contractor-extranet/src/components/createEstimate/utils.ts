@@ -23,6 +23,7 @@ export const getContextValuesForStep = (
       return {
         services: stepStates.services.services,
         family: stepStates.services.family,
+        serviceType: stepStates.services.serviceType,
       };
     }
     default: {

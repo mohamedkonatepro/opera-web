@@ -18,6 +18,7 @@ import { InformationEstimateFormProps } from "./types";
 import { BuildingAnnex } from "@/types/BuildingAnnex";
 
 const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
+  contextValues,
   initialValues,
   onSubmit,
   formId
@@ -85,11 +86,7 @@ const InformationEstimateForm: FC<InformationEstimateFormProps> = ({
       : initialValues?.realEstate?.annexes
   );
 
-  const serviceType: ServiceType = {
-    id: "1",
-    name: "Habitation",
-    code: "living",
-  };
+  const serviceType: ServiceType = contextValues?.serviceType;
 
   const handleChangeCurrentOccupationRadio = (value: string): void => {
     setOccupation(value);

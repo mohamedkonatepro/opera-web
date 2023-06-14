@@ -28,6 +28,7 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({
   const handleOnChange = (value: DateTime | undefined) => {
     onChange(value);
   };
+  const minDate = DateTime.now().plus({ days: 1 }).startOf("day");
 
   return (
     <Stack spacing={2}>
@@ -38,6 +39,7 @@ const MaxInterventionDatePicker: FC<MaxInterventionDatePickerProps> = ({
         <DatePicker
           label="Date maximale pour l’intervention"
           format="EEEE, d MMMM yyyy"
+          minDate={minDate}
           disablePast
           shouldDisableDate={(date: DateTime) => shouldDisableDate(date)}
           onChange={(newValue) => {
