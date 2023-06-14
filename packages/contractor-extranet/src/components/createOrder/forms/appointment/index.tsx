@@ -34,8 +34,8 @@ const AppointmentForm: FC<AppointmentProps> = ({
     initialValues?.movingZones ?? undefined
   );
   const [key, setKey] = useState(initialValues?.key ?? "tenant");
-  const [futherInformations, setFutherInformations] = useState(
-    initialValues?.futherInformations ?? ""
+  const [furtherInformations, setFurtherInformations] = useState(
+    contextValues?.furtherInformations ?? ""
   );
   const [selectedAppointmentDate, setSelectedAppointmentDate] = useState<
     DateTime | undefined

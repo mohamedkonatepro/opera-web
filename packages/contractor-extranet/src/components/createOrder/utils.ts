@@ -8,7 +8,7 @@ import { transformIncomingTenants } from "./forms/contact/utils";
 export const getContextValuesForStep = (
   activeStep: number,
   stepStates: any,
-  otherValues: any
+  otherValues: any,
 ) => {
   switch (activeStep) {
     case 1: {
@@ -29,7 +29,11 @@ export const getContextValuesForStep = (
       };
     }
     case 4: {
-      return stepStates;
+      return {
+        furtherInformations: `${otherValues?.realEstate?.observation ?? ""}${
+          otherValues?.realEstate?.observation ? "\n" : ""
+        }${stepStates.services.family.code === 'EDL' ? otherValues?.contractor?.observationEdl : otherValues?.contractor?.observationDiag}`,
+      };
     }
     default: {
       return {};
