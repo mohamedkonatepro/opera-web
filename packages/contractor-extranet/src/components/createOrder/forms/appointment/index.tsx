@@ -77,7 +77,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
     const createOrder = {
       date,
       key: KeyEnumWithStrIndex[key.toUpperCase()],
-      futherInformations,
+      furtherInformations,
       ...(submitWithAppointment && {
         selectedAppointmentDate,
         selectedSlot,
@@ -127,7 +127,7 @@ const AppointmentForm: FC<AppointmentProps> = ({
           Informations complémentaires
         </Typography>
         <TextField
-          name="futherInformations"
+          name="furtherInformations"
           label="Informations complémentaires"
           placeholder="Informations complémentaires"
           color="secondary"
@@ -135,9 +135,9 @@ const AppointmentForm: FC<AppointmentProps> = ({
             bgcolor: "background.paper",
           }}
           multiline
-          value={futherInformations}
+          value={furtherInformations}
           onChange={(event) => {
-            setFutherInformations(event.target.value);
+            setFurtherInformations(event.target.value);
           }}
         />
       </Stack>

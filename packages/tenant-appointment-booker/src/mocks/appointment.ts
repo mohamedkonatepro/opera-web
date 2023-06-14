@@ -1,6 +1,6 @@
-import Appointment from "@/types/appointment";
 import { DateTime } from "luxon";
 import mockOrder from "./order";
+import Appointment from "../types/appointment";
 
 const appointment: Appointment = {
   id: 1,
