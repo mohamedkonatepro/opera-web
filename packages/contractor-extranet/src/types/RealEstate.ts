@@ -1,5 +1,6 @@
 import { BuildingAnnex } from "./BuildingAnnex";
 import Contractor from "./Contractor";
+import { Floor } from "./Floor";
 import Owner from "./Owner";
 import { Purpose } from "./Purpose";
 import RealEstateType from "./RealEstateType";
@@ -30,6 +31,7 @@ interface RealEstate {
   locationColdWater: string | null;
   real_estate_type: RealEstateType;
   owner: Owner;
+  floor: Floor;
   purpose: Purpose;
   tenants: Tenant[];
   contractor: Contractor;

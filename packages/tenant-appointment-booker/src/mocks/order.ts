@@ -1,6 +1,6 @@
-import Order from "@/types/order";
-import RealEstate from "@/types/realEstate";
-import Tenant from "@/types/tenant";
+import Order from "../types/order";
+import RealEstate from "../types/realEstate";
+import Tenant from "../types/tenant";
 
 export const bien: RealEstate = {
   Address: "20 QUAI AUGAGNEUR",

@@ -84,7 +84,7 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                 city,
                 buildingReference,
                 unitReference,
-                staircaseNumber,
+                floor,
                 surface,
                 real_estate_type,
                 owner,
@@ -105,7 +105,7 @@ const RealEstateTable: React.FunctionComponent<RealEstateTableProps> = ({
                   </TableCell>
                   <TableCell>{buildingReference}</TableCell>
                   <TableCell>{unitReference}</TableCell>
-                  <TableCell>{staircaseNumber}</TableCell>
+                  <TableCell>{floor?.name}</TableCell>
                   <TableCell>{surface}</TableCell>
                   <TableCell>
                     {capitalizeWords(

@@ -4,6 +4,7 @@ import capitalizeWords from "@/utils/capitalizeWords";
 import Contractor from "@/types/Contractor";
 import { ServiceType } from "@/types/ServiceType";
 import { transformIncomingTenants } from "./forms/contact/utils";
+import appointment from '../../../../tenant-appointment-booker/src/mocks/appointment';
 
 export const getContextValuesForStep = (
   activeStep: number,
@@ -41,7 +42,9 @@ export const getContextValuesForStep = (
       };
     }
     default: {
-      return {};
+      return {
+        appointment: null
+      };
     }
   }
 };
