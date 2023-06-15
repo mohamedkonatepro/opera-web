@@ -35,6 +35,7 @@ export const getContextValuesForStep = (
     }
     case 4: {
       return {
+        realEstate: stepStates.realEstate,
         furtherInformations: `${otherValues?.realEstate?.observation ?? ""}${
           otherValues?.realEstate?.observation ? "\n" : ""
         }${stepStates.services.family.code === 'EDL' ? otherValues?.contractor?.observationEdl : otherValues?.contractor?.observationDiag}`,

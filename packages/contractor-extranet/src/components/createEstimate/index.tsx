@@ -146,8 +146,8 @@ const CreateEstimateStepper: React.FC<{
         open={estimateRequestedDialogOpen}
         title="Demande de devis validée"
         text={`
-        Votre demande de devis a été transmise à nos équipes.
-        Le devis sera envoyé au plus vite par nos équipes à l’adresse mail suivante : ${stepStates?.contractor?.email}
+        Votre demande de devis a bien été transmise à nos équipes.
+        Le devis sera envoyé au plus vite à l'adresse email que vous nous avez renseigné.
         `}
         maxWidth={584}
         onClose={() => setEstimateRequestedDialogOpen(false)}
