@@ -22,6 +22,12 @@ const getFilters = (serviceType?: string) => {
       };
       break;
     }
+    case "common_parts": {
+      filters.code = {
+        $contains: "common_parts",
+      };
+      break;
+    }
     default: {
       break;
     }
